@@ -28,5 +28,7 @@ namespace CM.Models
 
         public decimal BarRating { get; set; }  
 
+        public DateTime? DateDeleted { get; set; }
+
     }
 }

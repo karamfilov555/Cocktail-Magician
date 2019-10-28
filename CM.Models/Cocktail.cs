@@ -23,6 +23,7 @@ namespace CM.Models
         public ICollection<BarCocktail> BarCocktails { get; set; }
         public ICollection<CocktailIngredient> CocktailIngredients { get; set; }
         public ICollection<CocktailReview> CocktailReviews { get; set; }
-        public decimal Rating { get; set; }  
+        public decimal Rating { get; set; }
+        public DateTime? DateDeleted { get; set; }
     }
 }

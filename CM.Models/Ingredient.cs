@@ -16,6 +16,8 @@ namespace CM.Models
 
         public ICollection<CocktailIngredient> CocktailIngredients { get; set; }
 
-       
+        public DateTime? DateDeleted { get; set; }
+
+
     }
 }

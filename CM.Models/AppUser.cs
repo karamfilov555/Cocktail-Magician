@@ -9,6 +9,6 @@ namespace CM.Models
         {
 
         }
-
+        //public DateTime? DateBanned { get; set; } May be another model
     }
 }
