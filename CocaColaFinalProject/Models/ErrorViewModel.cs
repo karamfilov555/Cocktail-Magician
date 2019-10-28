@@ -1,6 +1,6 @@
 using System;
 
-namespace CocaColaFinalProject.Models
+namespace CM.Web.Models
 {
     public class ErrorViewModel
     {

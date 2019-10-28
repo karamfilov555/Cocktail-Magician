@@ -5,7 +5,7 @@ using System;
 
 namespace CM.Data
 {
-    public class CMContext : IdentityDbContext<User, Role, string>
+    public class CMContext : IdentityDbContext<AppUser, AppRole, string>
     {
         public CMContext(DbContextOptions<CMContext> options) : base(options)
         {
@@ -13,10 +13,9 @@ namespace CM.Data
         }
         public DbSet<Bar> Bar { get; set; }
         public DbSet<BarReview> BarReviews { get; set; }
-        public DbSet<BarRating> BarRating { get; set; }
+       
         public DbSet<BarCocktail> BarCocktails { get; set; }
         public DbSet<Cocktail> Cocktails { get; set; }
-        public DbSet<CocktailRating> CocktailRatings { get; set; }
         public DbSet<CocktailReview> CocktailReviews { get; set; }
         public DbSet<CocktailIngredient> CocktailIngredients { get; set; }
         public DbSet<Ingredient> Ingredients { get; set; }

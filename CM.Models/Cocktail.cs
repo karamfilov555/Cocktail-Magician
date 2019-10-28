@@ -22,7 +22,7 @@ namespace CM.Models
 
         public ICollection<BarCocktail> BarCocktails { get; set; }
         public ICollection<CocktailIngredient> CocktailIngredients { get; set; }
-
-        public decimal Rating { get; set; }  // can be replaced with model CocktilRating
+        public ICollection<CocktailReview> CocktailReviews { get; set; }
+        public decimal Rating { get; set; }  
     }
 }

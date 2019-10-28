@@ -33,6 +33,7 @@ namespace CocaColaFinalProject
             services.Configure<IdentityOptions>(options =>
             {
                 options.Password.RequireDigit = false;
+                options.Lockout.MaxFailedAccessAttempts = 5;
                 options.Password.RequiredLength = 5;
                 options.Password.RequireLowercase = false;
                 options.Password.RequireNonAlphanumeric = false;
@@ -43,8 +44,8 @@ namespace CocaColaFinalProject
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
 
-            services.AddDefaultIdentity<User>()
-                .AddRoles<Role>()
+            services.AddDefaultIdentity<AppUser>()
+                .AddRoles<AppRole>()
                 .AddDefaultUI(UIFramework.Bootstrap4)
                 .AddEntityFrameworkStores<CMContext>();
 

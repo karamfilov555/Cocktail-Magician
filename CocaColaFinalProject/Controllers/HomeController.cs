@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using CM.Web.Models;
 using Microsoft.AspNetCore.Mvc;
-using CocaColaFinalProject.Models;
+using System.Diagnostics;
 
 namespace CocaColaFinalProject.Controllers
 {

@@ -1,23 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
-namespace CM.Models
+namespace CM.Models.Abstractions
 {
-    public class BarRating
+   public abstract class AbstractReview
     {
-        public BarRating()
-        {
-
-        }
-
+        [Key]
         public string Id { get; set; }
-        public ICollection<BarReview> BarReviews { get; set; }
-        public string BarId { get; set; }
-        public Bar Bar { get; set; }
+        [Range(0, 500)]
+        public string Description { get; set; }
 
         [Column(TypeName = "decimal(18,2)")]
+        [Range(1, 5)]
         public decimal Rating { get; set; }
     }
 }

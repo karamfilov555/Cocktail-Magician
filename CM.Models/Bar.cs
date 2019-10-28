@@ -24,7 +24,9 @@ namespace CM.Models
 
         public ICollection<BarCocktail> BarCocktails { get; set; }
 
-        public decimal BarRating { get; set; }  // can be replaced with model BarRating
+        public ICollection<BarReview> BarReviews { get; set; }
+
+        public decimal BarRating { get; set; }  
 
     }
 }

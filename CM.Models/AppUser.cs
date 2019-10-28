@@ -1,13 +1,14 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace CM.Models
 {
-    public class Role : IdentityRole
+    public class AppUser : IdentityUser
     {
+        public AppUser()
+        {
 
+        }
 
     }
 }
