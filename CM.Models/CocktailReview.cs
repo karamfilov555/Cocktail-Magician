@@ -13,7 +13,6 @@ namespace CM.Models
         {
 
         }
-        
         public string UserId { get; set; }
         public AppUser User { get; set; }
         public string CocktailId { get; set; }
