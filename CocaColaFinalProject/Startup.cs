@@ -11,6 +11,8 @@ using CM.Data;
 using CM.Models;
 using Microsoft.AspNetCore.Mvc.Razor;
 using CM.Web.Infrastructure;
+using CM.Data.DatabaseSeeder;
+using CM.Data.JsonManager;
 
 namespace CocaColaFinalProject
 {
@@ -51,13 +53,10 @@ namespace CocaColaFinalProject
                 .AddDefaultUI(UIFramework.Bootstrap4)
                 .AddEntityFrameworkStores<CMContext>();
 
-            services.Configure<RazorViewEngineOptions>(options =>
-            {
-                options.AreaViewLocationFormats.Clear();
-                //options.AreaViewLocationFormats.Add("/MyAreas/{2}/Views/{1}/{0}.cshtml");
-                //options.AreaViewLocationFormats.Add("/MyAreas/{2}/Views/Shared/{0}.cshtml");
-                options.AreaViewLocationFormats.Add("/Views/Shared/_Layout1.cshtml");
-            });
+            //register services here :
+
+            services.AddScoped<IJsonManager, JsonManager>();
+            
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
             services.AddMvc().AddNToastNotifyToastr();
@@ -67,6 +66,8 @@ namespace CocaColaFinalProject
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             app.UpdateDatabase();
+            app.SeedDatabaseCocktails();
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
