@@ -13,6 +13,8 @@ using Microsoft.AspNetCore.Mvc.Razor;
 using CM.Web.Infrastructure;
 using CM.Data.DatabaseSeeder;
 using CM.Data.JsonManager;
+using CM.Services.Contracts;
+using CM.Services;
 
 namespace CocaColaFinalProject
 {
@@ -56,6 +58,7 @@ namespace CocaColaFinalProject
             //register services here :
 
             services.AddScoped<IJsonManager, JsonManager>();
+            services.AddScoped<ICocktailServices, CocktailServices>();
             
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);

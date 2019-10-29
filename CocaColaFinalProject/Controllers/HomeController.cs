@@ -1,14 +1,25 @@
-﻿using CM.Web.Models;
+﻿using CM.Services.Contracts;
+using CM.Web.Mappers;
+using CM.Web.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace CocaColaFinalProject.Controllers
 {
     public class HomeController : Controller
     {
-        public IActionResult Index()
+        private readonly ICocktailServices _cocktailServices;
+        public HomeController(ICocktailServices cocktailServices)
         {
-            return View();
+            _cocktailServices = cocktailServices;
+        }
+        public async Task<IActionResult> Index()
+        {
+            var cocktailsForHp =  await _cocktailServices.GetCocktailsForHomePage();
+            var cocktailsVm = cocktailsForHp.Select(b => b.MapToCocktailViewModel()).ToList();
+            return View(cocktailsVm);
         }
 
         public IActionResult Privacy()

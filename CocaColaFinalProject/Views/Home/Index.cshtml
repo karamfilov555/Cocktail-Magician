@@ -1,301 +1,306 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
 }
+@model List<CocktailViewModel>
 
-    <div class="bg-1 section">
-        <div class="inner" data-topspace="80" data-bottomspace="100" style="background-image: none; padding-top: 80px; padding-bottom: 100px;">
-            <div class="container">
+<div class="bg-1 section">
+    <div class="inner" data-topspace="80" data-bottomspace="100" style="background-image: none; padding-top: 80px; padding-bottom: 100px;">
+        <div class="container">
 
-                <h3 class="hdr4">Big Brand Slider</h3>
+            <h3 class="hdr4">Cocktail's Slider</h3>
 
-                <!-- *********************** -->
-                <!-- ** FULL WIDTH SLIDER ** -->
-            </div>
-            <div class="flexFull type2 flexslider text-center" id="location">
+            <!-- *********************** -->
+            <!-- ** FULL WIDTH SLIDER ** -->
+        </div>
+        <div class="flexFull type2 flexslider text-center" id="location">
 
-                <div class="flex-viewport" style="overflow: hidden; position: relative;">
-                    <ul class="slides" style="width: 800%; margin-left: -1349px;">
+            <div class="flex-viewport" style="overflow: hidden; position: relative;">
+                <ul class="slides" style="width: 800%; margin-left: -1349px;">
+                    @foreach (var cocktail in Model)
+                    {
                         <li class="clone" aria-hidden="true" style="width: 1349px; float: left; display: block;">
-                            <img src="./assets/images/content/sliderfull-1.jpg" alt=" " draggable="false">
+                            <img src="@cocktail.Image" alt=" " draggable="false">
                         </li>
-                        <li style="width: 1349px; float: left; display: block;" class="flex-active-slide">
-                            <img src="./assets/images/content/sliderfull-1.jpg" alt=" " draggable="false">
-                        </li>
-                        <li style="width: 1349px; float: left; display: block;" class="">
-                            <img src="./assets/images/content/sliderfull-1.jpg" alt=" " draggable="false">
-                        </li>
-                        <li style="width: 1349px; float: left; display: block;" class="clone" aria-hidden="true">
-                            <img src="./assets/images/content/sliderfull-1.jpg" alt=" " draggable="false">
-                        </li>
-                    </ul>
-                </div><ul class="flex-direction-nav"><li><a class="flex-prev" href="#">Previous</a></li><li><a class="flex-next" href="#">Next</a></li></ul>
-            </div>
-            <div class="container">
 
-                <br><br><br><br><br>
-                <h3 class="hdr4">Product Slider</h3>
-
-                <!-- ************************* -->
-                <!-- ** FULL PRODUCT SLIDER ** -->
-            </div>
-            <div class="flexFull flexslider text-center">
-
-                <div class="flex-viewport" style="overflow: hidden; position: relative;">
-                    <ul class="slides" style="width: 800%; margin-left: -1349px;">
-                        <li class="clone" aria-hidden="true" style="width: 1349px; float: left; display: block;">
-                            <div class="container">
-                                <img src="./assets/images/content/sliderphoto-1.png" alt=" " draggable="false">
-
-                                <h3 class="hdr2">Big cahuna burger - mia walace style</h3>
-                                <h4 class="hdr3">Our Tasty Classic Burger SERVED with an ice cold beer (homebrewed)</h4>
-
-                            </div>
-                        </li>
-                        <li style="width: 1349px; float: left; display: block;" class="flex-active-slide">
-                            <div class="container">
-                                <img src="./assets/images/content/sliderphoto-1.png" alt=" " draggable="false">
-
-                                <h3 class="hdr2">Big cahuna burger - mia walace style</h3>
-                                <h4 class="hdr3">Our Tasty Classic Burger SERVED with an ice cold beer (homebrewed)</h4>
-
-                            </div>
-                        </li>
-                        <li style="width: 1349px; float: left; display: block;" class="">
-                            <div class="container">
-                                <img src="./assets/images/content/sliderphoto-1.png" alt=" " draggable="false">
-
-                                <h3 class="hdr2">Big cahuna burger - mia walace style</h3>
-                                <h4 class="hdr3">Our Tasty Classic Burger SERVED with an ice cold beer (homebrewed)</h4>
-
-                            </div>
-                        </li>
-                        <li style="width: 1349px; float: left; display: block;" class="clone" aria-hidden="true">
-                            <div class="container">
-                                <img src="./assets/images/content/sliderphoto-1.png" alt=" " draggable="false">
-
-                                <h3 class="hdr2">Big cahuna burger - mia walace style</h3>
-                                <h4 class="hdr3">Our Tasty Classic Burger SERVED with an ice cold beer (homebrewed)</h4>
-
-                            </div>
-                        </li>
-                    </ul>
-                </div><ul class="flex-direction-nav"><li><a class="flex-prev" href="#">Previous</a></li><li><a class="flex-next" href="#">Next</a></li></ul>
-            </div>
-            <div class="container">
-                <!-- / flexslider -->
-
-
-                <br><br><br><br><br>
-                <h3 class="hdr4">Daily special slider + about us</h3>
-
-
-                <div class="row">
-                    <div class="col-md-8">
-                        <div class="flexFade flexslider text-right">
-                            <ul class="slides">
-                                <li class="flex-active-slide" style="width: 100%; float: left; margin-right: -100%; position: relative; opacity: 1; display: block; z-index: 2;">
-                                    <div class="descArea">
-                                        <h4>Our daily Specials</h4>
-                                        <hr>
-                                        <h5>Burger Lover Special with Twist Fries &amp; Coke</h5>
-
-                                        <p>
-                                            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                                            tempor incididunt
-                                        </p>
-                                        <span class="price"><em>$</em>8<span>99</span></span>
-
-                                    </div>
-                                    <div class="roundedImg" data-size="320" style="background-image: url(&quot;./assets/images/content/photo-3.jpg&quot;); width: 320px; height: 320px;">
-                                        <img class="media-object" src="./assets/images/content/photo-3.jpg" alt=" " draggable="false">
-                                    </div>
-                                </li>
-                                <li style="width: 100%; float: left; margin-right: -100%; position: relative; opacity: 0; display: block; z-index: 1;">
-                                    <div class="descArea">
-                                        <h4>Our Starters</h4>
-                                        <hr>
-                                        <h5>Burger Lover Classic menu with fries</h5>
-
-                                        <p>
-                                            Pellentesque eget augue et ipsum laoreet ultrices eget ut est. Donec tincidunt justo nec lobortis molestie. Duis adipiscing libero ut auctor lacinia. Quisque a erat vitae libero facilisis pretium.
-                                        </p>
-                                        <span class="price"><em>$</em>9<span>99</span></span>
-
-                                    </div>
-                                    <div class="roundedImg" data-size="320" style="background-image: url(&quot;./assets/images/content/photo-4.jpg&quot;); width: 320px; height: 320px;">
-                                        <img class="media-object" src="./assets/images/content/photo-4.jpg" alt=" " draggable="false">
-                                    </div>
-                                </li>
-                            </ul>
-                            <ul class="flex-direction-nav"><li><a class="flex-prev" href="#">Previous</a></li><li><a class="flex-next" href="#">Next</a></li></ul>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <h4 class="hdr7">About Us</h4>
-
-                        <div class="roundedImg pull-right" data-size="160" style="background-image: url(&quot;./assets/images/content/photo-5.jpg&quot;); width: 160px; height: 160px;">
-                            <img class="media-object" src="./assets/images/content/photo-5.jpg" alt=" ">
-                        </div>
-                        <p class="bigger">
-                            Hello Foody! We have traveled countless miles, hundreds of sailing through storms to find out where is the best and freshest food in the world.
-                            <br>
-                            Ultimately we have brought them to our restaurant to let you enjoy this priceless treasure.<br><br>
-                            Please consider yourself. Good Appetite!<br>
-                            Your Chef Team<br>
-                        </p>
-
-                    </div>
-                </div>
-
-                <br><br><br><br><br>
-                <h3 class="hdr4">Our recommendations</h3>
-
-                <div class="row">
-                    <div class="col-md-4 col-sm-6">
-                        <div class="prodBox pull-left">
-                            <div class="frameImg"><img src="./assets/images/content/product-1.jpg" alt=" "></div>
-
-                            <div class="inner">
-                                <h4>Burger Lover Classic menu with fries</h4>
-
-                                <p>
-                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eius
-                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiu.
-                                </p>
-                                <span class="price"><small>just</small><em>$</em>6</span>
-                                <a href="#" class="btn btn-primary btn-sm">order now!</a>
-                            </div>
-                        </div>
-                        <!-- / prodBox -->
-                    </div>
-                    <div class="col-md-4 col-sm-6">
-                        <div class="prodBox type2">
-                            <div class="frameImg"><img src="./assets/images/content/product-2.jpg" alt=" "></div>
-
-                            <div class="inner">
-                                <h4>Pulled pork with homemade bun</h4>
-
-                                <p>
-                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eius Lorem, consectetur adipisicing elit, sed do eiu.
-                                </p>
-                                <span class="price"><small>just</small><em>$</em>4<span>99</span></span>
-                                <a href="#" class="btn btn-primary btn-sm">order now!</a>
-                            </div>
-                        </div>
-                        <!-- / prodBox -->
-                    </div>
-                    <div class="clearfix visible-sm"></div>
-                    <div class="col-md-4 col-sm-12">
-                        <div class="prodBox type3 pull-right">
-                            <div class="frameImg"><img src="./assets/images/content/product-3.jpg" alt=" "></div>
-
-                            <div class="inner">
-                                <h4>Blueberry Pancakes with whip cream</h4>
-
-                                <p>Lorem ipsum dolor sit amet, consectetudo eius Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiu.</p>
-                                <span class="price"><small>just</small><em>$</em>5<span>99</span></span>
-                                <span class="info">* Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod</span>
-                                <a href="#" class="btn btn-primary btn-sm">order now!</a>
-                            </div>
-                        </div>
-                        <!-- / prodBox -->
-                    </div>
-                </div>
-                <!-- / row -->
-
-                <br><br><br><br><br>
-                <h3 class="hdr4">Gallery</h3>
-
-
-                <ul class="galleryContainer row">
-                    <li class="col-md-3 col-sm-6">
-                        <div class="galleryBox">
-                            <div class="top">
-                                <span>Starters</span>
-                            </div>
-                            <div class="inner">
-                                <a href="./assets/images/content/product-1.jpg" data-rel="prettyPhoto[gallery1]">
-                                    <img src="./assets/images/content/gallery-01.jpg" alt=" ">
-
-                                    <div style="display: block; left: 100%; top: 0px; transition: all 300ms ease 0s;"><span>3 images</span></div>
-                                </a>
-                            </div>
-                            <div class="hiddenGallery">
-                                <a href="./assets/images/content/product-2.jpg" data-rel="prettyPhoto[gallery1]" title="Title goes here">
-                                    <img src="./assets/images/content/product-2.jpg" alt=" ">
-                                </a>
-                                <a href="./assets/images/content/product-3.jpg" data-rel="prettyPhoto[gallery1]" title="Title goes here">
-                                    <img src="./assets/images/content/product-3.jpg" alt=" ">
-                                </a>
-                            </div>
-                        </div>
-                        <!-- / galleryBox -->
+                    }
+                    <li style="width: 1349px; float: left; display: block;" class="flex-active-slide">
+                        <img src="./assets/images/content/sliderfull-1.jpg" alt=" " draggable="false">
                     </li>
-                    <li class="col-md-3 col-sm-6">
-                        <div class="galleryBox">
-                            <div class="top">
-                                <span>Kitchen Life</span>
-                            </div>
-                            <div class="inner">
-                                <a href="./assets/images/content/product-1.jpg" data-rel="prettyPhoto[gallery2]">
-                                    <img src="./assets/images/content/gallery-02.jpg" alt=" ">
-
-                                    <div style="display: block; left: 0px; top: 100%; transition: all 300ms ease 0s;"><span>2 images</span></div>
-                                </a>
-                            </div>
-                            <div class="hiddenGallery">
-                                <a href="./assets/images/content/product-2.jpg" data-rel="prettyPhoto[gallery2]" title="Title goes here">
-                                    <img src="./assets/images/content/product-2.jpg" alt=" ">
-                                </a>
-                            </div>
-                        </div>
-                        <!-- / galleryBox -->
+                    <li style="width: 1349px; float: left; display: block;" class="">
+                        <img src="./assets/images/content/sliderfull-1.jpg" alt=" " draggable="false">
                     </li>
-                    <li class="col-md-3 col-sm-6">
-                        <div class="galleryBox">
-                            <div class="top">
-                                <span>Event Life</span>
-                            </div>
-                            <div class="inner">
-                                <a href="./assets/images/content/product-1.jpg" data-rel="prettyPhoto[gallery3]">
-                                    <img src="./assets/images/content/gallery-03.jpg" alt=" ">
-
-                                    <div><span>3 images</span></div>
-                                </a>
-                            </div>
-                            <div class="hiddenGallery">
-                                <a href="./assets/images/content/product-2.jpg" data-rel="prettyPhoto[gallery3]" title="Title goes here">
-                                    <img src="./assets/images/content/product-2.jpg" alt=" ">
-                                </a>
-                                <a href="./assets/images/content/product-3.jpg" data-rel="prettyPhoto[gallery3]" title="Title goes here">
-                                    <img src="./assets/images/content/product-3.jpg" alt=" ">
-                                </a>
-                            </div>
-                        </div>
-                        <!-- / galleryBox -->
-                    </li>
-                    <li class="col-md-3 col-sm-6">
-                        <div class="galleryBox">
-                            <div class="top">
-                                <span>Food Life</span>
-                            </div>
-                            <div class="inner">
-                                <a href="./assets/images/content/product-1.jpg" data-rel="prettyPhoto[gallery4]">
-                                    <img src="./assets/images/content/gallery-04.jpg" alt=" ">
-
-                                    <div style="display: block; left: 100%; top: 0px; transition: all 300ms ease 0s;"><span>2 images</span></div>
-                                </a>
-                            </div>
-                            <div class="hiddenGallery">
-                                <a href="./assets/images/content/product-2.jpg" data-rel="prettyPhoto[gallery4]" title="Title goes here">
-                                    <img src="./assets/images/content/product-2.jpg" alt=" ">
-                                </a>
-                            </div>
-                        </div>
-                        <!-- / galleryBox -->
+                    <li style="width: 1349px; float: left; display: block;" class="clone" aria-hidden="true">
+                        <img src="./assets/images/content/sliderfull-1.jpg" alt=" " draggable="false">
                     </li>
                 </ul>
+            </div><ul class="flex-direction-nav"><li><a class="flex-prev" href="#">Previous</a></li><li><a class="flex-next" href="#">Next</a></li></ul>
+        </div>
+        <div class="container">
 
+            <br><br><br><br><br>
+            <h3 class="hdr4">Product Slider</h3>
+
+            <!-- ************************* -->
+            <!-- ** FULL PRODUCT SLIDER ** -->
+        </div>
+        <div class="flexFull flexslider text-center">
+
+            <div class="flex-viewport" style="overflow: hidden; position: relative;">
+                <ul class="slides" style="width: 800%; margin-left: -1349px;">
+                    <li class="clone" aria-hidden="true" style="width: 1349px; float: left; display: block;">
+                        <div class="container">
+                            <img src="./assets/images/content/sliderphoto-1.png" alt=" " draggable="false">
+
+                            <h3 class="hdr2">Big cahuna burger - mia walace style</h3>
+                            <h4 class="hdr3">Our Tasty Classic Burger SERVED with an ice cold beer (homebrewed)</h4>
+
+                        </div>
+                    </li>
+                    <li style="width: 1349px; float: left; display: block;" class="flex-active-slide">
+                        <div class="container">
+                            <img src="./assets/images/content/sliderphoto-1.png" alt=" " draggable="false">
+
+                            <h3 class="hdr2">Big cahuna burger - mia walace style</h3>
+                            <h4 class="hdr3">Our Tasty Classic Burger SERVED with an ice cold beer (homebrewed)</h4>
+
+                        </div>
+                    </li>
+                    <li style="width: 1349px; float: left; display: block;" class="">
+                        <div class="container">
+                            <img src="./assets/images/content/sliderphoto-1.png" alt=" " draggable="false">
+
+                            <h3 class="hdr2">Big cahuna burger - mia walace style</h3>
+                            <h4 class="hdr3">Our Tasty Classic Burger SERVED with an ice cold beer (homebrewed)</h4>
+
+                        </div>
+                    </li>
+                    <li style="width: 1349px; float: left; display: block;" class="clone" aria-hidden="true">
+                        <div class="container">
+                            <img src="./assets/images/content/sliderphoto-1.png" alt=" " draggable="false">
+
+                            <h3 class="hdr2">Big cahuna burger - mia walace style</h3>
+                            <h4 class="hdr3">Our Tasty Classic Burger SERVED with an ice cold beer (homebrewed)</h4>
+
+                        </div>
+                    </li>
+                </ul>
+            </div><ul class="flex-direction-nav"><li><a class="flex-prev" href="#">Previous</a></li><li><a class="flex-next" href="#">Next</a></li></ul>
+        </div>
+        <div class="container">
+            <!-- / flexslider -->
+
+
+            <br><br><br><br><br>
+            <h3 class="hdr4">Daily special slider + about us</h3>
+
+
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="flexFade flexslider text-right">
+                        <ul class="slides">
+                            <li class="flex-active-slide" style="width: 100%; float: left; margin-right: -100%; position: relative; opacity: 1; display: block; z-index: 2;">
+                                <div class="descArea">
+                                    <h4>Our daily Specials</h4>
+                                    <hr>
+                                    <h5>Burger Lover Special with Twist Fries &amp; Coke</h5>
+
+                                    <p>
+                                        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                                        tempor incididunt
+                                    </p>
+                                    <span class="price"><em>$</em>8<span>99</span></span>
+
+                                </div>
+                                <div class="roundedImg" data-size="320" style="background-image: url(&quot;./assets/images/content/photo-3.jpg&quot;); width: 320px; height: 320px;">
+                                    <img class="media-object" src="./assets/images/content/photo-3.jpg" alt=" " draggable="false">
+                                </div>
+                            </li>
+                            <li style="width: 100%; float: left; margin-right: -100%; position: relative; opacity: 0; display: block; z-index: 1;">
+                                <div class="descArea">
+                                    <h4>Our Starters</h4>
+                                    <hr>
+                                    <h5>Burger Lover Classic menu with fries</h5>
+
+                                    <p>
+                                        Pellentesque eget augue et ipsum laoreet ultrices eget ut est. Donec tincidunt justo nec lobortis molestie. Duis adipiscing libero ut auctor lacinia. Quisque a erat vitae libero facilisis pretium.
+                                    </p>
+                                    <span class="price"><em>$</em>9<span>99</span></span>
+
+                                </div>
+                                <div class="roundedImg" data-size="320" style="background-image: url(&quot;./assets/images/content/photo-4.jpg&quot;); width: 320px; height: 320px;">
+                                    <img class="media-object" src="./assets/images/content/photo-4.jpg" alt=" " draggable="false">
+                                </div>
+                            </li>
+                        </ul>
+                        <ul class="flex-direction-nav"><li><a class="flex-prev" href="#">Previous</a></li><li><a class="flex-next" href="#">Next</a></li></ul>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <h4 class="hdr7">About Us</h4>
+
+                    <div class="roundedImg pull-right" data-size="160" style="background-image: url(&quot;./assets/images/content/photo-5.jpg&quot;); width: 160px; height: 160px;">
+                        <img class="media-object" src="./assets/images/content/photo-5.jpg" alt=" ">
+                    </div>
+                    <p class="bigger">
+                        Hello Foody! We have traveled countless miles, hundreds of sailing through storms to find out where is the best and freshest food in the world.
+                        <br>
+                        Ultimately we have brought them to our restaurant to let you enjoy this priceless treasure.<br><br>
+                        Please consider yourself. Good Appetite!<br>
+                        Your Chef Team<br>
+                    </p>
+
+                </div>
             </div>
+
+            <br><br><br><br><br>
+            <h3 class="hdr4">Our recommendations</h3>
+
+            <div class="row">
+                <div class="col-md-4 col-sm-6">
+                    <div class="prodBox pull-left">
+                        <div class="frameImg"><img src="./assets/images/content/product-1.jpg" alt=" "></div>
+
+                        <div class="inner">
+                            <h4>Burger Lover Classic menu with fries</h4>
+
+                            <p>
+                                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eius
+                                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiu.
+                            </p>
+                            <span class="price"><small>just</small><em>$</em>6</span>
+                            <a href="#" class="btn btn-primary btn-sm">order now!</a>
+                        </div>
+                    </div>
+                    <!-- / prodBox -->
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <div class="prodBox type2">
+                        <div class="frameImg"><img src="./assets/images/content/product-2.jpg" alt=" "></div>
+
+                        <div class="inner">
+                            <h4>Pulled pork with homemade bun</h4>
+
+                            <p>
+                                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eius Lorem, consectetur adipisicing elit, sed do eiu.
+                            </p>
+                            <span class="price"><small>just</small><em>$</em>4<span>99</span></span>
+                            <a href="#" class="btn btn-primary btn-sm">order now!</a>
+                        </div>
+                    </div>
+                    <!-- / prodBox -->
+                </div>
+                <div class="clearfix visible-sm"></div>
+                <div class="col-md-4 col-sm-12">
+                    <div class="prodBox type3 pull-right">
+                        <div class="frameImg"><img src="./assets/images/content/product-3.jpg" alt=" "></div>
+
+                        <div class="inner">
+                            <h4>Blueberry Pancakes with whip cream</h4>
+
+                            <p>Lorem ipsum dolor sit amet, consectetudo eius Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiu.</p>
+                            <span class="price"><small>just</small><em>$</em>5<span>99</span></span>
+                            <span class="info">* Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod</span>
+                            <a href="#" class="btn btn-primary btn-sm">order now!</a>
+                        </div>
+                    </div>
+                    <!-- / prodBox -->
+                </div>
+            </div>
+            <!-- / row -->
+
+            <br><br><br><br><br>
+            <h3 class="hdr4">Gallery</h3>
+
+
+            <ul class="galleryContainer row">
+                <li class="col-md-3 col-sm-6">
+                    <div class="galleryBox">
+                        <div class="top">
+                            <span>Starters</span>
+                        </div>
+                        <div class="inner">
+                            <a href="./assets/images/content/product-1.jpg" data-rel="prettyPhoto[gallery1]">
+                                <img src="./assets/images/content/gallery-01.jpg" alt=" ">
+
+                                <div style="display: block; left: 100%; top: 0px; transition: all 300ms ease 0s;"><span>3 images</span></div>
+                            </a>
+                        </div>
+                        <div class="hiddenGallery">
+                            <a href="./assets/images/content/product-2.jpg" data-rel="prettyPhoto[gallery1]" title="Title goes here">
+                                <img src="./assets/images/content/product-2.jpg" alt=" ">
+                            </a>
+                            <a href="./assets/images/content/product-3.jpg" data-rel="prettyPhoto[gallery1]" title="Title goes here">
+                                <img src="./assets/images/content/product-3.jpg" alt=" ">
+                            </a>
+                        </div>
+                    </div>
+                    <!-- / galleryBox -->
+                </li>
+                <li class="col-md-3 col-sm-6">
+                    <div class="galleryBox">
+                        <div class="top">
+                            <span>Kitchen Life</span>
+                        </div>
+                        <div class="inner">
+                            <a href="./assets/images/content/product-1.jpg" data-rel="prettyPhoto[gallery2]">
+                                <img src="./assets/images/content/gallery-02.jpg" alt=" ">
+
+                                <div style="display: block; left: 0px; top: 100%; transition: all 300ms ease 0s;"><span>2 images</span></div>
+                            </a>
+                        </div>
+                        <div class="hiddenGallery">
+                            <a href="./assets/images/content/product-2.jpg" data-rel="prettyPhoto[gallery2]" title="Title goes here">
+                                <img src="./assets/images/content/product-2.jpg" alt=" ">
+                            </a>
+                        </div>
+                    </div>
+                    <!-- / galleryBox -->
+                </li>
+                <li class="col-md-3 col-sm-6">
+                    <div class="galleryBox">
+                        <div class="top">
+                            <span>Event Life</span>
+                        </div>
+                        <div class="inner">
+                            <a href="./assets/images/content/product-1.jpg" data-rel="prettyPhoto[gallery3]">
+                                <img src="./assets/images/content/gallery-03.jpg" alt=" ">
+
+                                <div><span>3 images</span></div>
+                            </a>
+                        </div>
+                        <div class="hiddenGallery">
+                            <a href="./assets/images/content/product-2.jpg" data-rel="prettyPhoto[gallery3]" title="Title goes here">
+                                <img src="./assets/images/content/product-2.jpg" alt=" ">
+                            </a>
+                            <a href="./assets/images/content/product-3.jpg" data-rel="prettyPhoto[gallery3]" title="Title goes here">
+                                <img src="./assets/images/content/product-3.jpg" alt=" ">
+                            </a>
+                        </div>
+                    </div>
+                    <!-- / galleryBox -->
+                </li>
+                <li class="col-md-3 col-sm-6">
+                    <div class="galleryBox">
+                        <div class="top">
+                            <span>Food Life</span>
+                        </div>
+                        <div class="inner">
+                            <a href="./assets/images/content/product-1.jpg" data-rel="prettyPhoto[gallery4]">
+                                <img src="./assets/images/content/gallery-04.jpg" alt=" ">
+
+                                <div style="display: block; left: 100%; top: 0px; transition: all 300ms ease 0s;"><span>2 images</span></div>
+                            </a>
+                        </div>
+                        <div class="hiddenGallery">
+                            <a href="./assets/images/content/product-2.jpg" data-rel="prettyPhoto[gallery4]" title="Title goes here">
+                                <img src="./assets/images/content/product-2.jpg" alt=" ">
+                            </a>
+                        </div>
+                    </div>
+                    <!-- / galleryBox -->
+                </li>
+            </ul>
+
         </div>
     </div>
+</div>
