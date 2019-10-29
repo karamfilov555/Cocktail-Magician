@@ -28,13 +28,21 @@
 }
 else
 {
-    <a href="tel:66-87-65-43-21" class="phoneIcon" style="display:none">+66 87 65 43 21</a>
-    <a href="http://goo.gl/maps/IUzKJ" class="locationIcon" target="_blank" style="display:none;">http://goo.gl/maps/IUzKJ</a>
-    <ul class="smallSocials">
-        <li class="fb"><a href="#"><img src="/assets/images/smallsocial-fb.png" alt="Facebook"></a></li>
-        <li class="tw"><a href="#"><img src="/assets/images/smallsocial-tw.png" alt="Twitter"></a></li>
-        <li class="gg"><a href="#"><img src="/assets/images/smallsocial-gg.png" alt="Google+"></a></li>
-        <li class="rss"><a href="#"><img src="/assets/images/smallsocial-rss.png" alt="RSS"></a></li>
-
-    </ul>
+<ul class="smallSocials">
+    <li class="dropdown active">
+        <a class="btn twitter" asp-area="Identity" asp-page="/Account/Manage/Index"><font size="6">Account</font></a>
+        <ul class="dropdown-menu" style="background-color:brown">
+            <li style="background-color:brown">
+                <form class="form-inline" asp-area="Identity" asp-page="/Account/Login">
+                    <button type="submit" class="progress-bar"><font size="5">Login</font></button>
+                </form>
+            </li>
+            <li style="background-color:brown">
+                <form class="form-inline" asp-area="Identity" asp-page="/Account/Register">
+                    <button type="submit" class="progress-bar"><font size="5">Register</font></button>
+                </form>
+            </li>
+        </ul>
+        </li>
+</ul>
 }
