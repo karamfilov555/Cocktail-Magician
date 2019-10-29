@@ -59,7 +59,8 @@ namespace CocaColaFinalProject
 
             services.AddScoped<IJsonManager, JsonManager>();
             services.AddScoped<ICocktailServices, CocktailServices>();
-            
+            services.AddScoped<IBarServices, BarServices>();
+
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
             services.AddMvc().AddNToastNotifyToastr();

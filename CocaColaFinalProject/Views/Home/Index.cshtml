@@ -1,13 +1,13 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
 }
-@model List<CocktailViewModel>
+@model HomePageViewModel
 
 <div class="bg-1 section">
     <div class="inner" data-topspace="80" data-bottomspace="100" style="background-image: none; padding-top: 80px; padding-bottom: 100px;">
         <div class="container">
 
-            <h3 class="hdr4">Cocktail's Slider</h3>
+            <h3 class="hdr4">Cocktails Slider</h3>
 
             <!-- *********************** -->
             <!-- ** FULL WIDTH SLIDER ** -->
@@ -16,7 +16,7 @@
 
             <div class="flex-viewport" style="overflow: hidden; position: relative;">
                 <ul class="slides" style="width: 800%; margin-left: -1349px;">
-                    @foreach (var cocktail in Model)
+                    @foreach (var cocktail in Model.Cocktails)
                     {
                         <li class="clone" aria-hidden="true" style="width: 1349px; float: left; display: block;">
                             <img src="@cocktail.Image" alt=" " draggable="false">
@@ -38,7 +38,7 @@
         <div class="container">
 
             <br><br><br><br><br>
-            <h3 class="hdr4">Product Slider</h3>
+            <h3 class="hdr4">Bars Slider</h3>
 
             <!-- ************************* -->
             <!-- ** FULL PRODUCT SLIDER ** -->
@@ -47,42 +47,20 @@
 
             <div class="flex-viewport" style="overflow: hidden; position: relative;">
                 <ul class="slides" style="width: 800%; margin-left: -1349px;">
-                    <li class="clone" aria-hidden="true" style="width: 1349px; float: left; display: block;">
-                        <div class="container">
-                            <img src="./assets/images/content/sliderphoto-1.png" alt=" " draggable="false">
+                    @foreach (var bar in Model.Bars)
+                    {
+                        <li class="clone" aria-hidden="true" style="width: 1349px; float: left; display: block;">
+                            <div class="container">
+                                <img src="@bar.ImageURL" alt=" " draggable="false">
 
-                            <h3 class="hdr2">Big cahuna burger - mia walace style</h3>
-                            <h4 class="hdr3">Our Tasty Classic Burger SERVED with an ice cold beer (homebrewed)</h4>
+                                <h3 class="hdr2">@bar.Name</h3>
+                                <h4 class="hdr3">@bar.Address</h4>
+                            </div>
+                        </li>
+                    }
 
-                        </div>
-                    </li>
-                    <li style="width: 1349px; float: left; display: block;" class="flex-active-slide">
-                        <div class="container">
-                            <img src="./assets/images/content/sliderphoto-1.png" alt=" " draggable="false">
 
-                            <h3 class="hdr2">Big cahuna burger - mia walace style</h3>
-                            <h4 class="hdr3">Our Tasty Classic Burger SERVED with an ice cold beer (homebrewed)</h4>
 
-                        </div>
-                    </li>
-                    <li style="width: 1349px; float: left; display: block;" class="">
-                        <div class="container">
-                            <img src="./assets/images/content/sliderphoto-1.png" alt=" " draggable="false">
-
-                            <h3 class="hdr2">Big cahuna burger - mia walace style</h3>
-                            <h4 class="hdr3">Our Tasty Classic Burger SERVED with an ice cold beer (homebrewed)</h4>
-
-                        </div>
-                    </li>
-                    <li style="width: 1349px; float: left; display: block;" class="clone" aria-hidden="true">
-                        <div class="container">
-                            <img src="./assets/images/content/sliderphoto-1.png" alt=" " draggable="false">
-
-                            <h3 class="hdr2">Big cahuna burger - mia walace style</h3>
-                            <h4 class="hdr3">Our Tasty Classic Burger SERVED with an ice cold beer (homebrewed)</h4>
-
-                        </div>
-                    </li>
                 </ul>
             </div><ul class="flex-direction-nav"><li><a class="flex-prev" href="#">Previous</a></li><li><a class="flex-next" href="#">Next</a></li></ul>
         </div>
