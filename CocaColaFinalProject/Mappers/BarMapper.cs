@@ -14,6 +14,7 @@ namespace CM.Web.Mappers
             var newBarVM = new BarViewModel();
             newBarVM.Id = bar.Id;
             newBarVM.Name = bar.Name;
+            newBarVM.Address = bar.Address;
             newBarVM.ImageURL = bar.ImageUrl;
             newBarVM.Website = bar.Website;
 

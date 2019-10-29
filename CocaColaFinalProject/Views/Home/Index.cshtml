@@ -57,8 +57,9 @@
                     {
                         <li class="clone" aria-hidden="true" style="width: 1349px; float: left; display: block;">
                             <div class="container">
+                                <a asp-area="Bars" asp-controller="Bars" asp-action="Details" asp-route-id="@bar.Id">
                                 <img src="@bar.ImageURL" alt=" " draggable="false">
-
+                                </a>
                                 <h3 class="hdr2">@bar.Name</h3>
                                 <h4 class="hdr3">@bar.Address</h4>
                             </div>

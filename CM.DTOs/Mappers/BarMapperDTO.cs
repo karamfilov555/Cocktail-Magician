@@ -14,6 +14,7 @@ namespace CM.DTOs.Mappers
             newBarDTO.Name = bar.Name;
             newBarDTO.ImageUrl = bar.Image;
             newBarDTO.Website = bar.Website;
+            newBarDTO.Address = bar.Address;
             newBarDTO.DateDeleted = bar.DateDeleted;
 
             return newBarDTO;

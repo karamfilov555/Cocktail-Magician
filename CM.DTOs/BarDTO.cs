@@ -10,6 +10,7 @@ namespace CM.DTOs
         public String Id { get; set; }
         public String Name { get; set; }
         public String ImageUrl { get; set; }
+        public String Address { get; set; }
         public string Website { get; set; }
         public DateTime? DateDeleted { get; set; }
         
