@@ -1,4 +1,6 @@
 ﻿using CM.Data;
+using CM.DTOs;
+using CM.DTOs.Mappers;
 using CM.Models;
 using CM.Services.Contracts;
 using Microsoft.EntityFrameworkCore;
@@ -17,14 +19,17 @@ namespace CM.Services
             _context = context ?? throw new ArgumentNullException(nameof(context));
         }
 
-        public async Task<IList<Cocktail>> GetCocktailsForHomePage()
+        public async Task<IEnumerable<CocktailDto>> GetCocktailsForHomePage()
         {
             // include ingredients ... posle ... da se vzima po rating 
             var cocktails = await _context.Cocktails
                                             .Where(c => c.Name.Contains("A") && c.DateDeleted == null)
                                             .ToListAsync()
                                             .ConfigureAwait(false);
-            return cocktails;
+            //map to dto before pass to fe
+            var cocktailDtos = cocktails.Select(c => c.MapToCocktailDto()).ToList();
+
+            return cocktailDtos;
         }
     }
 }

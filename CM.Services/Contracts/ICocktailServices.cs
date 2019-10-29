@@ -1,4 +1,5 @@
-﻿using CM.Models;
+﻿using CM.DTOs;
+using CM.Models;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -8,6 +9,6 @@ namespace CM.Services.Contracts
 {
     public interface ICocktailServices
     {
-        Task<IList<Cocktail>> GetCocktailsForHomePage();
+        Task<IEnumerable<CocktailDto>> GetCocktailsForHomePage();
     }
 }

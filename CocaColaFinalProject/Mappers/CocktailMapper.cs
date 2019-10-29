@@ -1,21 +1,17 @@
-﻿using CM.Models;
+﻿using CM.DTOs;
 using CM.Web.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace CM.Web.Mappers
 {
     public static class MapToViewModel
     {
-        public static CocktailViewModel MapToCocktailViewModel(this Cocktail cocktail)
+        public static CocktailViewModel MapToCocktailViewModel(this CocktailDto cocktailDto)
         {
             var cocktailVm = new CocktailViewModel();
-            cocktailVm.Id = cocktail.Id;
-            cocktailVm.Name = cocktail.Name;
-            cocktailVm.Rating = cocktail.Rating;
-            cocktailVm.Image = cocktail.Image;
+            cocktailVm.Id = cocktailDto.Id;
+            cocktailVm.Name = cocktailDto.Name;
+            cocktailVm.Rating = cocktailDto.Rating;
+            cocktailVm.Image = cocktailDto.Image;
             return cocktailVm;
         }
     }

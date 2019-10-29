@@ -1,12 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
 
-namespace CM.Web.Models
+namespace CM.DTOs
 {
-    public class CocktailViewModel
+    public class CocktailDto
     {
         // some validations ?
         [Key]
@@ -18,10 +15,9 @@ namespace CM.Web.Models
         public string Name { get; set; }
         [Url]
         [Display(Name = "Image")]
-        
+
         public string Image { get; set; }
         [Display(Name = "Cocktail's Rating")]
         public decimal Rating { get; set; }
-
     }
 }

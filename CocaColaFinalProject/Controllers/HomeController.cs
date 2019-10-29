@@ -17,8 +17,8 @@ namespace CocaColaFinalProject.Controllers
         }
         public async Task<IActionResult> Index()
         {
-            var cocktailsForHp =  await _cocktailServices.GetCocktailsForHomePage();
-            var cocktailsVm = cocktailsForHp.Select(b => b.MapToCocktailViewModel()).ToList();
+            var cocktailDtos =  await _cocktailServices.GetCocktailsForHomePage();
+            var cocktailsVm = cocktailDtos.Select(b => b.MapToCocktailViewModel()).ToList();
             return View(cocktailsVm);
         }
 
