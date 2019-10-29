@@ -10,5 +10,6 @@ namespace CM.Services.Contracts
     public interface ICocktailServices
     {
         Task<IEnumerable<CocktailDto>> GetCocktailsForHomePage();
+        Task<CocktailDto> FindCocktailById(string id);
     }
 }

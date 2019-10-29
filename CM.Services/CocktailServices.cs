@@ -31,6 +31,17 @@ namespace CM.Services
 
             return cocktailDtos;
         }
+        public async Task<CocktailDto> FindCocktailById(string id)
+        {
+            // INCLUDE !!
+            var cocktail =  await _context.Cocktails
+                                            .FirstOrDefaultAsync(c => c.Id == id && c.DateDeleted == null)
+                                            .ConfigureAwait(false);
+
+            var cocktailDto = cocktail.MapToCocktailDto();
+
+            return cocktailDto;
+        }
     }
 }
 

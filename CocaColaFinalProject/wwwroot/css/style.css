@@ -921,7 +921,7 @@ li.dropdown:hover .dropdown-menu {
   display: block;
   float: left;
   margin-left: 22px;
-  background: transparent url("../images/smallsocial-bg.png") no-repeat 0 0;
+  background: transparent url("") no-repeat 0 0;
   -webkit-transition: background-position 0.2s ease;
   transition: background-position 0.2s ease;
 }
@@ -937,6 +937,7 @@ li.dropdown:hover .dropdown-menu {
 }
 .smallSocials li:hover {
   background-position: 0 -30px;
+  
 }
 .bigSocials {
   display: block;
@@ -3382,6 +3383,11 @@ body.preloader #ct_preloader {
     display: none !important;
   }
 }
+
+
+
+
+
 @media (max-width: 480px) {
   .polaroidSlider {
     width: 271px !important;

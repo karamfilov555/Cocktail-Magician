@@ -19,7 +19,13 @@
                     @foreach (var cocktail in Model.Cocktails)
                     {
                         <li class="clone" aria-hidden="true" style="width: 1349px; float: left; display: block;">
-                            <img src="@cocktail.Image" alt=" " draggable="false">
+                            
+                                    <a asp-area="Cocktails" asp-controller="Cocktails" asp-action="Details" asp-route-id="@cocktail.Id">
+                                        <img src="@cocktail.Image" height="250" width="250">
+                                    </a>
+                                <h3>@cocktail.Name</h3>
+                                
+                            
                         </li>
 
                     }
@@ -43,7 +49,7 @@
             <!-- ************************* -->
             <!-- ** FULL PRODUCT SLIDER ** -->
         </div>
-        <div class="flexFull flexslider text-center">
+        <div class="flexFull type2 flexslider text-center">
 
             <div class="flex-viewport" style="overflow: hidden; position: relative;">
                 <ul class="slides" style="width: 800%; margin-left: -1349px;">
