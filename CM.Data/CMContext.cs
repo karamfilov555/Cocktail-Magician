@@ -2,7 +2,6 @@
 using CM.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using System;
 
 namespace CM.Data
 {
@@ -28,6 +27,5 @@ namespace CM.Data
 
             base.OnModelCreating(builder);
         }
-
     }
 }

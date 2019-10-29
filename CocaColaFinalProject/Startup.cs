@@ -9,6 +9,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using CM.Data;
 using CM.Models;
+using Microsoft.AspNetCore.Mvc.Razor;
 using CM.Web.Infrastructure;
 
 namespace CocaColaFinalProject
@@ -50,7 +51,16 @@ namespace CocaColaFinalProject
                 .AddDefaultUI(UIFramework.Bootstrap4)
                 .AddEntityFrameworkStores<CMContext>();
 
+            services.Configure<RazorViewEngineOptions>(options =>
+            {
+                options.AreaViewLocationFormats.Clear();
+                //options.AreaViewLocationFormats.Add("/MyAreas/{2}/Views/{1}/{0}.cshtml");
+                //options.AreaViewLocationFormats.Add("/MyAreas/{2}/Views/Shared/{0}.cshtml");
+                options.AreaViewLocationFormats.Add("/Views/Shared/_Layout1.cshtml");
+            });
+
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddMvc().AddNToastNotifyToastr();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -70,12 +80,14 @@ namespace CocaColaFinalProject
             }
 
             app.UseAuthentication();
+            app.UseStatusCodePagesWithReExecute("/error/{}");
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();
 
             app.UseAuthentication();
-
+            //za tostera
+            app.UseNToastNotify();
             app.UseMvc(routes =>
             {
                 routes.MapRoute(

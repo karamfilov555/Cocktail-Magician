@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Text;
 
 namespace CM.Models.Abstractions
 {
-   public abstract class AbstractReview
+    public abstract class AbstractReview
     {
         [Key]
         public string Id { get; set; }

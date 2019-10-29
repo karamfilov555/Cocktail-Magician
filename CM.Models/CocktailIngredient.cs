@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace CM.Models
+﻿namespace CM.Models
 {
     public class CocktailIngredient
     {
