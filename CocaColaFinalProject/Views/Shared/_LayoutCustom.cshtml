@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1, shrink-to-fit=no">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-    <title>Foodtruck - Burger Lover - Multi-page</title>
+    <title>The Coca-Cola's Cocktail Magician</title>
 
     <link rel="stylesheet" type="text/css" href="/assets/js/customscroll/jquery.mCustomScrollbar.css">
     <link rel="stylesheet" type="text/css" href="/assets/js/flexslider/css/flexslider.css">
@@ -50,17 +50,13 @@
                             The Coca-Cola Company Cocktail Magician™ Telerik Academy, Sofia, Bulgaria
                         </p>
                     </div>
-                    <center>   <partial name="_LogoPartial" /> </center>
 
-                    <a href="tel:66-87-65-43-21" class="phoneIcon" style="display:none">+66 87 65 43 21</a>
-                    <a href="http://goo.gl/maps/IUzKJ" class="locationIcon" target="_blank" style="display:none;">http://goo.gl/maps/IUzKJ</a>
-                    <ul class="smallSocials">
-                        <li class="fb"><a href="#"><img src="/assets/images/smallsocial-fb.png" alt="Facebook"></a></li>
-                        <li class="tw"><a href="#"><img src="/assets/images/smallsocial-tw.png" alt="Twitter"></a></li>
-                        <li class="gg"><a href="#"><img src="/assets/images/smallsocial-gg.png" alt="Google+"></a></li>
-                        <li class="rss"><a href="#"><img src="/assets/images/smallsocial-rss.png" alt="RSS"></a></li>                    
+                    <center>  
+                    <partial name="_LogoPartial" /> 
+                    </center>
 
-                    </ul>
+                    <partial name="_HeaderPartial" />
+
                 </div>
 
                 <!-- Collect the nav links, forms, and other content for toggling -->
@@ -75,8 +71,6 @@
                         <li><a asp-area="" asp-controller="Home" asp-action="Cola">Colaa</a></li>
                         <li><a href="10_story.html">Story</a></li>
                         <li><a href="11_gallery.html">Gallery</a></li>
-
-
                         @*Drop down class !!*@
                         <li class="dropdown">
                             <a href="1_shortcodes_boxes.html" class="dropdown-toggle">Shortcodes</a>
@@ -89,9 +83,11 @@
                                 <li><a href="6_images_sliders.html">Sliders</a></li>
                             </ul>
                         </li>
-                        <li class="align-content-end"><partial name="_LoginPartial" /></li>
+
+                        <li class="align-content-end"><partial name="_NavigationBarPartial" /></li>
+
                     </ul>
-                   
+
                 </div>
                 <!-- /.navbar-collapse -->
             </div>

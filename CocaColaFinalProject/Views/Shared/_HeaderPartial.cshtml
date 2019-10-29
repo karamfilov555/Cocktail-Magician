@@ -1,0 +1,40 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using CM.Models
+@inject SignInManager<AppUser> SignInManager
+@inject UserManager<AppUser> UserManager
+
+@if (SignInManager.IsSignedIn(User))
+{
+    <a href="tel:66-87-65-43-21" class="phoneIcon" style="display:none">+66 87 65 43 21</a>
+    <a href="http://goo.gl/maps/IUzKJ" class="locationIcon" target="_blank" style="display:none;">http://goo.gl/maps/IUzKJ</a>
+    <ul class="smallSocials">
+        <li class="dropdown active">
+            <a href="1_shortcodes_boxes.html" class="btn">Hello @User.Identity.Name!</a>
+            <ul class="dropdown-menu">
+                <li>
+                    <form class="form-inline" asp-area="Identity" asp-page="/Account/Manage/Index">
+                        <button type="submit" class="progress-bar">Details</button>
+                    </form>
+                </li>
+                <li>
+                    <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                        <button type="submit" class="progress-bar">Logout</button>
+                    </form>
+                </li>
+               
+            </ul>
+        </li>
+    </ul>
+}
+else
+{
+    <a href="tel:66-87-65-43-21" class="phoneIcon" style="display:none">+66 87 65 43 21</a>
+    <a href="http://goo.gl/maps/IUzKJ" class="locationIcon" target="_blank" style="display:none;">http://goo.gl/maps/IUzKJ</a>
+    <ul class="smallSocials">
+        <li class="fb"><a href="#"><img src="/assets/images/smallsocial-fb.png" alt="Facebook"></a></li>
+        <li class="tw"><a href="#"><img src="/assets/images/smallsocial-tw.png" alt="Twitter"></a></li>
+        <li class="gg"><a href="#"><img src="/assets/images/smallsocial-gg.png" alt="Google+"></a></li>
+        <li class="rss"><a href="#"><img src="/assets/images/smallsocial-rss.png" alt="RSS"></a></li>
+
+    </ul>
+}

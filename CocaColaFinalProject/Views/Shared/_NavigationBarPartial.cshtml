@@ -1,0 +1,16 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using CM.Models
+@inject SignInManager<AppUser> SignInManager
+@inject UserManager<AppUser> UserManager
+
+
+@if (!SignInManager.IsSignedIn(User))
+{
+    <li class="nav-item">
+        <a class="nav-link text-dark ml-5" asp-area="Identity" asp-page="/Account/Register">Register</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link text-dark ml-5" asp-area="Identity" asp-page="/Account/Login">Login</a>
+    </li>
+}
+
