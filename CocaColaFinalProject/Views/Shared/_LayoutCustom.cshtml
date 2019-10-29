@@ -1,0 +1,199 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="description" content=" ">
+    <meta name="author" content=" ">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1, shrink-to-fit=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>Foodtruck - Burger Lover - Multi-page</title>
+
+    <link rel="stylesheet" type="text/css" href="/assets/js/customscroll/jquery.mCustomScrollbar.css">
+    <link rel="stylesheet" type="text/css" href="/assets/js/flexslider/css/flexslider.css">
+    <link rel="stylesheet" type="text/css" href="/assets/js/prettyPhoto/css/prettyPhoto.css">
+    <link rel="stylesheet" type="text/css" href="/assets/js/bxslider/jquery.bxslider.css">
+    <link rel="stylesheet" type="text/css" href="/assets/css/font-awesome.css">
+
+    <link rel="stylesheet" type="text/css" href="/assets/css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="/assets/css/style.css">
+
+    <!-- modernizr : detect css transition -->
+    <script src="/assets/js/modernizr.custom.81779.js"></script>
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script src="/assets/bootstrap/js/html5shiv.js"></script>
+    <script src="/assets/bootstrap/js/respond.min.js"></script>
+    <![endif]-->
+
+
+    <script type="text/javascript" charset="UTF-8" src="https://maps.googleapis.com/maps-api-v3/api/js/38/9/common.js"></script>
+    <script type="text/javascript" charset="UTF-8" src="https://maps.googleapis.com/maps-api-v3/api/js/38/9/util.js"></script>
+    <script type="text/javascript" charset="UTF-8" src="https://maps.googleapis.com/maps-api-v3/api/js/38/9/geocoder.js"></script>
+</head>
+<body>
+    <nav class="navbar navbar-default" role="navigation">
+        <div class="inner">
+            <div class="container">
+                <!-- Brand and toggle get grouped for better mobile display -->
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle btn btn-primary" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+
+                    <div class="text-center">
+                        <p class="address">
+                            The Coca-Cola Company Cocktail Magician™ Telerik Academy, Sofia, Bulgaria
+                        </p>
+                    </div>
+                    <center>   <partial name="_LogoPartial" /> </center>
+
+                    <a href="tel:66-87-65-43-21" class="phoneIcon" style="display:none">+66 87 65 43 21</a>
+                    <a href="http://goo.gl/maps/IUzKJ" class="locationIcon" target="_blank" style="display:none;">http://goo.gl/maps/IUzKJ</a>
+                    <ul class="smallSocials">
+                        <li class="fb"><a href="#"><img src="/assets/images/smallsocial-fb.png" alt="Facebook"></a></li>
+                        <li class="tw"><a href="#"><img src="/assets/images/smallsocial-tw.png" alt="Twitter"></a></li>
+                        <li class="gg"><a href="#"><img src="/assets/images/smallsocial-gg.png" alt="Google+"></a></li>
+                        <li class="rss"><a href="#"><img src="/assets/images/smallsocial-rss.png" alt="RSS"></a></li>
+                    </ul>
+                </div>
+
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse navbar-ex1-collapse">
+                    <ul class="nav navbar-nav text-center" data-pos="145" style="margin-top: -5px;">
+                        @*active class !!!!*@
+                        <li class="active">
+                            <a asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                        </li>
+                        <li><a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a></li>
+                        <li><a asp-area="" asp-controller="Home" asp-action="About">About</a></li>
+                        <li><a asp-area="" asp-controller="Home" asp-action="Cola">Colaa</a></li>
+                        <li><a href="10_story.html">Story</a></li>
+                        <li><a href="11_gallery.html">Gallery</a></li>
+
+                        @*Drop down class !!*@
+                        <li class="dropdown">
+                            <a href="1_shortcodes_boxes.html" class="dropdown-toggle">Shortcodes</a>
+                            <ul class="dropdown-menu">
+                                <li><a href="1_shortcodes_boxes.html">Boxes</a></li>
+                                <li><a href="2_shortcodes_toggleable.html">Toggleable</a></li>
+                                <li><a href="3_shortcodes_contact.html">Contact</a></li>
+                                <li><a href="4_buttons_typography.html">Typography</a></li>
+                                <li><a href="5_shortcodes_elements.html">Elements</a></li>
+                                <li><a href="6_images_sliders.html">Sliders</a></li>
+                            </ul>
+                        </li>
+
+                        <li><a href="7_blog.html">Blog</a></li>
+                        <li><a href="12_contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                <!-- /.navbar-collapse -->
+            </div>
+            <!-- / container -->
+
+            <div class="btm"></div>
+        </div>
+    </nav>
+
+
+    <section style="margin-top: 20px">
+        @RenderBody()
+    </section>
+    <footer>
+        <div class="container">
+
+            <div class="row">
+                <div class="col-md-3">
+
+                    <h4>Contact</h4>
+
+                    <p>
+                        Atlantic Avenue 1234,<br><br>
+                        New York, NY<br><br>
+                        123 - 456 - 7891<br><br>
+                        <a href="mailto:hello@burgerlover.com">hello@burgerlover.com</a>
+                    </p>
+                    <hr>
+                    <h4>Hours</h4>
+
+                    <p>
+                        Monday - Friday<br>
+                        11:00 am - 11:00 pm
+                        <br><br>
+                        Saturday &amp; Sunday<br>
+                        10:45 am - 5:00 pm
+                        <br><br>
+                        Saturday &amp; Sunday<br>
+                        10:45 am - 5:00 pm
+                    </p>
+
+                </div>
+                <div class="col-md-6">
+                    <img src="/assets/images/content/logo.png" alt=" ">
+
+                    <div class="googleMap" data-location="Marine Ave. New York, NY" data-text="We are here!"></div>
+
+                    <ul class="bigSocials">
+                        <li class="fb"><a href="#"><img src="/assets/images/social-fb.png" alt="Facebook"></a></li>
+                        <li class="tw"><a href="#"><img src="/assets/images/social-tw.png" alt="Twitter"></a></li>
+                        <li class="gg"><a href="#"><img src="/assets/images/social-gg.png" alt="Google+"></a></li>
+                        <li class="rss"><a href="#"><img src="/assets/images/social-rss.png" alt="RSS"></a></li>
+                    </ul>
+
+                    <p class="copyright">© Copyright 2014 <a href="#">TemplateRockers</a></p>
+
+
+                </div>
+                <div class="col-md-3">
+                    <h4>Latest Tweets</h4>
+
+                    <div class="tweets">
+                        <div style="display:none">here will be displayed live tweets, configuration is placed in /twitter/config.php</div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <a href="#" id="toTop"></a>
+    </footer>
+    <!-- / footer -->
+
+
+
+    <script src="/assets/js/jquery.min.js"></script>
+    <script src="/assets/bootstrap/js/bootstrap.min.js"></script>
+
+    <!-- we're including library : maps.googleapis.com/maps/api/js?sensor=false in main.js -->
+    <script src="/assets/js/gmap3.min.js"></script>
+
+    <script src="/assets/js/customscroll/jquery.mCustomScrollbar.concat.min.js"></script>
+    <script src="/assets/js/flexslider/jquery.easing.1.3.min.js"></script>
+    <script src="/assets/js/flexslider/jquery.flexslider-min.js"></script>
+    <script src="/assets/js/prettyPhoto/js/jquery.prettyPhoto.js"></script>
+    <script src="/assets/js/bxslider/jquery.bxslider.min.js"></script>
+    <script src="/assets/twitter/js/jquery.tweet.js"></script>
+    <script src="/assets/js/jquery.hoverdir.js"></script>
+    <script src="/assets/js/jquery.arctext.js"></script>
+    <script src="/assets/js/jquery.placeholder.js"></script>
+    <script src="/assets/js/jquery.sticky.js"></script>
+
+    <script src="/assets/form/js/form.js"></script>
+    <script src="/assets/js/main.js"></script>
+
+    <script src="/assets/js/less.min.js"></script>
+
+
+
+
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAYTLFgKDw12Y3CAaOdIOidNEQ93gHbwno&amp;callback=initmap"></script>
+
+    @RenderSection("Scripts", required: false)
+    @await Component.InvokeAsync("NToastNotify")
+</body>
+
+</html>
