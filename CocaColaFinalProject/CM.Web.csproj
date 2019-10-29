@@ -19,4 +19,16 @@
     <ProjectReference Include="..\CM.Data\CM.Data.csproj" />
   </ItemGroup>
 
+
+  <ItemGroup>
+    <Folder Include="Areas\Bars\Controllers\" />
+    <Folder Include="Areas\Bars\Data\" />
+    <Folder Include="Areas\Bars\Models\" />
+    <Folder Include="Areas\Bars\Views\" />
+    <Folder Include="Areas\Cocktails\Controllers\" />
+    <Folder Include="Areas\Cocktails\Data\" />
+    <Folder Include="Areas\Cocktails\Models\" />
+    <Folder Include="Areas\Cocktails\Views\" />
+  </ItemGroup>
+
 </Project>
