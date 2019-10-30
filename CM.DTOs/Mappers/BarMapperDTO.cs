@@ -16,7 +16,6 @@ namespace CM.DTOs.Mappers
             newBarDTO.Website = bar.Website;
             newBarDTO.Address = bar.Address;
             newBarDTO.DateDeleted = bar.DateDeleted;
-
             return newBarDTO;
         }
     }

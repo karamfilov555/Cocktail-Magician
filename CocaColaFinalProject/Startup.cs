@@ -60,6 +60,7 @@ namespace CocaColaFinalProject
             services.AddScoped<IJsonManager, JsonManager>();
             services.AddScoped<ICocktailServices, CocktailServices>();
             services.AddScoped<IBarServices, BarServices>();
+            services.AddScoped<IAppUserServices, AppUserServices>();
 
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
