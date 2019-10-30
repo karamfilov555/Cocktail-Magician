@@ -60,11 +60,42 @@ namespace CM.Web.Areas.Cocktails.Controllers
             return View();
         }
         [HttpGet]
-        public async Task<IActionResult> ListCocktails()
+        public async Task<IActionResult> ListCocktails(string sortOrder)
         {
+            ViewData["CurrentSort"] = sortOrder; //care
+            ViewData["NameSortCriteria"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            ViewData["RatingSortCriteria"] = sortOrder == "rating" ? "rating_desc" : "rating";
+            //ViewData["IngredientsSortCriteria"] = sortOrder == "ingredients" ? "ingredients_desc" : "ingredients";
+            
+
             var allCocktailsDtos = await _cocktailServices.GetAllCocktails();
-            var allCocktailsVms = allCocktailsDtos.Select(c => c.MapToCocktailViewModel()).ToList();
-            return View(allCocktailsVms);
+            var allCocktailsVms = allCocktailsDtos.Select(c => c.MapToCocktailViewModel());
+
+            switch (sortOrder)
+            {
+                case "name_desc":
+                    allCocktailsVms = allCocktailsVms.OrderByDescending(b => b.Name);
+                    break;
+                case "rating":
+                    allCocktailsVms = allCocktailsVms.OrderBy(b => b.Rating);
+                    break;
+                case "rating_desc":
+                    allCocktailsVms = allCocktailsVms.OrderByDescending(s => s.Rating);
+                    break;
+                //case "ingredients":
+                //    allCocktailsVms = allCocktailsVms.OrderByDescending(b => b.CocktailIngredients);
+                //    break;
+                //case "ingredients_desc":
+                //    allCocktailsVms = allCocktailsVms.OrderBy(b => b.CocktailIngredients);
+                //    break;
+               
+
+                default:
+                    allCocktailsVms = allCocktailsVms.OrderBy(s => s.Name);
+                    break;
+            }
+
+            return View(allCocktailsVms.ToList());
         }
     }
 }

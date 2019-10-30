@@ -4,15 +4,44 @@
     Layout = "~/Views/Shared/_LayoutCustom.cshtml";
 }
 
+<head>
+    <meta charset="utf-8">
+    <meta name="description" content=" ">
+    <meta name="author" content=" ">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1, shrink-to-fit=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
+    <title>Foodtruck - Burger Lover : Gallery</title>
+
+    <link rel="stylesheet" type="text/css" href="./assets/js/customscroll/jquery.mCustomScrollbar.css">
+    <link rel="stylesheet" type="text/css" href="./assets/js/flexslider/css/flexslider.css">
+    <link rel="stylesheet" type="text/css" href="./assets/js/prettyPhoto/css/prettyPhoto.css">
+    <link rel="stylesheet" type="text/css" href="./assets/js/bxslider/jquery.bxslider.css">
+    <link rel="stylesheet" type="text/css" href="./assets/css/font-awesome.css">
+
+    <link rel="stylesheet" type="text/css" href="./assets/css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="./assets/css/style.css">
+
+    <!-- modernizr : detect css transition -->
+    <script src="./assets/js/modernizr.custom.81779.js"></script>
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script src="./assets/bootstrap/js/html5shiv.js"></script>
+    <script src="./assets/bootstrap/js/respond.min.js"></script>
+    <![endif]-->
+
+
+</head>
 
 <table class="table">
     <thead>
         <tr>
             <th><h5>Cocktail's Picture</h5></th>
-            <th><h5>Cocktail's Name</h5></th>
-            <th><h5>Cocktail's Rating</h5></th>
-            <th><h5>Cocktail's Ingredients</h5></th>
+            <th><h5><a asp-action="ListCocktails" asp-route-sortOrder="@ViewData["NameSortCriteria"]"
+   asp-route-currentFilter="@ViewData["CurrentFilter"]">&uarr;&darr; Name</a></h5></th>
+            <th><h5 style="padding-right:60px"><a asp-action="ListCocktails" asp-route-sortOrder="@ViewData["RatingSortCriteria"]"
+   asp-route-currentFilter="@ViewData["CurrentFilter"]">&uarr;&darr; Rating</a></h5></th>
+            <th ><h5 >Ingredients</h5></th>
             <th><h5>                      </h5></th>
         </tr>
     </thead>
@@ -20,9 +49,11 @@
         @foreach (var cocktail in Model)
         {
             <tr>
-                <td><img src="@cocktail.Image" height="250" width="250" style="border-radius:25px; padding-top:5px; padding-bottom:5px"></td>
-                <td><h5> @cocktail.Name</h5></td>
-                
+                <td>
+                    <img src="@cocktail.Image" height="250" width="250" style="border-radius:25px; padding-top:5px; padding-bottom:5px">
+                </td>
+                <td><h5 style="padding-left:30px;"> @cocktail.Name</h5></td>
+
                 <td>
                     @if (cocktail.Rating == 0)
                     {
@@ -35,11 +66,11 @@
                             for (int i = 0; i < cocktail.Rating - 1; i++)
                             {
                                 <font color="gold">
-                                    <i class="fa fa-star"  style="color:gold"></i>
+                                    <i class="fa fa-star" style="color:gold"></i>
                                 </font>
                             }
                             <font color="gold">
-                                <i class="fa fa-star"  style="color:gold"><font size="2"> @Html.DisplayFor(modelItem => cocktail.Rating)</font></i>
+                                <i class="fa fa-star" style="color:gold"><font size="2"> @cocktail.Rating</font></i>
                             </font>
                         }
                         else
@@ -48,27 +79,28 @@
                             for (int i = 0; i < cocktail.Rating - 1; i++)
                             {
                                 <font color="gold">
-                                    <i class="fa fa-star"  style="color:gold"></i>
+                                    <i class="fa fa-star" style="color:gold"></i>
                                 </font>
                             }
                             <font color="gold">
-                                <i class="fa fa-star-half"  style="color:gold"> <font size="2"> @Html.DisplayFor(modelItem => cocktail.Rating)</font></i>
+                                <i class="fa fa-star-half" style="color:gold"> <font size="2"> @cocktail.Rating</font></i>
                             </font>
                             @*<span class="quntity">
-                @Html.DisplayFor(modelItem => item.Rating)</span>*@
+                                @Html.DisplayFor(modelItem => item.Rating)</span>*@
                         }
                     }
-                                
-                            </td>
-                <td> @foreach (var ingredient in cocktail.CocktailIngredients)
-                {
-                    <h5>
-                    @ingredient.Ingredient.Name
+
+                </td>
+                <td>
+                    @foreach (var ingredient in cocktail.CocktailIngredients)
+                    {
+                        <h5 style="padding-left:0px">
+                            @ingredient.Ingredient.Name
                         </h5>
-                }
+                    }
                 </td>
                 <td style="padding-top:50px">
-                    <a class="btn btn-default btn-sm" > <font style="color:gold" >rate cocktail</font> </a>
+                    <a class="btn btn-default btn-sm"> <font style="color:gold">rate cocktail</font> </a>
                 </td>
 
             </tr>
