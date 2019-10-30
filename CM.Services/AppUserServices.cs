@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -24,11 +25,19 @@ namespace CM.Services
             _context = context;
             _userManager = userManager;
         }
-
-        public async Task<List<AppUserDTO>> GetAllUsers()
+        private async Task<AppUser> GetUserByID(string id)
         {
-            var users = await _context.Users.ToListAsync().ConfigureAwait(false);
+            var user = await _context.Users.FindAsync(id);
+            user.ValidateIfNull();
+            return user;
+        }
 
+            public async Task<ICollection<AppUserDTO>> GetAllUsers()
+        {
+            var users = await _context.Users
+                .Where(u=>u.DateDeleted==null)
+                .ToListAsync().ConfigureAwait(false);
+            users.ValidateIfNull();
 
             var userDTOs = new List<AppUserDTO>();
             foreach (var user in users)
@@ -52,8 +61,7 @@ namespace CM.Services
 
         public async Task ConvertToManager(string id)
         {
-            var user = await _context.Users.FindAsync(id);
-            user.ValidateIfNull();
+            var user = await this.GetUserByID(id);
             var roles = await _userManager.GetRolesAsync(user);
             foreach (var role in roles)
             {
@@ -63,5 +71,12 @@ namespace CM.Services
             await _context.SaveChangesAsync();
         }
 
+        public async Task Delete(string id)
+        {
+            //TODO Update?
+            var user = await this.GetUserByID(id);
+            user.DateDeleted = DateTime.Now.Date;
+            await _context.SaveChangesAsync();
+        }
     }
 }

@@ -30,5 +30,11 @@ namespace CM.Web.Controllers
             await _appUserServices.ConvertToManager(id);
             return RedirectToAction("ListUsers", "AppUser");
         }
+
+        public async Task<IActionResult> Delete(string id)
+        {
+            await _appUserServices.Delete(id);
+            return RedirectToAction("ListUsers", "AppUser");
+        }
     }
 }
