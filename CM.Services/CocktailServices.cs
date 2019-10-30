@@ -61,6 +61,7 @@ namespace CM.Services
         {
             var allCocktailsModels = await _context.Cocktails
                                                 .Include(c => c.CocktailIngredients)
+                                                .ThenInclude(c => c.Ingredient)
                                                 .ToListAsync();
 
             var allCocktailsDto = allCocktailsModels.Select(c => c.MapToCocktailDto()).ToList();

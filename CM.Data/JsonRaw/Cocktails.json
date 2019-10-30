@@ -2,12 +2,14 @@
   {
     "Id": "1",
     "Image": "http://cocktail.itsplanet.eu/img/cocktail/2017_1.jpg",
-    "Name": "Americano"
+    "Name": "Americano",
+    "Rating": 3.5
   },
   {
     "Id": "2",
     "Image": "http://cocktail.itsplanet.eu/img/cocktail/2017_2.jpg",
-    "Name": "Angel Face"
+    "Name": "Angel Face",
+    "Rating": 5
   },
   {
     "Id": "3",
