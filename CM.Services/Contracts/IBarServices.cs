@@ -7,5 +7,6 @@ namespace CM.Services.Contracts
     public interface IBarServices
     {
         Task<ICollection<BarDTO>> GetHomePageBars();
+        Task<BarDTO> GetBarByID(string id);
     }
 }

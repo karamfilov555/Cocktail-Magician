@@ -1,6 +1,7 @@
 ﻿using CM.Data;
 using CM.DTOs;
 using CM.DTOs.Mappers;
+using CM.Services.Common;
 using CM.Services.Contracts;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -27,6 +28,14 @@ namespace CM.Services
                 .ConfigureAwait(false);
             var barDTOs = bars.Select(b => b.MapBarToDTO()).ToList();
             return barDTOs;
+        }
+
+        public async Task<BarDTO> GetBarByID(string id)
+        {
+            var bar = await _context.Bars.FindAsync(id).ConfigureAwait(false);
+            bar.ValidateIfNull();
+            var barDTO = bar.MapBarToDTO();
+            return barDTO;
         }
 
     }
