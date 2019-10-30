@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using CM.Services.Contracts;
 using CM.Web.Mappers;
+using CM.Web.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CM.Web.Areas.Cocktails.Controllers
@@ -41,8 +42,21 @@ namespace CM.Web.Areas.Cocktails.Controllers
                 ViewBag.ErrorTitle = $"You are tring to see Details of a cocktail with invalid model state";
                 return View("Error");
             }
-
             return View(vm);
+        }
+        [HttpGet]
+        public async Task<IActionResult> Create()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Create(CocktailViewModel cocktailVm)
+        {
+            var cocktailDto = cocktailVm.MapToCocktailDto();
+            await _cocktailServices.AddCocktail(cocktailDto);
+
+            return View();
         }
     }
 }

@@ -29,6 +29,7 @@ namespace CM.Data.DatabaseSeeder
 
                     var cocktails = _jsonManager.ExtractTypesFromJson<Cocktail>(cocktailsDirectory);
                     var ingredients = _jsonManager.ExtractTypesFromJson<Ingredient>(ingredientsDirectory);
+
                     var cocktailIngredients = _jsonManager
                                     .ExtractTypesFromJson<CocktailIngredient>(cocktailIngredientsDirectory);
 

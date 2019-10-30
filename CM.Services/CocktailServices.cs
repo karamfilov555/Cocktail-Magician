@@ -42,6 +42,17 @@ namespace CM.Services
 
             return cocktailDto;
         }
+
+        public async Task AddCocktail(CocktailDto cocktailDto)
+        {
+            if (cocktailDto == null)
+            {
+                // check , some validaitons
+            }
+            var cocktail = cocktailDto.MapToCocktailModel();
+            _context.Cocktails.Add(cocktail);
+            await _context.SaveChangesAsync();
+        }
     }
 }
 
