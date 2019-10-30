@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CM.Models;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -23,5 +24,6 @@ namespace CM.Web.Models
         [Display(Name = "Cocktail's Rating")]
         public decimal Rating { get; set; }
 
+        public ICollection<CocktailIngredient> CocktailIngredients { get; set; } = new List<CocktailIngredient>();
     }
 }

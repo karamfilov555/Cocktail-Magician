@@ -5,44 +5,39 @@
     Layout = "~/Views/Shared/_LayoutCustom.cshtml";
 }
 
-<h1>Details</h1>
+    <center><h1>@Model.Name details</h1></center>
+    <table class="table">
+        <thead>
+            <tr>
+                <th><h5>Cocktail's Picture</h5></th>
+                <th><h5>Cocktail's Details</h5></th>
+                <th><h5>Cocktail's Ingredients</h5></th>
 
-<div>
-    <h4>Cocktail</h4>
-    <hr />
-    <dl class="row">
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Id)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Id)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Name)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Image)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Image)
-        </dd>
-        @*<dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Rating)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Rating)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.DateDeleted)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.DateDeleted)
-        </dd>*@
-    </dl>
-</div>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            
+                <tr>
+                    <td><img src="@Model.Image" height="250" width="250"></td>
+                    <td><h5>Name: @Model.Name</h5>
+                        <h5>Rating: @Model.Rating</h5>
+
+                    </td>
+                    <td>
+                        @foreach (var ingredient in Model.CocktailIngredients)
+                        {
+                            <h5>
+                                @ingredient.Ingredient.Name
+                            </h5>
+                        }
+                    </td>
+                </tr>
+            
+        </tbody>
+    </table>
+
+    
 <div>
     @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
     <a asp-action="Index">Back to List</a>

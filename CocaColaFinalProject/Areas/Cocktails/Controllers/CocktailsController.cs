@@ -37,6 +37,7 @@ namespace CM.Web.Areas.Cocktails.Controllers
             }
 
             var vm = cocktail.MapToCocktailViewModel();
+
             if (vm == null)
             {
                 ViewBag.ErrorTitle = $"You are tring to see Details of a cocktail with invalid model state";

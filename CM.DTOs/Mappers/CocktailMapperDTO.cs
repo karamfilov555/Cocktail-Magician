@@ -14,15 +14,18 @@ namespace CM.DTOs.Mappers
             cocktailDto.Name = cocktail.Name;
             cocktailDto.Rating = cocktail.Rating;
             cocktailDto.Image = cocktail.Image;
+            cocktailDto.CocktailIngredients = cocktail.CocktailIngredients;
+
             return cocktailDto;
         }
-        public static Cocktail MapToCocktailModel(this CocktailDto cocktail)
+        public static Cocktail MapToCocktailModel(this CocktailDto cocktailDto)
         {
             var cocktailModel = new Cocktail();
             // Care !!! --> vse oshte nqma Id!
-            cocktailModel.Name = cocktail.Name;
-            cocktailModel.Rating = cocktail.Rating;
-            cocktailModel.Image = cocktail.Image;
+            cocktailModel.Name = cocktailDto.Name;
+            cocktailModel.Rating = cocktailDto.Rating;
+            cocktailModel.Image = cocktailDto.Image;
+            cocktailModel.CocktailIngredients = cocktailDto.CocktailIngredients;
             return cocktailModel;
         }
     }

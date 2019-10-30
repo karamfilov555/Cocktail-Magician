@@ -1,4 +1,6 @@
-﻿using System;
+﻿using CM.Models;
+using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace CM.DTOs
@@ -19,5 +21,8 @@ namespace CM.DTOs
         public string Image { get; set; }
         [Display(Name = "Cocktail's Rating")]
         public decimal Rating { get; set; }
+        // model?
+        public ICollection<CocktailIngredient> CocktailIngredients { get; set; }
+            = new List<CocktailIngredient>();
     }
 }

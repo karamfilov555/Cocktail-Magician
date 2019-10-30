@@ -23,19 +23,23 @@ namespace CM.Services
         {
             // include ingredients ... posle ... da se vzima po rating 
             var cocktails = await _context.Cocktails
-                                            .Where(c => c.Name.Contains("A") && c.DateDeleted == null)
+                                            .Where(c=>c.DateDeleted == null)
+                                            .Include(c=>c.CocktailIngredients)
                                             .ToListAsync()
                                             .ConfigureAwait(false);
             //map to dto before pass to fe
             var cocktailDtos = cocktails.Select(c => c.MapToCocktailDto()).ToList();
-
+            
             return cocktailDtos;
         }
         public async Task<CocktailDto> FindCocktailById(string id)
         {
             // INCLUDE !!
             var cocktail = await _context.Cocktails
-                                            .FirstOrDefaultAsync(c => c.Id == id && c.DateDeleted == null)
+                                            .Include(c=>c.CocktailIngredients)
+                                            .ThenInclude(c=>c.Ingredient)
+                                            .FirstOrDefaultAsync(c => c.Id == id 
+                                             && c.DateDeleted == null)
                                             .ConfigureAwait(false);
 
             var cocktailDto = cocktail.MapToCocktailDto();

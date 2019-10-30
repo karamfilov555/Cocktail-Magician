@@ -12,6 +12,7 @@ namespace CM.Web.Mappers
             cocktailVm.Name = cocktailDto.Name;
             cocktailVm.Rating = cocktailDto.Rating;
             cocktailVm.Image = cocktailDto.Image;
+            cocktailVm.CocktailIngredients = cocktailDto.CocktailIngredients;
             return cocktailVm;
         }
         public static CocktailDto MapToCocktailDto(this CocktailViewModel cocktailVm)
@@ -21,6 +22,7 @@ namespace CM.Web.Mappers
             cocktailDto.Name = cocktailVm.Name;
             cocktailDto.Image = cocktailVm.Image;
             cocktailDto.Rating = cocktailVm.Rating;
+            cocktailDto.CocktailIngredients = cocktailVm.CocktailIngredients;
             // colleciton bars , kudeto se predlaga kokteila ? 
             return cocktailDto;
         }
