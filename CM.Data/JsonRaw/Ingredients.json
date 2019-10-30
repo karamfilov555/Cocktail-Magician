@@ -1,0 +1,58 @@
+[
+  {
+    "Id": "1",
+    "Name": "Coca-Cola"
+  },
+  {
+    "Id": "2",
+    "Name": "Vodka"
+  },
+  {
+    "Id": "3",
+    "Name": "Orange juice"
+  },
+  {
+    "Id": "4",
+    "Name": "Bacardi"
+  },
+  {
+    "Id": "5",
+    "Name": "Banana Juice"
+  },
+  {
+    "Id": "6",
+    "Name": "Liqueior"
+  },
+  {
+    "Id": "7",
+    "Name": "Whiskey"
+  },
+  {
+    "Id": "8",
+    "Name": "Coffee"
+  },
+  {
+    "Id": "9",
+    "Name": "Strawberry"
+  },
+  {
+    "Id": "10",
+    "Name": "Jin"
+  },
+  {
+    "Id": "11",
+    "Name": "Campari"
+  },
+  {
+    "Id": "12",
+    "Name": "Rom"
+  },
+  {
+    "Id": "13",
+    "Name": "Lime"
+  },
+  {
+    "Id": "14",
+    "Name": "Soda"
+  }
+]

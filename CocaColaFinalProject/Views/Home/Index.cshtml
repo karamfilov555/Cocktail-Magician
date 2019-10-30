@@ -3,7 +3,8 @@
 }
 @model HomePageViewModel
 
-<div class="bg-1 section">
+<div class="bg-1 section" id="events">
+    <div class="inner" data-image="./assets/images/content/background-2.jpg" data-topspace="80" style="background-image: url(' ./assets/images/content/background-2.jpg'); padding-top: 80px;">
     <div class="inner" data-topspace="80" data-bottomspace="100" style="background-image: none; padding-top: 80px; padding-bottom: 100px;">
         <div class="container">
 
@@ -19,13 +20,13 @@
                     @foreach (var cocktail in Model.Cocktails)
                     {
                         <li class="clone" aria-hidden="true" style="width: 1349px; float: left; display: block;">
-                            
-                                    <a asp-area="Cocktails" asp-controller="Cocktails" asp-action="Details" asp-route-id="@cocktail.Id">
-                                        <img src="@cocktail.Image" height="250" width="250">
-                                    </a>
-                                <h3>@cocktail.Name</h3>
-                                
-                            
+
+                            <a asp-area="Cocktails" asp-controller="Cocktails" asp-action="Details" asp-route-id="@cocktail.Id">
+                                <img src="@cocktail.Image" height="250" width="250">
+                            </a>
+                            <h3>@cocktail.Name</h3>
+
+
                         </li>
 
                     }
@@ -284,7 +285,8 @@
                     <!-- / galleryBox -->
                 </li>
             </ul>
-
         </div>
     </div>
+            </div>
 </div>
+

@@ -13,15 +13,14 @@
             <ul class="dropdown-menu" style="background-color:brown">
                 <li style="background-color:brown">
                     <form class="form-inline" asp-area="Identity" asp-page="/Account/Manage/Index">
-                        <button type="submit" class="progress-bar"><font size="5">Settings</font></button>
+                        <button type="submit" class="progress-bar" style="border:0px"><font size="5">Settings</font></button>
                     </form>
                 </li>
                 <li style="background-color:brown">
                     <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
-                        <button type="submit" class="progress-bar"><font size="5">Logout</font></button>
+                        <button type="submit" class="progress-bar" style="border:0px"><font size="5">Logout</font></button>
                     </form>
                 </li>
-               
             </ul>
         </li>
     </ul>
@@ -29,17 +28,18 @@
 else
 {
 <ul class="smallSocials">
-    <li class="dropdown active">
-        <a class="btn twitter" asp-area="Identity" asp-page="/Account/Manage/Index"><font size="6">Account</font></a>
+    <li class="dropdown">
+        <a class="btn " asp-area="Identity" asp-page="/Account/Manage/Index"><font size="6">Account</font></a>
         <ul class="dropdown-menu" style="background-color:brown">
             <li style="background-color:brown">
+
                 <form class="form-inline" asp-area="Identity" asp-page="/Account/Login">
-                    <button type="submit" class="progress-bar"><font size="5">Login</font></button>
+                    <button type="submit" class="progress-bar" style="border:0px"><font size="5">Login</font></button>
                 </form>
             </li>
             <li style="background-color:brown">
                 <form class="form-inline" asp-area="Identity" asp-page="/Account/Register">
-                    <button type="submit" class="progress-bar"><font size="5">Register</font></button>
+                    <button type="submit" class="progress-bar" style="border:0px"><font size="5">Register</font></button>
                 </form>
             </li>
         </ul>
