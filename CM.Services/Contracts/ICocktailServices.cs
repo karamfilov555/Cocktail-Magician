@@ -12,5 +12,7 @@ namespace CM.Services.Contracts
         Task<IEnumerable<CocktailDto>> GetCocktailsForHomePage();
         Task<CocktailDto> FindCocktailById(string id);
         Task AddCocktail(CocktailDto cocktailDto);
+        Task<ICollection<CocktailDto>> GetAllCocktails();
+
     }
 }

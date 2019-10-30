@@ -58,5 +58,12 @@ namespace CM.Web.Areas.Cocktails.Controllers
 
             return View();
         }
+        [HttpGet]
+        public async Task<IActionResult> ListCocktails()
+        {
+            var allCocktailsDtos = await _cocktailServices.GetAllCocktails();
+            var allCocktailsVms = allCocktailsDtos.Select(c => c.MapToCocktailViewModel()).ToList();
+            return View(allCocktailsVms);
+        }
     }
 }

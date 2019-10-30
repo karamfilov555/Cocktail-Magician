@@ -1,0 +1,30 @@
+﻿@model List<CocktailViewModel>
+@{
+    ViewData["Title"] = "ListCocktails";
+    Layout = "~/Views/Shared/_LayoutCustom.cshtml";
+}
+
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th><h5>Cocktail's Picture</h5></th>
+            <th><h5>Cocktail's Name</h5></th>
+            <th><h5>Cocktail's Rating</h5></th>
+
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var cocktail in Model)
+        {
+            <tr>
+                <td><img src="@cocktail.Image" height="250" width="250"></td>
+                <td><h5> @cocktail.Name</h5></td>
+                <td> @cocktail.Rating</td>
+
+            </tr>
+        }
+    </tbody>
+</table>

@@ -34,7 +34,7 @@ namespace CM.Services
         public async Task<CocktailDto> FindCocktailById(string id)
         {
             // INCLUDE !!
-            var cocktail =  await _context.Cocktails
+            var cocktail = await _context.Cocktails
                                             .FirstOrDefaultAsync(c => c.Id == id && c.DateDeleted == null)
                                             .ConfigureAwait(false);
 
@@ -52,6 +52,15 @@ namespace CM.Services
             var cocktail = cocktailDto.MapToCocktailModel();
             _context.Cocktails.Add(cocktail);
             await _context.SaveChangesAsync();
+        }
+        public async Task<ICollection<CocktailDto>> GetAllCocktails()
+        {
+            var allCocktailsModels = await _context.Cocktails
+                                                .Include(c => c.CocktailIngredients)
+                                                .ToListAsync();
+
+            var allCocktailsDto = allCocktailsModels.Select(c => c.MapToCocktailDto()).ToList();
+            return allCocktailsDto;
         }
     }
 }
