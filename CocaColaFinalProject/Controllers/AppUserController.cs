@@ -24,5 +24,11 @@ namespace CM.Web.Controllers
             var listUserVM = userDTOs.Select(u=>u.MapAppUserToVM()).ToList();
             return View(listUserVM);
         }
+
+        public async Task<IActionResult> ChangeRoleToManager(string id)
+        {
+            await _appUserServices.ConvertToManager(id);
+            return RedirectToAction("ListUsers", "AppUser");
+        }
     }
 }

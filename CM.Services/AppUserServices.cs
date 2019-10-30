@@ -2,6 +2,7 @@
 using CM.DTOs;
 using CM.DTOs.Mappers;
 using CM.Models;
+using CM.Services.Common;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -47,10 +48,19 @@ namespace CM.Services
                 userDTOs.Add(newDTO);
             }
             return userDTOs;
+        }
 
-
-
-
+        public async Task ConvertToManager(string id)
+        {
+            var user = await _context.Users.FindAsync(id);
+            user.ValidateIfNull();
+            var roles = await _userManager.GetRolesAsync(user);
+            foreach (var role in roles)
+            {
+            await _userManager.RemoveFromRoleAsync(user, role);
+            }
+            await _userManager.AddToRoleAsync(user, "Manager");
+            await _context.SaveChangesAsync();
         }
 
     }

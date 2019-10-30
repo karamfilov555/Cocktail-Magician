@@ -7,50 +7,48 @@
 <table class="table">
     <thead>
         <tr>
-            <th>Username</th>
-            <th>E-mail </th>
-            <th>Role</th>
-            
-            <th></th>
+            <th width="20%">Username</th>
+            <th width="30%">E-mail </th>
+            <th width="20%">Role</th>
+            <th width="10%"></th>
+            <th width="10%"></th>
+            <th width="10%"></th>
         </tr>
     </thead>
     <tbody>
         @foreach (var user in Model)
         {
-            <tr>
-                <td>@user.Username</td>
-                <td> @user.Email</td>
-                <td> @user.Role</td>
+            if (user.Role != "Administrator")
+            {
+        <tr>
+            <td>@user.Username</td>
+            <td> @user.Email</td>
+            <td> @user.Role</td>
 
-            </tr>
+
+
+            <td>
+                @if (user.Role != ("Administrator") && user.Role != ("Manager"))
+                {
+                    <form method="post">
+                        <button class="btn btn-default btn-sm" asp-action="ChangeRoleToManager" asp-controller="AppUser" asp-route-id="@user.Id">Create Manager</button>
+                    </form>
+                }
+            </td>
+            <td>
+                <form method="post">
+                    <button class="btn btn-default btn-sm" asp-action="Delete" asp-controller="AppUser" asp-route-id="@user.Id">Delete</button>
+                </form>
+
+            </td>
+            <td>
+                <form method="post">
+                    <button class="btn btn-default btn-sm" asp-action="Delete" asp-controller="AppUser" asp-route-id="@user.Id">Ban</button>
+                </form>
+
+            </td>
+        </tr>
+            }
         }
     </tbody>
 </table>
-
-                                @*<div class="btn-group">
-                        if (user.Role != ("Administrator") && user.Role != ("Librarian"))
-                        {
-                            if (User.IsInRole("Administrator"))
-                            {
-                                <form method="post">
-                                    <button class="btn btn-primary" asp-action="ChangeRoleToLibrarian" asp-controller="User" asp-route-userId="@user.Id">Create Librarian</button>
-                                </form>
-                            }
-                            if (!user.IsBanned)
-                            {
-                                <form method="get">
-                                    <button class="btn btn-primary ml-1" asp-action="BanUser" asp-controller="User" asp-route-userId="@user.Id">Ban</button>
-                                </form>
-                            }
-                            else
-                            {
-                                <form method="post">
-                                    <button class="btn btn-primary" asp-action="RemoveBanUser" asp-controller="User" asp-route-userId="@user.Id">Remove Ban</button>
-                                </form>
-                            }
-                        }
-                       <form method="post">
-                                <button class="btn btn-primary ml-1" asp-action="Delete" asp-controller="User" asp-route-userId="@user.Id">Delete</button>
-                            </form>
-                    </div>
-                </td>*@

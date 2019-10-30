@@ -2,16 +2,6 @@
 @using CM.Models
 @inject SignInManager<AppUser> SignInManager
 @inject UserManager<AppUser> UserManager
-@* TO BE DELETED *@
-@if (!SignInManager.IsSignedIn(User))
-{
-    <li class="nav-item">
-        <a class="nav-link text-dark ml-5" asp-area="Identity" asp-page="/Account/Register">Register</a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link text-dark ml-5" asp-area="Identity" asp-page="/Account/Login">Login</a>
-    </li>
-}
 
 @if (User.IsInRole("Administrator") || User.IsInRole("Manager"))
 {
@@ -39,6 +29,6 @@
     </li>
     if (User.IsInRole("Administrator"))
     {
-        <li><a asp-area="" asp-controller="Home" asp-action="Privacy">Users</a></li>
+        <li><a asp-area="" asp-controller="AppUser" asp-action="ListUsers">Users</a></li>
     }
 }

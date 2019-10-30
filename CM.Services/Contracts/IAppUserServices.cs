@@ -7,5 +7,6 @@ namespace CM.Services
     public interface IAppUserServices
     {
         Task<List<AppUserDTO>> GetAllUsers();
+        Task ConvertToManager(string id);
     }
 }
