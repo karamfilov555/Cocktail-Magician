@@ -25,6 +25,7 @@ namespace CM.Web.Areas.Bars.Controllers
 
 
         // GET: Bars/Bars/Details/5
+        [Route("bars/details/{id}")]
         public async Task<IActionResult> Details(string id)
         {
             if (id == null)

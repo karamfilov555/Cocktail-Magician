@@ -17,6 +17,8 @@ namespace CM.Web.Areas.Cocktails.Controllers
             _cocktailServices = cocktailServices;
         }
 
+        [Route("cocktails/details/{id}")]
+
         public async Task<IActionResult> Details(string Id)
         {
             if (Id == null)
