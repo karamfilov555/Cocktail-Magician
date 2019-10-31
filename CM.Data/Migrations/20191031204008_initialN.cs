@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace CM.Data.Migrations
 {
-    public partial class newerinitial : Migration
+    public partial class initialN : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -200,32 +200,6 @@ namespace CM.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "BarReviews",
-                columns: table => new
-                {
-                    UserId = table.Column<string>(nullable: false),
-                    BarId = table.Column<string>(nullable: false),
-                    Description = table.Column<string>(nullable: true),
-                    Rating = table.Column<decimal>(type: "decimal(18,2)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_BarReviews", x => new { x.UserId, x.BarId });
-                    table.ForeignKey(
-                        name: "FK_BarReviews_Bars_BarId",
-                        column: x => x.BarId,
-                        principalTable: "Bars",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_BarReviews_AspNetUsers_UserId",
-                        column: x => x.UserId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "BarCocktails",
                 columns: table => new
                 {
@@ -250,29 +224,38 @@ namespace CM.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "CocktailReviews",
+                name: "Reviews",
                 columns: table => new
                 {
-                    UserId = table.Column<string>(nullable: false),
-                    CocktailId = table.Column<string>(nullable: false),
+                    Id = table.Column<string>(nullable: false),
                     Description = table.Column<string>(nullable: true),
-                    Rating = table.Column<decimal>(type: "decimal(18,2)", nullable: false)
+                    Rating = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    UserId = table.Column<string>(nullable: true),
+                    CocktailId = table.Column<string>(nullable: true),
+                    BarId = table.Column<string>(nullable: true),
+                    ReviewDate = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_CocktailReviews", x => new { x.UserId, x.CocktailId });
+                    table.PrimaryKey("PK_Reviews", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_CocktailReviews_Cocktails_CocktailId",
+                        name: "FK_Reviews_Bars_BarId",
+                        column: x => x.BarId,
+                        principalTable: "Bars",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Reviews_Cocktails_CocktailId",
                         column: x => x.CocktailId,
                         principalTable: "Cocktails",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_CocktailReviews_AspNetUsers_UserId",
+                        name: "FK_Reviews_AspNetUsers_UserId",
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -344,19 +327,24 @@ namespace CM.Data.Migrations
                 column: "CocktailId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_BarReviews_BarId",
-                table: "BarReviews",
-                column: "BarId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_CocktailIngredients_IngredientId",
                 table: "CocktailIngredients",
                 column: "IngredientId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_CocktailReviews_CocktailId",
-                table: "CocktailReviews",
+                name: "IX_Reviews_BarId",
+                table: "Reviews",
+                column: "BarId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Reviews_CocktailId",
+                table: "Reviews",
                 column: "CocktailId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Reviews_UserId",
+                table: "Reviews",
+                column: "UserId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -380,22 +368,19 @@ namespace CM.Data.Migrations
                 name: "BarCocktails");
 
             migrationBuilder.DropTable(
-                name: "BarReviews");
-
-            migrationBuilder.DropTable(
                 name: "CocktailIngredients");
 
             migrationBuilder.DropTable(
-                name: "CocktailReviews");
+                name: "Reviews");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
-                name: "Bars");
+                name: "Ingredients");
 
             migrationBuilder.DropTable(
-                name: "Ingredients");
+                name: "Bars");
 
             migrationBuilder.DropTable(
                 name: "Cocktails");

@@ -194,6 +194,8 @@ namespace CM.Data.Migrations
                     b.Property<decimal>("Rating")
                         .HasColumnType("decimal(18,2)");
 
+                    b.Property<string>("ReviewDate");
+
                     b.Property<string>("UserId");
 
                     b.HasKey("Id");

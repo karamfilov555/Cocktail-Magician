@@ -39,7 +39,8 @@ namespace CM.Services
                 UserId = userId,
                 CocktailId = cocktailDto.Id,
                 Description = cocktailDto.Description,
-                Rating = cocktailDto.Rating
+                Rating = cocktailDto.Rating,
+                ReviewDate = DateTime.Now.ToShortDateString()
             };
             _context.Reviews.Add(cocktailReview);
             await _context.SaveChangesAsync().ConfigureAwait(false);
@@ -55,9 +56,9 @@ namespace CM.Services
             cocktail.Rating = avg;
             await _context.SaveChangesAsync();
         }
-        public async Task<IDictionary<string, Tuple<string, decimal>>> GetReviewsForCocktial(string cocktailId)
+        public async Task<IDictionary<string, Tuple<string, decimal, string>>> GetReviewsDetailsForCocktial(string cocktailId)
         {
-            var reviews = new Dictionary<string, Tuple<string, decimal>>();
+            var reviews = new Dictionary<string, Tuple<string, decimal, string>>();
 
             var reviewsForCocktail = await _context.Reviews
                                     .Where(r => r.CocktailId == cocktailId)
@@ -66,11 +67,11 @@ namespace CM.Services
             foreach (var item in reviewsForCocktail)
             {
                 var username = await _userServices.GetUsernameById(item.UserId);
-
+                
                 if (item.Description == null)
                     item.Description = "No description";
 
-                var descriptionWithRating = new Tuple<string, decimal>(item.Description,item.Rating);
+                var descriptionWithRating = new Tuple<string, decimal, string>(item.Description,item.Rating, item.ReviewDate);
 
                 reviews.Add(username, descriptionWithRating);
             }

@@ -121,7 +121,7 @@ namespace CM.Web.Areas.Cocktails.Controllers
             string userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
 
             var canUserReview = await _reviewServices.CheckIfUserCanReview(userId, cocktail);
-            var cocktailReviews = await _reviewServices.GetReviewsForCocktial(cocktail.Id);
+            var cocktailReviews = await _reviewServices.GetReviewsDetailsForCocktial(cocktail.Id);
 
             reviewVm.CanReview = !canUserReview;
             reviewVm.Reviews = cocktailReviews;

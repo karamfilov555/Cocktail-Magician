@@ -1,4 +1,5 @@
 ﻿using CM.Models.Abstractions;
+using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -25,5 +26,6 @@ namespace CM.Models
         public Cocktail Cocktail { get; set; }
         public string BarId { get; set; }
         public Bar Bar { get; set; }
+        public string ReviewDate { get; set; }
     }
 }

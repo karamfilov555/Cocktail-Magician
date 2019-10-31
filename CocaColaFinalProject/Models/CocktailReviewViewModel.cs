@@ -27,7 +27,7 @@ namespace CM.Web.Models
         public ICollection<CocktailIngredient> CocktailIngredients { get; set; } 
             = new List<CocktailIngredient>();
         public bool CanReview { get; set; }
-        public IDictionary<string, Tuple<string, decimal>> Reviews { get; set; }
-            = new Dictionary<string, Tuple<string, decimal>>();
+        public IDictionary<string, Tuple<string, decimal, string >> Reviews { get; set; }
+            = new Dictionary<string, Tuple<string, decimal, string>>();
     }
 }
