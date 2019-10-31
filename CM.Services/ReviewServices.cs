@@ -2,6 +2,7 @@
 using CM.DTOs;
 using CM.Models;
 using CM.Services.Contracts;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,13 +15,16 @@ namespace CM.Services
     {
         private readonly CMContext _context;
         private readonly ICocktailServices _cocktailServices;
+        private readonly IAppUserServices _userServices;
 
         public ReviewServices(CMContext context,
-                              ICocktailServices cocktailServices)
+                              ICocktailServices cocktailServices,
+                              IAppUserServices userServices)
         {
             // this dependencies can be removed ... till now
             _context = context;
             _cocktailServices = cocktailServices;
+            _userServices = userServices;
         }
 
         public async Task<bool> CheckIfUserCanReview(string userId, CocktailDto cocktailDto)
@@ -50,6 +54,28 @@ namespace CM.Services
             var cocktail = _context.Cocktails.First(c => c.Id == cocktailId);
             cocktail.Rating = avg;
             await _context.SaveChangesAsync();
+        }
+        public async Task<Dictionary<string, Tuple<string, decimal>>> GetReviewsForCocktial(string cocktailId)
+        {
+            var reviews = new Dictionary<string, Tuple<string, decimal>>();
+
+            var reviewsForCocktail = await _context.Reviews
+                                    .Where(r => r.CocktailId == cocktailId)
+                                    .ToListAsync();
+
+            foreach (var item in reviewsForCocktail)
+            {
+                var username = await _userServices.GetUsernameById(item.UserId);
+
+                if (item.Description == null)
+                    item.Description = "No description";
+
+                var descriptionWithRating = new Tuple<string, decimal>(item.Description,item.Rating);
+
+                reviews.Add(username, descriptionWithRating);
+            }
+
+            return reviews;
         }
     }
 }

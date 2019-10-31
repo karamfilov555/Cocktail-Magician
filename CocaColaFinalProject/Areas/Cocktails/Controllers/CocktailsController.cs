@@ -117,8 +117,11 @@ namespace CM.Web.Areas.Cocktails.Controllers
             string userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
 
             var canUserReview = await _reviewServices.CheckIfUserCanReview(userId, cocktail);
+            var cocktailReviews = await _reviewServices.GetReviewsForCocktial(cocktail.Id);
 
             reviewVm.CanReview = !canUserReview;
+            reviewVm.Reviews = cocktailReviews;
+
             return View(reviewVm);
         }
         [HttpPost]
@@ -130,6 +133,7 @@ namespace CM.Web.Areas.Cocktails.Controllers
 
             
             await _reviewServices.CreateCocktailReview(userId, cocktailDto);
+            _toast.AddSuccessToastMessage($"You successfully rate \"{cocktailDto.Name}\" cocktail");
             return RedirectToAction("ListCocktails", "Cocktails");
         }
         [HttpGet]

@@ -31,8 +31,16 @@ namespace CM.Services
             user.ValidateIfNull();
             return user;
         }
+        public async Task<string> GetUsernameById(string id)
+        {
+            if (id == null)
+                return "annonymous";
 
-            public async Task<ICollection<AppUserDTO>> GetAllUsers()
+            var user = await _context.Users.FindAsync(id);
+            return user.UserName;
+        }
+
+        public async Task<ICollection<AppUserDTO>> GetAllUsers()
         {
             var users = await _context.Users
                 .Where(u=>u.DateDeleted==null)

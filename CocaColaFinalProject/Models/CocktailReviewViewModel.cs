@@ -24,7 +24,10 @@ namespace CM.Web.Models
         public decimal Rating { get; set; }
         [Display(Name = "Type your Review Here")]
         public string Description { get; set; }
-        public ICollection<CocktailIngredient> CocktailIngredients { get; set; } = new List<CocktailIngredient>();
+        public ICollection<CocktailIngredient> CocktailIngredients { get; set; } 
+            = new List<CocktailIngredient>();
         public bool CanReview { get; set; }
+        public IDictionary<string, Tuple<string, decimal>> Reviews { get; set; }
+            = new Dictionary<string, Tuple<string, decimal>>();
     }
 }

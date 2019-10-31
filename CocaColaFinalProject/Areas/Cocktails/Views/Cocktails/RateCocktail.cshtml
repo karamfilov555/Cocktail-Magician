@@ -91,6 +91,20 @@
 }
 <center><h1 class="hdr6">Comments for "@Model.Name" </h1></center>
 
+@if (Model.Reviews.Count == 0)
+{
+    <h3>There are no comments for this cocktail</h3>
+}
+else
+{
+    foreach (var item in Model.Reviews)
+    {
+<h3>User @item.Key Comment: @item.Value.Item1 Grade: @item.Value.Item2</h3>
+    }
+}
+@*Comments goes here ... :*@
+
+
 <p style="padding-left:10px; padding-top:260px">
 
     <a asp-action="ListCocktails" class="btn btn-success">Back to List</a>
