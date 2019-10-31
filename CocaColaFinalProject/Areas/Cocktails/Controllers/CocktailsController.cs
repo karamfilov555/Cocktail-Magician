@@ -19,18 +19,14 @@ namespace CM.Web.Areas.Cocktails.Controllers
         private readonly ICocktailServices _cocktailServices;
         private readonly UserManager<AppUser> _userManager;
         private readonly IReviewServices _reviewServices;
-        public CocktailsController(ICocktailServices cocktailServices,
-                                    UserManager<AppUser> userManager,
-                                    IReviewServices reviewServices)
         private readonly IIngredientServices _ingredientServices;
+        
 
-        //ID!!!! string id = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-
-        public CocktailsController(ICocktailServices cocktailServices, IIngredientServices ingredientServices)
+        public CocktailsController(ICocktailServices cocktailServices, IIngredientServices ingredientServices,
+            IReviewServices reviewServices)
         {
             _cocktailServices = cocktailServices;
             _ingredientServices = ingredientServices;
-            _userManager = userManager;
             _reviewServices = reviewServices;
         }
 
@@ -115,9 +111,9 @@ namespace CM.Web.Areas.Cocktails.Controllers
         {
             var cocktail = await _cocktailServices.FindCocktailById(Id);
             var reviewVm = cocktail.MapToCocktailReviewViewModel();
-            var user = await _userManager.GetUserAsync(User);
+            string id = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-            if (await _reviewServices.CheckIfUserCanReview(user.Id, cocktail))
+            if (await _reviewServices.CheckIfUserCanReview(id, cocktail))
             {
                 return BadRequest("You cannot rate cocktail you have already rated!");
             }
