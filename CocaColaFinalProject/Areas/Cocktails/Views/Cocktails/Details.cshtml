@@ -25,10 +25,10 @@
 
                     </td>
                     <td>
-                        @foreach (var ingredient in Model.CocktailIngredients)
+                        @foreach (var item in Model.CocktailIngredients)
                         {
                             <h5>
-                                @ingredient.Ingredient.Name
+                                @item.Ingredient.Name
                             </h5>
                         }
                     </td>
@@ -38,7 +38,7 @@
     </table>
 
     
-<div>
-    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
-    <a asp-action="Index">Back to List</a>
-</div>
+    <div>
+        
+        <a asp-action="ListCocktails" class="btn btn-success">Back to List</a>
+    </div>
