@@ -37,11 +37,19 @@
     <thead>
         <tr>
             <th><h5>Cocktail's Picture</h5></th>
-            <th><h5><a asp-action="ListCocktails" asp-route-sortOrder="@ViewData["NameSortCriteria"]"
-   asp-route-currentFilter="@ViewData["CurrentFilter"]">&uarr;&darr; Name</a></h5></th>
-            <th><h5 style="padding-right:60px"><a asp-action="ListCocktails" asp-route-sortOrder="@ViewData["RatingSortCriteria"]"
-   asp-route-currentFilter="@ViewData["CurrentFilter"]">&uarr;&darr; Rating</a></h5></th>
-            <th ><h5 >Ingredients</h5></th>
+            <th>
+                <h5>
+                    <a asp-action="ListCocktails" asp-route-sortOrder="@ViewData["NameSortCriteria"]"
+                       asp-route-currentFilter="@ViewData["CurrentFilter"]">&uarr;&darr; Name</a>
+                </h5>
+            </th>
+            <th>
+                <h5 style="padding-right:60px">
+                    <a asp-action="ListCocktails" asp-route-sortOrder="@ViewData["RatingSortCriteria"]"
+                       asp-route-currentFilter="@ViewData["CurrentFilter"]">&uarr;&darr; Rating</a>
+                </h5>
+            </th>
+            <th><h5>Ingredients</h5></th>
             <th><h5>                      </h5></th>
         </tr>
     </thead>
@@ -51,8 +59,8 @@
             <tr>
                 <td>
                     <a asp-area="Cocktails" asp-controller="Cocktails" asp-action="Details" asp-route-id="@cocktail.Id">
-                    <img src="@cocktail.Image" height="250" width="250" style="border-radius:25px; padding-top:5px; padding-bottom:5px">
-                        </a>
+                        <img src="@cocktail.Image" height="250" width="250" style="border-radius:25px; padding-top:5px; padding-bottom:5px">
+                    </a>
                 </td>
                 <td><h5 style="padding-left:30px;"> @cocktail.Name</h5></td>
 
@@ -102,9 +110,13 @@
                     }
                 </td>
                 <td style="padding-top:50px">
-                    <p>
-                        <a class="btn btn-default btn-sm" asp-area="Cocktails" asp-controller="Cocktails" asp-action="RateCocktail" asp-route-id="@cocktail.Id"><font style="color:gold">Rate Cocktail</font></a>
-                    </p>
+                    @if (this.User.IsInRole("Member") || this.User.IsInRole("Manager") || this.User.IsInRole("Administrator"))
+                    {
+                        <p>
+                            <a class="btn btn-default btn-sm" asp-area="Cocktails" asp-controller="Cocktails" asp-action="RateCocktail" asp-route-id="@cocktail.Id"><font style="color:gold">Rate Cocktail</font></a>
+                        </p>
+
+                    }
                     @if (this.User.IsInRole("Administrator") || this.User.IsInRole("Manager"))
                     {
                         <p>
@@ -114,7 +126,7 @@
                             <a class="btn btn-default btn-sm" asp-area="Cocktails" asp-controller="Cocktails" asp-action="Delete" asp-route-id="@cocktail.Id"><font style="color:gold">Delete Cocktail</font></a>
                         </p>
                     }
-                    </td>
+                </td>
             </tr>
         }
     </tbody>

@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using CM.Services.Contracts;
 using CM.Web.Mappers;
 using CM.Web.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using NToastNotify;
@@ -60,6 +61,7 @@ namespace CM.Web.Areas.Cocktails.Controllers
             return View(vm);
         }
         [HttpGet]
+        [Authorize(Roles = "Admin, Manager")]
         public async Task<IActionResult> Create()
         {
             //expouse-vame ctx model
@@ -70,6 +72,7 @@ namespace CM.Web.Areas.Cocktails.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles ="Admin, Manager")]
         public async Task<IActionResult> Create(CocktailViewModel cocktailVm)
         {
             var cocktailDto = cocktailVm.MapToCocktailDto();
@@ -110,6 +113,7 @@ namespace CM.Web.Areas.Cocktails.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public async Task<IActionResult> RateCocktail(string Id)
         {
             var cocktail = await _cocktailServices.FindCocktailById(Id);
@@ -125,6 +129,7 @@ namespace CM.Web.Areas.Cocktails.Controllers
             return View(reviewVm);
         }
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> RateCocktail(CocktailReviewViewModel cocktailVm)
         {
             //validations
@@ -137,6 +142,7 @@ namespace CM.Web.Areas.Cocktails.Controllers
             return RedirectToAction("ListCocktails", "Cocktails");
         }
         [HttpGet]
+        [Authorize(Roles = "Admin, Manager")]
         public async Task<IActionResult> Delete(string Id)
         {
             var cocktail = await _cocktailServices.FindCocktailById(Id);
@@ -147,6 +153,7 @@ namespace CM.Web.Areas.Cocktails.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin, Manager")]
         public async Task<IActionResult> Delete(CocktailViewModel cocktailVm)
         {
              var cocktailName = await _cocktailServices.DeleteCocktial(cocktailVm.Id);

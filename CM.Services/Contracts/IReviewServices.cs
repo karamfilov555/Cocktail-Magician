@@ -12,6 +12,6 @@ namespace CM.Services.Contracts
         Task CreateCocktailReview(string userId, CocktailDto cocktailDto);
         Task SetAverrageRating(string cocktailId);
 
-        Task<Dictionary<string, Tuple<string, decimal>>> GetReviewsForCocktial(string cocktailId);
+        Task<IDictionary<string, Tuple<string, decimal>>> GetReviewsForCocktial(string cocktailId);
     }
 }
