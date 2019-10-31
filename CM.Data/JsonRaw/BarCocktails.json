@@ -1,0 +1,58 @@
+[
+  {
+    "BarId": "1",
+    "CocktailId": "1"
+  },
+  {
+    "BarId": "1",
+    "CocktailId": "2"
+  },
+  {
+    "BarId": "1",
+    "CocktailId": "3"
+  },
+  {
+    "BarId": "2",
+    "CocktailId": "2"
+  },
+  {
+    "BarId": "2",
+    "CocktailId": "5"
+  },
+  {
+    "BarId": "2",
+    "CocktailId": "3"
+  },
+  {
+    "BarId": "3",
+    "CocktailId": "4"
+  },
+  {
+    "BarId": "3",
+    "CocktailId": "8"
+  },
+  {
+    "BarId": "4",
+    "CocktailId": "8"
+  },
+  {
+    "BarId": "4",
+    "CocktailId": "2"
+  },
+  {
+    "BarId": "5",
+    "CocktailId": "10"
+  },
+  {
+    "BarId": "5",
+    "CocktailId": "3"
+  },
+  {
+    "BarId": "6",
+    "CocktailId": "1"
+  },
+  {
+    "BarId": "7",
+    "CocktailId": "1"
+  }
+]

@@ -82,6 +82,11 @@ namespace CM.Services
             await _context.SaveChangesAsync();
             return cocktailModel.Name;
         }
+        public async Task<string> GetCocktailNameById(string id)
+        {
+            var cocktail = await _context.Cocktails.FirstAsync(c => c.Id == id);
+            return cocktail.Name;
+        }
     }
 }
 

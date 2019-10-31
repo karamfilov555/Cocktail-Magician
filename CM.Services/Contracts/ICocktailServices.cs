@@ -14,6 +14,7 @@ namespace CM.Services.Contracts
         Task AddCocktail(CocktailDto cocktailDto);
         Task<ICollection<CocktailDto>> GetAllCocktails();
         Task<string> DeleteCocktial(string id);
+        Task<string> GetCocktailNameById(string id);
 
     }
 }

@@ -135,10 +135,10 @@ namespace CM.Web.Areas.Cocktails.Controllers
             //validations
             var cocktailDto = cocktailVm.MapToCocktailDto();
             string userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-
+            var cocktailName = await _cocktailServices.GetCocktailNameById(cocktailDto.Id);
             
             await _reviewServices.CreateCocktailReview(userId, cocktailDto);
-            _toast.AddSuccessToastMessage($"You successfully rate \"{cocktailDto.Name}\" cocktail");
+            _toast.AddSuccessToastMessage($"You successfully rate \"{cocktailName}\" cocktail");
             return RedirectToAction("ListCocktails", "Cocktails");
         }
         [HttpGet]
