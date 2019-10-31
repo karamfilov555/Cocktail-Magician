@@ -20,7 +20,7 @@
     <tbody>
 
         <tr>
-            <td><img src="@Model.Image" height="250" width="250"></td>
+            <td><img src="@Model.Image" height="250" width="250" style="border-radius:25px; padding-top:5px; padding-bottom:5px"></td>
             <td>
                 <h5>Name: @Model.Name</h5>
                 <h5>Rating: @Model.Rating</h5>
@@ -39,8 +39,8 @@
     </tbody>
 </table>
 <center>
-    <center><h1>Are you sure you want to delete "@Model.Name" cocktail?</h1></center>
-    <form method="post" asp-area="Cocktails" asp-controller="Cocktails" asp-action="Delete">
+    <center><h3><font style="color:mintcream">Are you sure you want to delete "@Model.Name" cocktail?</font></h3></center>
+    <form method="post" asp-area="Cocktails" asp-controller="Cocktails" asp-action="Delete" style="padding-bottom:20px">
         <input type="hidden" />
         <input type="submit" value="Delete" class="btn btn-danger" /> |
         <a asp-action="ListCocktails" class="btn btn-success">Back to List</a>

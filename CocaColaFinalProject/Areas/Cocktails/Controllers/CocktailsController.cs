@@ -61,7 +61,7 @@ namespace CM.Web.Areas.Cocktails.Controllers
             return View(vm);
         }
         [HttpGet]
-        [Authorize(Roles = "Admin, Manager")]
+        [Authorize(Roles = "Administrator, Manager")]
         public async Task<IActionResult> Create()
         {
             //expouse-vame ctx model
@@ -72,7 +72,7 @@ namespace CM.Web.Areas.Cocktails.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles ="Admin, Manager")]
+        [Authorize(Roles = "Administrator, Manager")]
         public async Task<IActionResult> Create(CocktailViewModel cocktailVm)
         {
             var cocktailDto = cocktailVm.MapToCocktailDto();
@@ -142,7 +142,7 @@ namespace CM.Web.Areas.Cocktails.Controllers
             return RedirectToAction("ListCocktails", "Cocktails");
         }
         [HttpGet]
-        [Authorize(Roles = "Admin, Manager")]
+        [Authorize(Roles = "Administrator, Manager")]
         public async Task<IActionResult> Delete(string Id)
         {
             var cocktail = await _cocktailServices.FindCocktailById(Id);
@@ -153,7 +153,7 @@ namespace CM.Web.Areas.Cocktails.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = "Admin, Manager")]
+        [Authorize(Roles = "Administrator, Manager")]
         public async Task<IActionResult> Delete(CocktailViewModel cocktailVm)
         {
              var cocktailName = await _cocktailServices.DeleteCocktial(cocktailVm.Id);

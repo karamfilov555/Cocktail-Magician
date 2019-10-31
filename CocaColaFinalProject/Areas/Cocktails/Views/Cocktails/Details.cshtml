@@ -19,7 +19,7 @@
     <tbody>
 
         <tr>
-            <td><img src="@Model.Image" height="250" width="250"></td>
+            <td><img src="@Model.Image" height="250" width="250" style="border-radius:25px; padding-top:5px; padding-bottom:5px"></td>
             <td>
                 <h5>Name: @Model.Name</h5>
                 <h5>Rating: @Model.Rating</h5>
@@ -38,6 +38,12 @@
     </tbody>
 </table>
 <h1 class="hdr6"> Where to find "@Model.Name"</h1>
+@if (Model.BarCocktails.Count() == 0)
+{
+    <h3 class="hdr3">
+        you can be the first in the town to offer this cocktail
+    </h3>
+}
 @foreach (var item in Model.BarCocktails)
 {
     <div class="eventBox">
@@ -57,6 +63,9 @@
 
     </div>
 }
-<div>
+<center>
+<div style="padding-bottom:20px">
+
     <a asp-action="ListCocktails" class="btn btn-success">Back to List</a>
 </div>
+</center>
