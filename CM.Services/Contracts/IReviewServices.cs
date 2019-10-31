@@ -10,5 +10,6 @@ namespace CM.Services.Contracts
     {
         Task<bool> CheckIfUserCanReview(string userId, CocktailDto cocktailDto);
         Task CreateCocktailReview(string userId, CocktailDto cocktailDto);
+        Task SetAverrageRating(string cocktailId);
     }
 }

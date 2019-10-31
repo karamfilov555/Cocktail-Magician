@@ -17,17 +17,19 @@ namespace CM.Web.Areas.Cocktails.Controllers
     public class CocktailsController : Controller
     {
         private readonly ICocktailServices _cocktailServices;
-        private readonly UserManager<AppUser> _userManager;
         private readonly IReviewServices _reviewServices;
         private readonly IIngredientServices _ingredientServices;
-        
 
-        public CocktailsController(ICocktailServices cocktailServices, IIngredientServices ingredientServices,
-            IReviewServices reviewServices)
+        //ID!!!! string id = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+        public CocktailsController(ICocktailServices cocktailServices, 
+                                   IIngredientServices ingredientServices,
+                                   IReviewServices reviewServices)
         {
             _cocktailServices = cocktailServices;
             _ingredientServices = ingredientServices;
             _reviewServices = reviewServices;
+           
         }
 
         [Route("cocktails/details/{id}")]
@@ -60,6 +62,7 @@ namespace CM.Web.Areas.Cocktails.Controllers
         [HttpGet]
         public async Task<IActionResult> Create()
         {
+            //expouse-vame ctx model
             var ingr =await _ingredientServices.GetAllIngredients();
             var cocktailVM = new CocktailViewModel();
             cocktailVM.Ingredients.AddRange(ingr.Select(i => new SelectListItem(i.Name, i.Id)));
@@ -111,9 +114,9 @@ namespace CM.Web.Areas.Cocktails.Controllers
         {
             var cocktail = await _cocktailServices.FindCocktailById(Id);
             var reviewVm = cocktail.MapToCocktailReviewViewModel();
-            string id = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            string userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-            if (await _reviewServices.CheckIfUserCanReview(id, cocktail))
+            if (await _reviewServices.CheckIfUserCanReview(userId, cocktail))
             {
                 return BadRequest("You cannot rate cocktail you have already rated!");
             }
@@ -125,9 +128,9 @@ namespace CM.Web.Areas.Cocktails.Controllers
         {
             //validations
             var cocktailDto = cocktailVm.MapToCocktailDto();
-            var user = await _userManager.GetUserAsync(User);
-            await _reviewServices.CreateCocktailReview(user.Id,cocktailDto);
-           
+            string userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            await _reviewServices.CreateCocktailReview(userId, cocktailDto);
+            await _reviewServices.SetAverrageRating(cocktailDto.Id); 
 
             return RedirectToAction("ListCocktails", "Cocktails");
         }
