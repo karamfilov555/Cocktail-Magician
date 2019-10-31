@@ -9,7 +9,7 @@
         <li><a asp-area="Bars" asp-controller="Bars" asp-action="Index">Bars List</a></li>
         @if (User.IsInRole("Administrator") || User.IsInRole("Manager"))
         {
-            <li><a href="2_shortcodes_toggleable.html">Add new bar</a></li>
+            <li><a asp-area="Bars" asp-controller="Bars" asp-action="Create">Add new bar</a></li>
         }
         @*<li><a href="3_shortcodes_contact.html">List</a></li>
             <li><a href="4_buttons_typography.html">Typography</a></li>

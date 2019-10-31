@@ -9,7 +9,7 @@ namespace CM.Services.Contracts
 {
     public interface ICocktailServices
     {
-        Task<IEnumerable<CocktailDto>> GetCocktailsForHomePage();
+        Task<ICollection<CocktailDto>> GetCocktailsForHomePage();
         Task<CocktailDto> FindCocktailById(string id);
         Task AddCocktail(CocktailDto cocktailDto);
         Task<ICollection<CocktailDto>> GetAllCocktails();

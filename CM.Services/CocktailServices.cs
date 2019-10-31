@@ -1,7 +1,6 @@
 ﻿using CM.Data;
 using CM.DTOs;
 using CM.DTOs.Mappers;
-using CM.Models;
 using CM.Services.Contracts;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -19,7 +18,7 @@ namespace CM.Services
             _context = context ?? throw new ArgumentNullException(nameof(context));
         }
 
-        public async Task<IEnumerable<CocktailDto>> GetCocktailsForHomePage()
+        public async Task<ICollection<CocktailDto>> GetCocktailsForHomePage()
         {
             // include ingredients ... posle ... da se vzima po rating 
             var cocktails = await _context.Cocktails

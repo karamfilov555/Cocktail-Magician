@@ -13,7 +13,11 @@ namespace CM.DTOs
         public String Address { get; set; }
         public string Website { get; set; }
         public DateTime? DateDeleted { get; set; }
-        
+        public List<Cocktail> Cocktails { get; set; }
+            = new List<Cocktail>();
+        public ICollection<Review> Reviews { get; set; }
+           = new List<Review>();
+
         public BarDTO()
         {
            

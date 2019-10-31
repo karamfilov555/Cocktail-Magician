@@ -9,18 +9,21 @@ using CM.Data;
 using CM.Models;
 using CM.Services.Contracts;
 using CM.Web.Mappers;
+using CM.Web.Areas.Bars.Models;
 
 namespace CM.Web.Areas.Bars.Controllers
 {
     [Area("Bars")]
     public class BarsController : Controller
     {
-        
-        private readonly IBarServices _barServices;
 
-        public BarsController(IBarServices barServices)
+        private readonly IBarServices _barServices;
+        private readonly ICocktailServices _cocktailServices;
+
+        public BarsController(IBarServices barServices, ICocktailServices cocktailServices)
         {
             _barServices = barServices;
+            _cocktailServices = cocktailServices;
         }
 
 
@@ -32,7 +35,7 @@ namespace CM.Web.Areas.Bars.Controllers
             {
                 return NotFound();
             }
-            var barDTO =await _barServices.GetBarByID(id);
+            var barDTO = await _barServices.GetBarByID(id);
             if (barDTO == null)
             {
                 return NotFound();
@@ -42,30 +45,36 @@ namespace CM.Web.Areas.Bars.Controllers
             return View(barVM);
         }
 
-        // GET: Bars/Bars
+        // GET:
         [Route("bars/list")]
         public async Task<IActionResult> Index()
         {
-            var bars =await _barServices.GetAllBars();
+            var bars = await _barServices.GetAllBars();
             var barsVM = bars.Select(b => b.MapBarToVM()).ToList();
             return View(barsVM);
         }
-        //// GET: Bars/Bars/Create
-        //public IActionResult Create()
-        //{
-        //    return View();
-        //}
+        // GET: Bars/Bars/Create
+        [Route("bars/create")]
+        public async Task<IActionResult> Create()
+        {
+            var allCocktails =await _cocktailServices.GetAllCocktails();
+            var createBarVM = new CreateBarVM();
+            createBarVM.AllCocktails = allCocktails
+                .Select(c => new SelectListItem(c.Name, c.Id)).ToList();
+            return View(createBarVM);
+        }
 
-        //// POST: Bars/Bars/Create
-        //// To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        //// more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        //POST: Bars/Bars/Create
+        //To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         //[HttpPost]
         //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> Create([Bind("Id,Name,Image,Website,Address,BarRating,DateDeleted")] Bar bar)
+        //public async Task<IActionResult> Create(CreateBarVM barVM)
         //{
         //    if (ModelState.IsValid)
         //    {
-        //        _context.Add(bar);
+        //        var barDTO=
+        //       _barServices.Add(bar);
         //        await _context.SaveChangesAsync();
         //        return RedirectToAction(nameof(Index));
         //    }

@@ -1,4 +1,4 @@
-﻿@model CM.Models.Bar
+﻿@model CreateBarVM
 
 @{
     ViewData["Title"] = "Create";
@@ -18,11 +18,6 @@
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Image" class="control-label"></label>
-                <input asp-for="Image" class="form-control" />
-                <span asp-validation-for="Image" class="text-danger"></span>
-            </div>
-            <div class="form-group">
                 <label asp-for="Website" class="control-label"></label>
                 <input asp-for="Website" class="form-control" />
                 <span asp-validation-for="Website" class="text-danger"></span>
@@ -33,14 +28,15 @@
                 <span asp-validation-for="Address" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="BarRating" class="control-label"></label>
-                <input asp-for="BarRating" class="form-control" />
-                <span asp-validation-for="BarRating" class="text-danger"></span>
+                <label asp-for="ImageURL" class="control-label"></label>
+                <input asp-for="ImageURL" class="form-control" />
+                <span asp-validation-for="ImageURL" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="DateDeleted" class="control-label"></label>
-                <input asp-for="DateDeleted" class="form-control" />
-                <span asp-validation-for="DateDeleted" class="text-danger"></span>
+                <label asp-for="AllCocktails" class="control-label">Ingredients</label>
+                <select asp-for="AllCocktails" asp-items="@Model.AllCocktails" class="form-control">
+                    <option hidden disabled selected value="">Choose Cocktails:</option>
+                </select>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
