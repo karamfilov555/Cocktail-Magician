@@ -31,6 +31,7 @@ namespace CM.Web.Mappers
             var cocktailDto = new CocktailDto();
             cocktailDto.Id = cocktailVm.Id;
             cocktailDto.Description = cocktailVm.Description;
+            cocktailDto.Rating = cocktailVm.Rating;
             return cocktailDto;
         }
         public static CocktailReviewViewModel MapToCocktailReviewViewModel(this CocktailDto cocktailDto)

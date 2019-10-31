@@ -122,7 +122,7 @@ namespace CM.Web.Areas.Cocktails.Controllers
             await _reviewServices.CreateCocktailReview(user.Id,cocktailDto);
            
 
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("ListCocktails", "Cocktails");
         }
     }
 }

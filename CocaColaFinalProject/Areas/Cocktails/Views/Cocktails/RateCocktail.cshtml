@@ -1,0 +1,79 @@
+﻿@model CocktailReviewViewModel
+@{
+    ViewData["Title"] = "RateCocktail";
+    Layout = "~/Views/Shared/_LayoutCustom.cshtml";
+}
+
+<center><h1>Rate Cocktail "@Model.Name" </h1></center>
+<form asp-controller="Member" asp-action="ReviewBook" method="post">
+    <table class="table">
+        <thead>
+            <tr>
+                <th><h5>Cocktail's Picture</h5></th>
+                <th><h5>Cocktail's Details</h5></th>
+                <th><h5>Cocktail's Ingredients</h5></th>
+
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+
+            <tr>
+                <td><img src="@Model.Image" height="250" width="250"></td>
+                <td>
+                    <h5>Name: @Model.Name</h5>
+                    <h5>Rating: @Model.Rating</h5>
+
+                </td>
+                <td>
+                    @foreach (var ingredient in Model.CocktailIngredients)
+                    {
+                        <h5>
+                            @ingredient.Ingredient.Name
+                        </h5>
+                    }
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table>
+        <tbody>
+            <dl>
+    <dt class="col-sm-2">
+        Your grade
+    </dt>
+    <dd class="col-sm-10 text-danger">
+        <div class="form-group">
+            <b>
+                <select asp-for="@Model.Rating" class=" alert-success form-check">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                    <option value="9">9</option>
+                    <option value="10">10</option>
+                </select>
+            </b>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <textarea asp-for="Description" class="alert-success" rows="5" cols="50" placeholder="Write your review here..."> </textarea>
+                <button type="submit">Submit</button>
+            </div>
+
+        </div>
+    </dd>
+                </dl>
+            </tbody>
+        </table>
+</form>
+
+    <div>
+        @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+        <a asp-action="Index">Back to List</a>
+    </div>
