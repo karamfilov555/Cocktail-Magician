@@ -39,6 +39,7 @@ namespace CM.Services
             };
             _context.CocktailReviews.Add(cocktailReview);
             await _context.SaveChangesAsync().ConfigureAwait(false);
+            await this.SetAverrageRating(cocktailDto.Id);
 
         }
         public async Task SetAverrageRating(string cocktailId)
