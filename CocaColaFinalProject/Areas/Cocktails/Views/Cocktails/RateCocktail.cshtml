@@ -99,13 +99,38 @@ else
 {
     foreach (var item in Model.Reviews)
     {
-<h3>User @item.Key Comment: @item.Value.Item1 Grade: @item.Value.Item2</h3>
+        <center>
+            <div class="col-md-10 blog-main" style="padding-left:260px">
+                <div class="blog-post format-quote">
+                    <h3 class="blog_title"><a href="7b_single-blog.html">A quote post</a></h3>
+                    <div class="blog_thumbnail">
+                        <a href="7b_single-blog.html" class="box_text">
+                            <span class="ribbon_icon"><i class="fa fa-quote-left"></i></span>
+                            <blockquote class="inner">
+                                <p>
+                                    "@item.Value.Item1"
+                                    <br>
+                                    <font style="color:gold">Grade: @item.Value.Item2</font>
+                                </p>
+                                <span class="author">- The Coca-Cola Company, Cocktail Magician™, 2019 -</span>
+                            </blockquote>
+                        </a>
+                    </div>
+                    <div class="meta_box">
+                        <span class="meta_date">November 12, 2019</span>
+                        @*<span class="meta_comments"><a href="#"><em>21</em> <span>Comments</span></a></span>*@
+                        <span class="meta_author"><a href="#">@item.Key</a></span>
+                    </div>
+                </div>
+            </div>
+        </center>
     }
 }
 @*Comments goes here ... :*@
 
-
-<p style="padding-left:10px; padding-top:260px">
-
-    <a asp-action="ListCocktails" class="btn btn-success">Back to List</a>
-</p>
+<center>
+    <p style="padding-left:10px; padding-top:260px">
+        <a asp-action="ListCocktails" class="btn btn-danger">Load More Comments</a>
+        <a asp-action="ListCocktails" class="btn btn-success">Back to List</a>
+    </p>
+</center>
