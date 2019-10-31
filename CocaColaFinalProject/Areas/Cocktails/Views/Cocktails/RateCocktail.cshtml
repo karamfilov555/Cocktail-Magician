@@ -4,7 +4,9 @@
     Layout = "~/Views/Shared/_LayoutCustom.cshtml";
 }
 
-<center><h1>Rate Cocktail "@Model.Name" </h1></center>
+
+
+<center><h1 class="hdr6">Rate Cocktail "@Model.Name" </h1></center>
 <form asp-controller="Member" asp-action="ReviewBook" method="post">
     <table class="table">
         <thead>
@@ -40,41 +42,56 @@
     <table>
         <tbody>
             <dl>
-    <dt class="col-sm-2">
-        Your grade
-    </dt>
-    <dd class="col-sm-10 text-danger">
-        <div class="form-group">
-            <b>
-                <select asp-for="@Model.Rating" class=" alert-success form-check">
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                    <option value="6">6</option>
-                    <option value="7">7</option>
-                    <option value="8">8</option>
-                    <option value="9">9</option>
-                    <option value="10">10</option>
-                </select>
-            </b>
-        </div>
-        <div class="row">
-            <div class="col-md-6">
-                <textarea asp-for="Description" class="form-control input-sm" rows="5" cols="50" placeholder="Write your review here..." style="padding-right:10px"> </textarea>
-                <br>
-                <button class="btn btn-default" type="submit" >Submit</button>
-            </div>
+                @if (Model.CanReview)
+                {
+                    <dt class="col-sm-2">
+                        <h3 class="hdr3">Your grade</h3>
+                    </dt>
+                    <dd class="col-sm-10 text-danger">
+                        <div class="form-group">
+                            <b>
+                                <select asp-for="@Model.Rating" class=" alert-success form-check">
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                    <option value="6">6</option>
+                                    <option value="7">7</option>
+                                    <option value="8">8</option>
+                                    <option value="9">9</option>
+                                    <option value="10">10</option>
+                                </select>
+                            </b>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <textarea asp-for="Description" class="form-control input-sm" rows="5" cols="50" placeholder="Write your review here..." style="padding-right:10px"> </textarea>
+                                <br>
 
-        </div>
-    </dd>
-                </dl>
-            </tbody>
-        </table>
+                                <button class="btn btn-default" type="submit">Submit</button>
+
+                            </div>
+
+                        </div>
+                    </dd>
+
+                }
+                else
+                {
+                    <dt><h3 class="hdr3"> You've already rated this cocktail ! </h3></dt>
+                }
+            </dl>
+        </tbody>
+    </table>
 </form>
+@if (Model.CanReview)
+{
+    <br><br><br><br><br><br><br><br><br><br><br>
+}
+<center><h1 class="hdr6">Comments for "@Model.Name" </h1></center>
 
-    <div>
-        @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
-        <a asp-action="Index">Back to List</a>
-    </div>
+<p style="padding-left:10px; padding-top:260px">
+
+    <a asp-action="ListCocktails" class="btn btn-success">Back to List</a>
+</p>

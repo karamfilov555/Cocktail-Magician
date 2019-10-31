@@ -25,5 +25,6 @@ namespace CM.Web.Models
         [Display(Name = "Type your Review Here")]
         public string Description { get; set; }
         public ICollection<CocktailIngredient> CocktailIngredients { get; set; } = new List<CocktailIngredient>();
+        public bool CanReview { get; set; }
     }
 }

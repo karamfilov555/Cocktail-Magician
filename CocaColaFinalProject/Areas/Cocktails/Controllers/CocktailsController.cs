@@ -116,11 +116,9 @@ namespace CM.Web.Areas.Cocktails.Controllers
             var reviewVm = cocktail.MapToCocktailReviewViewModel();
             string userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-            if (await _reviewServices.CheckIfUserCanReview(userId, cocktail))
-            {
-                return BadRequest("You cannot rate cocktail you have already rated!");
-            }
+            var canUserReview = await _reviewServices.CheckIfUserCanReview(userId, cocktail);
 
+            reviewVm.CanReview = !canUserReview;
             return View(reviewVm);
         }
         [HttpPost]
@@ -129,6 +127,8 @@ namespace CM.Web.Areas.Cocktails.Controllers
             //validations
             var cocktailDto = cocktailVm.MapToCocktailDto();
             string userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            
             await _reviewServices.CreateCocktailReview(userId, cocktailDto);
             return RedirectToAction("ListCocktails", "Cocktails");
         }
