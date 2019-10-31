@@ -41,5 +41,14 @@ namespace CM.Services
             await _context.SaveChangesAsync().ConfigureAwait(false);
 
         }
+        public async Task SetAverrageRating(string cocktailId)
+        {
+            var gradesForCocktail = _context.CocktailReviews
+                                        .Where(c => c.CocktailId == cocktailId).ToList();
+            var avg = gradesForCocktail.Average(c => c.Rating);
+            var cocktail = _context.Cocktails.First(c => c.Id == cocktailId);
+            cocktail.Rating = avg;
+            await _context.SaveChangesAsync();
+        }
     }
 }
