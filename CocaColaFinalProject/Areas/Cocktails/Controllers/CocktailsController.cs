@@ -130,8 +130,6 @@ namespace CM.Web.Areas.Cocktails.Controllers
             var cocktailDto = cocktailVm.MapToCocktailDto();
             string userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
             await _reviewServices.CreateCocktailReview(userId, cocktailDto);
-            await _reviewServices.SetAverrageRating(cocktailDto.Id); 
-
             return RedirectToAction("ListCocktails", "Cocktails");
         }
     }

@@ -30,21 +30,21 @@ namespace CM.Services
         {
             //validations
 
-            var cocktailReview = new CocktailReview
+            var cocktailReview = new Review
             {
                 UserId = userId,
                 CocktailId = cocktailDto.Id,
                 Description = cocktailDto.Description,
                 Rating = cocktailDto.Rating
             };
-            _context.CocktailReviews.Add(cocktailReview);
+            _context.Reviews.Add(cocktailReview);
             await _context.SaveChangesAsync().ConfigureAwait(false);
             await this.SetAverrageRating(cocktailDto.Id);
 
         }
         public async Task SetAverrageRating(string cocktailId)
         {
-            var gradesForCocktail = _context.CocktailReviews
+            var gradesForCocktail = _context.Reviews
                                         .Where(c => c.CocktailId == cocktailId).ToList();
             var avg = gradesForCocktail.Average(c => c.Rating);
             var cocktail = _context.Cocktails.First(c => c.Id == cocktailId);

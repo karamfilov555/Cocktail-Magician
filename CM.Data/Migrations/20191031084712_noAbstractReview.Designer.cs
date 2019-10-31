@@ -4,14 +4,16 @@ using CM.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CM.Data.Migrations
 {
     [DbContext(typeof(CMContext))]
-    partial class CMContextModelSnapshot : ModelSnapshot
+    [Migration("20191031084712_noAbstractReview")]
+    partial class noAbstractReview
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -204,7 +206,7 @@ namespace CM.Data.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Reviews");
+                    b.ToTable("CocktailReviews");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -326,15 +328,15 @@ namespace CM.Data.Migrations
             modelBuilder.Entity("CM.Models.Review", b =>
                 {
                     b.HasOne("CM.Models.Bar", "Bar")
-                        .WithMany("Reviews")
+                        .WithMany("BarReviews")
                         .HasForeignKey("BarId");
 
                     b.HasOne("CM.Models.Cocktail", "Cocktail")
-                        .WithMany("Reviews")
+                        .WithMany("CocktailReviews")
                         .HasForeignKey("CocktailId");
 
                     b.HasOne("CM.Models.AppUser", "User")
-                        .WithMany("Reviews")
+                        .WithMany()
                         .HasForeignKey("UserId");
                 });
 

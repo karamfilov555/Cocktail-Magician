@@ -12,10 +12,10 @@ namespace CM.Data
 
         }
         public DbSet<Bar> Bars { get; set; }
-        public DbSet<BarReview> BarReviews { get; set; }
+        //public DbSet<BarReview> BarReviews { get; set; }
         public DbSet<BarCocktail> BarCocktails { get; set; }
         public DbSet<Cocktail> Cocktails { get; set; }
-        public DbSet<CocktailReview> CocktailReviews { get; set; }
+        public DbSet<Review> Reviews { get; set; }
         public DbSet<CocktailIngredient> CocktailIngredients { get; set; }
         public DbSet<Ingredient> Ingredients { get; set; }
 
@@ -24,7 +24,7 @@ namespace CM.Data
             builder.ApplyConfiguration(new BarCocktailConfiguration());
             builder.ApplyConfiguration(new CocktailIngredientConfiguration());
             builder.ApplyConfiguration(new CocktailReviewConfiguration());
-            builder.ApplyConfiguration(new BarReviewConfiguration());
+            //builder.ApplyConfiguration(new BarReviewConfiguration());
 
             base.OnModelCreating(builder);
         }

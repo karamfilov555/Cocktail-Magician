@@ -16,7 +16,7 @@ namespace CM.DTOs.Mappers
             cocktailDto.Rating = cocktail.Rating;
             cocktailDto.Image = cocktail.Image;
             cocktailDto.CocktailIngredients = cocktail.CocktailIngredients.ToList();
-            cocktailDto.CocktailReviews = cocktail.CocktailReviews;
+            cocktailDto.CocktailReviews = cocktail.Reviews;
 
             return cocktailDto;
         }
@@ -28,7 +28,7 @@ namespace CM.DTOs.Mappers
             cocktailModel.Rating = cocktailDto.Rating;
             cocktailModel.Image = cocktailDto.Image;
             //cocktailModel.CocktailIngredients = cocktailDto.CocktailIngredients;
-            cocktailModel.CocktailReviews = cocktailDto.CocktailReviews;
+            cocktailModel.Reviews = cocktailDto.CocktailReviews;
             return cocktailModel;
         }
     }

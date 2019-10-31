@@ -26,7 +26,7 @@ namespace CM.DTOs
         // model?
         public List<CocktailIngredient> CocktailIngredients { get; set; }
             = new List<CocktailIngredient>();
-        public ICollection<CocktailReview> CocktailReviews { get; set; }
-           = new List<CocktailReview>();
+        public ICollection<Review> CocktailReviews { get; set; }
+           = new List<Review>();
     }
 }

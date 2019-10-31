@@ -21,7 +21,7 @@ namespace CM.Models
         [Required]
         public string Address { get; set; } // can be made with google maps api
         public ICollection<BarCocktail> BarCocktails { get; set; }
-        public ICollection<BarReview> BarReviews { get; set; }
+        public ICollection<Review> Reviews { get; set; }
         public decimal BarRating { get; set; }
         public DateTime? DateDeleted { get; set; }
     }
