@@ -32,7 +32,6 @@ namespace CM.Web.Areas.Bars.Controllers
             {
                 return NotFound();
             }
-
             var barDTO =await _barServices.GetBarByID(id);
             if (barDTO == null)
             {
@@ -43,11 +42,14 @@ namespace CM.Web.Areas.Bars.Controllers
             return View(barVM);
         }
 
-        //// GET: Bars/Bars
-        //public async Task<IActionResult> Index()
-        //{
-        //    return View(await _context.Bars.ToListAsync());
-        //}
+        // GET: Bars/Bars
+        [Route("bars/list")]
+        public async Task<IActionResult> Index()
+        {
+            var bars =await _barServices.GetAllBars();
+            var barsVM = bars.Select(b => b.MapBarToVM()).ToList();
+            return View(barsVM);
+        }
         //// GET: Bars/Bars/Create
         //public IActionResult Create()
         //{

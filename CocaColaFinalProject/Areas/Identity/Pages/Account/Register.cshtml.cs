@@ -18,7 +18,7 @@ namespace CM.Web.Areas.Identity.Pages.Account
     {
         private readonly SignInManager<AppUser> _signInManager;
         private readonly UserManager<AppUser> _userManager;
-        private readonly ILogger<RegisterModel> _logger;
+        private readonly ILogger<RegisterModel> _logger;        
         private readonly IEmailSender _emailSender;
 
         public RegisterModel(

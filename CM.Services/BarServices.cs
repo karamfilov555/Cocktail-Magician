@@ -38,6 +38,17 @@ namespace CM.Services
             return barDTO;
         }
 
+
+        public async Task<ICollection<BarDTO>> GetAllBars()
+        {
+            
+            var bars = await _context.Bars.Where(b => b.DateDeleted == null)
+                .ToListAsync()
+                .ConfigureAwait(false);
+            var barDTOs = bars.Select(b => b.MapBarToDTO()).ToList();
+            return barDTOs;
+        }
+
     }
 
 }
