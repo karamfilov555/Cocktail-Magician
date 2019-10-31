@@ -1,4 +1,5 @@
 ﻿using CM.Models;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -23,7 +24,9 @@ namespace CM.Web.Models
         public string Image { get; set; }
         [Display(Name = "Cocktail's Rating")]
         public decimal Rating { get; set; }
+        public List<SelectListItem> Ingredients { get; set; } = new List<SelectListItem>();
+        public List<string> IngredientsIDs { get; set; } = new List<string>();
 
-        public ICollection<CocktailIngredient> CocktailIngredients { get; set; } = new List<CocktailIngredient>();
+        public List<CocktailIngredient> CocktailIngredients { get; set; } = new List<CocktailIngredient>();
     }
 }

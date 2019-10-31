@@ -24,7 +24,7 @@ namespace CM.DTOs
         [Display(Name = "Type your Review Here")]
         public string Description { get; set; }
         // model?
-        public ICollection<CocktailIngredient> CocktailIngredients { get; set; }
+        public List<CocktailIngredient> CocktailIngredients { get; set; }
             = new List<CocktailIngredient>();
         public ICollection<CocktailReview> CocktailReviews { get; set; }
            = new List<CocktailReview>();

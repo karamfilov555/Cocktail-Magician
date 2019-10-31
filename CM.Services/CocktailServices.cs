@@ -58,6 +58,10 @@ namespace CM.Services
             var cocktail = cocktailDto.MapToCocktailModel();
             _context.Cocktails.Add(cocktail);
             await _context.SaveChangesAsync();
+            cocktailDto.CocktailIngredients.ForEach(ci => ci.CocktailId = cocktail.Id);
+            cocktail.CocktailIngredients=cocktailDto.CocktailIngredients;
+            await _context.SaveChangesAsync();
+
         }
         public async Task<ICollection<CocktailDto>> GetAllCocktails()
         {

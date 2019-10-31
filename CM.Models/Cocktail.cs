@@ -8,7 +8,7 @@ namespace CM.Models
     {
         public Cocktail()
         {
-
+            this.CocktailReviews = new List<CocktailReview>();
         }
         [Key]
         public string Id { get; set; }
@@ -17,7 +17,7 @@ namespace CM.Models
         [Url]
         public string Image { get; set; }
         public ICollection<BarCocktail> BarCocktails { get; set; }
-        public ICollection<CocktailIngredient> CocktailIngredients { get; set; }
+        public List<CocktailIngredient> CocktailIngredients { get; set; }
         public ICollection<CocktailReview> CocktailReviews { get; set; }
         public decimal Rating { get; set; }
         public DateTime? DateDeleted { get; set; }

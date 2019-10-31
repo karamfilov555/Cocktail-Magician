@@ -1,5 +1,7 @@
 ﻿using CM.DTOs;
+using CM.Models;
 using CM.Web.Models;
+using System.Linq;
 
 namespace CM.Web.Mappers
 {
@@ -13,7 +15,8 @@ namespace CM.Web.Mappers
             cocktailVm.Rating = cocktailDto.Rating;
             cocktailVm.Image = cocktailDto.Image;
             cocktailVm.CocktailIngredients = cocktailDto.CocktailIngredients;
-            return cocktailVm;
+            return cocktailVm; 
+
         }
         public static CocktailDto MapToCocktailDto(this CocktailViewModel cocktailVm)
         {
@@ -22,7 +25,13 @@ namespace CM.Web.Mappers
             cocktailDto.Name = cocktailVm.Name;
             cocktailDto.Image = cocktailVm.Image;
             cocktailDto.Rating = cocktailVm.Rating;
-            cocktailDto.CocktailIngredients = cocktailVm.CocktailIngredients;
+            //TODO
+            cocktailDto.CocktailIngredients = cocktailVm.IngredientsIDs
+                .Select(i=>new CocktailIngredient()
+                {
+                    CocktailId = cocktailVm.Id, IngredientId=i
+                })
+                .ToList();
             // colleciton bars , kudeto se predlaga kokteila ? 
             return cocktailDto;
         }

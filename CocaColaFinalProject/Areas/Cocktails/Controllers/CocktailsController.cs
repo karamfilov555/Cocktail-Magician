@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using CM.Models;
 using CM.Services.Contracts;
@@ -8,6 +9,7 @@ using CM.Web.Mappers;
 using CM.Web.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace CM.Web.Areas.Cocktails.Controllers
 {
@@ -20,8 +22,14 @@ namespace CM.Web.Areas.Cocktails.Controllers
         public CocktailsController(ICocktailServices cocktailServices,
                                     UserManager<AppUser> userManager,
                                     IReviewServices reviewServices)
+        private readonly IIngredientServices _ingredientServices;
+
+        //ID!!!! string id = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+        public CocktailsController(ICocktailServices cocktailServices, IIngredientServices ingredientServices)
         {
             _cocktailServices = cocktailServices;
+            _ingredientServices = ingredientServices;
             _userManager = userManager;
             _reviewServices = reviewServices;
         }
@@ -56,7 +64,10 @@ namespace CM.Web.Areas.Cocktails.Controllers
         [HttpGet]
         public async Task<IActionResult> Create()
         {
-            return View();
+            var ingr =await _ingredientServices.GetAllIngredients();
+            var cocktailVM = new CocktailViewModel();
+            cocktailVM.Ingredients.AddRange(ingr.Select(i => new SelectListItem(i.Name, i.Id)));
+            return View(cocktailVM);
         }
 
         [HttpPost]
@@ -65,7 +76,7 @@ namespace CM.Web.Areas.Cocktails.Controllers
             var cocktailDto = cocktailVm.MapToCocktailDto();
             await _cocktailServices.AddCocktail(cocktailDto);
 
-            return View();
+            return RedirectToAction("ListCocktails");
         }
         [HttpGet]
         public async Task<IActionResult> ListCocktails(string sortOrder)

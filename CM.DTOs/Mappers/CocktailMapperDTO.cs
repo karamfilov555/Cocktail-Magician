@@ -1,6 +1,7 @@
 ﻿using CM.Models;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace CM.DTOs.Mappers
@@ -14,7 +15,7 @@ namespace CM.DTOs.Mappers
             cocktailDto.Name = cocktail.Name;
             cocktailDto.Rating = cocktail.Rating;
             cocktailDto.Image = cocktail.Image;
-            cocktailDto.CocktailIngredients = cocktail.CocktailIngredients;
+            cocktailDto.CocktailIngredients = cocktail.CocktailIngredients.ToList();
             cocktailDto.CocktailReviews = cocktail.CocktailReviews;
 
             return cocktailDto;
@@ -26,7 +27,7 @@ namespace CM.DTOs.Mappers
             cocktailModel.Name = cocktailDto.Name;
             cocktailModel.Rating = cocktailDto.Rating;
             cocktailModel.Image = cocktailDto.Image;
-            cocktailModel.CocktailIngredients = cocktailDto.CocktailIngredients;
+            //cocktailModel.CocktailIngredients = cocktailDto.CocktailIngredients;
             cocktailModel.CocktailReviews = cocktailDto.CocktailReviews;
             return cocktailModel;
         }
