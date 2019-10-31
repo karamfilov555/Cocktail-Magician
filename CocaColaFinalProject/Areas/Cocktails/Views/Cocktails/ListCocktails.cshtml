@@ -102,11 +102,19 @@
                     }
                 </td>
                 <td style="padding-top:50px">
+                    <p>
+                        <a class="btn btn-default btn-sm" asp-area="Cocktails" asp-controller="Cocktails" asp-action="RateCocktail" asp-route-id="@cocktail.Id"><font style="color:gold">Rate Cocktail</font></a>
+                    </p>
+                    @if (this.User.IsInRole("Administrator") || this.User.IsInRole("Manager"))
+                    {
                         <p>
-                            <a class="btn btn-default btn-sm" asp-area="Cocktails" asp-controller="Cocktails" asp-action="RateCocktail" asp-route-id="@cocktail.Id"><font style="color:gold">Rate Cocktail</font></a>
+                            <a class="btn btn-default btn-sm" asp-area="Cocktails" asp-controller="Cocktails" asp-action="Edit" asp-route-id="@cocktail.Id"><font style="color:gold">Edit Cocktail</font></a>
                         </p>
-                </td>
-
+                        <p>
+                            <a class="btn btn-default btn-sm" asp-area="Cocktails" asp-controller="Cocktails" asp-action="Delete" asp-route-id="@cocktail.Id"><font style="color:gold">Delete Cocktail</font></a>
+                        </p>
+                    }
+                    </td>
             </tr>
         }
     </tbody>

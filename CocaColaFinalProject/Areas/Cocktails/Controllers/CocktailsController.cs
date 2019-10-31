@@ -10,6 +10,7 @@ using CM.Web.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using NToastNotify;
 
 namespace CM.Web.Areas.Cocktails.Controllers
 {
@@ -19,17 +20,19 @@ namespace CM.Web.Areas.Cocktails.Controllers
         private readonly ICocktailServices _cocktailServices;
         private readonly IReviewServices _reviewServices;
         private readonly IIngredientServices _ingredientServices;
+        private readonly IToastNotification _toast;
 
         //ID!!!! string id = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
 
         public CocktailsController(ICocktailServices cocktailServices, 
                                    IIngredientServices ingredientServices,
-                                   IReviewServices reviewServices)
+                                   IReviewServices reviewServices,
+                                   IToastNotification toast)
         {
             _cocktailServices = cocktailServices;
             _ingredientServices = ingredientServices;
             _reviewServices = reviewServices;
-           
+            _toast = toast;
         }
 
         [Route("cocktails/details/{id}")]
@@ -130,6 +133,23 @@ namespace CM.Web.Areas.Cocktails.Controllers
             var cocktailDto = cocktailVm.MapToCocktailDto();
             string userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
             await _reviewServices.CreateCocktailReview(userId, cocktailDto);
+            return RedirectToAction("ListCocktails", "Cocktails");
+        }
+        [HttpGet]
+        public async Task<IActionResult> Delete(string Id)
+        {
+            var cocktail = await _cocktailServices.FindCocktailById(Id);
+            var cocktailVm = cocktail.MapToCocktailViewModel();
+            //validations
+
+            return View(cocktailVm);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Delete(CocktailViewModel cocktailVm)
+        {
+             var cocktailName = await _cocktailServices.DeleteCocktial(cocktailVm.Id);
+            _toast.AddSuccessToastMessage($"You successfully delete \"{cocktailName}\" cocktail!");
             return RedirectToAction("ListCocktails", "Cocktails");
         }
     }

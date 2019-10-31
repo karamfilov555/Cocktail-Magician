@@ -28,5 +28,6 @@ namespace CM.Web.Models
         public List<string> IngredientsIDs { get; set; } = new List<string>();
 
         public List<CocktailIngredient> CocktailIngredients { get; set; } = new List<CocktailIngredient>();
+        public DateTime? DateDeleted { get; set; }
     }
 }

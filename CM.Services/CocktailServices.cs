@@ -68,10 +68,20 @@ namespace CM.Services
             var allCocktailsModels = await _context.Cocktails
                                                 .Include(c => c.CocktailIngredients)
                                                 .ThenInclude(c => c.Ingredient)
+                                                .Where(c=>c.DateDeleted == null)
                                                 .ToListAsync();
 
             var allCocktailsDto = allCocktailsModels.Select(c => c.MapToCocktailDto()).ToList();
             return allCocktailsDto;
+        }
+
+        public async Task<string> DeleteCocktial(string id)
+        {
+            var cocktailModel = await _context.Cocktails
+                                            .FirstAsync(c=>c.Id==id);
+            cocktailModel.DateDeleted = DateTime.Now;
+            await _context.SaveChangesAsync();
+            return cocktailModel.Name;
         }
     }
 }

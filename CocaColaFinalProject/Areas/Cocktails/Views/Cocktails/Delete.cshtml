@@ -1,0 +1,48 @@
+﻿
+@{
+    ViewData["Title"] = "Delete";
+    Layout = "~/Views/Shared/_LayoutCustom.cshtml";
+}
+
+
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th><h5>Cocktail's Picture</h5></th>
+            <th><h5>Cocktail's Details</h5></th>
+            <th><h5>Cocktail's Ingredients</h5></th>
+
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+
+        <tr>
+            <td><img src="@Model.Image" height="250" width="250"></td>
+            <td>
+                <h5>Name: @Model.Name</h5>
+                <h5>Rating: @Model.Rating</h5>
+
+            </td>
+            <td>
+                @foreach (var ingredient in Model.CocktailIngredients)
+                {
+                    <h5>
+                        @ingredient.Ingredient.Name
+                    </h5>
+                }
+            </td>
+        </tr>
+
+    </tbody>
+</table>
+<center>
+    <center><h1>Are you sure you want to delete "@Model.Name" cocktail?</h1></center>
+    <form method="post" asp-area="Cocktails" asp-controller="Cocktails" asp-action="Delete">
+        <input type="hidden" />
+        <input type="submit" value="Delete" class="btn btn-danger" /> |
+        <a asp-action="ListCocktails" class="btn btn-success">Back to List</a>
+    </form>
+</center>

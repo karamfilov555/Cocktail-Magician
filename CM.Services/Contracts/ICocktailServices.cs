@@ -13,6 +13,7 @@ namespace CM.Services.Contracts
         Task<CocktailDto> FindCocktailById(string id);
         Task AddCocktail(CocktailDto cocktailDto);
         Task<ICollection<CocktailDto>> GetAllCocktails();
+        Task<string> DeleteCocktial(string id);
 
     }
 }

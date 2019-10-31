@@ -14,6 +14,7 @@ namespace CM.Web.Mappers
             cocktailVm.Name = cocktailDto.Name;
             cocktailVm.Rating = cocktailDto.Rating;
             cocktailVm.Image = cocktailDto.Image;
+            cocktailVm.DateDeleted = cocktailDto.DateDeleted;
             cocktailVm.CocktailIngredients = cocktailDto.CocktailIngredients;
             return cocktailVm; 
 

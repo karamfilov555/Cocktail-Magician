@@ -28,5 +28,6 @@ namespace CM.DTOs
             = new List<CocktailIngredient>();
         public ICollection<Review> CocktailReviews { get; set; }
            = new List<Review>();
+        public DateTime? DateDeleted { get; set; }
     }
 }
