@@ -17,7 +17,8 @@ namespace CM.DTOs.Mappers
             cocktailDto.Image = cocktail.Image;
             cocktailDto.CocktailIngredients = cocktail.CocktailIngredients.ToList();
             cocktailDto.CocktailReviews = cocktail.Reviews;
-            cocktailDto.DateDeleted = cocktailDto.DateDeleted;
+            cocktailDto.DateDeleted = cocktail.DateDeleted;
+            cocktailDto.BarCocktails = cocktail.BarCocktails.ToList();
             return cocktailDto;
         }
         public static Cocktail MapToCocktailModel(this CocktailDto cocktailDto)

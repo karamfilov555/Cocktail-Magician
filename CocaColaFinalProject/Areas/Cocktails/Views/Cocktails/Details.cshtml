@@ -5,40 +5,58 @@
     Layout = "~/Views/Shared/_LayoutCustom.cshtml";
 }
 
-    <center><h1>@Model.Name details</h1></center>
-    <table class="table">
-        <thead>
-            <tr>
-                <th><h5>Cocktail's Picture</h5></th>
-                <th><h5>Cocktail's Details</h5></th>
-                <th><h5>Cocktail's Ingredients</h5></th>
+<center><h1>@Model.Name details</h1></center>
+<table class="table">
+    <thead>
+        <tr>
+            <th><h5>Cocktail's Picture</h5></th>
+            <th><h5>Cocktail's Details</h5></th>
+            <th><h5>Cocktail's Ingredients</h5></th>
 
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            
-                <tr>
-                    <td><img src="@Model.Image" height="250" width="250"></td>
-                    <td><h5>Name: @Model.Name</h5>
-                        <h5>Rating: @Model.Rating</h5>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
 
-                    </td>
-                    <td>
-                        @foreach (var item in Model.CocktailIngredients)
-                        {
-                            <h5>
-                                @item.Ingredient.Name
-                            </h5>
-                        }
-                    </td>
-                </tr>
-            
-        </tbody>
-    </table>
+        <tr>
+            <td><img src="@Model.Image" height="250" width="250"></td>
+            <td>
+                <h5>Name: @Model.Name</h5>
+                <h5>Rating: @Model.Rating</h5>
 
-    
-    <div>
-        
-        <a asp-action="ListCocktails" class="btn btn-success">Back to List</a>
+            </td>
+            <td>
+                @foreach (var item in Model.CocktailIngredients)
+                {
+                    <h5>
+                        @item.Ingredient.Name
+                    </h5>
+                }
+            </td>
+        </tr>
+
+    </tbody>
+</table>
+<h1 class="hdr6"> Where to find "@Model.Name"</h1>
+@foreach (var item in Model.BarCocktails)
+{
+    <div class="eventBox">
+        <span class="date">SEP <span>06</span></span>
+
+        <h4 class="hdr2">
+            @item.Bar.Name<br>
+            <span class="place"> @item.Bar.Address</span>
+            <span class="time">11:00 am - 1:00 pm</span>
+        </h4>
+        <hr>
+
+        <div class="clearfix"></div>
+        <!-- go to http://amap.to/ and create your own map -->
+        <a href="http://aMAP.to/qgmdrzv?iframe=true&amp;width=500&amp;height=350" data-rel="prettyPhoto" class="mapit"><i></i>Map it</a>
+        <a target="_blank" href="http://www.facebook.com/sharer/sharer.php?u=foodtruck.html.themeforest.createit.pl" class="shareit"><i></i>Share it</a>
+
     </div>
+}
+<div>
+    <a asp-action="ListCocktails" class="btn btn-success">Back to List</a>
+</div>

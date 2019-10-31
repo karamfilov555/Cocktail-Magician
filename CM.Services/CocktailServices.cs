@@ -24,6 +24,9 @@ namespace CM.Services
             var cocktails = await _context.Cocktails
                                             .Where(c=>c.DateDeleted == null)
                                             .Include(c=>c.CocktailIngredients)
+                                            .ThenInclude(c => c.Ingredient)
+                                            .Include(c => c.BarCocktails)
+                                            .ThenInclude(c => c.Bar)
                                             .ToListAsync()
                                             .ConfigureAwait(false);
             //map to dto before pass to fe
@@ -39,6 +42,8 @@ namespace CM.Services
                                             .ThenInclude(c=>c.User)
                                             .Include(c=>c.CocktailIngredients)
                                             .ThenInclude(c=>c.Ingredient)
+                                            .Include(c=>c.BarCocktails)
+                                            .ThenInclude(c=>c.Bar)
                                             .FirstOrDefaultAsync(c => c.Id == id 
                                              && c.DateDeleted == null)
                                             .ConfigureAwait(false);
@@ -65,8 +70,12 @@ namespace CM.Services
         public async Task<ICollection<CocktailDto>> GetAllCocktails()
         {
             var allCocktailsModels = await _context.Cocktails
+                                                .Include(c => c.Reviews)
+                                                .ThenInclude(c => c.User)
                                                 .Include(c => c.CocktailIngredients)
                                                 .ThenInclude(c => c.Ingredient)
+                                                .Include(c => c.BarCocktails)
+                                                .ThenInclude(c => c.Bar)
                                                 .Where(c=>c.DateDeleted == null)
                                                 .ToListAsync();
 
