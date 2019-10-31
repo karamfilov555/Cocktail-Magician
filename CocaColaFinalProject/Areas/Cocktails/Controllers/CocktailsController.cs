@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using CM.Models;
 using CM.Services.Contracts;
 using CM.Web.Mappers;
 using CM.Web.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CM.Web.Areas.Cocktails.Controllers
@@ -13,9 +15,15 @@ namespace CM.Web.Areas.Cocktails.Controllers
     public class CocktailsController : Controller
     {
         private readonly ICocktailServices _cocktailServices;
-        public CocktailsController(ICocktailServices cocktailServices)
+        private readonly UserManager<AppUser> _userManager;
+        private readonly IReviewServices _reviewServices;
+        public CocktailsController(ICocktailServices cocktailServices,
+                                    UserManager<AppUser> userManager,
+                                    IReviewServices reviewServices)
         {
             _cocktailServices = cocktailServices;
+            _userManager = userManager;
+            _reviewServices = reviewServices;
         }
 
         [Route("cocktails/details/{id}")]
@@ -82,13 +90,6 @@ namespace CM.Web.Areas.Cocktails.Controllers
                 case "rating_desc":
                     allCocktailsVms = allCocktailsVms.OrderByDescending(s => s.Rating);
                     break;
-                //case "ingredients":
-                //    allCocktailsVms = allCocktailsVms.OrderByDescending(b => b.CocktailIngredients);
-                //    break;
-                //case "ingredients_desc":
-                //    allCocktailsVms = allCocktailsVms.OrderBy(b => b.CocktailIngredients);
-                //    break;
-               
 
                 default:
                     allCocktailsVms = allCocktailsVms.OrderBy(s => s.Name);
@@ -96,6 +97,32 @@ namespace CM.Web.Areas.Cocktails.Controllers
             }
 
             return View(allCocktailsVms.ToList());
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> RateCocktail(string Id)
+        {
+            var cocktail = await _cocktailServices.FindCocktailById(Id);
+            var reviewVm = cocktail.MapToCocktailReviewViewModel();
+            var user = await _userManager.GetUserAsync(User);
+
+            if (await _reviewServices.CheckIfUserCanReview(user.Id, cocktail))
+            {
+                return BadRequest("You cannot rate cocktail you have already rated!");
+            }
+
+            return View(reviewVm);
+        }
+        [HttpPost]
+        public async Task<IActionResult> RateCocktail(CocktailReviewViewModel cocktailVm)
+        {
+            //validations
+            var cocktailDto = cocktailVm.MapToCocktailDto();
+            var user = await _userManager.GetUserAsync(User);
+            await _reviewServices.CreateCocktailReview(user.Id,cocktailDto);
+           
+
+            return RedirectToAction("Index", "Home");
         }
     }
 }

@@ -61,6 +61,7 @@ namespace CocaColaFinalProject
             services.AddScoped<ICocktailServices, CocktailServices>();
             services.AddScoped<IBarServices, BarServices>();
             services.AddScoped<IAppUserServices, AppUserServices>();
+            services.AddScoped<IReviewServices, ReviewServices>();
 
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);

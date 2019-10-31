@@ -24,6 +24,7 @@ namespace CM.Data
             builder.ApplyConfiguration(new BarCocktailConfiguration());
             builder.ApplyConfiguration(new CocktailIngredientConfiguration());
             builder.ApplyConfiguration(new CocktailReviewConfiguration());
+            builder.ApplyConfiguration(new BarReviewConfiguration());
 
             base.OnModelCreating(builder);
         }

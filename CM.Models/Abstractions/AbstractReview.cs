@@ -5,8 +5,6 @@ namespace CM.Models.Abstractions
 {
     public abstract class AbstractReview
     {
-        [Key]
-        public string Id { get; set; }
         [Range(0, 500)]
         public string Description { get; set; }
 

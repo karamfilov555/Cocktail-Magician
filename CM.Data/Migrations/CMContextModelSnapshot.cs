@@ -135,8 +135,7 @@ namespace CM.Data.Migrations
 
             modelBuilder.Entity("CM.Models.BarReview", b =>
                 {
-                    b.Property<string>("Id")
-                        .ValueGeneratedOnAdd();
+                    b.Property<string>("UserId");
 
                     b.Property<string>("BarId");
 
@@ -145,13 +144,9 @@ namespace CM.Data.Migrations
                     b.Property<decimal>("Rating")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<string>("UserId");
-
-                    b.HasKey("Id");
+                    b.HasKey("UserId", "BarId");
 
                     b.HasIndex("BarId");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("BarReviews");
                 });
@@ -196,15 +191,10 @@ namespace CM.Data.Migrations
 
                     b.Property<string>("Description");
 
-                    b.Property<string>("Id")
-                        .IsRequired();
-
                     b.Property<decimal>("Rating")
                         .HasColumnType("decimal(18,2)");
 
                     b.HasKey("UserId", "CocktailId");
-
-                    b.HasAlternateKey("Id");
 
                     b.HasIndex("CocktailId");
 
@@ -333,11 +323,13 @@ namespace CM.Data.Migrations
                 {
                     b.HasOne("CM.Models.Bar", "Bar")
                         .WithMany("BarReviews")
-                        .HasForeignKey("BarId");
+                        .HasForeignKey("BarId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("CM.Models.AppUser", "User")
                         .WithMany()
-                        .HasForeignKey("UserId");
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("CM.Models.CocktailIngredient", b =>

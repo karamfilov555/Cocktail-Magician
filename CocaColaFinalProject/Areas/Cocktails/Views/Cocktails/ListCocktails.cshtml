@@ -50,7 +50,9 @@
         {
             <tr>
                 <td>
+                    <a asp-area="Cocktails" asp-controller="Cocktails" asp-action="Details" asp-route-id="@cocktail.Id">
                     <img src="@cocktail.Image" height="250" width="250" style="border-radius:25px; padding-top:5px; padding-bottom:5px">
+                        </a>
                 </td>
                 <td><h5 style="padding-left:30px;"> @cocktail.Name</h5></td>
 
@@ -100,7 +102,9 @@
                     }
                 </td>
                 <td style="padding-top:50px">
-                    <a class="btn btn-default btn-sm"> <font style="color:gold">rate cocktail</font> </a>
+                        <p>
+                            <a class="btn btn-default btn-sm" asp-area="Cocktails" asp-controller="Cocktails" asp-action="RateCocktail" asp-route-id="@cocktail.Id"><font style="color:gold">Rate Cocktail</font></a>
+                        </p>
                 </td>
 
             </tr>
