@@ -26,6 +26,9 @@ namespace CM.Models
         public Cocktail Cocktail { get; set; }
         public string BarId { get; set; }
         public Bar Bar { get; set; }
+        //да е  datetime???
         public string ReviewDate { get; set; }
+        //public DateTime? DateDeleted { get; set; }
+
     }
 }

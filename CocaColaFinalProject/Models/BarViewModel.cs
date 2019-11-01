@@ -25,6 +25,7 @@ namespace CM.Web.Models
 
         [Required(ErrorMessage = "A link to an image is required!")]
         public string ImageURL { get; set; }
+        public List<ReviewViewModel> Reviews { get; set; } = new List<ReviewViewModel>();
 
     }
 }

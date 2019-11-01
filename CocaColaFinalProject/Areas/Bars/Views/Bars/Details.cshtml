@@ -10,16 +10,16 @@
     <h4>Bar</h4>
     <hr />
     <dl class="row">
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Model.Name
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Model.Address
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             <img src="@Model.ImageURL" height="300" />
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             <a href="@Model.Website">@Model.Website</a>
         </dd>
     </dl>
@@ -27,4 +27,26 @@
 <div>
     <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
     <a asp-action="Index">Back to List</a>
+</div>
+<div>
+    <h3>Comments</h3>
+    @foreach (var review in @Model.Reviews)
+    {
+        <div class="blog-post format-quote">
+            <div class="blog_thumbnail">
+                <a href="7b_single-blog.html" class="box_text">
+                    <span class="ribbon_icon"><i class="fa fa-quote-left"></i></span>
+                    <blockquote class="inner">
+                        <p>
+                            @review.Description
+                        </p>
+                        <span class="author">@review.UserName</span>
+                    </blockquote>
+                </a>
+            </div>
+            <div class="meta_box">
+                <span class="meta_date">@review.ReviewDate</span>                
+            </div>
+        </div>
+    }
 </div>

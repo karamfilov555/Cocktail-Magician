@@ -1,5 +1,6 @@
 ﻿using CM.Data;
 using CM.DTOs;
+using CM.DTOs.Mappers;
 using CM.Models;
 using CM.Services.Contracts;
 using Microsoft.EntityFrameworkCore;
@@ -77,6 +78,16 @@ namespace CM.Services
             }
 
             return reviews;
+        }
+
+        public async Task<List<BarReviewDTO>> GetAllReviewsForBar(string id)
+        {
+            var reviews = await _context
+                .Reviews
+                .Include(r=>r.User)
+                .Where(r => r.BarId == id).ToListAsync();
+            var reviewDTOs = reviews.Select(r => r.MapReviewToDTO()).ToList();
+            return reviewDTOs;
         }
     }
 }

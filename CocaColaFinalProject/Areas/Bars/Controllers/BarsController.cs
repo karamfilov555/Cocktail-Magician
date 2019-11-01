@@ -19,11 +19,14 @@ namespace CM.Web.Areas.Bars.Controllers
 
         private readonly IBarServices _barServices;
         private readonly ICocktailServices _cocktailServices;
+        private readonly IReviewServices _reviewServices;
 
-        public BarsController(IBarServices barServices, ICocktailServices cocktailServices)
+        public BarsController(IBarServices barServices, ICocktailServices cocktailServices, 
+            IReviewServices reviewServices)
         {
             _barServices = barServices;
             _cocktailServices = cocktailServices;
+            _reviewServices = reviewServices;
         }
 
 
@@ -41,6 +44,8 @@ namespace CM.Web.Areas.Bars.Controllers
                 return NotFound();
             }
             var barVM = barDTO.MapBarToVM();
+            var reviews = await _reviewServices.GetAllReviewsForBar(id);
+            barVM.Reviews = reviews.Select(r => r.MapReviewDTOToVM()).ToList();
 
             return View(barVM);
         }
