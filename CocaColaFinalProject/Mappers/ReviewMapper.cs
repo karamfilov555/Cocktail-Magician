@@ -9,15 +9,26 @@ namespace CM.Web.Mappers
 {
     public static class ReviewMapper
     {
-        public static ReviewViewModel MapReviewDTOToVM(this BarReviewDTO reviewDTO)
+        public static BarReviewViewModel MapReviewDTOToVM(this BarReviewDTO reviewDTO)
         {
-            var newReviewVM = new ReviewViewModel();
-            newReviewVM.Id = reviewDTO.Id;
+            var newReviewVM = new BarReviewViewModel();
+            newReviewVM.BarId = reviewDTO.BarId;
             newReviewVM.Rating = reviewDTO.Rating;
             newReviewVM.Description = reviewDTO.Description;
             newReviewVM.ReviewDate = reviewDTO.ReviewDate;
             newReviewVM.UserName = reviewDTO.UserName;
             return newReviewVM;
+        }
+
+        public static BarReviewDTO MapVMToReviewDTO(this BarReviewViewModel reviewVM)
+        {
+            var newReview = new BarReviewDTO();
+            newReview.BarId = reviewVM.BarId;
+            newReview.Rating = reviewVM.Rating;
+            newReview.Description = reviewVM.Description;
+            newReview.ReviewDate = reviewVM.ReviewDate;
+            newReview.UserName = reviewVM.UserName;
+            return newReview;
         }
     }
 }

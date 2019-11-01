@@ -28,8 +28,8 @@ namespace CM.DTOs
             = new List<CocktailIngredient>();
         public List<BarCocktail> BarCocktails { get; set; }
            = new List<BarCocktail>();
-        public ICollection<Review> CocktailReviews { get; set; }
-           = new List<Review>();
+        public ICollection<CocktailReview> CocktailReviews { get; set; }
+           = new List<CocktailReview>();
         public DateTime? DateDeleted { get; set; }
     }
 }

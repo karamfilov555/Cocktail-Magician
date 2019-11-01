@@ -15,8 +15,8 @@ namespace CM.DTOs
         public DateTime? DateDeleted { get; set; }
         public List<CocktailDto> Cocktails { get; set; }
             = new List<CocktailDto>();
-        public ICollection<Review> Reviews { get; set; }
-           = new List<Review>();
+        public ICollection<BarReview> BarReviews { get; set; }
+           = new List<BarReview>();
 
         public BarDTO()
         {

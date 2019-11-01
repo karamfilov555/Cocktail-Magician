@@ -2,6 +2,7 @@
 using CM.DTOs;
 using CM.DTOs.Mappers;
 using CM.Models;
+using CM.Services.Common;
 using CM.Services.Contracts;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -35,7 +36,7 @@ namespace CM.Services
         {
             //validations
 
-            var cocktailReview = new Review
+            var cocktailReview = new CocktailReview
             {
                 UserId = userId,
                 CocktailId = cocktailDto.Id,
@@ -43,14 +44,14 @@ namespace CM.Services
                 Rating = cocktailDto.Rating,
                 ReviewDate = DateTime.Now.ToShortDateString()
             };
-            _context.Reviews.Add(cocktailReview);
+            _context.CocktailReviews.Add(cocktailReview);
             await _context.SaveChangesAsync().ConfigureAwait(false);
             await this.SetAverrageRating(cocktailDto.Id);
 
         }
         public async Task SetAverrageRating(string cocktailId)
         {
-            var gradesForCocktail = _context.Reviews
+            var gradesForCocktail = _context.CocktailReviews
                                         .Where(c => c.CocktailId == cocktailId).ToList();
             var avg = gradesForCocktail.Average(c => c.Rating);
             var cocktail = _context.Cocktails.First(c => c.Id == cocktailId);
@@ -61,7 +62,7 @@ namespace CM.Services
         {
             var reviews = new Dictionary<string, Tuple<string, decimal, string>>();
 
-            var reviewsForCocktail = await _context.Reviews
+            var reviewsForCocktail = await _context.CocktailReviews
                                     .Where(r => r.CocktailId == cocktailId)
                                     .ToListAsync();
 
@@ -83,11 +84,35 @@ namespace CM.Services
         public async Task<List<BarReviewDTO>> GetAllReviewsForBar(string id)
         {
             var reviews = await _context
-                .Reviews
+                .BarReviews
                 .Include(r=>r.User)
                 .Where(r => r.BarId == id).ToListAsync();
-            var reviewDTOs = reviews.Select(r => r.MapReviewToDTO()).ToList();
+            var reviewDTOs = reviews.Select(r => r.BarMapReviewToDTO()).ToList();
             return reviewDTOs;
+        }
+
+        public async Task CreateBarReview(BarReviewDTO barReviewDTO)
+        {
+            //validations
+            var user = await _context.Users
+                .FindAsync(barReviewDTO.UserID);
+            user.ValidateIfNull();
+            var barReview = barReviewDTO.MapDTOToReview();
+            barReview.UserId= user.Id;
+            _context.BarReviews.Add(barReview);
+            await _context.SaveChangesAsync().ConfigureAwait(false);
+            await this.SetAverrageRating(barReviewDTO.BarId);
+        }
+        private async Task SetAverrageRatingForBar(string barId)
+        {
+            var bar =await _context.Bars.FirstOrDefaultAsync(b => b.Id == barId);
+            var barRatings =await _context.BarReviews
+                                        .Where(r => r.BarId == barId)
+                                        .Select(r=>r.Rating)
+                                        .ToListAsync();
+            var avg = barRatings.Average();
+            bar.BarRating = avg;
+            await _context.SaveChangesAsync();
         }
     }
 }

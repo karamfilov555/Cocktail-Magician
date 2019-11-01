@@ -11,7 +11,8 @@ namespace CM.Models
         {
         }
 
-        public ICollection<Review> Reviews { get; set; }
+        public ICollection<CocktailReview> CocktailReviews { get; set; }
+        public ICollection<BarReview> BarReviews { get; set; }
 
     }
 

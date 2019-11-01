@@ -133,6 +133,33 @@ namespace CM.Data.Migrations
                     b.ToTable("BarCocktails");
                 });
 
+            modelBuilder.Entity("CM.Models.BarReview", b =>
+                {
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("BarId");
+
+                    b.Property<DateTime?>("DateDeleted");
+
+                    b.Property<string>("Description");
+
+                    b.Property<decimal>("Rating")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("ReviewDate");
+
+                    b.Property<string>("UserId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BarId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("BarReviews");
+                });
+
             modelBuilder.Entity("CM.Models.Cocktail", b =>
                 {
                     b.Property<string>("Id")
@@ -165,6 +192,33 @@ namespace CM.Data.Migrations
                     b.ToTable("CocktailIngredients");
                 });
 
+            modelBuilder.Entity("CM.Models.CocktailReview", b =>
+                {
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("CocktailId");
+
+                    b.Property<DateTime?>("DateDeleted");
+
+                    b.Property<string>("Description");
+
+                    b.Property<decimal>("Rating")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("ReviewDate");
+
+                    b.Property<string>("UserId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CocktailId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("CocktailReviews");
+                });
+
             modelBuilder.Entity("CM.Models.Ingredient", b =>
                 {
                     b.Property<string>("Id")
@@ -178,35 +232,6 @@ namespace CM.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Ingredients");
-                });
-
-            modelBuilder.Entity("CM.Models.Review", b =>
-                {
-                    b.Property<string>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("BarId");
-
-                    b.Property<string>("CocktailId");
-
-                    b.Property<string>("Description");
-
-                    b.Property<decimal>("Rating")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<string>("ReviewDate");
-
-                    b.Property<string>("UserId");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("BarId");
-
-                    b.HasIndex("CocktailId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Reviews");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -312,6 +337,17 @@ namespace CM.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
+            modelBuilder.Entity("CM.Models.BarReview", b =>
+                {
+                    b.HasOne("CM.Models.Bar", "Bar")
+                        .WithMany("Reviews")
+                        .HasForeignKey("BarId");
+
+                    b.HasOne("CM.Models.AppUser", "User")
+                        .WithMany("BarReviews")
+                        .HasForeignKey("UserId");
+                });
+
             modelBuilder.Entity("CM.Models.CocktailIngredient", b =>
                 {
                     b.HasOne("CM.Models.Cocktail", "Cocktail")
@@ -325,18 +361,14 @@ namespace CM.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("CM.Models.Review", b =>
+            modelBuilder.Entity("CM.Models.CocktailReview", b =>
                 {
-                    b.HasOne("CM.Models.Bar", "Bar")
-                        .WithMany("Reviews")
-                        .HasForeignKey("BarId");
-
                     b.HasOne("CM.Models.Cocktail", "Cocktail")
                         .WithMany("Reviews")
                         .HasForeignKey("CocktailId");
 
                     b.HasOne("CM.Models.AppUser", "User")
-                        .WithMany("Reviews")
+                        .WithMany("CocktailReviews")
                         .HasForeignKey("UserId");
                 });
 

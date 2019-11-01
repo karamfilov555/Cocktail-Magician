@@ -1,0 +1,25 @@
+﻿@model BarReviewViewModel
+@{
+    ViewData["Title"] = "_LeaveReviewPartial";
+}
+
+    <h4>Leave a comment</h4>
+    <form class="simpleForm" asp-controller="Reviews" asp-action="CreateBarReiew"  method="post">
+        <fieldset>
+            <dd hidden>
+                <input asp-controller="Reviews" asp-action="CreateBarReiew"  />
+                <input asp-for ="UserID" value="@User.FindFirstValue(ClaimTypes.NameIdentifier)" />
+            </dd>
+            <div class="form-group">
+                <label class="label-sm">UserName</label>
+                <input type="text" class="form-control input-sm" name="field_[]" placeholder="enter your name">
+            </div>
+            
+            <div class="form-group">
+                <label class="label-sm">Description</label>
+                <textarea class="form-control input-sm" rows="5" name="field_[]" placeholder="type your message"></textarea>
+            </div>
+            <input class="btn btn-default" type="submit" value="Submit">
+        </fieldset>
+    </form>
+
