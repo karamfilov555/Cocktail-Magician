@@ -1,6 +1,7 @@
 ﻿using CM.Data;
 using CM.DTOs;
 using CM.DTOs.Mappers;
+using CM.Models;
 using CM.Services.Common;
 using CM.Services.Contracts;
 using Microsoft.EntityFrameworkCore;
@@ -47,6 +48,25 @@ namespace CM.Services
                 .ConfigureAwait(false);
             var barDTOs = bars.Select(b => b.MapBarToDTO()).ToList();
             return barDTOs;
+        }
+
+        public async Task AddBar(BarDTO barDTO)
+        {
+            var newBar = barDTO.MapBarDTOToBar();
+            await _context.Bars.AddAsync(newBar).ConfigureAwait(false);
+            await _context.SaveChangesAsync();
+            var coctailsInBar = barDTO.Cocktails.Select(c => c.MapToCocktailModel()).ToList();
+            foreach (var cocktail in coctailsInBar)
+            {
+               await AddCocktailToBar(cocktail, newBar);
+            }
+        }
+
+        public async Task AddCocktailToBar(Cocktail cocktail, Bar bar)
+        {
+           bar.BarCocktails.Add(new BarCocktail() { BarId = bar.Id, CocktailId = cocktail.Id });
+            await _context.SaveChangesAsync();
+
         }
 
     }

@@ -18,5 +18,17 @@ namespace CM.DTOs.Mappers
             newBarDTO.DateDeleted = bar.DateDeleted;
             return newBarDTO;
         }
+
+        public static Bar MapBarDTOToBar(this BarDTO bar)
+        {
+            var newBar = new Bar();
+            newBar.Id = bar.Id;
+            newBar.Name = bar.Name;
+            newBar.Image = bar.ImageUrl;
+            newBar.Website = bar.Website;
+            newBar.Address = bar.Address;
+            newBar.DateDeleted = bar.DateDeleted;
+            return newBar;
+        }
     }
 }

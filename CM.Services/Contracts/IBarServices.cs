@@ -9,6 +9,7 @@ namespace CM.Services.Contracts
         Task<ICollection<BarDTO>> GetHomePageBars();
         Task<BarDTO> GetBarByID(string id);
         Task<ICollection<BarDTO>> GetAllBars();
+        Task AddBar(BarDTO barDTO);
 
     }
 }

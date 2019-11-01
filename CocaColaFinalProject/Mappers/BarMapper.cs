@@ -30,13 +30,13 @@ namespace CM.Web.Mappers
             newBarDTO.Address = bar.Address;
             newBarDTO.ImageUrl = bar.ImageURL;
             newBarDTO.Website = bar.Website;
-            //newBarDTO.Cocktails = bar.AllCocktails
-            //   .Select(i => new CocktailDto()
-            //   {
-            //       Id = i.ToString()
-                   
-            //   })
-            //   .ToList();
+            newBarDTO.Cocktails = bar.AllCocktails
+               .Select(i => new CocktailDto()
+               {
+                   Id = i.ToString()
+
+               })
+               .ToList();
 
             return newBarDTO;
         }

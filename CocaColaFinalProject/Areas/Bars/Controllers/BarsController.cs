@@ -54,10 +54,11 @@ namespace CM.Web.Areas.Bars.Controllers
             return View(barsVM);
         }
         // GET: Bars/Bars/Create
-        [Route("bars/create")]
+        [HttpGet]
+        
         public async Task<IActionResult> Create()
         {
-            var allCocktails =await _cocktailServices.GetAllCocktails();
+            var allCocktails = await _cocktailServices.GetAllCocktails();
             var createBarVM = new CreateBarVM();
             createBarVM.AllCocktails = allCocktails
                 .Select(c => new SelectListItem(c.Name, c.Id)).ToList();
@@ -67,19 +68,19 @@ namespace CM.Web.Areas.Bars.Controllers
         //POST: Bars/Bars/Create
         //To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> Create(CreateBarVM barVM)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        var barDTO=
-        //       _barServices.Add(bar);
-        //        await _context.SaveChangesAsync();
-        //        return RedirectToAction(nameof(Index));
-        //    }
-        //    return View(bar);
-        //}
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create(CreateBarVM barVM)
+        {
+            if (ModelState.IsValid)
+            {
+                var barDTO = barVM.MapBarVMToDTO();
+                await _barServices.AddBar(barDTO);
+
+                return RedirectToAction(nameof(Index));
+            }
+            return View(barVM);
+        }
 
         //// GET: Bars/Bars/Edit/5
         //public async Task<IActionResult> Edit(string id)
