@@ -16,6 +16,6 @@ namespace CM.Services.Contracts
         Task<List<BarReviewDTO>> GetAllReviewsForBar(string id);
 
 
-        Task<IDictionary<string, Tuple<string, decimal, string>>> GetReviewsDetailsForCocktial(string cocktailId);
+        Task<IDictionary<string, Tuple<string, decimal, DateTime>>> GetReviewsDetailsForCocktial(string cocktailId);
     }
 }

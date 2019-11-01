@@ -12,10 +12,10 @@ namespace CM.Data.Configuratons
 
         public void Configure(EntityTypeBuilder<BarReview> builder)
         {
-            builder.HasKey(r => r.Id);
-            builder.HasOne(r => r.User)
-                .WithMany(user => user.BarReviews)
-                .HasForeignKey(r => r.UserId);
+            //builder.HasKey(r => r.Id);
+            //builder.HasOne(r => r.User)
+            //    .WithMany(user => user.BarReviews)
+            //    .HasForeignKey(r => r.UserId);
             builder.HasOne(r => r.Bar)
                .WithMany(bar => bar.Reviews)
                .HasForeignKey(r => r.BarId);

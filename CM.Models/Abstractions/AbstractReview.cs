@@ -15,7 +15,7 @@ namespace CM.Models.Abstractions
         [Column(TypeName = "decimal(18,2)")]
         [Range(1, 5)]
         public decimal Rating { get; set; }
-        public string ReviewDate { get; set; }
+        public DateTime ReviewDate { get; set; }
         public DateTime? DateDeleted { get; set; }
         public string UserId { get; set; }
         public AppUser User { get; set; }

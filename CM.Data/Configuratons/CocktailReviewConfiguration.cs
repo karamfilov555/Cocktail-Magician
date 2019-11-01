@@ -13,9 +13,9 @@ namespace CM.Data.Configuratons
         public void Configure(EntityTypeBuilder<CocktailReview> builder)
         {
             builder.HasKey(r => r.Id);
-            builder.HasOne(r => r.User)
-                .WithMany(user => user.CocktailReviews)
-                .HasForeignKey(r => r.UserId);
+            //builder.HasOne(r => r.User)
+            //    .WithMany(user => user.CocktailReviews)
+            //    .HasForeignKey(r => r.UserId);
             builder.HasOne(r => r.Cocktail)
                .WithMany(cocktail => cocktail.Reviews)
                .HasForeignKey(r => r.CocktailId);
