@@ -1,10 +1,11 @@
-﻿using System;
+﻿using CM.Web.Areas.Reviews.Models;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace CM.Web.Models
+namespace CM.Web.Areas.Bars.Models
 {
     public class BarViewModel
     {

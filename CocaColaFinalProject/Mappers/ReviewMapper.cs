@@ -1,4 +1,5 @@
 ﻿using CM.DTOs;
+using CM.Web.Areas.Reviews.Models;
 using CM.Web.Models;
 using System;
 using System.Collections.Generic;

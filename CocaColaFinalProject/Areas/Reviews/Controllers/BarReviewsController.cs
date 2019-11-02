@@ -1,4 +1,5 @@
 ﻿using CM.Services.Contracts;
+using CM.Web.Areas.Reviews.Models;
 using CM.Web.Mappers;
 using CM.Web.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -9,16 +10,15 @@ using System.Threading.Tasks;
 
 namespace CM.Web.Controllers
 {
-    public class ReviewsController:Controller
+    public class BarReviewsController:Controller
     {
         private readonly ICocktailServices _cocktailServices;
         private readonly IBarServices _barServices;
         private readonly IReviewServices _reviewServices;
 
-        public ReviewsController(IBarServices barServices, 
-            ICocktailServices cocktailServices, IReviewServices reviewServices)
+        public BarReviewsController(IBarServices barServices, 
+             IReviewServices reviewServices)
         {
-            _cocktailServices = cocktailServices;
             _barServices = barServices;
             _reviewServices = reviewServices;
         }
