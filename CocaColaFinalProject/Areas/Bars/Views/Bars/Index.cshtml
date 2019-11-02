@@ -18,50 +18,53 @@
 <link rel="stylesheet" type="text/css" href="./assets/css/style.css">
 <script src="./assets/js/modernizr.custom.81779.js"></script>
 
-<table class="table">
-    <thead>
-        <tr>
-            <th width="30%"></th>
-            <th width="20%">Name</th>
-            <th width="20%">Address</th>
-            <th width="10%">Website</th>
-            <th width="20%"></th>
-
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var bar in Model)
-        {
+<h3 class="hdr4">All Bars</h3>
+<div >
+    <table class="table">
+        <thead>
             <tr>
-                <td>
-                    <img src="@bar.ImageURL"
-                         height="250" width="250"
-                         style="border-radius:25px; padding-top:5px; padding-bottom:5px" alt="Bar picture" />
-                </td>
-                <td>
-                    <h4>@bar.Name</h4>
-                </td>
-                <td>
-                    @bar.Address
-                </td>
-                <td>
-                    <a href="@bar.Website">
-                        @bar.Website
-                    </a>
-                </td>
-                <td>
-                    <a  class="btn btn-default btn-sm" asp-area="Bars" asp-action="Details" asp-route-id="@bar.Id">Details</a> 
-                    @if (this.User.IsInRole("Administrator")||this.User.IsInRole("Manager"))
-                    {
-                    <a class="btn btn-default btn-sm" asp-area="Bars" asp-action="Edit" asp-route-id="@bar.Id">Edit</a> 
-                    <a  class="btn btn-default btn-sm" asp-area="Bars" asp-action="Delete" asp-route-id="@bar.Id">Delete</a>
+                <th width="30%"></th>
+                <th width="20%">Name</th>
+                <th width="20%">Address</th>
+                <th width="10%">Website</th>
+                <th width="20%"></th>
 
-                    }
-                </td>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach (var bar in Model)
+            {
+                <tr>
+                    <td>
+                        <img src="@bar.ImageURL"
+                             height="250" width="250"
+                             style="border-radius:25px; padding-top:5px; padding-bottom:5px" alt="Bar picture" />
+                    </td>
+                    <td>
+                        <h4>@bar.Name</h4>
+                    </td>
+                    <td>
+                        @bar.Address
+                    </td>
+                    <td>
+                        <a href="@bar.Website">
+                            @bar.Website
+                        </a>
+                    </td>
+                    <td>
+                        <a class="btn btn-default btn-sm" asp-area="Bars" asp-action="Details" asp-route-id="@bar.Id">Details</a>
+                        @if (this.User.IsInRole("Administrator") || this.User.IsInRole("Manager"))
+                        {
+                            <a class="btn btn-default btn-sm" asp-area="Bars" asp-action="Edit" asp-route-id="@bar.Id">Edit</a>
+                            <a class="btn btn-default btn-sm" asp-area="Bars" asp-action="Delete" asp-route-id="@bar.Id">Delete</a>
+
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
 
 @*<a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
     <a asp-action="Details" asp-route-id="@item.Id">Details</a> |

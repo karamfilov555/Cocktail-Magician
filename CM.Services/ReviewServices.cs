@@ -101,7 +101,7 @@ namespace CM.Services
             barReview.UserId= user.Id;
             _context.BarReviews.Add(barReview);
             await _context.SaveChangesAsync().ConfigureAwait(false);
-            await this.SetAverrageRating(barReviewDTO.BarId);
+            await this.SetAverrageRatingForBar(barReviewDTO.BarId);
         }
         private async Task SetAverrageRatingForBar(string barId)
         {

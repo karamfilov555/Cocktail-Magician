@@ -10,6 +10,7 @@ using CM.Models;
 using CM.Services.Contracts;
 using CM.Web.Mappers;
 using CM.Web.Areas.Bars.Models;
+using CM.Web.Areas.Reviews.Models;
 
 namespace CM.Web.Areas.Bars.Controllers
 {
@@ -31,7 +32,7 @@ namespace CM.Web.Areas.Bars.Controllers
 
 
         // GET: Bars/Bars/Details/5
-        [Route("bars/details/{id}")]
+        //[Route("bars/details/{id}")]
         public async Task<IActionResult> Details(string id)
         {
             if (id == null)
@@ -87,6 +88,20 @@ namespace CM.Web.Areas.Bars.Controllers
             return View(barVM);
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> CreateNew(BarReviewViewModel barVM)
+
+        {
+            if (ModelState.IsValid)
+            {
+                //var barDTO = barVM.MapBarVMToDTO();
+                //await _barServices.AddBar(barDTO);
+
+                return RedirectToAction(nameof(Index));
+            }
+            return View(barVM);
+        }
         //// GET: Bars/Bars/Edit/5
         //public async Task<IActionResult> Edit(string id)
         //{

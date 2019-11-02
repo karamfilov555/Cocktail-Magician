@@ -29,6 +29,7 @@ namespace CM.Web.Mappers
             newReview.Description = reviewVM.Description;
             newReview.ReviewDate = reviewVM.ReviewDate;
             newReview.UserName = reviewVM.UserName;
+            newReview.UserID = reviewVM.UserID;
             return newReview;
         }
     }

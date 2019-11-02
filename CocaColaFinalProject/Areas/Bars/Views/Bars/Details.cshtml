@@ -28,34 +28,36 @@
     <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
     <a asp-action="Index">Back to List</a>
 </div>
-@{ 
+@{
     var reviewVM = new BarReviewViewModel();
-
+    reviewVM.BarId = Model.Id;
 
 }}
 <partial name="_LeaveReviewPartial" model=@reviewVM/>
-<div>
-    <h3>Comments</h3>
-    <ul class="commentList list-unstyled">
-        <li>
-            @foreach (var review in @Model.Reviews)
-            {
-                <div class="oneComment">
-                    <div class="media">
-                        <a class="pull-left roundedImg" href="#" style="background-image: url(&quot;./assets/images/content/testimonial-1.jpg&quot;);">
-                            <img class="media-object" src="./assets/images/content/testimonial-1.jpg" alt=" ">
-                        </a>
-                        <div class="media-body">
-                           @review.ReviewDate<br>
-                            @review.UserName
-                            <a href="#" class="comment-reply-link pull-right">Reply</a>
+
+
+    <div>
+        <h3>Comments</h3>
+        <ul class="commentList list-unstyled">
+            <li>
+                @foreach (var review in @Model.Reviews)
+                {
+                    <div class="oneComment">
+                        <div class="media">
+                            <a class="pull-left roundedImg" href="#" style="background-image: url(&quot;./assets/images/content/testimonial-1.jpg&quot;);">
+                                <img class="media-object" src="./assets/images/content/testimonial-1.jpg" alt=" ">
+                            </a>
+                            <div class="media-body">
+                                @review.ReviewDate<br>
+                                @review.UserName
+                                <a href="#" class="comment-reply-link pull-right">Reply</a>
+                            </div>
                         </div>
+                        <p>
+                            Donec tincidunt interdum arcu, ut volutpat urna tincidunt quis. Proin varius leo ut quam egestas rutrum. Donec faucibus mattis porta. Cras quis eros sit amet dui congue vehicula. Vivamus sit amet lacus
+                            lorem, eget congue orci. Donec at tellus eget mauris cursus interdum.
+                        </p>
                     </div>
-                    <p>
-                        Donec tincidunt interdum arcu, ut volutpat urna tincidunt quis. Proin varius leo ut quam egestas rutrum. Donec faucibus mattis porta. Cras quis eros sit amet dui congue vehicula. Vivamus sit amet lacus
-                        lorem, eget congue orci. Donec at tellus eget mauris cursus interdum.
-                    </p>
-                </div>
-            }
-    </ul>
-</div>
+                }
+        </ul>
+    </div>

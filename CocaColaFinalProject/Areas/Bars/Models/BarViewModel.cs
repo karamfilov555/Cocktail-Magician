@@ -21,6 +21,11 @@ namespace CM.Web.Areas.Bars.Models
             MaxLength(30, ErrorMessage = "Address must be between 3 and 30 symbols")]
         public string Address { get; set; }
         
+        
+
+        public decimal Rating { get; set; }
+        public string Description { get; set; }
+
         [Required(ErrorMessage = "A website is required!")]
         public string Website { get; set; }
 

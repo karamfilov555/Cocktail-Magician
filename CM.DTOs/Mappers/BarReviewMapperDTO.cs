@@ -21,7 +21,7 @@ namespace CM.DTOs.Mappers
         public static BarReview MapDTOToReview(this BarReviewDTO reviewDTO)
         {
             var newReview = new BarReview();
-            newReview.Id = reviewDTO.BarId;
+            newReview.BarId = reviewDTO.BarId;
             newReview.Description = reviewDTO.Description;
             newReview.Rating = reviewDTO.Rating;
             return newReview;
