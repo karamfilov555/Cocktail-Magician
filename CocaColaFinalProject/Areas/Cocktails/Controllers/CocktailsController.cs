@@ -81,13 +81,37 @@ namespace CM.Web.Areas.Cocktails.Controllers
             return RedirectToAction("ListCocktails");
         }
         [HttpGet]
-        public async Task<IActionResult> ListCocktails(string sortOrder)
+        public async Task<IActionResult> ListCocktails(string sortOrder , int? currPage)
         {
+            //ViewData["CurrentPage"] = currPage;
+            currPage = currPage ?? 1;
+
+            var fiveCocktailsDtos = await _cocktailServices.GetFiveCocktails((int)currPage);
+
+            var totalPages = await _cocktailServices.GetPageCountForCocktials(5);
+
+            var fiveCocktailsVm = fiveCocktailsDtos.Select(c => c.MapToCocktailViewModel()).ToList();
+
+            var litingViewModel = new CocktailsListingViewModel()
+            {
+                FiveCocktailsList = fiveCocktailsVm,
+                CurrPage = (int)currPage,
+                TotalPages = totalPages
+            };
+
+            if (totalPages > currPage)
+            {
+                litingViewModel.NextPage = currPage + 1;
+            }
+
+            if (currPage > 1)
+            {
+                litingViewModel.PrevPage = currPage - 1;
+            }
+
             ViewData["CurrentSort"] = sortOrder; //care
             ViewData["NameSortCriteria"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
             ViewData["RatingSortCriteria"] = sortOrder == "rating" ? "rating_desc" : "rating";
-            //ViewData["IngredientsSortCriteria"] = sortOrder == "ingredients" ? "ingredients_desc" : "ingredients";
-            
 
             var allCocktailsDtos = await _cocktailServices.GetAllCocktails();
             var allCocktailsVms = allCocktailsDtos.Select(c => c.MapToCocktailViewModel());
@@ -108,8 +132,8 @@ namespace CM.Web.Areas.Cocktails.Controllers
                     allCocktailsVms = allCocktailsVms.OrderBy(s => s.Name);
                     break;
             }
-
-            return View(allCocktailsVms.ToList());
+            return PartialView("_CocktailsGrid", litingViewModel);
+            //return View(allCocktailsVms.ToList());
         }
 
         [HttpGet]

@@ -96,6 +96,27 @@ namespace CM.Services
             var cocktail = await _context.Cocktails.FirstAsync(c => c.Id == id);
             return cocktail.Name;
         }
+
+        public async Task<IList<CocktailDto>> GetFiveCocktails(int currPage = 1)
+        {
+            var fiveCocktails = await _context.Cocktails
+                                        .Skip((currPage - 1) * 5)
+                                        .Take(5)
+                                        .ToListAsync();
+
+            var cocktailsDtos = fiveCocktails.Select(c => c.MapToCocktailDto()).ToList();
+            return cocktailsDtos;
+        }
+        public async Task<int> GetPageCountForCocktials(int cocktailsPerPage)
+        {
+            var allCocktailsCount = await _context
+                                       .Cocktails
+                                       .CountAsync();
+
+            int pageCount = (allCocktailsCount - 1) / cocktailsPerPage + 1;
+
+            return pageCount;
+        }
     }
 }
 

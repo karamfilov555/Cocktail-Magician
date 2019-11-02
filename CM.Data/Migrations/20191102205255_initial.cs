@@ -206,7 +206,7 @@ namespace CM.Data.Migrations
                     Id = table.Column<string>(nullable: false),
                     Description = table.Column<string>(nullable: true),
                     Rating = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    ReviewDate = table.Column<string>(nullable: true),
+                    ReviewDate = table.Column<DateTime>(nullable: false),
                     DateDeleted = table.Column<DateTime>(nullable: true),
                     UserId = table.Column<string>(nullable: true),
                     BarId = table.Column<string>(nullable: true)
@@ -259,7 +259,7 @@ namespace CM.Data.Migrations
                     Id = table.Column<string>(nullable: false),
                     Description = table.Column<string>(nullable: true),
                     Rating = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    ReviewDate = table.Column<string>(nullable: true),
+                    ReviewDate = table.Column<DateTime>(nullable: false),
                     DateDeleted = table.Column<DateTime>(nullable: true),
                     UserId = table.Column<string>(nullable: true),
                     CocktailId = table.Column<string>(nullable: true)
