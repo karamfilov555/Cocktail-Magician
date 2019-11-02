@@ -17,7 +17,9 @@ namespace CM.Web.Mappers
             newBarVM.Name = bar.Name;
             newBarVM.Address = bar.Address;
             newBarVM.ImageURL = bar.ImageUrl;
+            newBarVM.Rating = bar.Rating;
             newBarVM.Website = bar.Website;
+            newBarVM.Cocktails = bar.CocktailsNames;
 
             return newBarVM;
         }

@@ -69,11 +69,11 @@ namespace CM.Services
             foreach (var item in reviewsForCocktail)
             {
                 var username = await _userServices.GetUsernameById(item.UserId);
-                
+
                 if (item.Description == null)
                     item.Description = "No description";
 
-                var descriptionWithRating = new Tuple<string, decimal, DateTime>(item.Description,item.Rating, item.ReviewDate);
+                var descriptionWithRating = new Tuple<string, decimal, DateTime>(item.Description, item.Rating, item.ReviewDate);
 
                 reviews.Add(username, descriptionWithRating);
             }
@@ -85,7 +85,7 @@ namespace CM.Services
         {
             var reviews = await _context
                 .BarReviews
-                .Include(r=>r.User)
+                .Include(r => r.User)
                 .Where(r => r.BarId == id).ToListAsync();
             var reviewDTOs = reviews.Select(r => r.BarMapReviewToDTO()).ToList();
             return reviewDTOs;
@@ -96,19 +96,28 @@ namespace CM.Services
             //validations
             var user = await _context.Users
                 .FindAsync(barReviewDTO.UserID);
+            var bar = await _context.Bars
+                .Include(b=>b.Reviews)
+                .Where(b=>b.Id==barReviewDTO.BarId)
+                .FirstOrDefaultAsync();
             user.ValidateIfNull();
+            bar.ValidateIfNull();
             var barReview = barReviewDTO.MapDTOToReview();
-            barReview.UserId= user.Id;
+            barReview.UserId = user.Id;
+            if (bar.Reviews.Select(r=>r.UserId).ToList().Any(id=>id==user.Id))
+            {
+                throw new InvalidOperationException("You have already reviewed this bar!");      
+            }
             _context.BarReviews.Add(barReview);
             await _context.SaveChangesAsync().ConfigureAwait(false);
             await this.SetAverrageRatingForBar(barReviewDTO.BarId);
         }
         private async Task SetAverrageRatingForBar(string barId)
         {
-            var bar =await _context.Bars.FirstOrDefaultAsync(b => b.Id == barId);
-            var barRatings =await _context.BarReviews
+            var bar = await _context.Bars.FirstOrDefaultAsync(b => b.Id == barId);
+            var barRatings = await _context.BarReviews
                                         .Where(r => r.BarId == barId)
-                                        .Select(r=>r.Rating)
+                                        .Select(r => r.Rating)
                                         .ToListAsync();
             var avg = barRatings.Average();
             bar.BarRating = avg;

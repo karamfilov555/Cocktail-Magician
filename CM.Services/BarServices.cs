@@ -24,7 +24,8 @@ namespace CM.Services
         public async Task<ICollection<BarDTO>> GetHomePageBars()
         {
             //TODO reduce number and get only required fields
-            var bars = await _context.Bars.Where(b=>b.DateDeleted==null)
+            var bars = await _context.Bars
+                .Where(b=>b.DateDeleted==null)
                 .ToListAsync()
                 .ConfigureAwait(false);
             var barDTOs = bars.Select(b => b.MapBarToDTO()).ToList();
@@ -33,7 +34,12 @@ namespace CM.Services
 
         public async Task<BarDTO> GetBarByID(string id)
         {
-            var bar = await _context.Bars.FindAsync(id).ConfigureAwait(false);
+            var bar = await _context.Bars
+                .Where(b=>b.Id==id)
+                .Include(b => b.BarCocktails)
+                .ThenInclude(b => b.Cocktail)
+                .FirstOrDefaultAsync()
+                .ConfigureAwait(false);
             bar.ValidateIfNull();
             var barDTO = bar.MapBarToDTO();
             return barDTO;
@@ -42,8 +48,10 @@ namespace CM.Services
 
         public async Task<ICollection<BarDTO>> GetAllBars()
         {
-            
-            var bars = await _context.Bars.Where(b => b.DateDeleted == null)
+            var bars = await _context.Bars
+                .Where(b => b.DateDeleted == null)
+                .Include(b=>b.BarCocktails)
+                .ThenInclude(b=>b.Cocktail)
                 .ToListAsync()
                 .ConfigureAwait(false);
             var barDTOs = bars.Select(b => b.MapBarToDTO()).ToList();

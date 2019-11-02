@@ -1,6 +1,7 @@
 ﻿using CM.Models;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace CM.DTOs.Mappers
@@ -13,8 +14,10 @@ namespace CM.DTOs.Mappers
             newBarDTO.Id = bar.Id;
             newBarDTO.Name = bar.Name;
             newBarDTO.ImageUrl = bar.Image;
+            newBarDTO.Rating = bar.BarRating;
             newBarDTO.Website = bar.Website;
             newBarDTO.Address = bar.Address;
+            newBarDTO.CocktailsNames = bar.BarCocktails.Select(b=>b.Cocktail.Name).ToList();
             newBarDTO.DateDeleted = bar.DateDeleted;
             return newBarDTO;
         }
