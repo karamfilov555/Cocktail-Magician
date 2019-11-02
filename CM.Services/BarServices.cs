@@ -57,8 +57,14 @@ namespace CM.Services
             var barDTOs = bars.Select(b => b.MapBarToDTO()).ToList();
             return barDTOs;
         }
+        public async Task<Bar> GetBar(string id)
+        {
+            var bar = await _context.Bars.FindAsync(id);
+            bar.ValidateIfNull();
+            return bar;
+        }
 
-        public async Task AddBar(BarDTO barDTO)
+        public async Task<string> AddBar(BarDTO barDTO)
         {
             var newBar = barDTO.MapBarDTOToBar();
             await _context.Bars.AddAsync(newBar).ConfigureAwait(false);
@@ -68,13 +74,32 @@ namespace CM.Services
             {
                await AddCocktailToBar(cocktail, newBar);
             }
+            return newBar.Name;
         }
 
         public async Task AddCocktailToBar(Cocktail cocktail, Bar bar)
         {
            bar.BarCocktails.Add(new BarCocktail() { BarId = bar.Id, CocktailId = cocktail.Id });
             await _context.SaveChangesAsync();
+        }
+        public async Task<string> Delete(string id)
+        {
+            var barToDelete = await this.GetBar(id);
+            barToDelete.DateDeleted = DateTime.Now.Date;
+            await _context.SaveChangesAsync();
+            return barToDelete.Name;
+        }
 
+        public async Task<string> Edit(BarDTO barDto)
+        {
+            var barToEdit = barDto.MapBarDTOToBar();
+            var coctailsInBar = barDto.Cocktails.Select(c => c.MapToCocktailModel()).ToList();
+            foreach (var cocktail in coctailsInBar)
+            {
+                await AddCocktailToBar(cocktail, barToEdit);
+            }
+            await _context.SaveChangesAsync();
+            return barToEdit.Name;
         }
 
     }

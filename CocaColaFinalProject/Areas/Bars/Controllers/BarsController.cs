@@ -11,6 +11,7 @@ using CM.Services.Contracts;
 using CM.Web.Mappers;
 using CM.Web.Areas.Bars.Models;
 using CM.Web.Areas.Reviews.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace CM.Web.Areas.Bars.Controllers
 {
@@ -22,7 +23,7 @@ namespace CM.Web.Areas.Bars.Controllers
         private readonly ICocktailServices _cocktailServices;
         private readonly IReviewServices _reviewServices;
 
-        public BarsController(IBarServices barServices, ICocktailServices cocktailServices, 
+        public BarsController(IBarServices barServices, ICocktailServices cocktailServices,
             IReviewServices reviewServices)
         {
             _barServices = barServices;
@@ -61,7 +62,7 @@ namespace CM.Web.Areas.Bars.Controllers
         }
         // GET: Bars/Bars/Create
         [HttpGet]
-        
+        [Authorize(Roles = "Manager, Administrator")]
         public async Task<IActionResult> Create()
         {
             var allCocktails = await _cocktailServices.GetAllCocktails();
@@ -72,36 +73,21 @@ namespace CM.Web.Areas.Bars.Controllers
         }
 
         //POST: Bars/Bars/Create
-        //To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
+        [Authorize(Roles = "Manager, Administrator")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(CreateBarVM barVM)
         {
             if (ModelState.IsValid)
             {
                 var barDTO = barVM.MapBarVMToDTO();
-                await _barServices.AddBar(barDTO);
+                var barName = await _barServices.AddBar(barDTO);
 
                 return RedirectToAction(nameof(Index));
             }
             return View(barVM);
         }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> CreateNew(BarReviewViewModel barVM)
-
-        {
-            if (ModelState.IsValid)
-            {
-                //var barDTO = barVM.MapBarVMToDTO();
-                //await _barServices.AddBar(barDTO);
-
-                return RedirectToAction(nameof(Index));
-            }
-            return View(barVM);
-        }
         //// GET: Bars/Bars/Edit/5
         //public async Task<IActionResult> Edit(string id)
         //{
@@ -153,38 +139,27 @@ namespace CM.Web.Areas.Bars.Controllers
         //    return View(bar);
         //}
 
-        //// GET: Bars/Bars/Delete/5
-        //public async Task<IActionResult> Delete(string id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return NotFound();
-        //    }
+        // GET: Bars/Bars/Delete/5
+        [Authorize(Roles="Manager, Administrator")]
+        [HttpGet]
+        public async Task<IActionResult> Delete(string id)
+        {
+            
 
-        //    var bar = await _context.Bars
-        //        .FirstOrDefaultAsync(m => m.Id == id);
-        //    if (bar == null)
-        //    {
-        //        return NotFound();
-        //    }
+           var barDTO = await _barServices.GetBarByID(id);
+            var barVM = barDTO.MapBarToVM(); 
+            return View(barVM);
+        }
 
-        //    return View(bar);
-        //}
 
-        //// POST: Bars/Bars/Delete/5
-        //[HttpPost, ActionName("Delete")]
-        //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> DeleteConfirmed(string id)
-        //{
-        //    var bar = await _context.Bars.FindAsync(id);
-        //    _context.Bars.Remove(bar);
-        //    await _context.SaveChangesAsync();
-        //    return RedirectToAction(nameof(Index));
-        //}
+        [Authorize(Roles = "Manager, Administrator")]
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(string id)
+        {
+           var barName= await _barServices.Delete(id);
+           return RedirectToAction(nameof(Index));
+        }
 
-        //private bool BarExists(string id)
-        //{
-        //    return _context.Bars.Any(e => e.Id == id);
-        //}
     }
 }

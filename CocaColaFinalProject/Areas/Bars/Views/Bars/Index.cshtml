@@ -60,7 +60,7 @@
                     @if (this.User.IsInRole("Administrator") || this.User.IsInRole("Manager"))
                     {
                         <a class="btn btn-default btn-sm" asp-area="Bars" asp-action="Edit" asp-route-id="@bar.Id">Edit</a>
-                        <a class="btn btn-default btn-sm" asp-area="Bars" asp-action="Delete" asp-route-id="@bar.Id">Delete</a>
+                        <a class="btn btn-default btn-sm" asp-area="Bars" asp-controller="Bars" asp-action="Delete" asp-route-id="@bar.Id">Delete</a>
 
                     }
                 </td>
