@@ -39,14 +39,13 @@
             <th><h5>Cocktail's Picture</h5></th>
             <th>
                 <h5>
-                    <a asp-action="ListCocktails" asp-route-sortOrder="@ViewData["NameSortCriteria"]"
-                       asp-route-currentFilter="@ViewData["CurrentFilter"]">&uarr;&darr; Name</a>
+                    <a asp-action="ListCocktails" asp-route-sortOrder="@ViewData["NameSortCriteria"]">&uarr;&darr; Name</a>
                 </h5>
             </th>
             <th>
                 <h5 style="padding-right:60px">
-                    <a asp-action="ListCocktails" asp-route-sortOrder="@ViewData["RatingSortCriteria"]"
-                       asp-route-currentFilter="@ViewData["CurrentFilter"]">&uarr;&darr; Rating</a>
+                    <a asp-action="ListCocktails" asp-route-sortOrder="@ViewData["RatingSortCriteria"]">&uarr;&darr; Rating</a>
+                   
                 </h5>
             </th>
             <th><h5>Ingredients</h5></th>
@@ -149,8 +148,8 @@
         }
         else
         {
-            <a asp-area="Cocktails" asp-controller="Cocktails" asp-action="ListCocktails" class="btn btn-default btn-sm" asp-route-currPage="@Model.PrevPage"><h5 style="margin-bottom:-5px"> <i class="fa fa-arrow-circle-o-left"></i> Previous Page</h5></a>
-            <a asp-area="Cocktails" asp-controller="Cocktails" asp-action="ListCocktails" class="btn btn-default btn-sm" asp-route-currPage="@Model.PrevPage"><h5 style="margin-bottom:-5px">@Model.PrevPage</h5></a>
+            <a asp-area="Cocktails" asp-controller="Cocktails" asp-action="ListCocktails" class="btn btn-default btn-sm" asp-route-orderByModel="@Model.SortOrder" asp-route-currPage="@Model.PrevPage"><h5 style="margin-bottom:-5px"> <i class="fa fa-arrow-circle-o-left"></i> Previous Page</h5></a>
+            <a asp-area="Cocktails" asp-controller="Cocktails" asp-action="ListCocktails" class="btn btn-default btn-sm" asp-route-orderByModel="@Model.SortOrder" asp-route-currPage="@Model.PrevPage"><h5 style="margin-bottom:-5px">@Model.PrevPage</h5></a>
         }
 
         <button style="background-color:cornsilk" class="btn btn-default btn-sm disabled"><h5 style="margin-bottom:-5px; color:gold">@Model.CurrPage</h5></button>
@@ -161,9 +160,9 @@
         }
         else
         {
-            <a asp-area="Cocktails" asp-controller="Cocktails" asp-action="ListCocktails" class="btn btn-default btn-sm " asp-route-currPage="@Model.NextPage"><h5 style="margin-bottom:-5px">@Model.NextPage</h5></a>
+            <a asp-area="Cocktails" asp-controller="Cocktails" asp-action="ListCocktails" class="btn btn-default btn-sm " asp-route-orderByModel="@Model.SortOrder" asp-route-currPage="@Model.NextPage"><h5 style="margin-bottom:-5px">@Model.NextPage</h5></a>
 
-            <a asp-area="Cocktails" asp-controller="Cocktails" asp-action="ListCocktails" class="btn btn-default btn-sm  " asp-route-currPage="@Model.NextPage"><h5 style="margin-bottom:-5px">Next Page  <i class="fa fa-arrow-circle-o-right"></i></h5></a>
+            <a asp-area="Cocktails" asp-controller="Cocktails" asp-action="ListCocktails" class="btn btn-default btn-sm" asp-route-orderByModel="@Model.SortOrder" asp-route-currPage="@Model.NextPage"><h5 style="margin-bottom:-5px">Next Page  <i class="fa fa-arrow-circle-o-right"></i></h5></a>
         }
     }
 </center>

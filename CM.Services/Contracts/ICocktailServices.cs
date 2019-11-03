@@ -15,7 +15,7 @@ namespace CM.Services.Contracts
         Task<ICollection<CocktailDto>> GetAllCocktails();
         Task<string> DeleteCocktial(string id);
         Task<string> GetCocktailNameById(string id);
-        Task<IList<CocktailDto>> GetFiveCocktails(int currPage = 1);
+        Task<IList<CocktailDto>> GetFiveSortedCocktailsAsync(string sortOrder,int currPage = 1);
         Task<int> GetPageCountForCocktials(int cocktailsPerPage);
     }
 }

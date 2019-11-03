@@ -22,7 +22,7 @@ namespace CM.Web.Areas.Cocktails.Controllers
 
         //ID!!!! string id = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-        public CocktailsController(ICocktailServices cocktailServices, 
+        public CocktailsController(ICocktailServices cocktailServices,
                                    IIngredientServices ingredientServices,
                                    IReviewServices reviewServices,
                                    IToastNotification toast)
@@ -65,7 +65,7 @@ namespace CM.Web.Areas.Cocktails.Controllers
         public async Task<IActionResult> Create()
         {
             //expouse-vame ctx model
-            var ingr =await _ingredientServices.GetAllIngredients();
+            var ingr = await _ingredientServices.GetAllIngredients();
             var cocktailVM = new CocktailViewModel();
             cocktailVM.Ingredients.AddRange(ingr.Select(i => new SelectListItem(i.Name, i.Id)));
             return View(cocktailVM);
@@ -81,22 +81,35 @@ namespace CM.Web.Areas.Cocktails.Controllers
             return RedirectToAction("ListCocktails");
         }
         [HttpGet]
-        public async Task<IActionResult> ListCocktails(string sortOrder , int? currPage)
+        public async Task<IActionResult> ListCocktails(string sortOrder, int? currPage, string orderByModel)
         {
-            //ViewData["CurrentPage"] = currPage;
+            if (orderByModel == null)
+            {
+                ViewData["CurrentSort"] = sortOrder; //care
+                ViewData["NameSortCriteria"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+                ViewData["RatingSortCriteria"] = sortOrder == "rating" ? "rating_desc" : "rating";
+            }
+            else
+            {
+                sortOrder = orderByModel;
+            }
+
             currPage = currPage ?? 1;
 
-            var fiveCocktailsDtos = await _cocktailServices.GetFiveCocktails((int)currPage);
+            var fiveSortedCocktailsDtos = await _cocktailServices
+                                                    .GetFiveSortedCocktailsAsync(sortOrder, (int)currPage);
 
             var totalPages = await _cocktailServices.GetPageCountForCocktials(5);
 
-            var fiveCocktailsVm = fiveCocktailsDtos.Select(c => c.MapToCocktailViewModel()).ToList();
+            var fiveSortedCocktailsVm = fiveSortedCocktailsDtos
+                                                    .Select(c => c.MapToCocktailViewModel()).ToList();
 
             var litingViewModel = new CocktailsListingViewModel()
             {
-                FiveCocktailsList = fiveCocktailsVm,
+                FiveCocktailsList = fiveSortedCocktailsVm,
                 CurrPage = (int)currPage,
-                TotalPages = totalPages
+                TotalPages = totalPages,
+                SortOrder = sortOrder
             };
 
             if (totalPages > currPage)
@@ -109,29 +122,6 @@ namespace CM.Web.Areas.Cocktails.Controllers
                 litingViewModel.PrevPage = currPage - 1;
             }
 
-            ViewData["CurrentSort"] = sortOrder; //care
-            ViewData["NameSortCriteria"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
-            ViewData["RatingSortCriteria"] = sortOrder == "rating" ? "rating_desc" : "rating";
-
-            var allCocktailsDtos = await _cocktailServices.GetAllCocktails();
-            var allCocktailsVms = allCocktailsDtos.Select(c => c.MapToCocktailViewModel());
-
-            switch (sortOrder)
-            {
-                case "name_desc":
-                    allCocktailsVms = allCocktailsVms.OrderByDescending(b => b.Name);
-                    break;
-                case "rating":
-                    allCocktailsVms = allCocktailsVms.OrderBy(b => b.Rating);
-                    break;
-                case "rating_desc":
-                    allCocktailsVms = allCocktailsVms.OrderByDescending(s => s.Rating);
-                    break;
-
-                default:
-                    allCocktailsVms = allCocktailsVms.OrderBy(s => s.Name);
-                    break;
-            }
             return PartialView("_CocktailsGrid", litingViewModel);
             //return View(allCocktailsVms.ToList());
         }
@@ -160,7 +150,7 @@ namespace CM.Web.Areas.Cocktails.Controllers
             var cocktailDto = cocktailVm.MapToCocktailDto();
             string userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
             var cocktailName = await _cocktailServices.GetCocktailNameById(cocktailDto.Id);
-            
+
             await _reviewServices.CreateCocktailReview(userId, cocktailDto);
             _toast.AddSuccessToastMessage($"You successfully rate \"{cocktailName}\" cocktail");
             return RedirectToAction("ListCocktails", "Cocktails");
@@ -180,7 +170,7 @@ namespace CM.Web.Areas.Cocktails.Controllers
         [Authorize(Roles = "Administrator, Manager")]
         public async Task<IActionResult> Delete(CocktailViewModel cocktailVm)
         {
-             var cocktailName = await _cocktailServices.DeleteCocktial(cocktailVm.Id);
+            var cocktailName = await _cocktailServices.DeleteCocktial(cocktailVm.Id);
             _toast.AddSuccessToastMessage($"You successfully delete \"{cocktailName}\" cocktail!");
             return RedirectToAction("ListCocktails", "Cocktails");
         }

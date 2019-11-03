@@ -67,6 +67,7 @@ namespace CM.Services
             await _context.SaveChangesAsync();
 
         }
+        // to be deleted !  !
         public async Task<ICollection<CocktailDto>> GetAllCocktails()
         {
             var allCocktailsModels = await _context.Cocktails
@@ -97,15 +98,49 @@ namespace CM.Services
             return cocktail.Name;
         }
 
-        public async Task<IList<CocktailDto>> GetFiveCocktails(int currPage = 1)
+        public async Task<IList<CocktailDto>> GetFiveSortedCocktailsAsync(string sortOrder, int currPage = 1)
         {
-            var fiveCocktails = await _context.Cocktails
+            var sortedCocktails = _context.Cocktails
+                                                .Include(c => c.Reviews)
+                                                .ThenInclude(c => c.User)
+                                                .Include(c => c.CocktailIngredients)
+                                                .ThenInclude(c => c.Ingredient)
+                                                .Include(c => c.BarCocktails)
+                                                .ThenInclude(c => c.Bar)
+                                                .Where(c=>c.DateDeleted==null);
+
+            switch (sortOrder)
+            {
+                case "name_desc":
+                    sortedCocktails = sortedCocktails
+                                                .OrderByDescending(b => b.Name);
+                    break;
+
+                case "rating":
+                    sortedCocktails = sortedCocktails
+                                                .OrderBy(b => b.Rating);
+                    break;
+
+                case "rating_desc":
+                    sortedCocktails = sortedCocktails
+                                                .OrderByDescending(s => s.Rating);
+                    break;
+
+                default:
+                    sortedCocktails = sortedCocktails
+                                                .OrderBy(s => s.Name);
+                    break;
+            }
+
+            var fiveSortedCocktails = await sortedCocktails
                                         .Skip((currPage - 1) * 5)
                                         .Take(5)
                                         .ToListAsync();
 
-            var cocktailsDtos = fiveCocktails.Select(c => c.MapToCocktailDto()).ToList();
-            return cocktailsDtos;
+            var fiveSortedCocktailsDtos = fiveSortedCocktails
+                                                    .Select(c => c.MapToCocktailDto())
+                                                    .ToList();
+            return fiveSortedCocktailsDtos;
         }
         public async Task<int> GetPageCountForCocktials(int cocktailsPerPage)
         {
