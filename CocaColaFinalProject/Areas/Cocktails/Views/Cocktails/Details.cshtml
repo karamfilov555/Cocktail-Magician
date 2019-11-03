@@ -52,20 +52,87 @@
         <h4 class="hdr2">
             @item.Bar.Name<br>
             <span class="place"> @item.Bar.Address</span>
+
             <span class="time">11:00 am - 1:00 pm</span>
         </h4>
         <hr>
 
         <div class="clearfix"></div>
-        <!-- go to http://amap.to/ and create your own map -->
-        <a href="http://aMAP.to/qgmdrzv?iframe=true&amp;width=500&amp;height=350" data-rel="prettyPhoto" class="mapit"><i></i>Map it</a>
+
+        <a  data-rel="prettyPhoto" class="mapit" value="@item.Bar.Address"><i></i>Map it </a>
+
         <a target="_blank" href="http://www.facebook.com/sharer/sharer.php?u=foodtruck.html.themeforest.createit.pl" class="shareit"><i></i>Share it</a>
 
     </div>
-}
-<center>
-<div style="padding-bottom:20px">
 
-    <a asp-action="ListCocktails" class="btn btn-success">Back to List</a>
-</div>
+    <body onload="initialize()">
+        <center>
+            <div id="map" style="width:98vw; height: 360px;"></div>
+            <div>
+                <input id="address" type="hidden" value="@item.Bar.Address">
+            </div>
+        </center>
+    </body>
+}
+
+
+<center>
+    <div style="padding-bottom:20px">
+
+        <a asp-action="ListCocktails" class="btn btn-success">Back to List</a>
+    </div>
 </center>
+
+
+<script>
+    var geocoder;
+    var map;
+
+
+    function initialize() {
+
+        let mapBtns = document.getElementsByClassName("mapit");
+
+        for (const btn of mapBtns) {
+
+            btn.addEventListener('click', (e) => {
+
+                e.preventDefault();
+                let currentBtn = e.currentTarget;
+
+
+                currentBtn.innerHTML = "<i></i>HIDE MAP"
+                geocoder = new google.maps.Geocoder();
+                var latlng = new google.maps.LatLng(-34.397, 150.644);
+
+                var mapOptions = {
+                    zoom: 8,
+                    center: latlng
+                }
+                map = new google.maps.Map(document.getElementById('map'), mapOptions);
+
+                //geolocator
+
+                var address = document.getElementById('address').value;
+                console.log(address)
+                console.log(document.getElementsByClassName('place')[0].innerHTML)
+                geocoder.geocode({ 'address': address }, function (results, status) {
+                    if (status == 'OK') {
+                        map.setCenter(results[0].geometry.location);
+                        var marker = new google.maps.Marker({
+                            map: map,
+                            position: results[0].geometry.location
+                        });
+                    } else {
+                        alert('Geocode was not successful for the following reason: ' + status);
+                    }
+                });
+
+            });
+
+        }
+    }
+</script>
+<script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB2QJIfVlhWTpxgG5zCkx1XMmwADlMuE4c&callback=initialize">
+</script>
