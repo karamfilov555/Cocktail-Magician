@@ -3427,4 +3427,39 @@ body.preloader #ct_preloader {
     margin-left: 50px !important;
     margin-right: 50px !important;
   }
+
+    <style >
+    .select-editable {
+        position: relative;
+        background-color: white;
+        border: solid grey 1px;
+        width: 120px;
+        height: 18px;
+    }
+
+    .select-editable select {
+        position: absolute;
+        top: 0px;
+        left: 0px;
+        font-size: 14px;
+        border: none;
+        width: 120px;
+        margin: 0;
+    }
+
+    .select-editable input {
+        position: absolute;
+        top: 0px;
+        left: 0px;
+        width: 100px;
+        padding: 1px;
+        font-size: 12px;
+        border: none;
+    }
+
+        .select-editable select:focus, .select-editable input:focus {
+            outline: none;
+        }
+
+    </style >
 }

@@ -24,6 +24,17 @@ namespace CM.Web.Mappers
             return newBarVM;
         }
 
+        public static CreateBarVM MapBarToCreateBarVM(this BarDTO bar)
+        {
+            var newBarVM = new CreateBarVM();
+            newBarVM.Id = bar.Id;
+            newBarVM.Name = bar.Name;
+            newBarVM.Address = bar.Address;
+            newBarVM.ImageURL = bar.ImageUrl;
+            newBarVM.Website = bar.Website; 
+            return newBarVM;
+        }
+
         public static BarDTO MapBarVMToDTO(this CreateBarVM bar)
         {
             var newBarDTO = new BarDTO();
@@ -32,7 +43,7 @@ namespace CM.Web.Mappers
             newBarDTO.Address = bar.Address;
             newBarDTO.ImageUrl = bar.ImageURL;
             newBarDTO.Website = bar.Website;
-            newBarDTO.Cocktails = bar.AllCocktails
+            newBarDTO.Cocktails = bar.AllCocktailsIDs
                .Select(i => new CocktailDto()
                {
                    Id = i.ToString()

@@ -24,8 +24,10 @@ namespace CM.DTOs.Mappers
         public static Cocktail MapToCocktailModel(this CocktailDto cocktailDto)
         {
             var cocktailModel = new Cocktail();
+           
             // Care !!! --> vse oshte nqma Id!
             cocktailModel.Name = cocktailDto.Name;
+            cocktailModel.Id = cocktailDto.Id;
             cocktailModel.Rating = cocktailDto.Rating;
             cocktailModel.Image = cocktailDto.Image;
             //cocktailModel.CocktailIngredients = cocktailDto.CocktailIngredients;

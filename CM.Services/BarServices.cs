@@ -74,30 +74,34 @@ namespace CM.Services
             {
                await AddCocktailToBar(cocktail, newBar);
             }
+            await _context.SaveChangesAsync();
             return newBar.Name;
         }
 
         public async Task AddCocktailToBar(Cocktail cocktail, Bar bar)
         {
            bar.BarCocktails.Add(new BarCocktail() { BarId = bar.Id, CocktailId = cocktail.Id });
-            await _context.SaveChangesAsync();
         }
         public async Task<string> Delete(string id)
         {
-            var barToDelete = await this.GetBar(id);
+            var barToDelete = await this.GetBarByID(id);
             barToDelete.DateDeleted = DateTime.Now.Date;
             await _context.SaveChangesAsync();
             return barToDelete.Name;
         }
 
-        public async Task<string> Edit(BarDTO barDto)
+        public async Task<string> Update(BarDTO barDto)
         {
-            var barToEdit = barDto.MapBarDTOToBar();
+            var barToEdit =await this.GetBar(barDto.Id);
+            var bar = barDto.MapBarDTOToBar();
+            bar.BarRating = barToEdit.BarRating;
             var coctailsInBar = barDto.Cocktails.Select(c => c.MapToCocktailModel()).ToList();
             foreach (var cocktail in coctailsInBar)
             {
-                await AddCocktailToBar(cocktail, barToEdit);
+                await AddCocktailToBar(cocktail, bar);
             }
+
+            _context.Entry(barToEdit).CurrentValues.SetValues(bar);
             await _context.SaveChangesAsync();
             return barToEdit.Name;
         }

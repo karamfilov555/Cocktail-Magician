@@ -11,7 +11,7 @@ namespace CM.Services.Contracts
         Task<ICollection<BarDTO>> GetAllBars();
         Task<string> AddBar(BarDTO barDTO);
         Task<string> Delete(string id);
-        Task<string> Edit(BarDTO barDTO);
+        Task<string> Update(BarDTO barDTO);
 
     }
 }

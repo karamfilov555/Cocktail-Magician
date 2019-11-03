@@ -1,56 +1,55 @@
-﻿@model CM.Models.Bar
+﻿@model CreateBarVM
 
 @{
     ViewData["Title"] = "Edit";
 }
 
-<h1>Edit</h1>
+    <center>
+        <h1>Edit Bar's Details</h1>
 
-<h4>Bar</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="Id" />
-            <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
-                <input asp-for="Name" class="form-control" />
-                <span asp-validation-for="Name" class="text-danger"></span>
+        <hr />
+        <div class="row">
+            <div class="col-md-4 col-md-offset-4">
+                <form asp-controller="Bars" asp-area="Bars" asp-action="Update" method="post">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input type="hidden" asp-for="Id" />
+                    <div class="form-group">
+                        <label asp-for="Name" class="control-label"></label>
+                        <input asp-for="Name" class="form-control" />
+                        <span asp-validation-for="Name" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="ImageURL" class="control-label">Image URL</label>
+                        <input asp-for="ImageURL" class="form-control" />
+                        <span asp-validation-for="ImageURL" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Website" class="control-label"></label>
+                        <input asp-for="Website" class="form-control" />
+                        <span asp-validation-for="Website" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Address" class="control-label"></label>
+                        <input asp-for="Address" class="form-control" />
+                        <span asp-validation-for="Address" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <div class="select-editable">
+                            <label asp-for="AllCocktailsIDs" class="control-label">All Cocktails</label>
+                            <select asp-for="AllCocktailsIDs" asp-items="@Model.AllCocktails" class="form-control">
+                                <option hidden disabled selected value=""></option>
+                            </select>
+                        </div>
+                        </div>
+                    <div class="form-group">
+                        <input type="submit" value="Save" class="btn btn-primary" />
+                        <a class="btn btn-default" asp-action="Index">Cancel</a>
+                    </div>
+</form>
             </div>
-            <div class="form-group">
-                <label asp-for="Image" class="control-label"></label>
-                <input asp-for="Image" class="form-control" />
-                <span asp-validation-for="Image" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Website" class="control-label"></label>
-                <input asp-for="Website" class="form-control" />
-                <span asp-validation-for="Website" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Address" class="control-label"></label>
-                <input asp-for="Address" class="form-control" />
-                <span asp-validation-for="Address" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="BarRating" class="control-label"></label>
-                <input asp-for="BarRating" class="form-control" />
-                <span asp-validation-for="BarRating" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="DateDeleted" class="control-label"></label>
-                <input asp-for="DateDeleted" class="form-control" />
-                <span asp-validation-for="DateDeleted" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
-        </form>
-    </div>
-</div>
+        </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
-
+        <div>
+            <a asp-action="Index">Back to List</a>
+        </div>
+        </center>

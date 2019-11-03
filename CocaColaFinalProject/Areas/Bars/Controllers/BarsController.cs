@@ -88,66 +88,59 @@ namespace CM.Web.Areas.Bars.Controllers
             return View(barVM);
         }
 
-        //// GET: Bars/Bars/Edit/5
-        //public async Task<IActionResult> Edit(string id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return NotFound();
-        //    }
+        // GET: Bars/Bars/Edit/5
+        public async Task<IActionResult> Edit(string id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            var allCocktails = await _cocktailServices.GetAllCocktails();
+            var bar = await _barServices.GetBarByID(id);
+            var barVM = bar.MapBarToCreateBarVM();
+            barVM.AllCocktails = allCocktails
+                .Select(c => new SelectListItem(c.Name, c.Id)).ToList();
+            if (bar == null)
+            {
+                return NotFound();
+            }
+            return View(barVM);
+        }
 
-        //    var bar = await _context.Bars.FindAsync(id);
-        //    if (bar == null)
-        //    {
-        //        return NotFound();
-        //    }
-        //    return View(bar);
-        //}
+        // POST: Bars/Bars/Edit/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(CreateBarVM barVM)
+        {
 
-        //// POST: Bars/Bars/Edit/5
-        //// To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        //// more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> Edit(string id, [Bind("Id,Name,Image,Website,Address,BarRating,DateDeleted")] Bar bar)
-        //{
-        //    if (id != bar.Id)
-        //    {
-        //        return NotFound();
-        //    }
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    var barDTO = barVM.MapBarVMToDTO();
+                    var barName = await _barServices.Update(barDTO);
 
-        //    if (ModelState.IsValid)
-        //    {
-        //        try
-        //        {
-        //            _context.Update(bar);
-        //            await _context.SaveChangesAsync();
-        //        }
-        //        catch (DbUpdateConcurrencyException)
-        //        {
-        //            if (!BarExists(bar.Id))
-        //            {
-        //                return NotFound();
-        //            }
-        //            else
-        //            {
-        //                throw;
-        //            }
-        //        }
-        //        return RedirectToAction(nameof(Index));
-        //    }
-        //    return View(bar);
-        //}
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+
+                    throw;
+
+                }
+                return RedirectToAction(nameof(Index));
+            }
+            return RedirectToAction(nameof(Index));
+        }
 
         // GET: Bars/Bars/Delete/5
-        [Authorize(Roles="Manager, Administrator")]
+        [Authorize(Roles = "Manager, Administrator")]
         [HttpGet]
         public async Task<IActionResult> Delete(string id)
         {
-            
 
-           var barDTO = await _barServices.GetBarByID(id);
-            var barVM = barDTO.MapBarToVM(); 
+
+            var barDTO = await _barServices.GetBarByID(id);
+            var barVM = barDTO.MapBarToVM();
             return View(barVM);
         }
 
@@ -157,8 +150,8 @@ namespace CM.Web.Areas.Bars.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(string id)
         {
-           var barName= await _barServices.Delete(id);
-           return RedirectToAction(nameof(Index));
+            var barName = await _barServices.Delete(id);
+            return RedirectToAction(nameof(Index));
         }
 
     }

@@ -19,17 +19,17 @@ namespace CM.Web.Areas.Bars.Models
         public string Name { get; set; }
 
         [Required(ErrorMessage = "Address is required!")]
-        [MinLength(3, ErrorMessage = "Address must be between 3 and 30 symbols"),
-            MaxLength(30, ErrorMessage = "Address must be between 3 and 30 symbols")]
+        [MinLength(3, ErrorMessage = "Address must be between 3 and 100 symbols"),
+            MaxLength(100, ErrorMessage = "Address must be between 3 and 100 symbols")]
         public string Address { get; set; }
-        [Url]
+        //
         public string Website { get; set; }
 
         public string ImageURL { get; set; }
 
         public List<SelectListItem> AllCocktails { get; set; } = new List<SelectListItem>();
         public List<string> AllCocktailsIDs { get; set; } = new List<string>();
-        public List<BarCocktail> CocktailsInBar { get; set; }= new List<BarCocktail>();
+        public List<BarCocktail> CocktailsInBar { get; set; } = new List<BarCocktail>();
 
 
     }
