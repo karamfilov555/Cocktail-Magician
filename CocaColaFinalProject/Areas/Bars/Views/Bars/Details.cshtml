@@ -4,18 +4,29 @@
     ViewData["Title"] = "Details";
 }
 
-    <h1 class="hdr1">@Model.Name</h1>
+<h1 class="hdr1">@Model.Name</h1>
 
-<div>
 
-    <hr />
+
+<head>
+    <style>
+        #map {
+            width: 40%;
+            height: 200px;
+            background-color: grey;
+        }
+    </style>
+</head>
+
+
+   
     <table class="table">
         <thead>
             <tr>
                 <th><h5></h5></th>
                 <th><h5>Details</h5></th>
                 <th><h5>Menu</h5></th>
-                
+
 
                 <th></th>
             </tr>
@@ -23,12 +34,53 @@
         <tbody>
 
             <tr>
-                <td><img src="@Model.ImageURL" width="400"  style="border-radius:25px; padding-top:5px; padding-bottom:5px"></td>
+                <td><img src="@Model.ImageURL" width="400" style="border-radius:25px; padding-top:5px; padding-bottom:5px"></td>
                 <td>
-                    
+
                     <h5>Rating: @Model.Rating</h5>
-                    <h5>Address: @Model.Address</h5>
                     <h5>Website: <a href="@Model.Website">@Model.Website </a> </h5>
+                    <br />
+                    <h5>Location: </h5>
+                    <body onload="initialize()">
+                        <div id="map" style="width: 400px; height: 360px;"></div>
+                        <div>
+                            <input id="address" type="hidden" value="@Model.Address">
+                        </div>
+                    </body>
+                    <script>
+                        var geocoder;
+                        var map;
+                        function initialize() {
+                            geocoder = new google.maps.Geocoder();
+                            var latlng = new google.maps.LatLng(-34.397, 150.644);
+                            var mapOptions = {
+                                zoom: 8,
+                                center: latlng
+                            }
+                            map = new google.maps.Map(document.getElementById('map'), mapOptions);
+                            codeAddress();
+                        }
+
+                        function codeAddress() {
+                            var address = document.getElementById('address').value;
+                            geocoder.geocode({ 'address': address }, function (results, status) {
+                                if (status == 'OK') {
+                                    map.setCenter(results[0].geometry.location);
+                                    var marker = new google.maps.Marker({
+                                        map: map,
+                                        position: results[0].geometry.location
+                                    });
+                                } else {
+                                    alert('Geocode was not successful for the following reason: ' + status);
+                                }
+                            });
+                        }
+                    </script>
+                    <script async defer
+                            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB2QJIfVlhWTpxgG5zCkx1XMmwADlMuE4c&callback=initialize">
+                    </script>
+
+
 
                 </td>
                 <td>
@@ -43,50 +95,50 @@
 
         </tbody>
     </table>
-</div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
-</div>
-
-
-@{
-    var list = Model.Reviews.Select(r => r.UserID).ToList();
-    if (!list.Contains(@User.FindFirstValue(ClaimTypes.NameIdentifier)))
-    {
-        var reviewVM = new BarReviewViewModel();
-        reviewVM.BarId = Model.Id;
-
-        <partial name="_LeaveReviewPartial" model=reviewVM />
-    }
-}
-
-<br/>
-<div class="row">
-    <h3 class="hdr4">All Comments:</h3>
-    <div class="col-md-8 col-md-offset-2">
-        <ul class="commentList list-unstyled">
-            <li>
-                @foreach (var review in @Model.Reviews)
-                {
-                    <div class="oneComment">
-                        <div class="media">
-                            <a class="pull-left roundedImg" href="#" style="background-image: url(&quot;./assets/images/content/testimonial-1.jpg&quot;);">
-                                <img class="media-object" src="./assets/images/content/testimonial-1.jpg" alt=" ">
-                            </a>
-                            <div class="media-body">
-                                @review.ReviewDate.Date<br>
-                                @review.UserName
-                                @review.Rating
-                                <a href="#" class="comment-reply-link pull-right">Reply</a>
-                            </div>
-                        </div>
-
-                        <p>
-                           @review.Description
-                        </p>
-                    </div>
-                }
-        </ul>
     </div>
-</div>
+    <div>
+        <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
+        <a asp-action="Index">Back to List</a>
+    </div>
+
+
+    @{
+        var list = Model.Reviews.Select(r => r.UserID).ToList();
+        if (!list.Contains(@User.FindFirstValue(ClaimTypes.NameIdentifier)))
+        {
+            var reviewVM = new BarReviewViewModel();
+            reviewVM.BarId = Model.Id;
+
+            <partial name="_LeaveReviewPartial" model=reviewVM />
+        }
+    }
+
+    <br />
+    <div class="row">
+        <h3 class="hdr4">All Comments:</h3>
+        <div class="col-md-8 col-md-offset-2">
+            <ul class="commentList list-unstyled">
+                <li>
+                    @foreach (var review in @Model.Reviews)
+                    {
+                        <div class="oneComment">
+                            <div class="media">
+                                <a class="pull-left roundedImg" href="#" style="background-image: url(&quot;./assets/images/content/testimonial-1.jpg&quot;);">
+                                    <img class="media-object" src="./assets/images/content/testimonial-1.jpg" alt=" ">
+                                </a>
+                                <div class="media-body">
+                                    @review.ReviewDate.Date<br>
+                                    @review.UserName
+                                    @review.Rating
+                                    <a href="#" class="comment-reply-link pull-right">Reply</a>
+                                </div>
+                            </div>
+
+                            <p>
+                                @review.Description
+                            </p>
+                        </div>
+                    }
+            </ul>
+        </div>
+    </div>

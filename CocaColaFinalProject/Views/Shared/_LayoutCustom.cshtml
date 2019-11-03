@@ -28,11 +28,11 @@
     <![endif]-->
 
 
-    <script type="text/javascript" charset="UTF-8" src="https://maps.googleapis.com/maps-api-v3/api/js/38/9/common.js"></script>
+    @*<script type="text/javascript" charset="UTF-8" src="https://maps.googleapis.com/maps-api-v3/api/js/38/9/common.js"></script>
     <script type="text/javascript" charset="UTF-8" src="https://maps.googleapis.com/maps-api-v3/api/js/38/9/util.js"></script>
-    <script type="text/javascript" charset="UTF-8" src="https://maps.googleapis.com/maps-api-v3/api/js/38/9/geocoder.js"></script>
+    <script type="text/javascript" charset="UTF-8" src="https://maps.googleapis.com/maps-api-v3/api/js/38/9/geocoder.js"></script>*@
 </head>
-<body >
+<body>
     <nav class="navbar navbar-default" role="navigation">
         <div class="inner">
             <div class="container">
@@ -51,31 +51,33 @@
                         </p>
                     </div>
 
-                    <center>  
-                    <partial name="_LogoPartial" /> 
+                    <center>
+                        <partial name="_LogoPartial" />
                     </center>
 
                     <partial name="_HeaderPartial" />
 
                 </div>
 
+
+
                 <!-- Collect the nav links, forms, and other content for toggling -->
                 <div class="collapse navbar-collapse navbar-ex1-collapse">
                     <ul class="nav navbar-nav text-center" data-pos="145" style="margin-top: -5px;">
                         @*active class !!!!*@
-                        <li >
+                        <li>
                             <a asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
                         <li><a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a></li>
                         <li><a asp-area="" asp-controller="Home" asp-action="About">About</a></li>
                         <li><a asp-area="" asp-controller="Home" asp-action="Cola">Search</a></li>
                         @*<li><a href="10_story.html">Story</a></li>
-                        <li><a href="11_gallery.html">Gallery</a></li>*@
+                            <li><a href="11_gallery.html">Gallery</a></li>*@
                         @*Drop down class !!*@
 
                         <partial name="_NavigationBarPartial" />
 
-                        
+
 
                         @*<li class="align-content-end"><partial name="_NavigationBarPartial" /></li>*@
 
@@ -126,16 +128,16 @@
                 <div class="col-md-6">
                     <partial name="_LogoPartial">
 
-                    <div class="googleMap" data-location="Marine Ave. New York, NY" data-text="We are here!"></div>
+                        <div class="googleMap" data-location="Marine Ave. New York, NY" data-text="We are here!"></div>
 
-                    <ul class="bigSocials">
-                        <li class="fb"><a href="#"><img src="/assets/images/social-fb.png" alt="Facebook"></a></li>
-                        <li class="tw"><a href="#"><img src="/assets/images/social-tw.png" alt="Twitter"></a></li>
-                        <li class="gg"><a href="#"><img src="/assets/images/social-gg.png" alt="Google+"></a></li>
-                        <li class="rss"><a href="#"><img src="/assets/images/social-rss.png" alt="RSS"></a></li>
-                    </ul>
+                        <ul class="bigSocials">
+                            <li class="fb"><a href="#"><img src="/assets/images/social-fb.png" alt="Facebook"></a></li>
+                            <li class="tw"><a href="#"><img src="/assets/images/social-tw.png" alt="Twitter"></a></li>
+                            <li class="gg"><a href="#"><img src="/assets/images/social-gg.png" alt="Google+"></a></li>
+                            <li class="rss"><a href="#"><img src="/assets/images/social-rss.png" alt="RSS"></a></li>
+                        </ul>
 
-                    <p class="copyright">© Copyright 2014 <a href="#">TemplateRockers</a></p>
+                        <p class="copyright">© Copyright 2014 <a href="#">TemplateRockers</a></p>
 
 
                 </div>
@@ -159,7 +161,7 @@
     <script src="/assets/bootstrap/js/bootstrap.min.js"></script>
 
     <!-- we're including library : maps.googleapis.com/maps/api/js?sensor=false in main.js -->
-    <script src="/assets/js/gmap3.min.js"></script>
+    @*<script src="/assets/js/gmap3.min.js"></script>*@
 
     <script src="/assets/js/customscroll/jquery.mCustomScrollbar.concat.min.js"></script>
     <script src="/assets/js/flexslider/jquery.easing.1.3.min.js"></script>
@@ -176,11 +178,11 @@
     <script src="/assets/js/main.js"></script>
 
     <script src="/assets/js/less.min.js"></script>
+    
 
 
 
 
-    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAYTLFgKDw12Y3CAaOdIOidNEQ93gHbwno&amp;callback=initmap"></script>
 
     @RenderSection("Scripts", required: false)
     @await Component.InvokeAsync("NToastNotify")
