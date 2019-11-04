@@ -12,6 +12,7 @@ using CM.Web.Mappers;
 using CM.Web.Areas.Bars.Models;
 using CM.Web.Areas.Reviews.Models;
 using Microsoft.AspNetCore.Authorization;
+using NToastNotify;
 
 namespace CM.Web.Areas.Bars.Controllers
 {
@@ -22,13 +23,15 @@ namespace CM.Web.Areas.Bars.Controllers
         private readonly IBarServices _barServices;
         private readonly ICocktailServices _cocktailServices;
         private readonly IReviewServices _reviewServices;
+        private readonly IToastNotification _toast;
 
         public BarsController(IBarServices barServices, ICocktailServices cocktailServices,
-            IReviewServices reviewServices)
+            IReviewServices reviewServices, IToastNotification toast)
         {
             _barServices = barServices;
             _cocktailServices = cocktailServices;
             _reviewServices = reviewServices;
+            _toast = toast;
         }
 
 
@@ -82,7 +85,7 @@ namespace CM.Web.Areas.Bars.Controllers
             {
                 var barDTO = barVM.MapBarVMToDTO();
                 var barName = await _barServices.AddBar(barDTO);
-
+                _toast.AddSuccessToastMessage($"You successfully added \"{barName}\" cocktail!");
                 return RedirectToAction(nameof(Index));
             }
             return View(barVM);
@@ -119,7 +122,7 @@ namespace CM.Web.Areas.Bars.Controllers
                 {
                     var barDTO = barVM.MapBarVMToDTO();
                     var barName = await _barServices.Update(barDTO);
-
+                    _toast.AddSuccessToastMessage($"You successfully edited \"{barName}\" cocktail!");
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -151,6 +154,7 @@ namespace CM.Web.Areas.Bars.Controllers
         public async Task<IActionResult> DeleteConfirmed(string id)
         {
             var barName = await _barServices.Delete(id);
+            _toast.AddSuccessToastMessage($"You successfully deleted \"{barName}\" cocktail!");
             return RedirectToAction(nameof(Index));
         }
 
