@@ -206,7 +206,7 @@ function validateDataAttr($attr) {
 //	document.body.appendChild(script);
 //}
 
-//window.onload = loadScript;
+window.onload = loadScript;
 
 
 jQuery(document).ready(function () {
