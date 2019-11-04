@@ -59,21 +59,21 @@
 
         <div class="clearfix"></div>
 
-        <button style="background:none ; border:0px"  id="map_cocktail" data-rel="prettyPhoto" class="mapit" value="@item.Bar.Address"><i></i>Map it </button>
+        <button style="background:none ; border:0px ; outline:0px ; padding-top:5px" id="map_cocktail" data-rel="prettyPhoto" class="mapit" value="@item.Bar.Address"><i></i>Map it </button>
 
         <a target="_blank" href="http://www.facebook.com/sharer/sharer.php?u=foodtruck.html.themeforest.createit.pl" class="shareit"><i></i>Share it</a>
 
     </div>
 
 }
-    <body >
-        <center>
-            <div id="map" style="width:98vw; height: 360px; display:none"></div>
-            @*<div>
+@*<body>
+    <center>
+        <div id="map" style="width:98vw; height: 360px; display:none"></div>
+        <div>
                 <a class="button" id="address" type="hidden" value="@item.Bar.Address"></a>
-            </div>*@
-        </center>
-    </body>
+            </div>
+    </center>
+</body>*@
 
 
 <center>
@@ -100,26 +100,45 @@
                 e.preventDefault();
                 let currentBtn = e.currentTarget;
 
-                if (document.getElementById("map").hasChildNodes()) {
+                var divForTheMap = document.createElement('div');
+                divForTheMap.style.height = '360px';
+                divForTheMap.style.width = '98vm';
+                divForTheMap.id = 'divForTheMap' + e.currentTarget.value;
+                divForTheMap.style.display = 'block';
+                divForTheMap.style.position = 'relative';
+                divForTheMap.style.overflow = 'hidden';
+                console.log(divForTheMap);
+
+
+                if (document.getElementById("divForTheMap" + e.currentTarget.value) != null) {
                     console.log("sega ima karta");
-                    if (document.getElementById("map").style.display=="none") {
-                        document.getElementById("map").setAttribute("style", "display:block");
-                        document.getElementById("map").style.width = '98vm'
-                        document.getElementById("map").style.height = '360px'
-                        document.getElementById("map").style.display = 'block'
-                        document.getElementById("map").style.position = 'relative'
-                        document.getElementById("map").style.overflow = 'hidden'
+                    if (document.getElementById("divForTheMap" + e.currentTarget.value).style.display == "none") {
+                        document.getElementById("divForTheMap" + e.currentTarget.value).setAttribute("style", "display:block");
+                        document.getElementById("divForTheMap" + e.currentTarget.value).style.width = '98vm'
+                        document.getElementById("divForTheMap" + e.currentTarget.value).style.height = '360px'
+                        document.getElementById("divForTheMap" + e.currentTarget.value).style.display = 'block'
+                        document.getElementById("divForTheMap" + e.currentTarget.value).style.position = 'relative'
+                        document.getElementById("divForTheMap" + e.currentTarget.value).style.overflow = 'hidden'
                         currentBtn.innerHTML = "<i></i>HIDE Map";
-                    console.log("invisible");
+                        console.log("invisible");
                     }
                     else {
 
-                    console.log("visible");
-                    document.getElementById("map").setAttribute("style", "display:none");
-                    currentBtn.innerHTML = "<i></i>Map it";
+                        console.log("visible");
+                        document.getElementById("divForTheMap" + e.currentTarget.value).setAttribute("style", "display:none");
+                        currentBtn.innerHTML = "<i></i>Map it";
                     }
                 }
                 else {
+
+
+                    var divForTheMap = document.createElement('div');
+                    divForTheMap.style.height = '360px';
+                    divForTheMap.style.width = '98vm';
+                    divForTheMap.id = 'divForTheMap' + e.currentTarget.value;
+                    divForTheMap.style.display = 'block';
+                    divForTheMap.style.position = 'relative';
+                    divForTheMap.style.overflow = 'hidden';
 
 
                     geocoder = new google.maps.Geocoder();
@@ -129,11 +148,15 @@
                         zoom: 8,
                         center: latlng
                     }
-                    map = new google.maps.Map(document.getElementById('map'), mapOptions);
+                    map = new google.maps.Map(divForTheMap, mapOptions);
 
                     //geolocator
+                    var eventBox = e.currentTarget.parentElement;
+                    eventBox.parentNode.insertBefore(divForTheMap, eventBox.nextSibling);
+
                     var address = e.srcElement.value;
-                    console.log(e.currentTarget.value);
+                    console.log(); //button
+                    console.log(e.currentTarget.value); //adress
 
                     geocoder.geocode({ 'address': address }, function (results, status) {
                         if (status == 'OK') {
@@ -147,13 +170,14 @@
                         }
                     });
 
+
                     currentBtn.innerHTML = "<i></i>HIDE Map";
-                    document.getElementById("map").setAttribute("style", "display:block");
-                    document.getElementById("map").style.width = '98vm'
-                        document.getElementById("map").style.height = '360px'
-                        document.getElementById("map").style.display = 'block'
-                        document.getElementById("map").style.position = 'relative'
-                        document.getElementById("map").style.overflow = 'hidden'
+                    //document.getElementById("map").setAttribute("style", "display:block");
+                    //document.getElementById("map").style.width = '98vm'
+                    //document.getElementById("map").style.height = '360px'
+                    //document.getElementById("map").style.display = 'block'
+                    //document.getElementById("map").style.position = 'relative'
+                    //document.getElementById("map").style.overflow = 'hidden'
                 }
 
             });
