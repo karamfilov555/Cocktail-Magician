@@ -59,7 +59,7 @@
 
         <div class="clearfix"></div>
 
-        <a  data-rel="prettyPhoto" class="mapit" value="@item.Bar.Address"><i></i>Map it </a>
+        <a id="map_cocktail" data-rel="prettyPhoto" class="mapit" value="@item.Bar.Address"><i></i>Map it </a>
 
         <a target="_blank" href="http://www.facebook.com/sharer/sharer.php?u=foodtruck.html.themeforest.createit.pl" class="shareit"><i></i>Share it</a>
 
@@ -116,6 +116,7 @@
                 var address = document.getElementById('address').value;
                 console.log(address)
                 console.log(document.getElementsByClassName('place')[0].innerHTML)
+                console.log(document.getElementsById('map_cocktail')[0].innerHTML)
                 geocoder.geocode({ 'address': address }, function (results, status) {
                     if (status == 'OK') {
                         map.setCenter(results[0].geometry.location);
