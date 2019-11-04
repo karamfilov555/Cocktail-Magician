@@ -4,7 +4,6 @@
     ViewData["Title"] = "Details";
     Layout = "~/Views/Shared/_LayoutCustom.cshtml";
 }
-
 <center><h1>@Model.Name details</h1></center>
 <table class="table">
     <thead>
@@ -12,18 +11,15 @@
             <th><h5>Cocktail's Picture</h5></th>
             <th><h5>Cocktail's Details</h5></th>
             <th><h5>Cocktail's Ingredients</h5></th>
-
             <th></th>
         </tr>
     </thead>
     <tbody>
-
         <tr>
             <td><img src="@Model.Image" height="250" width="250" style="border-radius:25px; padding-top:5px; padding-bottom:5px"></td>
             <td>
                 <h5>Name: @Model.Name</h5>
                 <h5>Rating: @Model.Rating</h5>
-
             </td>
             <td>
                 @foreach (var item in Model.CocktailIngredients)
@@ -34,7 +30,6 @@
                 }
             </td>
         </tr>
-
     </tbody>
 </table>
 <h1 class="hdr6"> Where to find "@Model.Name"</h1>
@@ -48,46 +43,25 @@
 {
     <div class="eventBox">
         <span class="date">SEP <span>06</span></span>
-
         <h4 class="hdr2">
             @item.Bar.Name<br>
             <span class="place"> @item.Bar.Address</span>
-
             <span class="time">11:00 am - 1:00 pm</span>
         </h4>
         <hr>
-
         <div class="clearfix"></div>
-
         <button style="background:none ; border:0px ; outline:0px ; padding-top:5px" id="map_cocktail" data-rel="prettyPhoto" class="mapit" value="@item.Bar.Address"><i></i>Map it </button>
-
         <a target="_blank" href="http://www.facebook.com/sharer/sharer.php?u=foodtruck.html.themeforest.createit.pl" class="shareit"><i></i>Share it</a>
-
     </div>
-
 }
-@*<body>
-    <center>
-        <div id="map" style="width:98vw; height: 360px; display:none"></div>
-        <div>
-                <a class="button" id="address" type="hidden" value="@item.Bar.Address"></a>
-            </div>
-    </center>
-</body>*@
-
-
 <center>
     <div style="padding-bottom:20px">
-
         <a asp-action="ListCocktails" class="btn btn-success">Back to List</a>
     </div>
 </center>
-
-
 <script>
     var geocoder;
     var map;
-
 
     function initialize() {
 
@@ -109,7 +83,6 @@
                 divForTheMap.style.overflow = 'hidden';
                 console.log(divForTheMap);
 
-
                 if (document.getElementById("divForTheMap" + e.currentTarget.value) != null) {
                     console.log("sega ima karta");
                     if (document.getElementById("divForTheMap" + e.currentTarget.value).style.display == "none") {
@@ -130,8 +103,6 @@
                     }
                 }
                 else {
-
-
                     var divForTheMap = document.createElement('div');
                     divForTheMap.style.height = '360px';
                     divForTheMap.style.width = '98vm';
@@ -139,7 +110,6 @@
                     divForTheMap.style.display = 'block';
                     divForTheMap.style.position = 'relative';
                     divForTheMap.style.overflow = 'hidden';
-
 
                     geocoder = new google.maps.Geocoder();
                     var latlng = new google.maps.LatLng(-34.397, 150.644);
@@ -165,23 +135,15 @@
                                 map: map,
                                 position: results[0].geometry.location
                             });
+
                         } else {
                             alert('Geocode was not successful for the following reason: ' + status);
                         }
                     });
 
-
                     currentBtn.innerHTML = "<i></i>HIDE Map";
-                    //document.getElementById("map").setAttribute("style", "display:block");
-                    //document.getElementById("map").style.width = '98vm'
-                    //document.getElementById("map").style.height = '360px'
-                    //document.getElementById("map").style.display = 'block'
-                    //document.getElementById("map").style.position = 'relative'
-                    //document.getElementById("map").style.overflow = 'hidden'
                 }
-
             });
-
         }
     }
 </script>

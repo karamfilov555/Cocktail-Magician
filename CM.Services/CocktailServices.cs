@@ -146,6 +146,7 @@ namespace CM.Services
         {
             var allCocktailsCount = await _context
                                        .Cocktails
+                                       .Where(c=>c.DateDeleted==null)
                                        .CountAsync();
 
             int pageCount = (allCocktailsCount - 1) / cocktailsPerPage + 1;

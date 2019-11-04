@@ -23,6 +23,7 @@ namespace CM.Web.Models
         
         public string Image { get; set; }
         [Display(Name = "Cocktail's Rating")]
+        [Range(0,10, ErrorMessage = "Cocktail's rating should be between 0 and 10!")]
         public decimal Rating { get; set; }
         public List<SelectListItem> Ingredients { get; set; } = new List<SelectListItem>();
         public List<string> IngredientsIDs { get; set; } = new List<string>();

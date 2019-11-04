@@ -5,55 +5,60 @@
     Layout = "~/Views/Shared/_LayoutCustom.cshtml";
 }
 <center>
-   
 
-<h4></h4>
-<hr />
-<div class="row">
-    <div class="col-md-4 col-md-offset-4">
-        <h1>Create Cocktail</h1>
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            @*<div class="form-group">
-                <label asp-for="Id" class="control-label"></label>
-                <input asp-for="Id" class="form-control" />
-                <span asp-validation-for="Id" class="text-danger"></span>
-            </div>*@
-            <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
-                <input asp-for="Name" class="form-control" />
-                <span asp-validation-for="Name" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Image" class="control-label"></label>
-                <input asp-for="Image" class="form-control" />
-                <span asp-validation-for="Image" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Rating" class="control-label"></label>
-                <input asp-for="Rating" class="form-control" />
-                <span asp-validation-for="Rating" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="IngredientsIDs" class="control-label">Ingredients</label>
-                <select asp-for="IngredientsIDs" asp-items="@Model.Ingredients" class="form-control">
-                    <option hidden disabled selected value="">Choose Ingredients:</option>
-                </select>
-            </div>
-            @*<div class="form-group">
-                <label asp-for="DateDeleted" class="control-label"></label>
-                <input asp-for="DateDeleted" class="form-control" />
-                <span asp-validation-for="DateDeleted" class="text-danger"></span>
-            </div>*@
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
+
+    <h4></h4>
+    <hr />
+    <div class="row">
+        <div class="col-md-4 col-md-offset-4">
+            <h1>Create Cocktail</h1>
+            <form asp-action="Create">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                @*<div class="form-group">
+                        <label asp-for="Id" class="control-label"></label>
+                        <input asp-for="Id" class="form-control" />
+                        <span asp-validation-for="Id" class="text-danger"></span>
+                    </div>*@
+                <div class="form-group">
+                    <label asp-for="Name" class="control-label"></label>
+                    <input asp-for="Name" class="form-control" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Image" class="control-label"></label>
+                    <input asp-for="Image" class="form-control" />
+                    <span asp-validation-for="Image" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Rating" class="control-label"></label>
+                    <input asp-for="Rating" class="form-control" />
+                    <span asp-validation-for="Rating" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="IngredientsIDs" class="control-label">Ingredients</label>
+                    <select asp-for="IngredientsIDs"  class="js-example-basic-multiple form-control" asp-items="@Model.Ingredients" multiple="multiple" placeholder="Choose Ingredients...">
+                       
+                    </select>
+                </div>
+                @*<div class="form-group">
+                        <label asp-for="DateDeleted" class="control-label"></label>
+                        <input asp-for="DateDeleted" class="form-control" />
+                        <span asp-validation-for="DateDeleted" class="text-danger"></span>
+                    </div>*@
+                <div class="form-group">
+                    <input type="submit" value="Create" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
     </div>
-</div>
+    <div>
+        <a asp-action="Index">Back to List</a>
+    </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
-
-    </center>
+</center>
+<script>
+    window.onload = function () {
+        $('.js-example-basic-multiple').select2();
+    };
+   
+</script>
