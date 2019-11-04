@@ -59,7 +59,7 @@
 
         <div class="clearfix"></div>
 
-        <a id="map_cocktail" data-rel="prettyPhoto" class="mapit" value="@item.Bar.Address"><i></i>Map it </a>
+        <button id="map_cocktail" data-rel="prettyPhoto" class="mapit" value="@item.Bar.Address"><i></i>Map it </button>
 
         <a target="_blank" href="http://www.facebook.com/sharer/sharer.php?u=foodtruck.html.themeforest.createit.pl" class="shareit"><i></i>Share it</a>
 
@@ -69,7 +69,7 @@
         <center>
             <div id="map" style="width:98vw; height: 360px;"></div>
             <div>
-                <input id="address" type="hidden" value="@item.Bar.Address">
+                <a class="button" id="address" type="hidden" value="@item.Bar.Address"></a>
             </div>
         </center>
     </body>
@@ -99,8 +99,6 @@
 
                 e.preventDefault();
                 let currentBtn = e.currentTarget;
-
-
                 currentBtn.innerHTML = "<i></i>HIDE MAP"
                 geocoder = new google.maps.Geocoder();
                 var latlng = new google.maps.LatLng(-34.397, 150.644);
@@ -110,13 +108,11 @@
                     center: latlng
                 }
                 map = new google.maps.Map(document.getElementById('map'), mapOptions);
-
+               
                 //geolocator
-
-                var address = document.getElementById('address').value;
-                console.log(address)
-                console.log(document.getElementsByClassName('place')[0].innerHTML)
-                console.log(document.getElementsById('map_cocktail')[0].innerHTML)
+                var address = e.srcElement.value;
+                console.log(e.srcElement.value);
+                
                 geocoder.geocode({ 'address': address }, function (results, status) {
                     if (status == 'OK') {
                         map.setCenter(results[0].geometry.location);
