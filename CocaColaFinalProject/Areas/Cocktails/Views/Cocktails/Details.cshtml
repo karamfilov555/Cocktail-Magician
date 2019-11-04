@@ -59,21 +59,21 @@
 
         <div class="clearfix"></div>
 
-        <button id="map_cocktail" data-rel="prettyPhoto" class="mapit" value="@item.Bar.Address"><i></i>Map it </button>
+        <button style="background:none ; border:0px"  id="map_cocktail" data-rel="prettyPhoto" class="mapit" value="@item.Bar.Address"><i></i>Map it </button>
 
         <a target="_blank" href="http://www.facebook.com/sharer/sharer.php?u=foodtruck.html.themeforest.createit.pl" class="shareit"><i></i>Share it</a>
 
     </div>
 
-    <body onload="initialize()">
+}
+    <body >
         <center>
-            <div id="map" style="width:98vw; height: 360px;"></div>
-            <div>
+            <div id="map" style="width:98vw; height: 360px; display:none"></div>
+            @*<div>
                 <a class="button" id="address" type="hidden" value="@item.Bar.Address"></a>
-            </div>
+            </div>*@
         </center>
     </body>
-}
 
 
 <center>
@@ -99,31 +99,62 @@
 
                 e.preventDefault();
                 let currentBtn = e.currentTarget;
-                currentBtn.innerHTML = "<i></i>HIDE MAP"
-                geocoder = new google.maps.Geocoder();
-                var latlng = new google.maps.LatLng(-34.397, 150.644);
 
-                var mapOptions = {
-                    zoom: 8,
-                    center: latlng
-                }
-                map = new google.maps.Map(document.getElementById('map'), mapOptions);
-               
-                //geolocator
-                var address = e.srcElement.value;
-                console.log(e.srcElement.value);
-                
-                geocoder.geocode({ 'address': address }, function (results, status) {
-                    if (status == 'OK') {
-                        map.setCenter(results[0].geometry.location);
-                        var marker = new google.maps.Marker({
-                            map: map,
-                            position: results[0].geometry.location
-                        });
-                    } else {
-                        alert('Geocode was not successful for the following reason: ' + status);
+                if (document.getElementById("map").hasChildNodes()) {
+                    console.log("sega ima karta");
+                    if (document.getElementById("map").style.display=="none") {
+                        document.getElementById("map").setAttribute("style", "display:block");
+                        document.getElementById("map").style.width = '98vm'
+                        document.getElementById("map").style.height = '360px'
+                        document.getElementById("map").style.display = 'block'
+                        document.getElementById("map").style.position = 'relative'
+                        document.getElementById("map").style.overflow = 'hidden'
+                        currentBtn.innerHTML = "<i></i>HIDE Map";
+                    console.log("invisible");
                     }
-                });
+                    else {
+
+                    console.log("visible");
+                    document.getElementById("map").setAttribute("style", "display:none");
+                    currentBtn.innerHTML = "<i></i>Map it";
+                    }
+                }
+                else {
+
+
+                    geocoder = new google.maps.Geocoder();
+                    var latlng = new google.maps.LatLng(-34.397, 150.644);
+
+                    var mapOptions = {
+                        zoom: 8,
+                        center: latlng
+                    }
+                    map = new google.maps.Map(document.getElementById('map'), mapOptions);
+
+                    //geolocator
+                    var address = e.srcElement.value;
+                    console.log(e.currentTarget.value);
+
+                    geocoder.geocode({ 'address': address }, function (results, status) {
+                        if (status == 'OK') {
+                            map.setCenter(results[0].geometry.location);
+                            var marker = new google.maps.Marker({
+                                map: map,
+                                position: results[0].geometry.location
+                            });
+                        } else {
+                            alert('Geocode was not successful for the following reason: ' + status);
+                        }
+                    });
+
+                    currentBtn.innerHTML = "<i></i>HIDE Map";
+                    document.getElementById("map").setAttribute("style", "display:block");
+                    document.getElementById("map").style.width = '98vm'
+                        document.getElementById("map").style.height = '360px'
+                        document.getElementById("map").style.display = 'block'
+                        document.getElementById("map").style.position = 'relative'
+                        document.getElementById("map").style.overflow = 'hidden'
+                }
 
             });
 
