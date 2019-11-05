@@ -92,18 +92,30 @@ namespace CM.Web.Areas.Bars.Controllers
 
                 if (barVM.MyImage != null)
                 {
+                    var imageSizeInKb = barVM.MyImage.Length/1024;
+                    if (imageSizeInKb > 100)
+                    {
+                        _toast.AddErrorToastMessage($"The picture size is too big! Maximum size: 100 kb");
+                        return View(barVM);
+                    }
+
                     var uniqueFileName = GetUniqueFileName(barVM.MyImage.FileName);
                     var uploads = Path.Combine(_environment.WebRootPath, "images");
                     var filePath = Path.Combine(uploads, uniqueFileName);
                     barVM.MyImage.CopyTo(new FileStream(filePath, FileMode.Create));
                     var barDTO = barVM.MapBarVMToDTO();
+
                     barDTO.ImageUrl = "/images/" + uniqueFileName;
                     var barName = await _barServices.AddBar(barDTO);
                     _toast.AddSuccessToastMessage($"You successfully added \"{barName}\" bar!");
                     return RedirectToAction(nameof(Index));
                 }
             }
-            return View(barVM);
+            
+                //add cocktails to the vm if model state is invalid
+
+                return View(barVM);
+            
         }
 
         // GET: Bars/Bars/Edit/5
