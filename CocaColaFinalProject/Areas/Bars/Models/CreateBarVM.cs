@@ -23,12 +23,14 @@ namespace CM.Web.Areas.Bars.Models
         [MinLength(3, ErrorMessage = "Address must be between 3 and 100 symbols"),
             MaxLength(100, ErrorMessage = "Address must be between 3 and 100 symbols")]
         public string Address { get; set; }
-        //
+        [Required(ErrorMessage = "Website is required!")]
+        [Url]
         public string Website { get; set; }
-
+        [Required(ErrorMessage = "Image is required!")]
         public IFormFile BarImage { set; get; }
 
         public List<SelectListItem> AllCocktails { get; set; } = new List<SelectListItem>();
+        [Required(ErrorMessage = "You must specify cocktails for the bar!")]
         public List<string> AllCocktailsIDs { get; set; } = new List<string>();
         public List<BarCocktail> CocktailsInBar { get; set; } = new List<BarCocktail>();
 

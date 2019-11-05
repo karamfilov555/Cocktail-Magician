@@ -10,7 +10,8 @@
         <hr />
         <div class="row">
             <div class="col-md-4 col-md-offset-4">
-                <form asp-controller="Bars" asp-area="Bars" asp-action="Update" method="post">
+                <form asp-controller="Bars" asp-area="Bars" asp-action="Update" method="post"
+                      enctype="multipart/form-data">
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                     <input type="hidden" asp-for="Id" />
                     <div class="form-group">
@@ -18,11 +19,7 @@
                         <input asp-for="Name" class="form-control" />
                         <span asp-validation-for="Name" class="text-danger"></span>
                     </div>
-                    @*<div class="form-group">
-                        <label asp-for="ImageURL" class="control-label">Image URL</label>
-                        <input asp-for="ImageURL" class="form-control" />
-                        <span asp-validation-for="ImageURL" class="text-danger"></span>
-                    </div>*@
+
                     <div class="form-group">
                         <label asp-for="Website" class="control-label"></label>
                         <input asp-for="Website" class="form-control" />
@@ -33,6 +30,11 @@
                         <input asp-for="Address" class="form-control" />
                         <span asp-validation-for="Address" class="text-danger"></span>
                     </div>
+                    <div>
+                        <label asp-for="BarImage" class="control-label">Upload Image</label>
+                        <input asp-for="BarImage" class="btn btn-primary btn-sm" />
+                        <span asp-validation-for="BarImage" class="text-danger"></span>
+                    </div>
                     <div class="form-group">
                         <div class="select-editable">
                             <label asp-for="AllCocktailsIDs" class="control-label">All Cocktails</label>
@@ -40,12 +42,12 @@
                                 <option hidden disabled selected value=""></option>
                             </select>
                         </div>
-                        </div>
+                    </div>
                     <div class="form-group">
                         <input type="submit" value="Save" class="btn btn-primary" />
                         <a class="btn btn-default" asp-action="Index">Cancel</a>
                     </div>
-</form>
+                </form>
             </div>
         </div>
 

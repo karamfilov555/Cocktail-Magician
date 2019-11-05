@@ -15,6 +15,7 @@ using Microsoft.AspNetCore.Authorization;
 using NToastNotify;
 using System.IO;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 
 namespace CM.Web.Areas.Bars.Controllers
 {
@@ -26,8 +27,8 @@ namespace CM.Web.Areas.Bars.Controllers
         private readonly ICocktailServices _cocktailServices;
         private readonly IReviewServices _reviewServices;
         private readonly IToastNotification _toast;
-       
-        
+
+
 
         public BarsController(IBarServices barServices, ICocktailServices cocktailServices,
             IReviewServices reviewServices, IToastNotification toast)
@@ -87,30 +88,41 @@ namespace CM.Web.Areas.Bars.Controllers
         {
             if (ModelState.IsValid)
             {
-                    var imageSizeInKb = barVM.BarImage.Length/1024;
-                    var type = barVM.BarImage.ContentType;
-                
-                    if (type != "image/jpeg" && type != "image/jpg" && type != "image/png")
-                    {
-                        _toast.AddErrorToastMessage($"Allowed picture formats: \".jpg\", \".jpeg\" and \".png\"!");
-                        return View(barVM);
-                    }
-                    if (imageSizeInKb > 100)
-                    {
-                        _toast.AddErrorToastMessage($"The picture size is too big! Maximum size: 100 kb");
-                        return View(barVM);
-                    }
+                if (ImageIsValid(barVM.BarImage))
+                {
                     var barDTO = barVM.MapBarVMToDTO();
                     var barName = await _barServices.AddBar(barDTO);
                     _toast.AddSuccessToastMessage($"You successfully added \"{barName}\" bar!");
                     return RedirectToAction(nameof(Index));
-            }            
-                //add cocktails to the vm if model state is invalid
-                return View(barVM);
-            
+                }
+
+            }
+            var allCocktails = await _cocktailServices.GetAllCocktails();
+            barVM.AllCocktails = allCocktails
+                .Select(c => new SelectListItem(c.Name, c.Id)).ToList();
+            return View(barVM);
+        }
+
+        private bool ImageIsValid(IFormFile barImage)
+        {
+            var imageSizeInKb = barImage.Length / 1024;
+            var type = barImage.ContentType;
+
+            if (type != "image/jpeg" && type != "image/jpg" && type != "image/png")
+            {
+                _toast.AddErrorToastMessage($"Allowed picture formats: \".jpg\", \".jpeg\" and \".png\"!");
+                return false;
+            }
+            else if (imageSizeInKb > 100)
+            {
+                _toast.AddErrorToastMessage($"The picture size is too big! Maximum size: 100 kb");
+                return false;
+            }
+            return true;
         }
 
         // GET: Bars/Bars/Edit/5
+        [Authorize(Roles = "Manager, Administrator")]
         public async Task<IActionResult> Edit(string id)
         {
             if (id == null)
@@ -122,36 +134,29 @@ namespace CM.Web.Areas.Bars.Controllers
             var barVM = bar.MapBarToCreateBarVM();
             barVM.AllCocktails = allCocktails
                 .Select(c => new SelectListItem(c.Name, c.Id)).ToList();
-            if (bar == null)
-            {
-                return NotFound();
-            }
             return View(barVM);
         }
 
         // POST: Bars/Bars/Edit/5
         [HttpPost]
+        [Authorize(Roles = "Manager, Administrator")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(CreateBarVM barVM)
         {
 
             if (ModelState.IsValid)
             {
-                try
+                if (ImageIsValid(barVM.BarImage))
                 {
                     var barDTO = barVM.MapBarVMToDTO();
                     var barName = await _barServices.Update(barDTO);
                     _toast.AddSuccessToastMessage($"You successfully edited \"{barName}\" bar!");
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-
-                    throw;
-
-                }
-                return RedirectToAction(nameof(Index));
-            }
-            return RedirectToAction(nameof(Index));
+                    return RedirectToAction(nameof(Index));
+                }            }
+            var allCocktails = await _cocktailServices.GetAllCocktails();
+            barVM.AllCocktails = allCocktails
+                .Select(c => new SelectListItem(c.Name, c.Id)).ToList();
+            return View(barVM);
         }
 
         // GET: Bars/Bars/Delete/5
@@ -175,6 +180,6 @@ namespace CM.Web.Areas.Bars.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        
+
     }
 }

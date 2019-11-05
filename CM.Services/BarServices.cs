@@ -103,6 +103,8 @@ namespace CM.Services
         public async Task<string> Update(BarDTO barDto)
         {
             var barToEdit = await this.GetBar(barDto.Id);
+            var uniqueFileNamePath = _fileUploadService.UploadFile(barDto.BarImage);
+            barDto.ImageUrl = uniqueFileNamePath;
             var bar = barDto.MapBarDTOToBar();
             bar.BarRating = barToEdit.BarRating;
             var coctailsInBar = barDto.Cocktails.Select(c => c.MapToCocktailModel()).ToList();
@@ -110,7 +112,6 @@ namespace CM.Services
             {
                 await AddCocktailToBar(cocktail, bar);
             }
-
             _context.Entry(barToEdit).CurrentValues.SetValues(bar);
             _context.RemoveRange(barToEdit.BarCocktails);
             _context.AddRange(bar.BarCocktails);
