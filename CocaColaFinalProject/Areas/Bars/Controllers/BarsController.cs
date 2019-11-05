@@ -27,7 +27,7 @@ namespace CM.Web.Areas.Bars.Controllers
         private readonly IReviewServices _reviewServices;
         private readonly IToastNotification _toast;
         private readonly IHostingEnvironment _environment;
-        private object hostingEnvironment;
+        
 
         public BarsController(IBarServices barServices, ICocktailServices cocktailServices,
             IReviewServices reviewServices, IToastNotification toast,
@@ -89,23 +89,16 @@ namespace CM.Web.Areas.Bars.Controllers
         {
             if (ModelState.IsValid)
             {
-
-                if (barVM.MyImage != null)
+                var imageSizeInKb = barVM.MyImage.Length / 1024;
+                if (imageSizeInKb > 100)
                 {
-                    var imageSizeInKb = barVM.MyImage.Length/1024;
-                    if (imageSizeInKb > 100)
-                    {
-                        _toast.AddErrorToastMessage($"The picture size is too big! Maximum size: 100 kb");
-                        return View(barVM);
-                    }
-
-                    var uniqueFileName = GetUniqueFileName(barVM.MyImage.FileName);
-                    var uploads = Path.Combine(_environment.WebRootPath, "images");
-                    var filePath = Path.Combine(uploads, uniqueFileName);
-                    barVM.MyImage.CopyTo(new FileStream(filePath, FileMode.Create));
+                    _toast.AddErrorToastMessage($"The picture size is too big! Maximum size: 100 kb");
+                    return View(barVM);
+                }
+                if (barVM.BarImage != null)
+                {
+                    
                     var barDTO = barVM.MapBarVMToDTO();
-
-                    barDTO.ImageUrl = "/images/" + uniqueFileName;
                     var barName = await _barServices.AddBar(barDTO);
                     _toast.AddSuccessToastMessage($"You successfully added \"{barName}\" bar!");
                     return RedirectToAction(nameof(Index));
@@ -149,7 +142,7 @@ namespace CM.Web.Areas.Bars.Controllers
                 {
                     var barDTO = barVM.MapBarVMToDTO();
                     var barName = await _barServices.Update(barDTO);
-                    _toast.AddSuccessToastMessage($"You successfully edited \"{barName}\" cocktail!");
+                    _toast.AddSuccessToastMessage($"You successfully edited \"{barName}\" bar!");
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -167,8 +160,6 @@ namespace CM.Web.Areas.Bars.Controllers
         [HttpGet]
         public async Task<IActionResult> Delete(string id)
         {
-
-
             var barDTO = await _barServices.GetBarByID(id);
             var barVM = barDTO.MapBarToVM();
             return View(barVM);
@@ -181,17 +172,10 @@ namespace CM.Web.Areas.Bars.Controllers
         public async Task<IActionResult> DeleteConfirmed(string id)
         {
             var barName = await _barServices.Delete(id);
-            _toast.AddSuccessToastMessage($"You successfully deleted \"{barName}\" cocktail!");
+            _toast.AddSuccessToastMessage($"You successfully deleted \"{barName}\" bar!");
             return RedirectToAction(nameof(Index));
         }
 
-        private string GetUniqueFileName(string fileName)
-        {
-            fileName = Path.GetFileName(fileName);
-            return Path.GetFileNameWithoutExtension(fileName)
-                      + "_"
-                      + Guid.NewGuid().ToString().Substring(0, 4)
-                      + Path.GetExtension(fileName);
-        }
+        
     }
 }

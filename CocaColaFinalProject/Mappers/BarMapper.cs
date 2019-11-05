@@ -30,7 +30,7 @@ namespace CM.Web.Mappers
             newBarVM.Id = bar.Id;
             newBarVM.Name = bar.Name;
             newBarVM.Address = bar.Address;
-            newBarVM.ImageURL = bar.ImageUrl;
+            newBarVM.BarImage = bar.BarImage;
             newBarVM.Website = bar.Website; 
             return newBarVM;
         }
@@ -41,7 +41,7 @@ namespace CM.Web.Mappers
             newBarDTO.Id = bar.Id;
             newBarDTO.Name = bar.Name;
             newBarDTO.Address = bar.Address;
-            newBarDTO.ImageUrl = bar.ImageURL;
+            newBarDTO.BarImage = bar.BarImage;
             newBarDTO.Website = bar.Website;
             newBarDTO.Cocktails = bar.AllCocktailsIDs
                .Select(i => new CocktailDto()

@@ -16,9 +16,12 @@ namespace CM.Services
     public class BarServices : IBarServices
     {
         private readonly CMContext _context;
-        public BarServices(CMContext context)
+        private readonly IFileUploadService _fileUploadService;
+
+        public BarServices(CMContext context, IFileUploadService fileUploadService)
         {
             _context = context;
+           _fileUploadService = fileUploadService;
         }
 
         public async Task<ICollection<BarDTO>> GetHomePageBars()
@@ -71,6 +74,8 @@ namespace CM.Services
 
         public async Task<string> AddBar(BarDTO barDTO)
         {
+            var uniqueFileNamePath = _fileUploadService.UploadFile(barDTO.BarImage);
+            barDTO.ImageUrl = uniqueFileNamePath;
             var newBar = barDTO.MapBarDTOToBar();
             await _context.Bars.AddAsync(newBar).ConfigureAwait(false);
             await _context.SaveChangesAsync();
