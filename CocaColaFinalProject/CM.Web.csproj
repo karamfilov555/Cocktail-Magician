@@ -24,7 +24,6 @@
   <ItemGroup>
     <Folder Include="Areas\Bars\Data\" />
     <Folder Include="Areas\Cocktails\Data\" />
-    <Folder Include="Areas\Cocktails\Models\" />
   </ItemGroup>
 
 </Project>

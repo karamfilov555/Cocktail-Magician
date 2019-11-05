@@ -21,10 +21,10 @@
                     <ul class="slides" style="width: 800%; margin-left: -1349px;">
                         @foreach (var bar in Model.Bars)
                         {
-                            <li class="clone" aria-hidden="true" style="width: 1349px; float: left; display: block;">
+                            <li class="clone" aria-hidden="true" style="width: 1349px; float: left; display: block; height:350px">
                                 <div class="container">
                                     <a asp-area="Bars" asp-controller="Bars" asp-action="Details" asp-route-id="@bar.Id">
-                                        <img src="@bar.ImageURL" alt=" " draggable="false">
+                                        <img src="@bar.ImageURL" width="725" height="300" draggable="false">
                                     </a>
                                     <br />
                                     <h3 class="hdr2">@bar.Name</h3>
@@ -52,7 +52,7 @@
                     <ul class="slides" style="width: 800%; margin-left: -1349px;">
                         @foreach (var cocktail in Model.Cocktails)
                         {
-                            <li class="clone" aria-hidden="true" style="width: 1349px; float: left; display: block;">
+                            <li class="clone" aria-hidden="true" style="width: 1349px; float: left; display: block; height:350px">
 
                                 <a asp-area="Cocktails" asp-controller="Cocktails" asp-action="Details" asp-route-id="@cocktail.Id">
                                     <img src="@cocktail.Image" height="250" width="250">
