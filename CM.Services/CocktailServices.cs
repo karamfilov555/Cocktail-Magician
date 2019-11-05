@@ -13,9 +13,12 @@ namespace CM.Services
     public class CocktailServices : ICocktailServices
     {
         private readonly CMContext _context;
-        public CocktailServices(CMContext context)
+        private readonly IFileUploadService _fileUploadService;
+
+        public CocktailServices(CMContext context, IFileUploadService fileUploadService)
         {
             _context = context ?? throw new ArgumentNullException(nameof(context));
+            _fileUploadService = fileUploadService;
         }
 
         public async Task<ICollection<CocktailDto>> GetCocktailsForHomePage()
@@ -59,6 +62,8 @@ namespace CM.Services
             {
                 // check , some validaitons
             }
+            var uniqueFileNamePath = _fileUploadService.UploadFile(cocktailDto.CocktailImage);
+            cocktailDto.Image = uniqueFileNamePath;
             var cocktail = cocktailDto.MapToCocktailModel();
             _context.Cocktails.Add(cocktail);
             await _context.SaveChangesAsync();

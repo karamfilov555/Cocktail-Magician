@@ -76,7 +76,19 @@ namespace CM.Web.Areas.Cocktails.Controllers
         public async Task<IActionResult> Create(CocktailViewModel cocktailVm)
         {
             if (ModelState.IsValid)
-            {   
+            {
+                var imageSizeInKb = cocktailVm.CocktailImage.Length / 1024;
+                var type = cocktailVm.CocktailImage.ContentType;
+                if (type != "image/jpeg" && type != "image/jpg" && type != "image/png")
+                {
+                    _toast.AddErrorToastMessage($"Allowed picture formats: \".jpg\", \".jpeg\" and \".png\"!");
+                    return View(cocktailVm);
+                }
+                if (imageSizeInKb > 100)
+                {
+                    _toast.AddErrorToastMessage($"The picture size is too big! Maximum size: 100 kb");
+                    return View(cocktailVm);
+                }
                 var cocktailDto = cocktailVm.MapToCocktailDto();
                 await _cocktailServices.AddCocktail(cocktailDto);
                 _toast.AddSuccessToastMessage($"You successfully added cocktail {cocktailDto.Name}!");

@@ -1,4 +1,5 @@
 ﻿using CM.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
@@ -26,6 +27,9 @@ namespace CM.Web.Areas.Cocktails.Models
         [Display(Name = "Cocktail's Rating")]
         [Range(0,10, ErrorMessage = "Cocktail's rating should be between 0 and 10!")]
         public decimal Rating { get; set; }
+
+        public IFormFile CocktailImage { set; get; }
+
         public List<SelectListItem> Ingredients { get; set; } = new List<SelectListItem>();
         public List<string> IngredientsIDs { get; set; } = new List<string>();
 

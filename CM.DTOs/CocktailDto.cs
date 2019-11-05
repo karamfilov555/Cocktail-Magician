@@ -1,4 +1,5 @@
 ﻿using CM.Models;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -23,6 +24,8 @@ namespace CM.DTOs
         public decimal Rating { get; set; }
         [Display(Name = "Type your Review Here")]
         public string Description { get; set; }
+
+        public IFormFile CocktailImage { set; get; }
         // model?
         public List<CocktailIngredient> CocktailIngredients { get; set; }
             = new List<CocktailIngredient>();

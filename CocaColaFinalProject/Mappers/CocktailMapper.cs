@@ -27,6 +27,8 @@ namespace CM.Web.Mappers
             cocktailDto.Name = cocktailVm.Name;
             cocktailDto.Image = cocktailVm.Image;
             cocktailDto.Rating = cocktailVm.Rating;
+            cocktailDto.CocktailImage = cocktailVm.CocktailImage;
+
             //TODO
             cocktailDto.CocktailIngredients = cocktailVm.IngredientsIDs
                 .Select(i=>new CocktailIngredient()

@@ -89,8 +89,6 @@ namespace CM.Web.Areas.Bars.Controllers
         {
             if (ModelState.IsValid)
             {
-
-                
                     var imageSizeInKb = barVM.BarImage.Length/1024;
                     var type = barVM.BarImage.ContentType;
                     if (type != "image/jpeg" && type != "image/jpg" && type != "image/png")
