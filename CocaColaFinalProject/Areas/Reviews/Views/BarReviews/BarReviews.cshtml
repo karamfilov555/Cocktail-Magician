@@ -1,0 +1,53 @@
+﻿@model AllBarReviewsViewModel
+@{
+    ViewData["Title"] = "BarReviews";
+}
+
+<h1 class="hdr1">Reviews for @Model.BarName </h1>
+
+@{
+    var list = Model.Reviews.Select(r => r.UserID).ToList();
+    if (!list.Contains(@User.FindFirstValue(ClaimTypes.NameIdentifier)))
+    {
+        var reviewVM = new BarReviewViewModel();
+        reviewVM.BarId = Model.BarId;
+        reviewVM.BarName = Model.BarName;
+
+        <partial name="_CreateBarReviewPartial" model=reviewVM />
+    }
+}
+
+<br />
+<div class="row">
+    <h3 class="hdr4">All Comments:</h3>
+    <div class="col-md-8 col-md-offset-2">
+        <ul class="commentList list-unstyled">
+            <li>
+                @foreach (var review in @Model.Reviews)
+                {
+                    <div class="oneComment">
+                        <div class="media">
+                            <a class="pull-left roundedImg" href="#" style="background-image: url(&quot;./assets/images/content/testimonial-1.jpg&quot;);">
+                                <img class="media-object" src="./assets/images/content/testimonial-1.jpg" alt=" ">
+                            </a>
+                            <div class="media-body">
+                                @review.ReviewDate.Date<br>
+                                @review.UserName
+                                @review.Rating
+                                <a href="#" class="comment-reply-link pull-right">Reply</a>
+                            </div>
+                        </div>
+
+                        <p>
+                            @review.Description
+                        </p>
+                    </div>
+                }
+        </ul>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index" asp-controller="Bars" asp-area="Bars" class="btn btn-default">Back to List</a>
+</div>
+        

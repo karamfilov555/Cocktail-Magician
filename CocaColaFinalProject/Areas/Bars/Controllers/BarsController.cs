@@ -26,18 +26,16 @@ namespace CM.Web.Areas.Bars.Controllers
         private readonly ICocktailServices _cocktailServices;
         private readonly IReviewServices _reviewServices;
         private readonly IToastNotification _toast;
-        private readonly IHostingEnvironment _environment;
+       
         
 
         public BarsController(IBarServices barServices, ICocktailServices cocktailServices,
-            IReviewServices reviewServices, IToastNotification toast,
-            IHostingEnvironment environment)
+            IReviewServices reviewServices, IToastNotification toast)
         {
             _barServices = barServices;
             _cocktailServices = cocktailServices;
             _reviewServices = reviewServices;
             _toast = toast;
-            _environment = environment;
         }
 
 
@@ -91,6 +89,7 @@ namespace CM.Web.Areas.Bars.Controllers
             {
                     var imageSizeInKb = barVM.BarImage.Length/1024;
                     var type = barVM.BarImage.ContentType;
+                
                     if (type != "image/jpeg" && type != "image/jpg" && type != "image/png")
                     {
                         _toast.AddErrorToastMessage($"Allowed picture formats: \".jpg\", \".jpeg\" and \".png\"!");

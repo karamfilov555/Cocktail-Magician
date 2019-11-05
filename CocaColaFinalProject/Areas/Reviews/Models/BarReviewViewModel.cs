@@ -9,6 +9,7 @@ namespace CM.Web.Areas.Reviews.Models
     {
         public String Id { get; set; }
         public String BarId { get; set; }
+        public String BarName { get; set; }
         public String Description { get; set; }
         public decimal Rating { get; set; }
         public string UserName { get; set; }

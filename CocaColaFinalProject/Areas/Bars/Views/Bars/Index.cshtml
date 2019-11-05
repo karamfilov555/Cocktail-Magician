@@ -56,6 +56,8 @@
                     </a>
                 </td>
                 <td>
+                    <a class="btn btn-default btn-sm" asp-area="Reviews" asp-controller="BarReviews" asp-action="BarReviews" 
+                       asp-route-id="@bar.Id" asp-route-name="@bar.Name">Reviews</a>
                     <a class="btn btn-default btn-sm" asp-area="Bars" asp-action="Details" asp-route-id="@bar.Id">Details</a>
                     @if (this.User.IsInRole("Administrator") || this.User.IsInRole("Manager"))
                     {

@@ -9,6 +9,7 @@
     <form class="col-md-4 col-md-offset-4" asp-area="Reviews" asp-controller="BarReviews" asp-action="CreateBarReview">
         <dd hidden>
             <input asp-for="BarId" value="@Model.BarId" />
+            <input asp-for="BarName" value="@Model.BarName" />
             <input asp-for="UserID" value="@User.FindFirstValue(ClaimTypes.NameIdentifier)" />
         </dd>
         @*<dd class="col-sm-12">
