@@ -13,6 +13,8 @@ using CM.Web.Areas.Bars.Models;
 using CM.Web.Areas.Reviews.Models;
 using Microsoft.AspNetCore.Authorization;
 using NToastNotify;
+using System.IO;
+using Microsoft.AspNetCore.Hosting;
 
 namespace CM.Web.Areas.Bars.Controllers
 {
@@ -24,14 +26,18 @@ namespace CM.Web.Areas.Bars.Controllers
         private readonly ICocktailServices _cocktailServices;
         private readonly IReviewServices _reviewServices;
         private readonly IToastNotification _toast;
+        private readonly IHostingEnvironment _environment;
+        private object hostingEnvironment;
 
         public BarsController(IBarServices barServices, ICocktailServices cocktailServices,
-            IReviewServices reviewServices, IToastNotification toast)
+            IReviewServices reviewServices, IToastNotification toast,
+            IHostingEnvironment environment)
         {
             _barServices = barServices;
             _cocktailServices = cocktailServices;
             _reviewServices = reviewServices;
             _toast = toast;
+            _environment = environment;
         }
 
 
@@ -83,10 +89,19 @@ namespace CM.Web.Areas.Bars.Controllers
         {
             if (ModelState.IsValid)
             {
-                var barDTO = barVM.MapBarVMToDTO();
-                var barName = await _barServices.AddBar(barDTO);
-                _toast.AddSuccessToastMessage($"You successfully added \"{barName}\" cocktail!");
-                return RedirectToAction(nameof(Index));
+
+                if (barVM.MyImage != null)
+                {
+                    var uniqueFileName = GetUniqueFileName(barVM.MyImage.FileName);
+                    var uploads = Path.Combine(_environment.WebRootPath, "images");
+                    var filePath = Path.Combine(uploads, uniqueFileName);
+                    barVM.MyImage.CopyTo(new FileStream(filePath, FileMode.Create));
+                    var barDTO = barVM.MapBarVMToDTO();
+                    barDTO.ImageUrl = "/images/" + uniqueFileName;
+                    var barName = await _barServices.AddBar(barDTO);
+                    _toast.AddSuccessToastMessage($"You successfully added \"{barName}\" bar!");
+                    return RedirectToAction(nameof(Index));
+                }
             }
             return View(barVM);
         }
@@ -158,5 +173,13 @@ namespace CM.Web.Areas.Bars.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        private string GetUniqueFileName(string fileName)
+        {
+            fileName = Path.GetFileName(fileName);
+            return Path.GetFileNameWithoutExtension(fileName)
+                      + "_"
+                      + Guid.NewGuid().ToString().Substring(0, 4)
+                      + Path.GetExtension(fileName);
+        }
     }
 }

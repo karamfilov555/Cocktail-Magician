@@ -12,7 +12,8 @@
     <div class="row">
         <h1>Create Bar</h1>
         <div class="col-md-4 col-md-offset-4">
-            <form asp-controller="Bars" asp-area="Bars" asp-action="Create" method="post">
+            <form asp-controller="Bars" asp-area="Bars" asp-action="Create" method="post"
+                  enctype="multipart/form-data">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <div class="form-group">
                     <label asp-for="Name" class="control-label"></label>
@@ -29,10 +30,15 @@
                     <input asp-for="Address" class="form-control" />
                     <span asp-validation-for="Address" class="text-danger"></span>
                 </div>
-                <div class="form-group">
+                @*<div class="form-group">
                     <label asp-for="ImageURL" class="control-label"></label>
                     <input asp-for="ImageURL" class="form-control" />
                     <span asp-validation-for="ImageURL" class="text-danger"></span>
+                </div>*@
+                <div>
+                    <label asp-for="MyImage" class="control-label">Upload Image</label>
+                    <input asp-for="MyImage" class="btn btn-primary btn-sm" />
+
                 </div>
                 <div class="form-group">
                     <div class="select-editable">

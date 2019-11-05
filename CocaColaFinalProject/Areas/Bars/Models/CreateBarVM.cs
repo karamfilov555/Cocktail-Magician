@@ -1,5 +1,6 @@
 ﻿using CM.Models;
 using CM.Web.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
@@ -26,6 +27,7 @@ namespace CM.Web.Areas.Bars.Models
         public string Website { get; set; }
 
         public string ImageURL { get; set; }
+        public IFormFile MyImage { set; get; }
 
         public List<SelectListItem> AllCocktails { get; set; } = new List<SelectListItem>();
         public List<string> AllCocktailsIDs { get; set; } = new List<string>();
