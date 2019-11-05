@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace CM.Web.Models
+namespace CM.Web.Areas.Cocktails.Models
 {
     public class CocktailViewModel
     {
@@ -16,7 +16,8 @@ namespace CM.Web.Models
 
         //care B-52 ;)
         [Display(Name = "Cocktail's Name")]
-        [Required, RegularExpression("[A-Za-z ]+", ErrorMessage = "Cocktail's name should only contain latin letters!")]
+        [Required(ErrorMessage = "Name is required!")]
+        [RegularExpression("[A-Za-z ]+", ErrorMessage = "Cocktail's name should only contain latin letters!")]
         public string Name { get; set; }
         [Url]
         [Display(Name = "Image")]

@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
-namespace CM.Web.Models
+namespace CM.Web.Areas.Cocktails.Models
 {
     public class CocktailsListingViewModel
     {

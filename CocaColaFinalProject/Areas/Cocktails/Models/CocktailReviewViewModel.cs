@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace CM.Web.Models
+namespace CM.Web.Areas.Cocktails.Models
 {
     public class CocktailReviewViewModel
     {

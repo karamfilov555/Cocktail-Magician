@@ -3,8 +3,8 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using CM.Services.Contracts;
+using CM.Web.Areas.Cocktails.Models;
 using CM.Web.Mappers;
-using CM.Web.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -75,10 +75,19 @@ namespace CM.Web.Areas.Cocktails.Controllers
         [Authorize(Roles = "Administrator, Manager")]
         public async Task<IActionResult> Create(CocktailViewModel cocktailVm)
         {
-            var cocktailDto = cocktailVm.MapToCocktailDto();
-            await _cocktailServices.AddCocktail(cocktailDto);
-
-            return RedirectToAction("ListCocktails");
+            if (ModelState.IsValid)
+            {   
+                var cocktailDto = cocktailVm.MapToCocktailDto();
+                await _cocktailServices.AddCocktail(cocktailDto);
+                _toast.AddSuccessToastMessage($"You successfully added cocktail {cocktailDto.Name}!");
+                return RedirectToAction("ListCocktails");
+            }
+            else
+            {
+                var ingr = await _ingredientServices.GetAllIngredients();
+                cocktailVm.Ingredients.AddRange(ingr.Select(i => new SelectListItem(i.Name, i.Id)));
+                return View(cocktailVm);
+            }
         }
         [HttpGet]
         public async Task<IActionResult> ListCocktails(string sortOrder, int? currPage, string orderByModel)

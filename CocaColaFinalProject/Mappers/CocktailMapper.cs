@@ -1,7 +1,7 @@
-﻿using CM.DTOs;
+﻿using System.Linq;
+using CM.DTOs;
 using CM.Models;
-using CM.Web.Models;
-using System.Linq;
+using CM.Web.Areas.Cocktails.Models;
 
 namespace CM.Web.Mappers
 {

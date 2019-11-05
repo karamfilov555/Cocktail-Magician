@@ -1,8 +1,6 @@
 ﻿using CM.Web.Areas.Bars.Models;
-using System;
+using CM.Web.Areas.Cocktails.Models;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace CM.Web.Models
 {
