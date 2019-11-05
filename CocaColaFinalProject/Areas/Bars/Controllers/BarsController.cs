@@ -93,6 +93,12 @@ namespace CM.Web.Areas.Bars.Controllers
                 if (barVM.MyImage != null)
                 {
                     var imageSizeInKb = barVM.MyImage.Length/1024;
+                    var type = barVM.MyImage.ContentType;
+                    if (type != "image/jpeg" && type != "image/jpg" && type != "image/png")
+                    {
+                        _toast.AddErrorToastMessage($"Allowed picture formats: \".jpg\", \".jpeg\" and \".png\"!");
+                        return View(barVM);
+                    }
                     if (imageSizeInKb > 100)
                     {
                         _toast.AddErrorToastMessage($"The picture size is too big! Maximum size: 100 kb");
