@@ -89,24 +89,18 @@ namespace CM.Web.Areas.Bars.Controllers
         {
             if (ModelState.IsValid)
             {
-                var imageSizeInKb = barVM.MyImage.Length / 1024;
+                var imageSizeInKb = barVM.BarImage.Length / 1024;
                 if (imageSizeInKb > 100)
                 {
                     _toast.AddErrorToastMessage($"The picture size is too big! Maximum size: 100 kb");
                     return View(barVM);
                 }
-                if (barVM.BarImage != null)
-                {
-                    
                     var barDTO = barVM.MapBarVMToDTO();
                     var barName = await _barServices.AddBar(barDTO);
                     _toast.AddSuccessToastMessage($"You successfully added \"{barName}\" bar!");
                     return RedirectToAction(nameof(Index));
-                }
-            }
-            
+            }            
                 //add cocktails to the vm if model state is invalid
-
                 return View(barVM);
             
         }
