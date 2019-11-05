@@ -89,12 +89,26 @@ namespace CM.Web.Areas.Bars.Controllers
         {
             if (ModelState.IsValid)
             {
-                var imageSizeInKb = barVM.BarImage.Length / 1024;
-                if (imageSizeInKb > 100)
+
+                if (barVM.MyImage != null)
                 {
-                    _toast.AddErrorToastMessage($"The picture size is too big! Maximum size: 100 kb");
-                    return View(barVM);
-                }
+                    var imageSizeInKb = barVM.MyImage.Length/1024;
+                    var type = barVM.MyImage.ContentType;
+                    if (type != "image/jpeg" && type != "image/jpg" && type != "image/png")
+                    {
+                        _toast.AddErrorToastMessage($"Allowed picture formats: \".jpg\", \".jpeg\" and \".png\"!");
+                        return View(barVM);
+                    }
+                    if (imageSizeInKb > 100)
+                    {
+                        _toast.AddErrorToastMessage($"The picture size is too big! Maximum size: 100 kb");
+                        return View(barVM);
+                    }
+
+                    var uniqueFileName = GetUniqueFileName(barVM.MyImage.FileName);
+                    var uploads = Path.Combine(_environment.WebRootPath, "images");
+                    var filePath = Path.Combine(uploads, uniqueFileName);
+                    barVM.MyImage.CopyTo(new FileStream(filePath, FileMode.Create));
                     var barDTO = barVM.MapBarVMToDTO();
                     var barName = await _barServices.AddBar(barDTO);
                     _toast.AddSuccessToastMessage($"You successfully added \"{barName}\" bar!");
