@@ -4,7 +4,7 @@
     ViewData["Title"] = "View";
     Layout = "~/Views/Shared/_LayoutCustom.cshtml";
 }
-<center>
+<center style="padding-bottom:50px">
 
 
     <h4></h4>
@@ -36,7 +36,7 @@
                 </div>
                 <div class="form-group">
                     <label asp-for="IngredientsIDs" class="control-label">Ingredients</label>
-                    <select asp-for="IngredientsIDs"  class="js-example-basic-multiple form-control" asp-items="@Model.Ingredients" multiple="multiple" placeholder="Choose Ingredients...">
+                    <select id="selectmenu" asp-for="IngredientsIDs"  class="js-example-basic-multiple form-control" asp-items="@Model.Ingredients" multiple="multiple" placeholder="Choose Ingredients...">
                        
                     </select>
                 </div>
@@ -59,6 +59,11 @@
 <script>
     window.onload = function () {
         $('.js-example-basic-multiple').select2();
+        //let selectmenu = document.getElementById("selectmenu")
+        //let ssss = document.getElementsByClassName("js-example-basic-multiple form-control select2-hidden-accessible")
+        
+        //ssss[0].style.color = 'red'
+        //console.log(ssss[0])
     };
    
 </script>
