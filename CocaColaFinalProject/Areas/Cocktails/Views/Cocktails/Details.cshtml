@@ -103,13 +103,13 @@
                     }
                 }
                 else {
-                    var divForTheMap = document.createElement('div');
-                    divForTheMap.style.height = '360px';
-                    divForTheMap.style.width = '98vm';
-                    divForTheMap.id = 'divForTheMap' + e.currentTarget.value;
-                    divForTheMap.style.display = 'block';
-                    divForTheMap.style.position = 'relative';
-                    divForTheMap.style.overflow = 'hidden';
+                    //var divForTheMap = document.createElement('div');
+                    //divForTheMap.style.height = '360px';
+                    //divForTheMap.style.width = '98vm';
+                    //divForTheMap.id = 'divForTheMap' + e.currentTarget.value;
+                    //divForTheMap.style.display = 'block';
+                    //divForTheMap.style.position = 'relative';
+                    //divForTheMap.style.overflow = 'hidden';
 
                     geocoder = new google.maps.Geocoder();
                     var latlng = new google.maps.LatLng(-34.397, 150.644);
@@ -124,9 +124,9 @@
                     var eventBox = e.currentTarget.parentElement;
                     eventBox.parentNode.insertBefore(divForTheMap, eventBox.nextSibling);
 
-                    var address = e.srcElement.value;
-                    console.log(); //button
-                    console.log(e.currentTarget.value); //adress
+                    var address = e.currentTarget.value;
+                    //console.log(address); //button
+                    //console.log(e.currentTarget.value); //adress
 
                     geocoder.geocode({ 'address': address }, function (results, status) {
                         if (status == 'OK') {
