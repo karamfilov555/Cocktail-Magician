@@ -29,6 +29,7 @@ namespace CM.Web.Areas.Cocktails.Models
         public decimal Rating { get; set; }
 
         public IFormFile CocktailImage { set; get; }
+        public string headLetter { set; get; }
 
         public List<SelectListItem> Ingredients { get; set; } = new List<SelectListItem>();
         public List<string> IngredientsIDs { get; set; } = new List<string>();
