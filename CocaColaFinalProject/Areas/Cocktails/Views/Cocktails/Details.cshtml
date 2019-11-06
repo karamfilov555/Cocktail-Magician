@@ -39,18 +39,22 @@
         you can be the first in the town to offer this cocktail
     </h3>
 }
+
 @foreach (var item in Model.BarCocktails)
 {
+
+    var addressNew = item.Bar.Address.Country + ", " + item.Bar.Address.City + ", "+ item.Bar.Address.Details;
+
     <div class="eventBox">
         <span class="date">SEP <span>06</span></span>
         <h4 class="hdr2">
             @item.Bar.Name<br>
-            <span class="place"> @item.Bar.Address</span>
+            <span class="place"> @addressNew</span>
             <span class="time">11:00 am - 1:00 pm</span>
         </h4>
         <hr>
         <div class="clearfix"></div>
-        <button style="background:none ; border:0px ; outline:0px ; padding-top:5px" id="map_cocktail" data-rel="prettyPhoto" class="mapit" value="@item.Bar.Address"><i></i>Map it </button>
+        <button style="background:none ; border:0px ; outline:0px ; padding-top:5px" id="map_cocktail" data-rel="prettyPhoto" class="mapit" value="@addressNew"><i></i>Map it </button>
         <a target="_blank" href="http://www.facebook.com/sharer/sharer.php?u=foodtruck.html.themeforest.createit.pl" class="shareit"><i></i>Share it</a>
     </div>
 }

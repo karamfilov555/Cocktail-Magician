@@ -76,6 +76,7 @@ namespace CocaColaFinalProject
             app.UpdateDatabase();
             app.SeedDatabaseCocktails();
             app.SeedDatabaseBars();
+            app.SeedDatabaseAddresses();
             app.SeedDatabaseDistribution();
 
             if (env.IsDevelopment())

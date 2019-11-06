@@ -13,7 +13,9 @@ namespace CM.DTOs
         public decimal Rating { get; set; }
         public String ImageUrl { get; set; }
         public IFormFile BarImage { set; get; }
-        public String Address { get; set; }
+        public String Country { get; set; }
+        public String City { get; set; }
+        public String Details { get; set; }
         public string Website { get; set; }
         public DateTime? DateDeleted { get; set; }
         public List<CocktailDto> Cocktails { get; set; }

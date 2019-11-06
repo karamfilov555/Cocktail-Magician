@@ -16,7 +16,6 @@ namespace CM.DTOs.Mappers
             newBarDTO.ImageUrl = bar.Image;
             newBarDTO.Rating = bar.BarRating;
             newBarDTO.Website = bar.Website;
-            newBarDTO.Address = bar.Address;
             newBarDTO.CocktailsNames = bar.BarCocktails.Select(b=>b.Cocktail.Name).ToList();
             newBarDTO.DateDeleted = bar.DateDeleted;
             return newBarDTO;
@@ -29,7 +28,6 @@ namespace CM.DTOs.Mappers
             newBar.Name = bar.Name;
             newBar.Image = bar.ImageUrl;
             newBar.Website = bar.Website;
-            newBar.Address = bar.Address;
             newBar.DateDeleted = bar.DateDeleted;
             return newBar;
         }

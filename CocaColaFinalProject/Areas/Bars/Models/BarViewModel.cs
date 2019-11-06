@@ -19,9 +19,12 @@ namespace CM.Web.Areas.Bars.Models
         [Required(ErrorMessage = "Address is required!")]
         [MinLength(3, ErrorMessage = "Address must be between 3 and 30 symbols"),
             MaxLength(30, ErrorMessage = "Address must be between 3 and 30 symbols")]
-        public string Address { get; set; }
-        
-        
+
+        public string City { get; set; }
+        public string Country { get; set; }
+        public string Details { get; set; }
+
+
 
         public decimal Rating { get; set; }
         public string Description { get; set; }

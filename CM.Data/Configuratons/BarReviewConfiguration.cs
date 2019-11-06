@@ -18,7 +18,8 @@ namespace CM.Data.Configuratons
             //    .HasForeignKey(r => r.UserId);
             builder.HasOne(r => r.Bar)
                .WithMany(bar => bar.Reviews)
-               .HasForeignKey(r => r.BarId);
+               .HasForeignKey(r => r.BarId)
+                .OnDelete(DeleteBehavior.Restrict); ;
 
         }
 

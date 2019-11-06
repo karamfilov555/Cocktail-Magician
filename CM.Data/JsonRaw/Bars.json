@@ -3,49 +3,42 @@
     "Id": "1",
     "Image": "https://www.worlds50bestbars.com/files/Banner/Images/4//American_Bar-jpg.jpg",
     "Name": "American Bar",
-    "Website": "https://www.thesavoylondon.com/restaurant/american-bar/",
-    "Address": "The Savoy Hotel, 100 Strand, London WC2R 0EZ"
+    "Website": "https://www.thesavoylondon.com/restaurant/american-bar/"
   },
   {
     "Id": "2",
     "Image": "https://www.worlds50bestbars.com/files/Banner/Images/4//Manhattan_PrivateSalon.jpg",
     "Name": "Manhattan",
-    "Website": "https://www.regenthotels.com/regent-singapore/dining/manhattan",
-    "Address": "Regent Singapore, 1 Cuscaden Road, Singapore 249715"
+    "Website": "https://www.regenthotels.com/regent-singapore/dining/manhattan"
   },
   {
     "Id": "3",
     "Image": "https://www.worlds50bestbars.com/files/Banner/Images/4//TheNoMadBar.jpg",
     "Name": "The NoMad",
-    "Website": "https://www.thenomadhotel.com",
-    "Address": "NoMad Hotel, 10 West 28th Street, New York City, NY 10001-6403"
+    "Website": "https://www.thenomadhotel.com"
   },
   {
     "Id": "4",
     "Image": "https://www.worlds50bestbars.com/files/Banner/Images/4//connaught_bar.jpg",
     "Name": "Connaught Bar",
-    "Website": "http://www.the-connaught.co.uk/mayfair-bars/connaught-bar/",
-    "Address": "Carlos Place, Mayfair, London W1K 2AL"
+    "Website": "http://www.the-connaught.co.uk/mayfair-bars/connaught-bar/"
   },
   {
     "Id": "5",
     "Image": "https://www.worlds50bestbars.com/files/Banner/Images/4//TheClumsies.jpg",
     "Name": "The Clumsies",
-    "Website": "http://www.theclumsies.gr",
-    "Address": "105, 61 Praxitelous 30, Athens"
+    "Website": "http://www.theclumsies.gr"
   },
   {
     "Id": "6",
     "Image": "https://www.worlds50bestbars.com/files/Banner/Images/4//DanteBaredit.jpg",
     "Name": "Dante",
-    "Website": "https://www.dante-nyc.com/",
-    "Address": "79-81 MacDougal Street, New York 10012"
+    "Website": "https://www.dante-nyc.com/"
   },
   {
     "Id": "7",
     "Image": "https://www.worlds50bestbars.com/files/Banner/Images/4//TheOldManHK.jpg",
     "Name": "The Old Man",
-    "Website": "https://www.dante-nyc.com/",
-    "Address": "Lower G/F, 37-39 Aberdeen Street, Soho, Central, Hong Kong, China"
+    "Website": "https://www.dante-nyc.com/"
   }
 ]

@@ -39,12 +39,16 @@ namespace CM.Services
         {
             var bar = await _context.Bars
                 .Where(b => b.Id == id)
+                .Include(b=>b.Address)
                 .Include(b => b.BarCocktails)
                 .ThenInclude(b => b.Cocktail)
                 .FirstOrDefaultAsync()
                 .ConfigureAwait(false);
             bar.ValidateIfNull();
             var barDTO = bar.MapBarToDTO();
+            barDTO.Country = bar.Address.Country;
+            barDTO.City = bar.Address.City;
+            barDTO.Details = bar.Address.Details;
             return barDTO;
         }
 
@@ -60,7 +64,7 @@ namespace CM.Services
             var barDTOs = bars.Select(b => b.MapBarToDTO()).ToList();
             return barDTOs;
         }
-        public async Task<Bar> GetBar(string id)
+        private async Task<Bar> GetBar(string id)
         {
             var bar = await _context.Bars
                 .Where(b => b.Id == id && b.DateDeleted == null)
@@ -77,6 +81,8 @@ namespace CM.Services
             var uniqueFileNamePath = _fileUploadService.UploadFile(barDTO.BarImage);
             barDTO.ImageUrl = uniqueFileNamePath;
             var newBar = barDTO.MapBarDTOToBar();
+            var newAddress = barDTO.MapBarDTOToAddress();
+            newBar.Address = newAddress;
             await _context.Bars.AddAsync(newBar).ConfigureAwait(false);
             await _context.SaveChangesAsync();
             var coctailsInBar = barDTO.Cocktails.Select(c => c.MapToCocktailModel()).ToList();

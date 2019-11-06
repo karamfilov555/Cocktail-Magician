@@ -4,14 +4,16 @@ using CM.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CM.Data.Migrations
 {
     [DbContext(typeof(CMContext))]
-    partial class CMContextModelSnapshot : ModelSnapshot
+    [Migration("20191105221928_TableAddresses")]
+    partial class TableAddresses
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -27,8 +29,6 @@ namespace CM.Data.Migrations
                     b.Property<string>("BarId");
 
                     b.Property<string>("City");
-
-                    b.Property<string>("Country");
 
                     b.Property<string>("Details");
 
@@ -122,6 +122,9 @@ namespace CM.Data.Migrations
                 {
                     b.Property<string>("Id")
                         .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Address")
+                        .IsRequired();
 
                     b.Property<decimal>("BarRating");
 
@@ -346,7 +349,7 @@ namespace CM.Data.Migrations
             modelBuilder.Entity("CM.Models.Address", b =>
                 {
                     b.HasOne("CM.Models.Bar", "Bar")
-                        .WithOne("Address")
+                        .WithOne("Address2")
                         .HasForeignKey("CM.Models.Address", "BarId");
                 });
 

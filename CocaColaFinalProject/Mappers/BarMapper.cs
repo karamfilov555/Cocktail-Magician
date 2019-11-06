@@ -15,7 +15,9 @@ namespace CM.Web.Mappers
             var newBarVM = new BarViewModel();
             newBarVM.Id = bar.Id;
             newBarVM.Name = bar.Name;
-            newBarVM.Address = bar.Address;
+            newBarVM.City = bar.City;
+            newBarVM.Country = bar.Country;
+            newBarVM.Details = bar.Details;
             newBarVM.ImageURL = bar.ImageUrl;
             newBarVM.Rating = bar.Rating;
             newBarVM.Website = bar.Website;
@@ -29,7 +31,9 @@ namespace CM.Web.Mappers
             var newBarVM = new CreateBarVM();
             newBarVM.Id = bar.Id;
             newBarVM.Name = bar.Name;
-            newBarVM.Address = bar.Address;
+            newBarVM.City = bar.City;
+            newBarVM.Country = bar.Country;
+            newBarVM.Details = bar.Details;
             newBarVM.BarImage = bar.BarImage;
             newBarVM.Website = bar.Website; 
             return newBarVM;
@@ -40,7 +44,9 @@ namespace CM.Web.Mappers
             var newBarDTO = new BarDTO();
             newBarDTO.Id = bar.Id;
             newBarDTO.Name = bar.Name;
-            newBarDTO.Address = bar.Address;
+            newBarDTO.City = bar.City;
+            newBarDTO.Country = bar.Country;
+            newBarDTO.Details = bar.Details;
             newBarDTO.BarImage = bar.BarImage;
             newBarDTO.Website = bar.Website;
             newBarDTO.Cocktails = bar.AllCocktailsIDs

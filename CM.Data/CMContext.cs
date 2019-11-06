@@ -12,7 +12,7 @@ namespace CM.Data
 
         }
         public DbSet<Bar> Bars { get; set; }
-        //public DbSet<BarReview> BarReviews { get; set; }
+        public DbSet<Address> Addresses { get; set; }
         public DbSet<BarCocktail> BarCocktails { get; set; }
         public DbSet<Cocktail> Cocktails { get; set; }
         public DbSet<BarReview> BarReviews { get; set; }

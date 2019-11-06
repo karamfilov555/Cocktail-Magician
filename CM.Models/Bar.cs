@@ -20,8 +20,7 @@ namespace CM.Models
         public string Image { get; set; }
         [Url]
         public string Website { get; set; }
-        [Required]
-        public string Address { get; set; } // can be made with google maps api
+        public Address Address { get; set; }
         public ICollection<BarCocktail> BarCocktails { get; set; }
         public ICollection<BarReview> Reviews { get; set; }
         public decimal BarRating { get; set; }

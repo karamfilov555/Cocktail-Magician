@@ -47,6 +47,7 @@ namespace CM.Services
                                             .ThenInclude(c=>c.Ingredient)
                                             .Include(c=>c.BarCocktails)
                                             .ThenInclude(c=>c.Bar)
+                                            .ThenInclude(c=>c.Address)
                                             .FirstOrDefaultAsync(c => c.Id == id 
                                              && c.DateDeleted == null)
                                             .ConfigureAwait(false);

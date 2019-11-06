@@ -19,10 +19,18 @@ namespace CM.Web.Areas.Bars.Models
             MaxLength(30, ErrorMessage = "Title must be between 3 and 30 symbols")]
         public string Name { get; set; }
 
-        [Required(ErrorMessage = "Address is required!")]
+        [Required(ErrorMessage = "City is required!")]
+        [MinLength(3, ErrorMessage = "City must be between 3 and 100 symbols"),
+            MaxLength(100, ErrorMessage = "City must be between 3 and 100 symbols")]
+        public string City { get; set; }
+        [Required(ErrorMessage = "Country is required!")]
+        [MinLength(3, ErrorMessage = "Country must be between 3 and 100 symbols"),
+            MaxLength(100, ErrorMessage = "Country must be between 3 and 100 symbols")]
+        public string Country { get; set; }
+        [Required(ErrorMessage = "Address details are required!")]
         [MinLength(3, ErrorMessage = "Address must be between 3 and 100 symbols"),
             MaxLength(100, ErrorMessage = "Address must be between 3 and 100 symbols")]
-        public string Address { get; set; }
+        public string Details { get; set; }
         [Required(ErrorMessage = "Website is required!")]
         [Url]
         public string Website { get; set; }
