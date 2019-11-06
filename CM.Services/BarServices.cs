@@ -53,16 +53,31 @@ namespace CM.Services
         }
 
 
-        public async Task<ICollection<BarDTO>> GetAllBars()
+        public async Task<PaginatedList<BarDTO>> GetAllBars(int? pageNumber, string sortOrder)
         {
-            var bars = await _context.Bars
+            int pageSize =5;
+            IQueryable<Bar> bars = _context.Bars
                 .Where(b => b.DateDeleted == null)
                 .Include(b => b.BarCocktails)
-                .ThenInclude(b => b.Cocktail)
-                .ToListAsync()
-                .ConfigureAwait(false);
-            var barDTOs = bars.Select(b => b.MapBarToDTO()).ToList();
-            return barDTOs;
+                .ThenInclude(b => b.Cocktail);
+            switch (sortOrder)
+            {
+                case "name_desc":
+                    bars = bars.OrderByDescending(b => b.Name);
+                    break;
+                case "Rating":
+                    bars = bars.OrderBy(b => b.BarRating);
+                    break;
+                case "rating_asc":
+                    bars = bars.OrderByDescending(b => b.BarRating);
+                    break;
+                default:
+                    bars = bars.OrderBy(b => b.Name);
+                    break;
+            }
+            var barDTOs = bars.Select(b => b.MapBarToDTO());
+            var currentPage = await PaginatedList<BarDTO>.CreateAsync(barDTOs, pageNumber ?? 1, pageSize);
+            return currentPage;
         }
         private async Task<Bar> GetBar(string id)
         {

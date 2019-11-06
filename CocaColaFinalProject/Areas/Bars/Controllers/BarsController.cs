@@ -16,6 +16,8 @@ using NToastNotify;
 using System.IO;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using CM.DTOs;
+using CM.Services.Common;
 
 namespace CM.Web.Areas.Bars.Controllers
 {
@@ -62,29 +64,24 @@ namespace CM.Web.Areas.Bars.Controllers
 
         // GET:
         [Route("bars/list")]
-        public async Task<IActionResult> Index(string sortOrder)
+        public async Task<IActionResult> Index(string sortOrder, string currentFilter,
+            int? pageNumber)
         {
             var listVM = new ListBarsViewModel();
-            listVM.NameSortParm= String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
-            listVM.RatingSortParm= sortOrder == "Rating" ? "rating_asc" : "Rating";
-            var bars = await _barServices.GetAllBars();
-            switch (sortOrder)
+            listVM.CurrentSortOrder = sortOrder;
+            listVM.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            listVM.RatingSortParm = sortOrder == "Rating" ? "rating_asc" : "Rating";
+            var bars = await _barServices.GetAllBars(pageNumber, sortOrder);
+            var pagList = new PaginatedList<BarViewModel>()
             {
-                case "name_desc":
-                    bars = bars.OrderByDescending(b => b.Name).ToList();
-                    break;
-                case "Rating":
-                    bars = bars.OrderBy(b => b.Rating).ToList();
-                    break;
-                case "rating_asc":
-                    bars = bars.OrderByDescending(b => b.Rating).ToList();
-                    break;
-                default:
-                    bars = bars.OrderBy(b => b.Name).ToList(); ;
-                    break;
+                PageIndex = bars.PageIndex,
+                TotalPages = bars.TotalPages
+            };
+            foreach (var item in bars)
+            {
+                pagList.Add(item.MapBarToVM());
             }
-            var barsVM = bars.Select(b => b.MapBarToVM()).ToList();
-            listVM.AllBars = barsVM;
+            listVM.AllBars = pagList;
             return View(listVM);
         }
         // GET: Bars/Bars/Create
@@ -171,7 +168,8 @@ namespace CM.Web.Areas.Bars.Controllers
                     var barName = await _barServices.Update(barDTO);
                     _toast.AddSuccessToastMessage($"You successfully edited \"{barName}\" bar!");
                     return RedirectToAction(nameof(Index));
-                }            }
+                }
+            }
             var allCocktails = await _cocktailServices.GetAllCocktails();
             barVM.AllCocktails = allCocktails
                 .Select(c => new SelectListItem(c.Name, c.Id)).ToList();

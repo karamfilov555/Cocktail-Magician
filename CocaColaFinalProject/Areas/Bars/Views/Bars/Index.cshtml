@@ -19,7 +19,7 @@
 <script src="./assets/js/modernizr.custom.81779.js"></script>
 
 <h3 class="hdr4">All Bars</h3>
-<div >
+<div>
     <table class="table">
         <thead>
             <tr>
@@ -28,7 +28,8 @@
                 <th width="20%">
                     <a asp-action="Index" asp-route-sortOrder="@Model.NameSortParm">Name</a>
                 </th>
-                <th width="5%"><a asp-action="Index" asp-route-sortOrder="@Model.RatingSortParm">Rating</a>
+                <th width="5%">
+                    <a asp-action="Index" asp-route-sortOrder="@Model.RatingSortParm">Rating</a>
                 </th>
                 <th width="10%">Website</th>
                 <th width="30%"></th>
@@ -38,41 +39,61 @@
         <tbody>
             @foreach (var bar in Model.AllBars)
             {
-            <tr>
-                <td>
-                    <img src="@bar.ImageURL"
-                         height="250" width="250"
-                         style="border-radius:25px; padding-top:5px; padding-bottom:5px" alt="Bar picture" />
-                </td>
-                <td>
-                    <h4>@bar.Name</h4>
-                </td>
-                <td>
-                    <h4>@bar.Rating</h4>
-                </td>
-                <td>
-                    @bar.Country
-                </td>
-                <td>
-                    <a  href="@bar.Website">@bar.Website</a>
-                </td>
-                <td>
-                    <a class="btn btn-default btn-sm" asp-area="Reviews" asp-controller="BarReviews" asp-action="BarReviews" 
-                       asp-route-id="@bar.Id" asp-route-name="@bar.Name">Reviews</a>
-                    <a class="btn btn-default btn-sm" asp-area="Bars" asp-action="Details" asp-route-id="@bar.Id">Details</a>
-                    @if (this.User.IsInRole("Administrator") || this.User.IsInRole("Manager"))
-                    {
-                        <a class="btn btn-default btn-sm" asp-area="Bars" asp-action="Edit" asp-route-id="@bar.Id">Edit</a>
-                        <a class="btn btn-default btn-sm" asp-area="Bars" asp-controller="Bars" asp-action="Delete" asp-route-id="@bar.Id">Delete</a>
+                <tr>
+                    <td>
+                        <img src="@bar.ImageURL"
+                             height="250" width="250"
+                             style="border-radius:25px; padding-top:5px; padding-bottom:5px" alt="Bar picture" />
+                    </td>
+                    <td>
+                        <h4>@bar.Name</h4>
+                    </td>
+                    <td>
+                        <h4>@bar.Rating</h4>
+                    </td>
+                    <td>
+                        @bar.Country
+                    </td>
+                    <td>
+                        <a href="@bar.Website">@bar.Website</a>
+                    </td>
+                    <td>
+                        <a class="btn btn-default btn-sm" asp-area="Reviews" asp-controller="BarReviews" asp-action="BarReviews"
+                           asp-route-id="@bar.Id" asp-route-name="@bar.Name">Reviews</a>
+                        <a class="btn btn-default btn-sm" asp-area="Bars" asp-action="Details" asp-route-id="@bar.Id">Details</a>
+                        @if (this.User.IsInRole("Administrator") || this.User.IsInRole("Manager"))
+                        {
+                            <a class="btn btn-default btn-sm" asp-area="Bars" asp-action="Edit" asp-route-id="@bar.Id">Edit</a>
+                            <a class="btn btn-default btn-sm" asp-area="Bars" asp-controller="Bars" asp-action="Delete" asp-route-id="@bar.Id">Delete</a>
 
-                    }
-                </td>
-            </tr>
+                        }
+                    </td>
+                </tr>
             }
         </tbody>
     </table>
 </div>
 
+@{
+    var prevDisabled = !Model.AllBars.HasPreviousPage ? "disabled" : "";
+    var nextDisabled = !Model.AllBars.HasNextPage ? "disabled" : "";
+}
+<a asp-action="Index" asp-area="Bars" asp-controller="Bars"
+   asp-route-sortOrder="@Model.CurrentSortOrder"
+   asp-route-pageNumber="@(Model.AllBars.PageIndex -1)"
+   class="btn btn-default @prevDisabled" >
+    Previous
+</a>
+<a asp-action="Index" asp-area="Bars" asp-controller="Bars"
+   asp-route-sortOrder="@Model.CurrentSortOrder"
+   asp-route-pageNumber="@(Model.AllBars.PageIndex + 1)"
+   class="btn btn-default @nextDisabled">
+    Next
+</a>
+
 @*<a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
     <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
     <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>*@
+
+@*asp-route-pageNumber="@(Model.AllBars.PageIndex - 1)"
+     "*@
