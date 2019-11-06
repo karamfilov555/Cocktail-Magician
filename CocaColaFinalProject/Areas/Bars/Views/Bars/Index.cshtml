@@ -1,4 +1,4 @@
-﻿@model ICollection<BarViewModel>
+﻿@model ListBarsViewModel
 @{
     ViewData["Title"] = "Index";
 }
@@ -23,17 +23,20 @@
     <table class="table">
         <thead>
             <tr>
-                <th width="30%"></th>
-                <th width="20%">Name</th>
-                <th width="5%">Rating</th>
-                <th width="15%">Address</th>
-                <th width="10%">Website</th>
                 <th width="20%"></th>
+
+                <th width="20%">
+                    <a asp-action="Index" asp-route-sortOrder="@Model.NameSortParm">Name</a>
+                </th>
+                <th width="5%"><a asp-action="Index" asp-route-sortOrder="@Model.RatingSortParm">Rating</a>
+                </th>
+                <th width="10%">Website</th>
+                <th width="30%"></th>
 
             </tr>
         </thead>
         <tbody>
-            @foreach (var bar in Model)
+            @foreach (var bar in Model.AllBars)
             {
             <tr>
                 <td>
@@ -51,9 +54,7 @@
                     @bar.Country
                 </td>
                 <td>
-                    <a href="@bar.Website">
-                        @bar.Website
-                    </a>
+                    <a  href="@bar.Website">@bar.Website</a>
                 </td>
                 <td>
                     <a class="btn btn-default btn-sm" asp-area="Reviews" asp-controller="BarReviews" asp-action="BarReviews" 

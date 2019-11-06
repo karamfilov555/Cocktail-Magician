@@ -62,11 +62,30 @@ namespace CM.Web.Areas.Bars.Controllers
 
         // GET:
         [Route("bars/list")]
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string sortOrder)
         {
+            var listVM = new ListBarsViewModel();
+            listVM.NameSortParm= String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            listVM.RatingSortParm= sortOrder == "Rating" ? "rating_asc" : "Rating";
             var bars = await _barServices.GetAllBars();
+            switch (sortOrder)
+            {
+                case "name_desc":
+                    bars = bars.OrderByDescending(b => b.Name).ToList();
+                    break;
+                case "Rating":
+                    bars = bars.OrderBy(b => b.Rating).ToList();
+                    break;
+                case "rating_asc":
+                    bars = bars.OrderByDescending(b => b.Rating).ToList();
+                    break;
+                default:
+                    bars = bars.OrderBy(b => b.Name).ToList(); ;
+                    break;
+            }
             var barsVM = bars.Select(b => b.MapBarToVM()).ToList();
-            return View(barsVM);
+            listVM.AllBars = barsVM;
+            return View(listVM);
         }
         // GET: Bars/Bars/Create
         [HttpGet]
