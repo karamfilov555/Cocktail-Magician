@@ -56,7 +56,6 @@ namespace CM.Data.Migrations
                     Name = table.Column<string>(nullable: false),
                     Image = table.Column<string>(nullable: true),
                     Website = table.Column<string>(nullable: true),
-                    Address = table.Column<string>(nullable: false),
                     BarRating = table.Column<decimal>(nullable: false),
                     DateDeleted = table.Column<DateTime>(nullable: true)
                 },
@@ -200,6 +199,27 @@ namespace CM.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Addresses",
+                columns: table => new
+                {
+                    Id = table.Column<string>(nullable: false),
+                    Country = table.Column<string>(nullable: true),
+                    City = table.Column<string>(nullable: true),
+                    Details = table.Column<string>(nullable: true),
+                    BarId = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Addresses", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Addresses_Bars_BarId",
+                        column: x => x.BarId,
+                        principalTable: "Bars",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "BarReviews",
                 columns: table => new
                 {
@@ -306,6 +326,13 @@ namespace CM.Data.Migrations
                 });
 
             migrationBuilder.CreateIndex(
+                name: "IX_Addresses_BarId",
+                table: "Addresses",
+                column: "BarId",
+                unique: true,
+                filter: "[BarId] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
                 column: "RoleId");
@@ -377,6 +404,9 @@ namespace CM.Data.Migrations
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "Addresses");
+
             migrationBuilder.DropTable(
                 name: "AspNetRoleClaims");
 

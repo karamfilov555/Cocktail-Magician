@@ -45,7 +45,7 @@
             <th>
                 <h5 style="padding-right:60px">
                     <a asp-action="ListCocktails" asp-route-sortOrder="@ViewData["RatingSortCriteria"]">&uarr;&darr; Rating</a>
-                   
+
                 </h5>
             </th>
             <th><h5>Ingredients</h5></th>
@@ -118,6 +118,9 @@
                     }
                     @if (this.User.IsInRole("Administrator") || this.User.IsInRole("Manager"))
                     {
+                        <p>
+                            <a class="btn btn-default btn-sm" asp-area="Cocktails" asp-controller="Cocktails" asp-action="DownloadRecepie" asp-route-id="@cocktail.Id"><font style="color:gold">Downoload Recepie</font></a>
+                        </p>
                         <p>
                             <a class="btn btn-default btn-sm" asp-area="Cocktails" asp-controller="Cocktails" asp-action="Edit" asp-route-id="@cocktail.Id"><font style="color:gold">Edit Cocktail</font></a>
                         </p>

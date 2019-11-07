@@ -18,5 +18,6 @@ namespace CM.Services.Contracts
         Task<IList<CocktailDto>> GetFiveSortedCocktailsAsync(string sortOrder,int currPage = 1);
         Task<int> GetPageCountForCocktials(int cocktailsPerPage);
         Task<ICollection<CocktailDto>> GetAllCocktailsByName(string searchCriteria);
+        Task<bool> CheckIfCocktailExist(string id);
     }
 }

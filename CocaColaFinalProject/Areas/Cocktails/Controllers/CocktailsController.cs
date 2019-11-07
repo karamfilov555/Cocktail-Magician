@@ -195,5 +195,39 @@ namespace CM.Web.Areas.Cocktails.Controllers
             _toast.AddSuccessToastMessage($"You successfully delete \"{cocktailName}\" cocktail!");
             return RedirectToAction("ListCocktails", "Cocktails");
         }
+
+        [HttpGet]
+        public async Task<IActionResult> DownloadRecepie(string Id)
+        {
+            if (Id == null)
+            {
+                _toast.AddErrorToastMessage("Cocktail's Id cannot be null!");
+                return RedirectToAction("ListCocktails", "Cocktails");
+            }
+            if (!await _cocktailServices.CheckIfCocktailExist(Id))
+            {
+                _toast.AddErrorToastMessage($"Cocktail with Id: {Id} does not exist!");
+                return RedirectToAction("ListCocktails", "Cocktails");
+            }
+            // if id doesnt exist....
+            var cocktailName = await _cocktailServices.GetCocktailNameById(Id);
+            var recepieUrl = $"https://localhost:44344/assets/recepies/{Id}.txt";
+            var net = new System.Net.WebClient();
+            byte[] data;
+            try
+            {
+                data = net.DownloadData(recepieUrl);
+            }
+            catch (Exception)
+            {
+                _toast.AddInfoToastMessage("This cocktail's recepie is a secret!");
+                return RedirectToAction("ListCocktails", "Cocktails");
+            }
+            //if data is null or empty...
+            var content = new System.IO.MemoryStream(data);
+            var contentType = "APPLICATION/octet-stream";
+            var fileName = $"{cocktailName}.txt";
+            return File(content, contentType, fileName);
+        }
     }
 }

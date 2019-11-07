@@ -177,6 +177,10 @@ namespace CM.Services
             var cocktailsDtos = cocktails.Select(c => c.MapToCocktailDto()).ToList();
             return cocktailsDtos;
         }
+        public async Task<bool> CheckIfCocktailExist(string id)
+        => await _context.Cocktails.AnyAsync(c => c.Id == id);
+
+
     }
 }
 

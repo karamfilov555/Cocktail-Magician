@@ -2,6 +2,7 @@
 using CM.Services.Contracts;
 using CM.Web.Mappers;
 using Microsoft.AspNetCore.Mvc;
+using NToastNotify;
 
 namespace CM.Web.Areas.Search.Controllers
 {
@@ -9,14 +10,22 @@ namespace CM.Web.Areas.Search.Controllers
     public class SearchController : Controller
     {
         private readonly ISearchServices _searchServices;
-        public SearchController(ISearchServices searchServices)
+        private readonly IToastNotification _toast;
+        public SearchController(ISearchServices searchServices,
+            IToastNotification toast)
         {
             _searchServices = searchServices;
+            _toast = toast;
         }
 
         
         public async Task<IActionResult> SearchResults(string searchString)
         {
+            if (searchString == null)
+            {
+                _toast.AddInfoToastMessage("Please enter search criteria!");
+                return RedirectToAction("Index","Home");
+            }
             var searchDto = await _searchServices.GetResultsFromSearch(searchString);
 
             var searchVm = searchDto.MapToSearchVM(searchString);
