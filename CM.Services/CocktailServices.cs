@@ -159,6 +159,24 @@ namespace CM.Services
 
             return pageCount;
         }
+
+        public async Task<ICollection<CocktailDto>> GetAllCocktailsByName(string searchCriteria)
+        {
+                                var cocktails =  await _context.Cocktails
+                                                .Include(c => c.Reviews)
+                                                .ThenInclude(c => c.User)
+                                                .Include(c => c.CocktailIngredients)
+                                                .ThenInclude(c => c.Ingredient)
+                                                .Include(c => c.BarCocktails)
+                                                .ThenInclude(c => c.Bar)
+                                                .Where(c => c.Name.Contains(searchCriteria,
+                                                 StringComparison.OrdinalIgnoreCase) 
+                                                 && c.DateDeleted == null)
+                                                .ToListAsync();
+
+            var cocktailsDtos = cocktails.Select(c => c.MapToCocktailDto()).ToList();
+            return cocktailsDtos;
+        }
     }
 }
 

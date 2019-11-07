@@ -20,6 +20,22 @@ namespace CM.DTOs.Mappers
             newBarDTO.DateDeleted = bar.DateDeleted;
             return newBarDTO;
         }
+        
+        public static BarDTO MapBarToDTOWithFullAdress(this Bar bar)
+        {
+            var newBarDTO = new BarDTO();
+            newBarDTO.Id = bar.Id;
+            newBarDTO.Name = bar.Name;
+            newBarDTO.ImageUrl = bar.Image;
+            newBarDTO.Rating = bar.BarRating;
+            newBarDTO.Website = bar.Website;
+            newBarDTO.CocktailsNames = bar.BarCocktails.Select(b => b.Cocktail.Name).ToList();
+            newBarDTO.DateDeleted = bar.DateDeleted;
+            newBarDTO.Country = bar.Address.Country;
+            newBarDTO.City = bar.Address.City;
+            newBarDTO.Details = bar.Address.Details;
+            return newBarDTO;
+        }
 
         public static Bar MapBarDTOToBar(this BarDTO bar)
         {

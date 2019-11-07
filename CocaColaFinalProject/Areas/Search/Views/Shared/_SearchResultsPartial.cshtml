@@ -1,0 +1,18 @@
+﻿@model CM.Web.Areas.Search.Models.SearchViewModel
+@{
+    Layout = "~/Views/Shared/_LayoutCustom.cshtml";
+}
+
+<h5> The results from your search for "@Model.SearchCriteria" are:   </h5>
+
+@*make this view looks fancy!*@
+<h3> BARS:</h3>
+@foreach (var item in Model.Bars)
+{
+<h5>@item.Name</h5>
+}
+<h3> Cocktails:</h3>
+@foreach (var item in Model.Cocktails)
+{
+<h5>@item.Name</h5>
+}

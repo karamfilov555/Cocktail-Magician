@@ -1810,7 +1810,7 @@ textarea.input-lg {
 }
 .btn:hover,
 .btn:focus {
-  color: #333333;
+  color: gold;
   text-decoration: none;
 }
 .btn:active,
@@ -3245,6 +3245,9 @@ textarea.input-group-sm > .input-group-btn > .btn {
   padding-left: 0;
   list-style: none;
 }
+    .nav:hover {
+        color: #006899;
+    }
 .nav:before,
 .nav:after {
   content: " ";

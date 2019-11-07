@@ -24,6 +24,7 @@
   <ItemGroup>
     <Folder Include="Areas\Bars\Data\" />
     <Folder Include="Areas\Cocktails\Data\" />
+    <Folder Include="Areas\Search\Views\Search\" />
     <Folder Include="wwwroot\images\" />
   </ItemGroup>
 

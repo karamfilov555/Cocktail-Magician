@@ -139,7 +139,21 @@ namespace CM.Services
             await _context.SaveChangesAsync();
             return barToEdit.Name;
         }
-
+        //care
+        public async Task<ICollection<BarDTO>> GetAllBarsByName(string searchCriteria)
+        {
+            var bars = await _context.Bars
+                .Include(b => b.Address)
+                .Include(b => b.BarCocktails)
+                .ThenInclude(b => b.Cocktail)
+                .Where(b => b.Name.Contains(searchCriteria,
+                 StringComparison.OrdinalIgnoreCase)
+                 && b.DateDeleted==null)
+                .ToListAsync()
+                .ConfigureAwait(false);
+                                                  //Change the method;s name ?
+            var allBarsDtos = bars.Select(b => b.MapBarToDTOWithFullAdress()).ToList();
+            return allBarsDtos;
+        }
     }
-
 }

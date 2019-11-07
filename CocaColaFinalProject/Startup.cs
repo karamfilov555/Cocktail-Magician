@@ -63,6 +63,7 @@ namespace CocaColaFinalProject
             services.AddScoped<IAppUserServices, AppUserServices>();
             services.AddScoped<IIngredientServices, IngredientServices>();
             services.AddScoped<IReviewServices, ReviewServices>();
+            services.AddScoped<ISearchServices, SearchServices>();
             services.AddScoped<IFileUploadService, FileUploadService>();
 
 
