@@ -16,11 +16,11 @@ namespace CM.DTOs.Mappers
             newBarDTO.ImageUrl = bar.Image;
             newBarDTO.Rating = bar.BarRating;
             newBarDTO.Website = bar.Website;
-            newBarDTO.CocktailsNames = bar.BarCocktails.Select(b=>b.Cocktail.Name).ToList();
+            newBarDTO.CocktailsNames = bar.BarCocktails.Select(b => b.Cocktail.Name).ToList();
             newBarDTO.DateDeleted = bar.DateDeleted;
             return newBarDTO;
         }
-        
+
         public static BarDTO MapBarToDTOWithFullAdress(this Bar bar)
         {
             var newBarDTO = new BarDTO();
@@ -31,9 +31,12 @@ namespace CM.DTOs.Mappers
             newBarDTO.Website = bar.Website;
             newBarDTO.CocktailsNames = bar.BarCocktails.Select(b => b.Cocktail.Name).ToList();
             newBarDTO.DateDeleted = bar.DateDeleted;
-            newBarDTO.Country = bar.Address.Country;
-            newBarDTO.City = bar.Address.City;
-            newBarDTO.Details = bar.Address.Details;
+            if (bar.Address != null)
+            {
+                newBarDTO.Country = bar.Address.Country;
+                newBarDTO.City = bar.Address.City;
+                newBarDTO.Details = bar.Address.Details;
+            }
             return newBarDTO;
         }
 
