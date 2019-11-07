@@ -30,6 +30,7 @@ namespace CM.DTOs.Mappers
             cocktailModel.Id = cocktailDto.Id;
             cocktailModel.Rating = cocktailDto.Rating;
             cocktailModel.Image = cocktailDto.Image;
+            cocktailModel.Recepie = cocktailDto.Recepie;
             //cocktailModel.CocktailIngredients = cocktailDto.CocktailIngredients;
             cocktailModel.Reviews = cocktailDto.CocktailReviews;
             return cocktailModel;

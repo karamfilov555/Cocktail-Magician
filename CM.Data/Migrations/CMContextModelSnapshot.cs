@@ -193,6 +193,8 @@ namespace CM.Data.Migrations
 
                     b.Property<decimal>("Rating");
 
+                    b.Property<string>("Recepie");
+
                     b.HasKey("Id");
 
                     b.ToTable("Cocktails");

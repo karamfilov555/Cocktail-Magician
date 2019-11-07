@@ -16,11 +16,9 @@ namespace CM.Services
         public async Task WriteToFile(string recepie, string cocktailId)
         {
 
-            // Set a variable to the Documents path.
             // CARE THIS PATH WONT WORK on othr pc!!!!!!!!!!
             string docPath = "wwwroot/assets/recepies";
 
-            // Write the string array to a new file named "WriteLines.txt".
             using (StreamWriter outputFile = new StreamWriter(Path.Combine(docPath, $"{cocktailId}.txt")))
             {
                     outputFile.WriteLine(recepie);

@@ -72,7 +72,8 @@ namespace CM.Data.Migrations
                     Name = table.Column<string>(nullable: false),
                     Image = table.Column<string>(nullable: true),
                     Rating = table.Column<decimal>(nullable: false),
-                    DateDeleted = table.Column<DateTime>(nullable: true)
+                    DateDeleted = table.Column<DateTime>(nullable: true),
+                    Recepie = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {

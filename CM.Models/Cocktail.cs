@@ -23,5 +23,6 @@ namespace CM.Models
         public ICollection<CocktailReview> Reviews { get; set; }
         public decimal Rating { get; set; }
         public DateTime? DateDeleted { get; set; }
+        public string Recepie { get; set; }
     }
 }

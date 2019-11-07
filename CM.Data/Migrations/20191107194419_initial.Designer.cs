@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CM.Data.Migrations
 {
     [DbContext(typeof(CMContext))]
-    [Migration("20191107160507_initial")]
+    [Migration("20191107194419_initial")]
     partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -194,6 +194,8 @@ namespace CM.Data.Migrations
                         .IsRequired();
 
                     b.Property<decimal>("Rating");
+
+                    b.Property<string>("Recepie");
 
                     b.HasKey("Id");
 
