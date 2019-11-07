@@ -36,5 +36,6 @@ namespace CM.Web.Areas.Cocktails.Models
         public List<CocktailIngredient> CocktailIngredients { get; set; } = new List<CocktailIngredient>();
         public List<BarCocktail> BarCocktails { get; set; } = new List<BarCocktail>();
         public DateTime? DateDeleted { get; set; }
+        public string Recepie { get; set; }
     }
 }

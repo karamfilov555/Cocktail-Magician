@@ -65,6 +65,7 @@ namespace CocaColaFinalProject
             services.AddScoped<IReviewServices, ReviewServices>();
             services.AddScoped<ISearchServices, SearchServices>();
             services.AddScoped<IFileUploadService, FileUploadService>();
+            services.AddScoped<IStreamWriterServices, StreamWriterServices>();
 
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);

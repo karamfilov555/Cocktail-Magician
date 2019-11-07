@@ -19,18 +19,21 @@ namespace CM.Web.Areas.Cocktails.Controllers
         private readonly IReviewServices _reviewServices;
         private readonly IIngredientServices _ingredientServices;
         private readonly IToastNotification _toast;
+        private readonly IStreamWriterServices _streamWriter;
 
         //ID!!!! string id = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
 
         public CocktailsController(ICocktailServices cocktailServices,
                                    IIngredientServices ingredientServices,
                                    IReviewServices reviewServices,
-                                   IToastNotification toast)
+                                   IToastNotification toast,
+                                   IStreamWriterServices streamWriter)
         {
             _cocktailServices = cocktailServices;
             _ingredientServices = ingredientServices;
             _reviewServices = reviewServices;
             _toast = toast;
+            _streamWriter = streamWriter;
         }
 
         [Route("cocktails/details/{id}")]
@@ -77,6 +80,7 @@ namespace CM.Web.Areas.Cocktails.Controllers
         {
             if (ModelState.IsValid)
             {
+                // validation if there is no Picture!
                 var imageSizeInKb = cocktailVm.CocktailImage.Length / 1024;
                 var type = cocktailVm.CocktailImage.ContentType;
                 if (type != "image/jpeg" && type != "image/jpg" && type != "image/png")
@@ -91,6 +95,9 @@ namespace CM.Web.Areas.Cocktails.Controllers
                 }
                 var cocktailDto = cocktailVm.MapToCocktailDto();
                 await _cocktailServices.AddCocktail(cocktailDto);
+
+                await _streamWriter.WriteToFile(cocktailVm.Recepie, await _cocktailServices.GetCocktailIdByName(cocktailVm.Name));
+
                 _toast.AddSuccessToastMessage($"You successfully added cocktail {cocktailDto.Name}!");
                 return RedirectToAction("ListCocktails");
             }

@@ -25,8 +25,8 @@ namespace CM.Services
         {
             // include ingredients ... posle ... da se vzima po rating 
             var cocktails = await _context.Cocktails
-                                            .Where(c=>c.DateDeleted == null)
-                                            .Include(c=>c.CocktailIngredients)
+                                            .Where(c => c.DateDeleted == null)
+                                            .Include(c => c.CocktailIngredients)
                                             .ThenInclude(c => c.Ingredient)
                                             .Include(c => c.BarCocktails)
                                             .ThenInclude(c => c.Bar)
@@ -34,21 +34,21 @@ namespace CM.Services
                                             .ConfigureAwait(false);
             //map to dto before pass to fe
             var cocktailDtos = cocktails.Select(c => c.MapToCocktailDto()).ToList();
-            
+
             return cocktailDtos;
         }
         public async Task<CocktailDto> FindCocktailById(string id)
         {
             // INCLUDE !!
             var cocktail = await _context.Cocktails
-                                            .Include(c=>c.Reviews)
-                                            .ThenInclude(c=>c.User)
-                                            .Include(c=>c.CocktailIngredients)
-                                            .ThenInclude(c=>c.Ingredient)
-                                            .Include(c=>c.BarCocktails)
-                                            .ThenInclude(c=>c.Bar)
-                                            .ThenInclude(c=>c.Address)
-                                            .FirstOrDefaultAsync(c => c.Id == id 
+                                            .Include(c => c.Reviews)
+                                            .ThenInclude(c => c.User)
+                                            .Include(c => c.CocktailIngredients)
+                                            .ThenInclude(c => c.Ingredient)
+                                            .Include(c => c.BarCocktails)
+                                            .ThenInclude(c => c.Bar)
+                                            .ThenInclude(c => c.Address)
+                                            .FirstOrDefaultAsync(c => c.Id == id
                                              && c.DateDeleted == null)
                                             .ConfigureAwait(false);
 
@@ -69,7 +69,7 @@ namespace CM.Services
             _context.Cocktails.Add(cocktail);
             await _context.SaveChangesAsync();
             cocktailDto.CocktailIngredients.ForEach(ci => ci.CocktailId = cocktail.Id);
-            cocktail.CocktailIngredients=cocktailDto.CocktailIngredients;
+            cocktail.CocktailIngredients = cocktailDto.CocktailIngredients;
             await _context.SaveChangesAsync();
 
         }
@@ -83,7 +83,7 @@ namespace CM.Services
                                                 .ThenInclude(c => c.Ingredient)
                                                 .Include(c => c.BarCocktails)
                                                 .ThenInclude(c => c.Bar)
-                                                .Where(c=>c.DateDeleted == null)
+                                                .Where(c => c.DateDeleted == null)
                                                 .ToListAsync();
 
             var allCocktailsDto = allCocktailsModels.Select(c => c.MapToCocktailDto()).ToList();
@@ -93,7 +93,7 @@ namespace CM.Services
         public async Task<string> DeleteCocktial(string id)
         {
             var cocktailModel = await _context.Cocktails
-                                            .FirstAsync(c=>c.Id==id);
+                                            .FirstAsync(c => c.Id == id);
             cocktailModel.DateDeleted = DateTime.Now;
             await _context.SaveChangesAsync();
             return cocktailModel.Name;
@@ -113,7 +113,7 @@ namespace CM.Services
                                                 .ThenInclude(c => c.Ingredient)
                                                 .Include(c => c.BarCocktails)
                                                 .ThenInclude(c => c.Bar)
-                                                .Where(c=>c.DateDeleted==null);
+                                                .Where(c => c.DateDeleted == null);
 
             switch (sortOrder)
             {
@@ -152,7 +152,7 @@ namespace CM.Services
         {
             var allCocktailsCount = await _context
                                        .Cocktails
-                                       .Where(c=>c.DateDeleted==null)
+                                       .Where(c => c.DateDeleted == null)
                                        .CountAsync();
 
             int pageCount = (allCocktailsCount - 1) / cocktailsPerPage + 1;
@@ -162,25 +162,31 @@ namespace CM.Services
 
         public async Task<ICollection<CocktailDto>> GetAllCocktailsByName(string searchCriteria)
         {
-                                var cocktails =  await _context.Cocktails
-                                                .Include(c => c.Reviews)
-                                                .ThenInclude(c => c.User)
-                                                .Include(c => c.CocktailIngredients)
-                                                .ThenInclude(c => c.Ingredient)
-                                                .Include(c => c.BarCocktails)
-                                                .ThenInclude(c => c.Bar)
-                                                .Where(c => c.Name.Contains(searchCriteria,
-                                                 StringComparison.OrdinalIgnoreCase) 
-                                                 && c.DateDeleted == null)
-                                                .ToListAsync();
+            var cocktails = await _context.Cocktails
+                            .Include(c => c.Reviews)
+                            .ThenInclude(c => c.User)
+                            .Include(c => c.CocktailIngredients)
+                            .ThenInclude(c => c.Ingredient)
+                            .Include(c => c.BarCocktails)
+                            .ThenInclude(c => c.Bar)
+                            .Where(c => c.Name.Contains(searchCriteria,
+                             StringComparison.OrdinalIgnoreCase)
+                             && c.DateDeleted == null)
+                            .ToListAsync();
 
             var cocktailsDtos = cocktails.Select(c => c.MapToCocktailDto()).ToList();
             return cocktailsDtos;
         }
         public async Task<bool> CheckIfCocktailExist(string id)
-        => await _context.Cocktails.AnyAsync(c => c.Id == id);
+        => await _context.Cocktails
+                         .AnyAsync(c => c.Id == id);
 
-
+        public async Task<string> GetCocktailIdByName(string cocktailName)
+        {
+            var cocktail = await _context.Cocktails
+                                         .FirstOrDefaultAsync(c => c.Name == cocktailName);
+            return cocktail.Id;
+        }
     }
 }
 
