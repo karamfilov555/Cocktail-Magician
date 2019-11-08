@@ -35,5 +35,7 @@ namespace CM.DTOs
            = new List<CocktailReview>();
         public DateTime? DateDeleted { get; set; }
         public string Recepie { get; set; }
+        public int LikeCount { get; set; }
+        public List<string> LikedByUsers { get; set; }
     }
 }

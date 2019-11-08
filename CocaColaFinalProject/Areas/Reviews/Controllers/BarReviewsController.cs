@@ -51,12 +51,12 @@ namespace CM.Web.Areas.Reviews.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> LikeBarReview(string barReviewID, string barId, string name)
+        public string LikeBarReview(string barReviewID, string barId, string name)
         {
             
-            await _reviewServices.LikeBarReview(barReviewID, User.FindFirstValue(ClaimTypes.NameIdentifier));
-
-            return RedirectToAction("BarReviews", "BarReviews", new { id = barId, name = name });
+           //int count= await _reviewServices.LikeBarReview(barReviewID, User.FindFirstValue(ClaimTypes.NameIdentifier));
+            
+            return "1";
         }
 
         [HttpPost]

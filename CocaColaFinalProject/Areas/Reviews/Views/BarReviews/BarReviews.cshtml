@@ -18,11 +18,7 @@
 }
 <head>
     <style>
-        
-
-
-
-    </style>        
+    </style>
 
 </head>
 
@@ -45,23 +41,35 @@
                                 @review.Rating
                                 @if (!review.LikedByUsers.Contains(@User.FindFirstValue(ClaimTypes.NameIdentifier)))
                                 {
-                                    <form method="post" asp-area="Reviews" asp-controller="BarReviews" asp-action="LikeBarReview"
-                                          asp-route-barReviewID="@review.Id" asp-route-barId="@review.BarId" asp-route-name="@review.BarName">
-                                        <button type="submit"
-                                                title="Love it" class="btn-like btn-counter" data-count="@review.LikeCount">
-                                            <span>&#x2764;</span>
-                                        </button>
-                                    </form>
+                            <form id="like-1" method="post" asp-area="Reviews" asp-controller="BarReviews" asp-action="LikeBarReview"
+                                  asp-route-barReviewID="@review.Id" asp-route-barId="@review.BarId" asp-route-name="@review.BarName"
+                                  data-barReviewID="@review.Id" data-barId="@review.BarId" data-name="@review.BarName">
+                                @*<a href="javascript:void(0)" class="like-2" data-barReviewID="@review.Id" data-barId="@review.BarId" data-name="@review.BarName">
+                                    <i class="fa fa-heart fa-lg text-danger">
+                                    </i><span> @review.LikeCount</span>
+                                </a>*@
+                                <button type="submit"
+                                        class="like-2" data-barReviewID="@review.Id" data-barId="@review.BarId" data-name="@review.BarName">
+                                    <i class="fa fa-heart fa-lg text-danger">
+                                    </i><span> @review.LikeCount</span>
+                                </button>
+                                @*<button id="countID" type="submit"
+                title="Love it" class="btn-like btn-counter" data-count="@review.LikeCount">
+            <span>&#x2764;</span>
+        </button>*@
+                            </form>
                                 }
                                 else
                                 {
-                                <form method="post" asp-area="Reviews" asp-controller="BarReviews" asp-action="RemoveLikeBarReview"
-                                      asp-route-barReviewID="@review.Id" asp-route-barId="@review.BarId" asp-route-name="@review.BarName">
-                                    <button type="submit"
-                                            title="Love it" class="btn-like btn-counter" data-count="@review.LikeCount">
-                                        <span>&#x2764;</span>
-                                    </button>
-                                </form>
+                                    <form method="post" asp-area="Reviews" asp-controller="BarReviews" asp-action="RemoveLikeBarReview"
+                                          asp-route-barReviewID="@review.Id" asp-route-barId="@review.BarId" asp-route-name="@review.BarName">
+
+                                        <a href="javascript:void(0)" class="unlike"><i class="fa fa-heart-o fa-lg"></i><span>(@review.LikeCount)l</span></a>
+                                        @*<button type="submit"
+                                                title="Love it" class="unlike btn-like btn-counter" data-count="@review.LikeCount">
+                                            <span>&#x2764;</span>
+                                        </button>*@
+                                    </form>
 
                                 }
 
@@ -81,4 +89,4 @@
 <div>
     <a asp-action="Index" asp-controller="Bars" asp-area="Bars" class="btn btn-default">Back to List</a>
 </div>
-        
+

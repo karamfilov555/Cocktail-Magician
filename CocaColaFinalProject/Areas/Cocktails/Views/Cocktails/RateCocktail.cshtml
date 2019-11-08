@@ -111,6 +111,7 @@ else
                                     "@item.Value.Item1"
                                     <br>
                                     <font style="color:gold">Grade: @item.Value.Item2</font>
+
                                 </p>
                                 <span class="author">- The Coca-Cola Company, Cocktail Magician™, 2019 -</span>
                             </blockquote>
@@ -120,6 +121,25 @@ else
                         <span class="meta_date">@item.Value.Item3</span>
                         @*<span class="meta_comments"><a href="#"><em>21</em> <span>Comments</span></a></span>*@
                         <span class="meta_author"><a href="#">Publisher: @item.Key</a></span>
+                        @*@if (!review.LikedByUsers.Contains(@User.FindFirstValue(ClaimTypes.NameIdentifier)))
+                                {
+                                    <form method="post" asp-area="Reviews" asp-controller="BarReviews" asp-action="LikeBarReview"
+                                          asp-route-barReviewID="@review.Id" asp-route-barId="@review.BarId" asp-route-name="@review.BarName">
+                                        <button type="submit"
+                                                title="Love it" class="btn-like btn-counter" data-count="@review.LikeCount">
+                                            <span>&#x2764;</span>
+                                        </button>
+                                    </form>
+                                }
+                                else
+                                {
+                                <form method="post" asp-area="Reviews" asp-controller="BarReviews" asp-action="RemoveLikeBarReview"
+                                      asp-route-barReviewID="@review.Id" asp-route-barId="@review.BarId" asp-route-name="@review.BarName">
+                                    <button type="submit"
+                                            title="Love it" class="btn-like btn-counter" data-count="@review.LikeCount">
+                                        <span>&#x2764;</span>
+                                    </button>
+                                </form>*@
                     </div>
                 </div>
             </div>

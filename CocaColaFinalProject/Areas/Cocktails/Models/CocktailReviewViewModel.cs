@@ -24,6 +24,9 @@ namespace CM.Web.Areas.Cocktails.Models
         public decimal Rating { get; set; }
         [Display(Name = "Type your Review Here")]
         public string Description { get; set; }
+
+        public int LikeCount { get; set; }
+        public List<string> LikedByUsers { get; set; }
         public ICollection<CocktailIngredient> CocktailIngredients { get; set; } 
             = new List<CocktailIngredient>();
         public bool CanReview { get; set; }

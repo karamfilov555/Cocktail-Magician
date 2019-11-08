@@ -19,6 +19,7 @@ namespace CM.Web.Mappers
             newReviewVM.Description = reviewDTO.Description;
             newReviewVM.ReviewDate = reviewDTO.ReviewDate;
             newReviewVM.UserName = reviewDTO.UserName;
+            newReviewVM.BarName = reviewDTO.BarName;
             newReviewVM.UserID = reviewDTO.UserID;
             newReviewVM.LikeCount = reviewDTO.LikeCount;
             newReviewVM.LikedByUsers = reviewDTO.LikedByUsers;

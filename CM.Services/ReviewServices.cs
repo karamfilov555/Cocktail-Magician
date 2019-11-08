@@ -87,6 +87,7 @@ namespace CM.Services
                 .BarReviews
                 .Include(r => r.User)
                 .Include(r=>r.BarReviewLikes)
+                .Include(r=>r.Bar)
                 .Where(r => r.BarId == id).ToListAsync();
             var reviewDTOs = reviews.Select(r => r.BarMapReviewToDTO()).ToList();
             return reviewDTOs;
@@ -126,7 +127,7 @@ namespace CM.Services
             await _context.SaveChangesAsync();
         }
 
-        public async Task LikeBarReview(string barReviewID, string userId)
+        public async Task<int> LikeBarReview(string barReviewID, string userId)
         {
             if (await _context.BarReviewLikes.AnyAsync(l => l.AppUserID == userId && l.BarReviewID == barReviewID))
             {
@@ -140,6 +141,7 @@ namespace CM.Services
             };
             _context.BarReviewLikes.Add(like);
             await _context.SaveChangesAsync();
+            return await _context.BarReviewLikes.Where(r => r.BarReviewID == barReviewID).CountAsync();
         }
 
         public async Task RemoveBarReviewLike(string barReviewID, string userId)

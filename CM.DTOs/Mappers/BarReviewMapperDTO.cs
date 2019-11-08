@@ -15,6 +15,7 @@ namespace CM.DTOs.Mappers
             newReviewDTO.BarId = review.BarId;
             newReviewDTO.Description = review.Description;
             newReviewDTO.UserName = review.User.UserName;
+            newReviewDTO.BarName = review.Bar.Name;
             newReviewDTO.UserID = review.UserId;
             newReviewDTO.Rating = review.Rating;
             newReviewDTO.LikeCount = review.BarReviewLikes.Count;
