@@ -31,7 +31,7 @@ namespace CM.Web.Areas.Reviews.Controllers
         [HttpGet]
         public async Task<IActionResult> BarReviews(string id, string name)
         {
-            List<BarReviewDTO> allReviewsDTOs =await _reviewServices.GetAllReviewsForBar(id);
+            List<BarReviewDTO> allReviewsDTOs = await _reviewServices.GetAllReviewsForBar(id);
             var allReviewsVM = allReviewsDTOs.Select(r => r.MapReviewDTOToVM()).ToList();
             var barReviewVM = new AllBarReviewsViewModel();
             barReviewVM.Reviews = allReviewsVM;
@@ -51,21 +51,27 @@ namespace CM.Web.Areas.Reviews.Controllers
         }
 
         [HttpPost]
-        public string LikeBarReview(string barReviewID, string barId, string name)
+        public async Task<int> LikeBarReview(string barReviewID, string barId, string name)
         {
-            
-           //int count= await _reviewServices.LikeBarReview(barReviewID, User.FindFirstValue(ClaimTypes.NameIdentifier));
-            
-            return "1";
+            int likesCount;
+            if (!await _reviewServices.UserCanReview(barReviewID, User.FindFirstValue(ClaimTypes.NameIdentifier)))
+            {
+                 likesCount = await _reviewServices.LikeBarReview(barReviewID, User.FindFirstValue(ClaimTypes.NameIdentifier));
+            }
+            else
+            {
+                likesCount = await _reviewServices.RemoveBarReviewLike(barReviewID, User.FindFirstValue(ClaimTypes.NameIdentifier));
+            }
+
+            return likesCount;
         }
 
-        [HttpPost]
-        public async Task<IActionResult> RemoveLikeBarReview(string barReviewID, string barId, string name)
-        {
+        //[HttpPost]
+        //public async Task<int> RemoveLikeBarReview(string barReviewID, string barId, string name)
+        //{
 
-            await _reviewServices.RemoveBarReviewLike(barReviewID, User.FindFirstValue(ClaimTypes.NameIdentifier));
+        //    return await _reviewServices.RemoveBarReviewLike(barReviewID, User.FindFirstValue(ClaimTypes.NameIdentifier));
 
-            return RedirectToAction("BarReviews", "BarReviews", new { id = barId, name = name });
-        }
+        //}
     }
 }

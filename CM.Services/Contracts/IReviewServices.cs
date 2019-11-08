@@ -13,8 +13,8 @@ namespace CM.Services.Contracts
         Task SetAverrageRating(string cocktailId);
         Task CreateBarReview(BarReviewDTO barReviewDTO);
         Task<int> LikeBarReview(string barReviewID, string userId);
-        Task RemoveBarReviewLike(string barReviewID, string userId);
-
+        Task<int> RemoveBarReviewLike(string barReviewID, string userId);
+        Task<bool> UserCanReview(string barReviewID, string userId);
         Task<List<BarReviewDTO>> GetAllReviewsForBar(string id);
 
 

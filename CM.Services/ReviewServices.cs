@@ -144,15 +144,22 @@ namespace CM.Services
             return await _context.BarReviewLikes.Where(r => r.BarReviewID == barReviewID).CountAsync();
         }
 
-        public async Task RemoveBarReviewLike(string barReviewID, string userId)
+        public async Task<int> RemoveBarReviewLike(string barReviewID, string userId)
         {
-            var like =await _context.BarReviewLikes.FirstOrDefaultAsync(l => l.AppUserID == userId && l.BarReviewID == barReviewID);
+            var like = await _context.BarReviewLikes.FirstOrDefaultAsync(l => l.AppUserID == userId && l.BarReviewID == barReviewID);
             if (like==null)
             {
                 throw new InvalidOperationException("You have not liked this review!");
             }
             _context.BarReviewLikes.Remove(like);
             await _context.SaveChangesAsync();
+            return await _context.BarReviewLikes.Where(r => r.BarReviewID == barReviewID).CountAsync();
+        }
+        public async Task<bool> UserCanReview(string barReviewID, string userId)
+        {
+            
+            var can = await _context.BarReviewLikes.AnyAsync(r => r.BarReviewID == barReviewID && r.AppUserID == userId);
+            return can;
         }
     }
 }
