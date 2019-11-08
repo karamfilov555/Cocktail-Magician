@@ -218,7 +218,7 @@ namespace CM.Web.Areas.Cocktails.Controllers
             }
             // if id doesnt exist....
             var cocktailName = await _cocktailServices.GetCocktailNameById(Id);
-            var recepieUrl = $"https://localhost:44344/assets/recepies/{Id}.txt";
+            var recepieUrl = $"https://localhost:5001/assets/recepies/{Id}.txt";
             var net = new System.Net.WebClient();
             byte[] data;
             try

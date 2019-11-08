@@ -17,6 +17,8 @@ namespace CM.Data
         public DbSet<Cocktail> Cocktails { get; set; }
         public DbSet<BarReview> BarReviews { get; set; }
         public DbSet<CocktailReview> CocktailReviews { get; set; }
+        public DbSet<BarReviewLike> BarReviewLikes { get; set; }
+        public DbSet<CocktailReviewLike> CocktailReviewLikes { get; set; }
         public DbSet<CocktailIngredient> CocktailIngredients { get; set; }
         public DbSet<Ingredient> Ingredients { get; set; }
 

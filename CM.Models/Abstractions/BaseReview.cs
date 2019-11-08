@@ -1,10 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CM.Models.Abstractions
 {
-    public abstract class AbstractReview
+    public class BaseReview
     {
        
         public string Id { get; set; }
@@ -19,6 +20,5 @@ namespace CM.Models.Abstractions
         public DateTime? DateDeleted { get; set; }
         public string UserId { get; set; }
         public AppUser User { get; set; }
-
     }
 }

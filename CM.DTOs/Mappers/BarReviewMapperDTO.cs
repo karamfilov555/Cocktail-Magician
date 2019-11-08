@@ -1,6 +1,7 @@
 ﻿using CM.Models;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace CM.DTOs.Mappers
@@ -10,11 +11,14 @@ namespace CM.DTOs.Mappers
         public static BarReviewDTO BarMapReviewToDTO(this BarReview review)
         {
             var newReviewDTO = new BarReviewDTO();
-            newReviewDTO.BarId = review.Id;
+            newReviewDTO.Id = review.Id;
+            newReviewDTO.BarId = review.BarId;
             newReviewDTO.Description = review.Description;
             newReviewDTO.UserName = review.User.UserName;
             newReviewDTO.UserID = review.UserId;
             newReviewDTO.Rating = review.Rating;
+            newReviewDTO.LikeCount = review.BarReviewLikes.Count;
+            newReviewDTO.LikedByUsers = review.BarReviewLikes.Select(b => b.AppUserID).ToList();
             return newReviewDTO;
         }
 

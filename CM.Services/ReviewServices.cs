@@ -86,6 +86,7 @@ namespace CM.Services
             var reviews = await _context
                 .BarReviews
                 .Include(r => r.User)
+                .Include(r=>r.BarReviewLikes)
                 .Where(r => r.BarId == id).ToListAsync();
             var reviewDTOs = reviews.Select(r => r.BarMapReviewToDTO()).ToList();
             return reviewDTOs;
@@ -97,16 +98,17 @@ namespace CM.Services
             var user = await _context.Users
                 .FindAsync(barReviewDTO.UserID);
             var bar = await _context.Bars
-                .Include(b=>b.Reviews)
-                .Where(b=>b.Id==barReviewDTO.BarId)
+                .Include(b => b.Reviews)
+                .Where(b => b.Id == barReviewDTO.BarId)
                 .FirstOrDefaultAsync();
             user.ValidateIfNull();
             bar.ValidateIfNull();
             var barReview = barReviewDTO.MapDTOToReview();
             barReview.UserId = user.Id;
-            if (bar.Reviews.Select(r=>r.UserId).ToList().Any(id=>id==user.Id))
+            barReview.ReviewDate = DateTime.Now.Date;
+            if (bar.Reviews.Select(r => r.UserId).ToList().Any(id => id == user.Id))
             {
-                throw new InvalidOperationException("You have already reviewed this bar!");      
+                throw new InvalidOperationException("You have already reviewed this bar!");
             }
             _context.BarReviews.Add(barReview);
             await _context.SaveChangesAsync().ConfigureAwait(false);
@@ -123,5 +125,34 @@ namespace CM.Services
             bar.BarRating = avg;
             await _context.SaveChangesAsync();
         }
+
+        public async Task LikeBarReview(string barReviewID, string userId)
+        {
+            if (await _context.BarReviewLikes.AnyAsync(l => l.AppUserID == userId && l.BarReviewID == barReviewID))
+            {
+                throw new InvalidOperationException("You have already liked this review!");
+            }
+            var like = new BarReviewLike()
+            {
+                AppUserID = userId,
+                BarReviewID = barReviewID,
+                Date = DateTime.Now.Date
+            };
+            _context.BarReviewLikes.Add(like);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task RemoveBarReviewLike(string barReviewID, string userId)
+        {
+            var like =await _context.BarReviewLikes.FirstOrDefaultAsync(l => l.AppUserID == userId && l.BarReviewID == barReviewID);
+            if (like==null)
+            {
+                throw new InvalidOperationException("You have not liked this review!");
+            }
+            _context.BarReviewLikes.Remove(like);
+            await _context.SaveChangesAsync();
+        }
     }
 }
+
+

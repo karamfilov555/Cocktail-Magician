@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace CM.Web.Areas.Reviews.Controllers
@@ -47,6 +48,24 @@ namespace CM.Web.Areas.Reviews.Controllers
             await _reviewServices.CreateBarReview(barReviewDTO);
 
             return RedirectToAction("BarReviews", "BarReviews", new { id = barVM.BarId, name = barVM.BarName });
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> LikeBarReview(string barReviewID, string barId, string name)
+        {
+            
+            await _reviewServices.LikeBarReview(barReviewID, User.FindFirstValue(ClaimTypes.NameIdentifier));
+
+            return RedirectToAction("BarReviews", "BarReviews", new { id = barId, name = name });
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> RemoveLikeBarReview(string barReviewID, string barId, string name)
+        {
+
+            await _reviewServices.RemoveBarReviewLike(barReviewID, User.FindFirstValue(ClaimTypes.NameIdentifier));
+
+            return RedirectToAction("BarReviews", "BarReviews", new { id = barId, name = name });
         }
     }
 }

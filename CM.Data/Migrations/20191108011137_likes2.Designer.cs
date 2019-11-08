@@ -4,14 +4,16 @@ using CM.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CM.Data.Migrations
 {
     [DbContext(typeof(CMContext))]
-    partial class CMContextModelSnapshot : ModelSnapshot
+    [Migration("20191108011137_likes2")]
+    partial class likes2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -179,26 +181,6 @@ namespace CM.Data.Migrations
                     b.ToTable("BarReviews");
                 });
 
-            modelBuilder.Entity("CM.Models.BarReviewLike", b =>
-                {
-                    b.Property<string>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("AppUserID");
-
-                    b.Property<string>("BarReviewID");
-
-                    b.Property<DateTime>("Date");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("AppUserID");
-
-                    b.HasIndex("BarReviewID");
-
-                    b.ToTable("BarReviewLikes");
-                });
-
             modelBuilder.Entity("CM.Models.Cocktail", b =>
                 {
                     b.Property<string>("Id")
@@ -260,26 +242,6 @@ namespace CM.Data.Migrations
                     b.ToTable("CocktailReviews");
                 });
 
-            modelBuilder.Entity("CM.Models.CocktailReviewLike", b =>
-                {
-                    b.Property<string>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("AppUserID");
-
-                    b.Property<string>("CocktailReviewID");
-
-                    b.Property<DateTime>("Date");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("AppUserID");
-
-                    b.HasIndex("CocktailReviewID");
-
-                    b.ToTable("CocktailReviewLikes");
-                });
-
             modelBuilder.Entity("CM.Models.Ingredient", b =>
                 {
                     b.Property<string>("Id")
@@ -293,6 +255,30 @@ namespace CM.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Ingredients");
+                });
+
+            modelBuilder.Entity("CM.Models.Like", b =>
+                {
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("AppUserID");
+
+                    b.Property<string>("BarReviewID");
+
+                    b.Property<string>("CocktailReviewID");
+
+                    b.Property<DateTime>("Date");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AppUserID");
+
+                    b.HasIndex("BarReviewID");
+
+                    b.HasIndex("CocktailReviewID");
+
+                    b.ToTable("Likes");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -417,17 +403,6 @@ namespace CM.Data.Migrations
                         .HasForeignKey("UserId");
                 });
 
-            modelBuilder.Entity("CM.Models.BarReviewLike", b =>
-                {
-                    b.HasOne("CM.Models.AppUser", "User")
-                        .WithMany("BarReviewLikes")
-                        .HasForeignKey("AppUserID");
-
-                    b.HasOne("CM.Models.BarReview", "BarReview")
-                        .WithMany("BarReviewLikes")
-                        .HasForeignKey("BarReviewID");
-                });
-
             modelBuilder.Entity("CM.Models.CocktailIngredient", b =>
                 {
                     b.HasOne("CM.Models.Cocktail", "Cocktail")
@@ -453,14 +428,18 @@ namespace CM.Data.Migrations
                         .HasForeignKey("UserId");
                 });
 
-            modelBuilder.Entity("CM.Models.CocktailReviewLike", b =>
+            modelBuilder.Entity("CM.Models.Like", b =>
                 {
                     b.HasOne("CM.Models.AppUser", "User")
-                        .WithMany("CocktailReviewLikes")
+                        .WithMany("Likes")
                         .HasForeignKey("AppUserID");
 
+                    b.HasOne("CM.Models.BarReview", "BarReview")
+                        .WithMany("Likes")
+                        .HasForeignKey("BarReviewID");
+
                     b.HasOne("CM.Models.CocktailReview", "CocktailReview")
-                        .WithMany("CocktailReviewLikes")
+                        .WithMany("Likes")
                         .HasForeignKey("CocktailReviewID");
                 });
 

@@ -13,12 +13,15 @@ namespace CM.Web.Mappers
         public static BarReviewViewModel MapReviewDTOToVM(this BarReviewDTO reviewDTO)
         {
             var newReviewVM = new BarReviewViewModel();
+            newReviewVM.Id = reviewDTO.Id;
             newReviewVM.BarId = reviewDTO.BarId;
             newReviewVM.Rating = reviewDTO.Rating;
             newReviewVM.Description = reviewDTO.Description;
             newReviewVM.ReviewDate = reviewDTO.ReviewDate;
             newReviewVM.UserName = reviewDTO.UserName;
             newReviewVM.UserID = reviewDTO.UserID;
+            newReviewVM.LikeCount = reviewDTO.LikeCount;
+            newReviewVM.LikedByUsers = reviewDTO.LikedByUsers;
             return newReviewVM;
         }
 
