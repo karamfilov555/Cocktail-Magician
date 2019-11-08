@@ -326,6 +326,58 @@ namespace CM.Data.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "BarReviewLikes",
+                columns: table => new
+                {
+                    Id = table.Column<string>(nullable: false),
+                    Date = table.Column<DateTime>(nullable: false),
+                    AppUserID = table.Column<string>(nullable: true),
+                    BarReviewID = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_BarReviewLikes", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_BarReviewLikes_AspNetUsers_AppUserID",
+                        column: x => x.AppUserID,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_BarReviewLikes_BarReviews_BarReviewID",
+                        column: x => x.BarReviewID,
+                        principalTable: "BarReviews",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "CocktailReviewLikes",
+                columns: table => new
+                {
+                    Id = table.Column<string>(nullable: false),
+                    Date = table.Column<DateTime>(nullable: false),
+                    AppUserID = table.Column<string>(nullable: true),
+                    CocktailReviewID = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CocktailReviewLikes", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_CocktailReviewLikes_AspNetUsers_AppUserID",
+                        column: x => x.AppUserID,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_CocktailReviewLikes_CocktailReviews_CocktailReviewID",
+                        column: x => x.CocktailReviewID,
+                        principalTable: "CocktailReviews",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_Addresses_BarId",
                 table: "Addresses",
@@ -378,6 +430,16 @@ namespace CM.Data.Migrations
                 column: "CocktailId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_BarReviewLikes_AppUserID",
+                table: "BarReviewLikes",
+                column: "AppUserID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_BarReviewLikes_BarReviewID",
+                table: "BarReviewLikes",
+                column: "BarReviewID");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_BarReviews_BarId",
                 table: "BarReviews",
                 column: "BarId");
@@ -391,6 +453,16 @@ namespace CM.Data.Migrations
                 name: "IX_CocktailIngredients_IngredientId",
                 table: "CocktailIngredients",
                 column: "IngredientId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_CocktailReviewLikes_AppUserID",
+                table: "CocktailReviewLikes",
+                column: "AppUserID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_CocktailReviewLikes_CocktailReviewID",
+                table: "CocktailReviewLikes",
+                column: "CocktailReviewID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_CocktailReviews_CocktailId",
@@ -427,22 +499,28 @@ namespace CM.Data.Migrations
                 name: "BarCocktails");
 
             migrationBuilder.DropTable(
-                name: "BarReviews");
+                name: "BarReviewLikes");
 
             migrationBuilder.DropTable(
                 name: "CocktailIngredients");
 
             migrationBuilder.DropTable(
-                name: "CocktailReviews");
+                name: "CocktailReviewLikes");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
-                name: "Bars");
+                name: "BarReviews");
 
             migrationBuilder.DropTable(
                 name: "Ingredients");
+
+            migrationBuilder.DropTable(
+                name: "CocktailReviews");
+
+            migrationBuilder.DropTable(
+                name: "Bars");
 
             migrationBuilder.DropTable(
                 name: "Cocktails");

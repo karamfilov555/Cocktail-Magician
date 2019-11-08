@@ -2,6 +2,7 @@
 using System.IO;
 using System.Linq;
 using System.Security.Claims;
+using System.Text;
 using System.Threading.Tasks;
 using CM.Services.Contracts;
 using CM.Web.Areas.Cocktails.Models;
@@ -218,35 +219,22 @@ namespace CM.Web.Areas.Cocktails.Controllers
                 return RedirectToAction("ListCocktails", "Cocktails");
             }
             // if id doesnt exist....
-
+            //validations
 
             var cocktailName = await _cocktailServices.GetCocktailNameById(Id);
             var cocktailRecepie = await _cocktailServices.GetCocktailRecepie(Id);
-            await _streamWriter.WriteToFile(cocktailRecepie, await _cocktailServices.GetCocktailIdByName(cocktailName));
-
-
-
-            var recepieUrl = $"https://localhost:44344/assets/recepies/{Id}.txt";
-            var net = new System.Net.WebClient();
-            byte[] data;
             try
             {
-                data = net.DownloadData(recepieUrl);
+                var content = new System.IO.MemoryStream(Encoding.UTF8.GetBytes(cocktailRecepie));
+                var contentType = "APPLICATION/octet-stream";
+                var fileName = $"{cocktailName}.txt";
+                return File(content, contentType, fileName);
             }
             catch (Exception)
             {
                 _toast.AddInfoToastMessage("This cocktail's recepie is a secret!");
                 return RedirectToAction("ListCocktails", "Cocktails");
             }
-            //Save file in variable and then ....
-            var content = new System.IO.MemoryStream(data);
-            //Delete file from server..
-            string[] recepieFile = Directory.GetFiles($"wwwroot/assets/recepies/", "*.txt");
-            System.IO.File.Delete($"wwwroot/assets/recepies/{Id}.txt");
-            
-            var contentType = "APPLICATION/octet-stream";
-            var fileName = $"{cocktailName}.txt";
-            return File(content, contentType, fileName);
         }
     }
 }
