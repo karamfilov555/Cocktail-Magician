@@ -187,6 +187,13 @@ namespace CM.Services
                                          .FirstOrDefaultAsync(c => c.Name == cocktailName);
             return cocktail.Id;
         }
+
+        public async Task<string> GetCocktailRecepie(string id)
+        {
+            var cocktail = await _context.Cocktails
+                                         .FirstOrDefaultAsync(c => c.Id == id);
+            return cocktail.Recepie;
+        }
     }
 }
 

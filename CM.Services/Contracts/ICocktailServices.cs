@@ -20,5 +20,6 @@ namespace CM.Services.Contracts
         Task<ICollection<CocktailDto>> GetAllCocktailsByName(string searchCriteria);
         Task<bool> CheckIfCocktailExist(string id);
         Task<string> GetCocktailIdByName(string cocktailName);
+        Task<string> GetCocktailRecepie(string id);
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -96,7 +97,7 @@ namespace CM.Web.Areas.Cocktails.Controllers
                 var cocktailDto = cocktailVm.MapToCocktailDto();
                 await _cocktailServices.AddCocktail(cocktailDto);
 
-                await _streamWriter.WriteToFile(cocktailVm.Recepie, await _cocktailServices.GetCocktailIdByName(cocktailVm.Name));
+             
 
                 _toast.AddSuccessToastMessage($"You successfully added cocktail {cocktailDto.Name}!");
                 return RedirectToAction("ListCocktails");
@@ -217,8 +218,15 @@ namespace CM.Web.Areas.Cocktails.Controllers
                 return RedirectToAction("ListCocktails", "Cocktails");
             }
             // if id doesnt exist....
+
+
             var cocktailName = await _cocktailServices.GetCocktailNameById(Id);
-            var recepieUrl = $"https://localhost:5001/assets/recepies/{Id}.txt";
+            var cocktailRecepie = await _cocktailServices.GetCocktailRecepie(Id);
+            await _streamWriter.WriteToFile(cocktailRecepie, await _cocktailServices.GetCocktailIdByName(cocktailName));
+
+
+
+            var recepieUrl = $"https://localhost:44344/assets/recepies/{Id}.txt";
             var net = new System.Net.WebClient();
             byte[] data;
             try
@@ -230,8 +238,12 @@ namespace CM.Web.Areas.Cocktails.Controllers
                 _toast.AddInfoToastMessage("This cocktail's recepie is a secret!");
                 return RedirectToAction("ListCocktails", "Cocktails");
             }
-            //if data is null or empty...
+            //Save file in variable and then ....
             var content = new System.IO.MemoryStream(data);
+            //Delete file from server..
+            string[] recepieFile = Directory.GetFiles($"wwwroot/assets/recepies/", "*.txt");
+            System.IO.File.Delete($"wwwroot/assets/recepies/{Id}.txt");
+            
             var contentType = "APPLICATION/octet-stream";
             var fileName = $"{cocktailName}.txt";
             return File(content, contentType, fileName);

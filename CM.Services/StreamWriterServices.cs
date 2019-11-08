@@ -1,8 +1,5 @@
 ﻿using CM.Services.Contracts;
-using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace CM.Services
@@ -11,11 +8,9 @@ namespace CM.Services
     {
         public StreamWriterServices()
         {
-
         }
         public async Task WriteToFile(string recepie, string cocktailId)
         {
-
             // CARE THIS PATH WONT WORK on othr pc!!!!!!!!!!
             string docPath = "wwwroot/assets/recepies";
 
@@ -24,6 +19,5 @@ namespace CM.Services
                     outputFile.WriteLine(recepie);
             }
         }
-
     }
 }

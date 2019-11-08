@@ -1,41 +1,85 @@
-﻿function initMap() {
-
-    //let eventBox = document.getElementById("events");
+﻿function initialize() {
+    var geocoder;
+    var map;
     let mapBtns = document.getElementsByClassName("mapit");
-    //var divToTheMap = document.getElementById('map');
+
     for (const btn of mapBtns) {
 
         btn.addEventListener('click', (e) => {
+
             e.preventDefault();
             let currentBtn = e.currentTarget;
 
-            var address = { lat: -25.344, lng: 131.036 };
+            var divForTheMap = document.createElement('div');
+            divForTheMap.style.height = '360px';
+            divForTheMap.style.width = '98vm';
+            divForTheMap.id = 'divForTheMap' + e.currentTarget.value;
+            divForTheMap.style.display = 'block';
+            divForTheMap.style.position = 'relative';
+            divForTheMap.style.overflow = 'hidden';
+            console.log(divForTheMap);
 
+            if (document.getElementById("divForTheMap" + e.currentTarget.value) != null) {
+                console.log("sega ima karta");
+                if (document.getElementById("divForTheMap" + e.currentTarget.value).style.display == "none") {
+                    document.getElementById("divForTheMap" + e.currentTarget.value).setAttribute("style", "display:block");
+                    document.getElementById("divForTheMap" + e.currentTarget.value).style.width = '98vm'
+                    document.getElementById("divForTheMap" + e.currentTarget.value).style.height = '360px'
+                    document.getElementById("divForTheMap" + e.currentTarget.value).style.display = 'block'
+                    document.getElementById("divForTheMap" + e.currentTarget.value).style.position = 'relative'
+                    document.getElementById("divForTheMap" + e.currentTarget.value).style.overflow = 'hidden'
+                    currentBtn.innerHTML = "<i></i>HIDE Map";
+                    console.log("invisible");
+                }
+                else {
 
-            console.log("vleznah u mtod");
-            //var mapOptions = {
-            //    center: address,
-            //    zoom: 15,
-            //    //minZoom: 15,
-            //    //mapTypeId: google.maps.MapTypeId.ROADMAP
-            //};
-            
-            var map = new google.maps.Map(
-                document.getElementById('map'), {center: address , zoom: 8 });
+                    console.log("visible");
+                    document.getElementById("divForTheMap" + e.currentTarget.value).setAttribute("style", "display:none");
+                    currentBtn.innerHTML = "<i></i>Map it";
+                }
+            }
+            else {
+                //var divForTheMap = document.createElement('div');
+                //divForTheMap.style.height = '360px';
+                //divForTheMap.style.width = '98vm';
+                //divForTheMap.id = 'divForTheMap' + e.currentTarget.value;
+                //divForTheMap.style.display = 'block';
+                //divForTheMap.style.position = 'relative';
+                //divForTheMap.style.overflow = 'hidden';
 
-            console.log(map);
-            //console.log(map);
-            ////console.log(divToTheMap);
-            //console.log(document.getElementById('map'));
-            var marker = new google.maps.Marker({ position: address});
+                geocoder = new google.maps.Geocoder();
+                var latlng = new google.maps.LatLng(-34.397, 150.644);
 
-            marker.setMap(map);
+                var mapOptions = {
+                    zoom: 8,
+                    center: latlng
+                }
+                map = new google.maps.Map(divForTheMap, mapOptions);
 
+                //geolocator
+                var eventBox = e.currentTarget.parentElement;
+                eventBox.parentNode.insertBefore(divForTheMap, eventBox.nextSibling);
 
-            currentBtn.innerHTML = "<i></i>Hide Map";
+                var address = e.currentTarget.value;
+                //console.log(address); //button
+                //console.log(e.currentTarget.value); //adress
 
+                geocoder.geocode({ 'address': address }, function (results, status) {
+                    if (status == 'OK') {
+                        map.setCenter(results[0].geometry.location);
+                        var marker = new google.maps.Marker({
+                            map: map,
+                            position: results[0].geometry.location
+                        });
+
+                    } else {
+                        alert('Geocode was not successful for the following reason: ' + status);
+                    }
+                });
+
+                currentBtn.innerHTML = "<i></i>HIDE Map";
+            }
         });
-
     }
 }
 //    function initMap() {
