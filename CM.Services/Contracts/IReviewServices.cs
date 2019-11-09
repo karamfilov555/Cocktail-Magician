@@ -12,8 +12,8 @@ namespace CM.Services.Contracts
         Task CreateCocktailReview(string userId, CocktailDto cocktailDto);
         Task SetAverrageRating(string cocktailId);
         Task CreateBarReview(BarReviewDTO barReviewDTO);
-        int LikeBarReview(string barReviewID, string userId);
-        int RemoveBarReviewLike(string barReviewID, string userId);
+        Task<int> LikeBarReview(string barReviewID, string userId);
+        Task<int> RemoveBarReviewLike(string barReviewID, string userId);
 
         Task<List<BarReviewDTO>> GetAllReviewsForBar(string id);
 

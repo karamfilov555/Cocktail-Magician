@@ -127,9 +127,9 @@ namespace CM.Services
             await _context.SaveChangesAsync();
         }
 
-        public int LikeBarReview(string barReviewID, string userId)
+        public async Task<int> LikeBarReview(string barReviewID, string userId)
         {
-            if (_context.BarReviewLikes.Any(l => l.AppUserID == userId && l.BarReviewID == barReviewID))
+            if (await _context.BarReviewLikes.AnyAsync(l => l.AppUserID == userId && l.BarReviewID == barReviewID))
             {
                 throw new InvalidOperationException("You have already liked this review!");
             }
@@ -140,20 +140,21 @@ namespace CM.Services
                 Date = DateTime.Now.Date
             };
             _context.BarReviewLikes.Add(like);
-            _context.SaveChanges();
-            return _context.BarReviewLikes.Where(r => r.BarReviewID == barReviewID).Count();
+            await _context.SaveChangesAsync();
+            int count = await _context.BarReviewLikes.Where(r => r.BarReviewID == barReviewID).CountAsync();
+            return count;
         }
 
-        public int RemoveBarReviewLike(string barReviewID, string userId)
+        public async Task<int> RemoveBarReviewLike(string barReviewID, string userId)
         {
-            var like = _context.BarReviewLikes.FirstOrDefault(l => l.AppUserID == userId && l.BarReviewID == barReviewID);
+            var like =await _context.BarReviewLikes.FirstOrDefaultAsync(l => l.AppUserID == userId && l.BarReviewID == barReviewID);
             if (like==null)
             {
                 throw new InvalidOperationException("You have not liked this review!");
             }
             _context.BarReviewLikes.Remove(like);
-             _context.SaveChanges();
-            return _context.BarReviewLikes.Where(r => r.BarReviewID == barReviewID).Count();
+            await _context.SaveChangesAsync();
+            return await _context.BarReviewLikes.Where(r => r.BarReviewID == barReviewID).CountAsync();
         }
     }
 }
