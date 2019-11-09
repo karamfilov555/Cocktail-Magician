@@ -1,0 +1,40 @@
+﻿@model ListBarsViewModel
+
+
+@{
+    var prevDisabled = !Model.AllBars.HasPreviousPage ? "disabled" : "";
+    var nextDisabled = !Model.AllBars.HasNextPage ? "disabled" : "";
+}
+<center>
+    <a asp-action="Index" asp-area="Bars" asp-controller="Bars"
+       asp-route-sortOrder="@Model.CurrentSortOrder"
+       asp-route-pageNumber="@(Model.AllBars.PageIndex -1)"
+       class="btn btn-default btn-sm @prevDisabled">
+        <h5 style="margin-bottom:-5px"> <i class="fa fa-arrow-circle-o-left"></i> Previous Page</h5>
+    </a>
+    @if (prevDisabled != "disabled")
+    {
+        <a asp-action="Index" asp-area="Bars" asp-controller="Bars"
+           asp-route-sortOrder="@Model.CurrentSortOrder"
+           asp-route-pageNumber="@(Model.AllBars.PageIndex -1)"
+           class="btn btn-default btn-sm">
+            <h5 style="margin-bottom:-5px">@(Model.AllBars.PageIndex - 1)</h5>
+        </a>
+    }
+    <button style="background-color:cornsilk" class="btn btn-default btn-sm disabled"><h5 style="margin-bottom:-5px; color:gold">@Model.AllBars.PageIndex</h5></button>
+    @if (nextDisabled != "disabled")
+    {
+        <a asp-action="Index" asp-area="Bars" asp-controller="Bars"
+           asp-route-sortOrder="@Model.CurrentSortOrder"
+           asp-route-pageNumber="@(Model.AllBars.PageIndex +1)"
+           class="btn btn-default btn-sm">
+            <h5 style="margin-bottom:-5px">@(Model.AllBars.PageIndex + 1)</h5>
+        </a>
+    }
+    <a asp-action="Index" asp-area="Bars" asp-controller="Bars"
+       asp-route-sortOrder="@Model.CurrentSortOrder"
+       asp-route-pageNumber="@(Model.AllBars.PageIndex + 1)"
+       class="btn btn-default btn-sm @nextDisabled">
+        <h5 style="margin-bottom:-5px">Next Page <i class="fa fa-arrow-circle-o-right"></i></h5>
+    </a>
+</center>
