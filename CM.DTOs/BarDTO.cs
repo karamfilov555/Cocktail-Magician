@@ -21,8 +21,6 @@ namespace CM.DTOs
         public List<CocktailDto> Cocktails { get; set; }
             = new List<CocktailDto>();
 
-        public List<string> CocktailsNames { get; set; }
-            = new List<string>();
         public ICollection<BarReview> BarReviews { get; set; }
            = new List<BarReview>();
 

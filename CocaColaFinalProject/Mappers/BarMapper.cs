@@ -21,7 +21,7 @@ namespace CM.Web.Mappers
             newBarVM.ImageURL = bar.ImageUrl;
             newBarVM.Rating = bar.Rating;
             newBarVM.Website = bar.Website;
-            newBarVM.Cocktails = bar.CocktailsNames;
+            newBarVM.Cocktails = bar.Cocktails.Select(c=>c.MapToCocktailViewModel()).ToList();
 
             return newBarVM;
         }

@@ -1,4 +1,5 @@
-﻿using CM.Web.Areas.Reviews.Models;
+﻿using CM.Web.Areas.Cocktails.Models;
+using CM.Web.Areas.Reviews.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -31,7 +32,7 @@ namespace CM.Web.Areas.Bars.Models
         [Required(ErrorMessage = "A link to an image is required!")]
         public string ImageURL { get; set; }
         public List<BarReviewViewModel> Reviews { get; set; } = new List<BarReviewViewModel>();
-        public List<string> Cocktails { get; set; } = new List<string>();
+        public List<CocktailViewModel> Cocktails { get; set; } = new List<CocktailViewModel>();
 
     }
 }

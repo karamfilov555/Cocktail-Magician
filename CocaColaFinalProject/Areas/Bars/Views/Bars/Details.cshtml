@@ -7,7 +7,7 @@
 <h1 class="hdr1">@Model.Name</h1>
 
 
-@{ 
+@{
     var address = Model.Country + ", " + Model.City + ", " + Model.Details;
 
 }
@@ -22,89 +22,61 @@
 </head>
 
 
-   
-    <table class="table">
-        <thead>
-            <tr>
-                <th><h5></h5></th>
-                <th><h5>Details</h5></th>
-                <th><h5>Menu</h5></th>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th><h5></h5></th>
+            <th><h5>Details</h5></th>
+            <th><h5>Menu</h5></th>
 
 
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
 
-            <tr>
-                <td><img src="@Model.ImageURL" width="400" style="border-radius:25px; padding-top:5px; padding-bottom:5px"></td>
-                <td>
+        <tr>
+            <td><img src="@Model.ImageURL" width="400" style="border-radius:25px; padding-top:5px; padding-bottom:5px"></td>
+            <td>
 
-                    <h5>Rating: @Model.Rating</h5>
-                    <h5>Website: <a href="@Model.Website">@Model.Website </a> </h5>
-                    <br />
-                    <h5>Location: </h5>
-                    <body onload="initialize()">
-                        <div id="map" style="width: 400px; height: 360px;"></div>
-                        <div>
-                            <input id="address" type="hidden" value="@address"
-                                   +@Model.Country+++
-                                   >
-                        </div>
-                    </body>
-                    <script>
-                        var geocoder;
-                        var map;
-                        function initialize() {
-                            geocoder = new google.maps.Geocoder();
-                            var latlng = new google.maps.LatLng(-34.397, 150.644);
-                            var mapOptions = {
-                                zoom: 8,
-                                center: latlng
-                            }
-                            map = new google.maps.Map(document.getElementById('map'), mapOptions);
-                            codeAddress();
-                        }
+                <h5>Rating: @Model.Rating</h5>
+                <h5>Website: <a href="@Model.Website">@Model.Website </a> </h5>
+                <br />
+                <h5>Location: </h5>
+                <body onload="initialize2()">
+                    <div id="map" style="width: 400px; height: 360px;"></div>
+                    <div>
+                        <input id="address" type="hidden" value="@address"
+                               +@Model.Country+++>
+                    </div>
+                </body>
 
-                        function codeAddress() {
-                            var address = document.getElementById('address').value;
-                            geocoder.geocode({ 'address': address }, function (results, status) {
-                                if (status == 'OK') {
-                                    map.setCenter(results[0].geometry.location);
-                                    var marker = new google.maps.Marker({
-                                        map: map,
-                                        position: results[0].geometry.location
-                                    });
-                                } else {
-                                    alert('Geocode was not successful for the following reason: ' + status);
-                                }
-                            });
-                        }
-                    </script>
-                    <script async defer
-                            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB2QJIfVlhWTpxgG5zCkx1XMmwADlMuE4c&callback=initialize">
-                    </script>
-
-
-
-                </td>
-                <td>
-                    @foreach (var cocktail in Model.Cocktails)
-                    {
+            </td>
+            <td>
+                @foreach (var cocktail in Model.Cocktails)
+                {
+                    <a asp-area="Cocktails" asp-controller="Cocktails" asp-action="Details" asp-route-id="@cocktail.Id">
                         <h5>
-                            @cocktail
+                            @cocktail.Name
                         </h5>
-                    }
-                </td>
-            </tr>
+                    </a>
+                }
+            </td>
+        </tr>
 
-        </tbody>
-    </table>
+    </tbody>
+</table>
     </div>
-    <div>
-        <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
-        <a asp-action="Index">Back to List</a>
-    </div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>
 
+<script src="~/assets/js/customGoogleMapper.js">
 
-   
+</script>
+
+<script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB2QJIfVlhWTpxgG5zCkx1XMmwADlMuE4c&callback=initialize">
+</script>
