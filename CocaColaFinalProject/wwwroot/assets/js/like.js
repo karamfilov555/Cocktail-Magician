@@ -19,7 +19,12 @@ $(document).on("click", '.like-2', function () {
 
             a.html('<i class="fa fa-heart fa-lg text-danger"></i > <span>' + result + '</span>').removeClass("like-2").addClass("unlike-2");
 
+        }, 
+        fail: function (xhr, textStatus, errorThrown) {
+            alert('request failed');
+            window.location = "/Error/CustomError";
         }
+
     })
 
 });
@@ -43,6 +48,10 @@ $(document).on("click", '.unlike-2', function () {
 
             a.html('<i class="fa fa-heart fa-lg text-danger"></i > <span>' + result + '</span>').removeClass("unlike-2").addClass("like-2");
 
+        },
+        fail: function (xhr, textStatus, errorThrown) {
+            alert('request failed');
+            window.location = "/Error/CustomError";
         }
     })
 
@@ -55,13 +64,13 @@ $(document).on("click", '.unlike-2', function () {
     //const url2 = $(this).attr('action');
     //const url2 = "/Reviews/BarReviews/LikeBarReview/";
     //console.log(url2)
-    $.ajax({
-        url: "https://localhost:44344/Reviews/BarReviews/RemoveLikeBarReview",
-        data: { 'barId': data, 'barReviewID': data2, 'data-name': data3 },
-        type: "post",
-        cache: false,
-        success: function (result) {
-            $("#unlikeSpan").html(result);
-        }
-    })
-});
+//    $.ajax({
+//        url: "https://localhost:44344/Reviews/BarReviews/RemoveLikeBarReview",
+//        data: { 'barId': data, 'barReviewID': data2, 'data-name': data3 },
+//        type: "post",
+//        cache: false,
+//        success: function (result) {
+//            $("#unlikeSpan").html(result);
+//        }
+//    })
+//});

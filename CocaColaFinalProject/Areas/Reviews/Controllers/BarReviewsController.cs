@@ -4,6 +4,7 @@ using CM.Web.Areas.Bars.Models;
 using CM.Web.Areas.Reviews.Models;
 using CM.Web.Mappers;
 using CM.Web.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -29,6 +30,7 @@ namespace CM.Web.Areas.Reviews.Controllers
 
 
         [HttpGet]
+        [Authorize(Roles = "Manager, Administrator, Member")]
         public async Task<IActionResult> BarReviews(string id, string name)
         {
             List<BarReviewDTO> allReviewsDTOs = await _reviewServices.GetAllReviewsForBar(id);
@@ -42,6 +44,7 @@ namespace CM.Web.Areas.Reviews.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Manager, Administrator, Member")]
         public async Task<IActionResult> CreateBarReview(BarReviewViewModel barVM)
         {
             var barReviewDTO = barVM.MapVMToReviewDTO();
@@ -50,22 +53,41 @@ namespace CM.Web.Areas.Reviews.Controllers
             return RedirectToAction("BarReviews", "BarReviews", new { id = barVM.BarId, name = barVM.BarName });
         }
 
+        //TODO bez rediredt pri greshka
         [HttpPost]
+        [Authorize(Roles = "Manager, Administrator, Member")]
         public async Task<int> LikeBarReview(string barReviewID, string barId)
         {
-            
-           int count= await _reviewServices.LikeBarReview(barReviewID, User.FindFirstValue(ClaimTypes.NameIdentifier));
-            
+            try
+            {
+            int count = await _reviewServices.LikeBarReview(barReviewID, User.FindFirstValue(ClaimTypes.NameIdentifier));
+
             return count;
+
+            }
+            catch (Exception ex)
+            {
+
+                throw new InvalidOperationException(ex.Message);
+            }
         }
 
+        //TODO bez rediredt pri greshka
         [HttpPost]
+        [Authorize(Roles = "Manager, Administrator, Member")]
         public async Task<int> RemoveLikeBarReview(string barReviewID, string barId)
         {
+            try
+            {
+                int count = await _reviewServices.RemoveBarReviewLike(barReviewID, User.FindFirstValue(ClaimTypes.NameIdentifier));
+                return count;
 
-            int count= await _reviewServices.RemoveBarReviewLike(barReviewID, User.FindFirstValue(ClaimTypes.NameIdentifier));
+            }
+            catch (Exception ex)
+            {
 
-            return count;
+                throw new InvalidOperationException(ex.Message);
+            }
         }
     }
 }

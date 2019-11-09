@@ -51,7 +51,7 @@
                                           data-barReviewID="@review.Id" data-barId="@review.BarId" data-name="@review.BarName">
                                         <button type="submit"
                                                 class="like-2"
-                                                data-barReviewID="@review.Id" data-barId="@review.BarId" data-name="@review.BarName">
+                                                data-barReviewID="@review.Id" data-barId="@review.BarId">
                                             <i class="fa fa-heart fa-lg text-danger"></i>
                                             <span> @review.LikeCount</span>
                                         </button>
@@ -65,7 +65,7 @@
                                         <button type="submit"
                                                 class="unlike-2" data-barReviewID="@review.Id" data-barId="@review.BarId">
                                             <i class="fa fa-heart fa-lg text-danger"></i>
-                                            <span>(@review.LikeCount)</span>
+                                            <span>@review.LikeCount</span>
                                         </button>
                                     </form>
                                 }

@@ -3,51 +3,70 @@
     ViewData["Title"] = "ListUsers";
 }
 
-<h1>ListUsers</h1>
-<table class="pretty-table table-responsive">
+<h3 class="hdr4">All Users</h3>
+
+
+<table class="table">
     <thead>
         <tr>
-            <th width="20%">Username</th>
-            <th width="30%">E-mail </th>
-            <th width="20%">Role</th>
-            <th width="10%"></th>
-            <th width="10%"></th>
-            <th width="10%"></th>
+            <th></th>
+            <th><h5>Username</h5></th>
+
+            <th>
+                <h5>E-mail</h5>
+            </th>
+            <th>
+                <h5>Role</h5>
+            </th>
+            <th></th>
+           
         </tr>
     </thead>
+
     <tbody>
         @foreach (var user in Model)
         {
             if (user.Role != "Administrator")
             {
-        <tr>
-            <td>@user.Username</td>
-            <td> @user.Email</td>
-            <td> @user.Role</td>
+                <tr>
+                    <td></td>
+                    <td><h5>@user.Username</h5></td>
+                    <td><h5> @user.Email</h5></td>
+                    <td> <h5>@user.Role</h5></td>
 
 
 
-            <td>
-                @if (user.Role != ("Administrator") && user.Role != ("Manager"))
-                {
-                    <form method="post">
-                        <button class="btn btn-default btn-sm" asp-action="ChangeRoleToManager" asp-controller="AppUser" asp-route-id="@user.Id">Create Manager</button>
-                    </form>
-                }
-            </td>
-            <td>
-                <form method="post">
-                    <button class="btn btn-default btn-sm" asp-action="Delete" asp-controller="AppUser" asp-route-id="@user.Id">Delete</button>
-                </form>
+                    <td>
+                        <p>
+                            @if (user.Role != ("Administrator") && user.Role != ("Manager"))
+                            {
+                                <a method="post" class="btn btn-default btn-sm"
+                                   asp-action="ChangeRoleToManager" asp-controller="AppUser" asp-route-id="@user.Id">
+                                    <font style="color:gold">
+                                        Create Manager
+                                    </font>
+                                </a>
+                            }
+                        </p>
+                        <p>
+                            <a method="post" class="btn btn-default btn-sm"
+                                asp-action="Delete" asp-controller="AppUser" asp-route-id="@user.Id">
+                                <font style="color:gold">
+                                    Delete
+                                </font>
+                            </a>
+                        </p>
 
-            </td>
-            <td>
-                <form method="post">
-                    <button class="btn btn-default btn-sm" asp-action="Delete" asp-controller="AppUser" asp-route-id="@user.Id">Ban</button>
-                </form>
-
-            </td>
-        </tr>
+                        <p>
+                            <a method="post" class="btn btn-default btn-sm"
+                                asp-action="Ban" asp-controller="AppUser" asp-route-id="@user.Id">
+                                <font style="color:gold">
+                                    Ban
+                                </font>
+                            </a>
+                        </p>
+                    
+                </tr>
             }
         }
     </tbody>
