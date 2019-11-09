@@ -127,9 +127,9 @@ namespace CM.Services
             await _context.SaveChangesAsync();
         }
 
-        public async Task<int> LikeBarReview(string barReviewID, string userId)
+        public int LikeBarReview(string barReviewID, string userId)
         {
-            if (await _context.BarReviewLikes.AnyAsync(l => l.AppUserID == userId && l.BarReviewID == barReviewID))
+            if (_context.BarReviewLikes.Any(l => l.AppUserID == userId && l.BarReviewID == barReviewID))
             {
                 throw new InvalidOperationException("You have already liked this review!");
             }
@@ -140,26 +140,20 @@ namespace CM.Services
                 Date = DateTime.Now.Date
             };
             _context.BarReviewLikes.Add(like);
-            await _context.SaveChangesAsync();
-            return await _context.BarReviewLikes.Where(r => r.BarReviewID == barReviewID).CountAsync();
+            _context.SaveChanges();
+            return _context.BarReviewLikes.Where(r => r.BarReviewID == barReviewID).Count();
         }
 
-        public async Task<int> RemoveBarReviewLike(string barReviewID, string userId)
+        public int RemoveBarReviewLike(string barReviewID, string userId)
         {
-            var like = await _context.BarReviewLikes.FirstOrDefaultAsync(l => l.AppUserID == userId && l.BarReviewID == barReviewID);
+            var like = _context.BarReviewLikes.FirstOrDefault(l => l.AppUserID == userId && l.BarReviewID == barReviewID);
             if (like==null)
             {
                 throw new InvalidOperationException("You have not liked this review!");
             }
             _context.BarReviewLikes.Remove(like);
-            await _context.SaveChangesAsync();
-            return await _context.BarReviewLikes.Where(r => r.BarReviewID == barReviewID).CountAsync();
-        }
-        public async Task<bool> UserCanReview(string barReviewID, string userId)
-        {
-            
-            var can = await _context.BarReviewLikes.AnyAsync(r => r.BarReviewID == barReviewID && r.AppUserID == userId);
-            return can;
+             _context.SaveChanges();
+            return _context.BarReviewLikes.Where(r => r.BarReviewID == barReviewID).Count();
         }
     }
 }

@@ -51,27 +51,21 @@ namespace CM.Web.Areas.Reviews.Controllers
         }
 
         [HttpPost]
-        public async Task<int> LikeBarReview(string barReviewID, string barId, string name)
+        public string LikeBarReview(string barReviewID, string barId)
         {
-            int likesCount;
-            if (!await _reviewServices.UserCanReview(barReviewID, User.FindFirstValue(ClaimTypes.NameIdentifier)))
-            {
-                 likesCount = await _reviewServices.LikeBarReview(barReviewID, User.FindFirstValue(ClaimTypes.NameIdentifier));
-            }
-            else
-            {
-                likesCount = await _reviewServices.RemoveBarReviewLike(barReviewID, User.FindFirstValue(ClaimTypes.NameIdentifier));
-            }
-
-            return likesCount;
+            
+           int count= _reviewServices.LikeBarReview(barReviewID, User.FindFirstValue(ClaimTypes.NameIdentifier));
+            
+            return count.ToString();
         }
 
-        //[HttpPost]
-        //public async Task<int> RemoveLikeBarReview(string barReviewID, string barId, string name)
-        //{
+        [HttpPost]
+        public string RemoveLikeBarReview(string barReviewID, string barId)
+        {
 
-        //    return await _reviewServices.RemoveBarReviewLike(barReviewID, User.FindFirstValue(ClaimTypes.NameIdentifier));
+            int count= _reviewServices.RemoveBarReviewLike(barReviewID, User.FindFirstValue(ClaimTypes.NameIdentifier));
 
-        //}
+            return count.ToString();
+        }
     }
 }

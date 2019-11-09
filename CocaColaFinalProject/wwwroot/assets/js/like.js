@@ -1,42 +1,52 @@
 ﻿
-$('.like-2').on('click', function (event) {
+$(document).on("click", '.like-2', function () {
     event.preventDefault();
+    debugger;
     const data = $(this).attr('data-barId');
     const data2 = $(this).attr('data-barReviewID');
     const data3 = $(this).attr('data-name');
 
-    //console.log(($("#countID").attr("data-count")));
-    //const new2 = $('#countID').attr('data-count').val;
-    //console.log(new2);
+    const url2 = "/Reviews/BarReviews/LikeBarReview?barReviewID=" + data2 + "&barId=" + data;
 
-    //const data4 = $('.data-count').attr('data-count').val;
-
-   // console.log(data4);
-  
-    //const url2 = $(this).attr('action');
-    //const url2 = "/Reviews/BarReviews/LikeBarReview/";
-    //console.log(url2)
+    const a = $(this);
+    debugger;
     $.ajax({
         url: "https://localhost:44344/Reviews/BarReviews/LikeBarReview",
         data: { 'barId': data, 'barReviewID': data2, 'data-name': data3 },
         type: "post",
         cache: false,
         success: function (result) {
-            $("#likeSpan").html(result); 
+
+            a.html('<i class="fa fa-heart fa-lg text-danger"></i > <span>' + result + '</span>').removeClass("like-2").addClass("unlike-2");
+
         }
     })
+
 });
 
 
-$('.unlike').on('click', function (event) {
+$(document).on("click", '.unlike-2', function () {
     event.preventDefault();
+    debugger;
     const data = $(this).attr('data-barId');
     const data2 = $(this).attr('data-barReviewID');
-    const data3 = $(this).attr('data-name');
+    debugger;
+    const url2 = "/Reviews/BarReviews/RemoveLikeBarReview?barReviewID=" + data2 + "&barId=" + data;
+    const a = $(this);
+    debugger;
+    $.ajax({
+        url: url2,
+        data: { 'barId': data, 'barReviewID': data2 },
+        type: "post",
+        cache: false,
+        success: function (result) {
 
-    //console.log(($("#countID").attr("data-count")));
-    //const new2 = $('#countID').attr('data-count').val;
-    //console.log(new2);
+            a.html('<i class="fa fa-heart fa-lg text-danger"></i > <span>' + result + '</span>').removeClass("unlike-2").addClass("like-2");
+
+        }
+    })
+
+});
 
     //const data4 = $('.data-count').attr('data-count').val;
 
