@@ -31,7 +31,7 @@
                     @foreach (var ingredient in Model.CocktailIngredients)
                     {
                         <h5>
-                            @ingredient.Ingredient.Name
+                            @ingredient
                         </h5>
                     }
                 </td>
@@ -108,9 +108,9 @@ else
                             <span class="ribbon_icon"><i class="fa fa-quote-left"></i></span>
                             <blockquote class="inner">
                                 <p>
-                                    "@item.Value.Item1"
+                                    "@item.Description"
                                     <br>
-                                    <font style="color:gold">Grade: @item.Value.Item2</font>
+                                    <font style="color:gold">Grade: @item.Rating</font>
 
                                 </p>
                                 <span class="author">- The Coca-Cola Company, Cocktail Magician™, 2019 -</span>
@@ -118,9 +118,9 @@ else
                         </a>
                     </div>
                     <div class="meta_box">
-                        <span class="meta_date">@item.Value.Item3</span>
+                        <span class="meta_date">@item.Name</span>
                         @*<span class="meta_comments"><a href="#"><em>21</em> <span>Comments</span></a></span>*@
-                        <span class="meta_author"><a href="#">Publisher: @item.Key</a></span>
+                        <span class="meta_author"><a href="#">Publisher: @item.UserName</a></span>
                         @*@if (!review.LikedByUsers.Contains(@User.FindFirstValue(ClaimTypes.NameIdentifier)))
                                 {
                                     <form method="post" asp-area="Reviews" asp-controller="BarReviews" asp-action="LikeBarReview"

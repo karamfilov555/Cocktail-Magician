@@ -14,6 +14,7 @@ namespace CM.Web.Areas.Cocktails.Models
         public int TotalPages { get; set; }
 
         public string SortOrder { get; set; }
+        public bool MoreToLoad { get; set; }
 
         public IList<CocktailViewModel> FiveCocktailsList { get; set; }
 

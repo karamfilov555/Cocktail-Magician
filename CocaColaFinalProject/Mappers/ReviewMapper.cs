@@ -1,6 +1,6 @@
 ﻿using CM.DTOs;
 using CM.Web.Areas.Reviews.Models;
-using CM.Web.Models;
+using CM.Web.Areas.Cocktails.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -37,5 +37,20 @@ namespace CM.Web.Mappers
             newReview.UserID = reviewVM.UserID;
             return newReview;
         }
+
+        public static CocktailReviewViewModel MapToViewModel(this CocktailReviewDTO reviewDTO)
+        {
+            var reviewVm = new CocktailReviewViewModel();
+            reviewVm.BarId = reviewDTO.BarId;
+            reviewVm.Description = reviewDTO.Description;
+            reviewVm.LikeCount = reviewDTO.LikeCount;
+            reviewVm.LikedByUsers = reviewDTO.LikedByUsers;
+            reviewVm.Rating = reviewDTO.Rating;
+            reviewVm.UserName = reviewDTO.UserName;
+            reviewVm.UserId = reviewDTO.UserID;
+            return reviewVm;
+        }
+
+
     }
 }

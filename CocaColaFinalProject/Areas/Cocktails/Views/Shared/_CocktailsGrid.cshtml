@@ -159,16 +159,16 @@
 
             <button style="background-color:cornsilk" class="btn btn-default btn-sm disabled"><h5 style="margin-bottom:-5px; color:gold">@Model.CurrPage</h5></button>*@
 
-        @if (Model.NextPage == null)
+        @if (Model.MoreToLoad == false)
         {
-            <a class="btn btn-default btn-sm disabled"><h5 style="margin-bottom:-5px">Load more cocktails<i class="fa fa-arrow-circle-o-right"></i></h5></a>
+            <a class="btn btn-default btn-sm disabled"><h5 style="margin-bottom:-5px">Load more cocktails <i class="fa fa-arrow-circle-o-down"></i></h5></a>
         }
         else
         {
             @*<a asp-area="Cocktails" asp-controller="Cocktails" asp-action="ListCocktails" class="btn btn-default btn-sm " asp-route-orderByModel="@Model.SortOrder" asp-route-currPage="@Model.NextPage"><h5 style="margin-bottom:-5px">@Model.NextPage</h5></a>*@
 
             @*string sortOrder, int? currPage, string orderByModel*@
-            <a id="loadMore" asp-area="Cocktails" asp-controller="Cocktails" asp-action="LoadMoreCocktails" class="btn btn-default btn-sm" asp-route-orderByModel="@Model.SortOrder" asp-route-currPage="@Model.NextPage" data-sortOrder="@Model.SortOrder" data-currPage="@Model.CurrPage" data-orderByModel="@Model.SortOrder"><h5 style="margin-bottom:-5px">Load more cocktails <i class="fa fa-beer"></i></h5></a>
+            <a id="loadMore" asp-area="Cocktails" asp-controller="Cocktails" asp-action="LoadMoreCocktails" class="btn btn-default btn-sm" asp-route-orderByModel="@Model.SortOrder" asp-route-currPage="@Model.NextPage" data-sortOrder="@Model.SortOrder" data-currPage="@Model.CurrPage" data-orderByModel="@Model.SortOrder"><h5 style="margin-bottom:-5px; color:gold">Load more cocktails <i class="fa fa-plus-circle"></i></h5></a>
         }
     }
 </center>

@@ -17,6 +17,9 @@ namespace CM.Web.Mappers
             cocktailVm.DateDeleted = cocktailDto.DateDeleted;
             cocktailVm.CocktailIngredients = cocktailDto.CocktailIngredients;
             cocktailVm.BarCocktails = cocktailDto.BarCocktails;
+            cocktailVm.LikeCount = cocktailDto.LikeCount;
+            cocktailVm.LikeByUsers = cocktailDto.LikedByUsers;
+            //Recepie .? mai nqma smisul ako samo moje da se dl
             return cocktailVm; 
 
         }
@@ -56,7 +59,8 @@ namespace CM.Web.Mappers
             cocktailVm.Rating = cocktailDto.Rating;
             cocktailVm.Description = cocktailDto.Description;
             cocktailVm.Image = cocktailDto.Image;
-            cocktailVm.CocktailIngredients = cocktailDto.CocktailIngredients;
+            //cocktailVm.CocktailIngredients = cocktailDto.CocktailIngredients;
+
             cocktailVm.LikeCount = cocktailDto.LikeCount;
             cocktailVm.LikedByUsers = cocktailDto.LikedByUsers;
             return cocktailVm;

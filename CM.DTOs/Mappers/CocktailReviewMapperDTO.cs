@@ -21,14 +21,5 @@ namespace CM.DTOs.Mappers
             newReviewDTO.LikedByUsers = review.CocktailReviewLikes.Select(b => b.AppUserID).ToList();
             return newReviewDTO;
         }
-
-        //public static CocktailReview MapDTOToReview(this CocktailReviewDTO reviewDTO)
-        //{
-        //    var newReview = new BarReview();
-        //    newReview.BarId = reviewDTO.BarId;
-        //    newReview.Description = reviewDTO.Description;
-        //    newReview.Rating = reviewDTO.Rating;
-        //    return newReview;
-        //}
     }
 }

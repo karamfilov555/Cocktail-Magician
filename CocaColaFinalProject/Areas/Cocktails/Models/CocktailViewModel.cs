@@ -37,5 +37,7 @@ namespace CM.Web.Areas.Cocktails.Models
         public List<BarCocktail> BarCocktails { get; set; } = new List<BarCocktail>();
         public DateTime? DateDeleted { get; set; }
         public string Recepie { get; set; }
+        public int LikeCount { get; set; }
+        public List<string> LikeByUsers { get; set; }
     }
 }

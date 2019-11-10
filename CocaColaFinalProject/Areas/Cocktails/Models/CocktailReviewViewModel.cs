@@ -16,6 +16,9 @@ namespace CM.Web.Areas.Cocktails.Models
         [Display(Name = "Cocktail's Name")]
         [Required, RegularExpression("[A-Za-z ]+", ErrorMessage = "Cocktail's name should only contain latin letters!")]
         public string Name { get; set; }
+        public string BarId { get; set; }
+        public string UserId { get; set; }
+        public string UserName { get; set; }
         [Url]
         [Display(Name = "Image")]
 
@@ -27,10 +30,10 @@ namespace CM.Web.Areas.Cocktails.Models
 
         public int LikeCount { get; set; }
         public List<string> LikedByUsers { get; set; }
-        public ICollection<CocktailIngredient> CocktailIngredients { get; set; } 
-            = new List<CocktailIngredient>();
+        public List<CocktailIngredientViewModel> CocktailIngredients { get; set; } 
+            = new List<CocktailIngredientViewModel>();
         public bool CanReview { get; set; }
-        public IDictionary<string, Tuple<string, decimal, DateTime >> Reviews { get; set; }
-            = new Dictionary<string, Tuple<string, decimal, DateTime>>();
+        public List<CocktailReviewViewModel> Reviews { get; set; }
+            = new List<CocktailReviewViewModel>();
     }
 }

@@ -128,11 +128,7 @@ namespace CM.Web.Areas.Cocktails.Controllers
 
             var fiveSortedCocktailsDtos = await _cocktailServices
                                                     .GetFiveSortedCocktailsAsync(sortOrder, (int)currPage);
-            if (fiveSortedCocktailsDtos.Count == 0)
-            {
-                _toast.AddInfoToastMessage("There are no more cocktails!");
-                //here i have to stop the request... return smthg..
-            }
+           
             var totalPages = await _cocktailServices.GetPageCountForCocktials(5);
 
             var fiveSortedCocktailsVm = fiveSortedCocktailsDtos
@@ -143,9 +139,15 @@ namespace CM.Web.Areas.Cocktails.Controllers
                 FiveCocktailsList = fiveSortedCocktailsVm,
                 CurrPage = (int)currPage,
                 TotalPages = totalPages,
-                SortOrder = sortOrder
+                SortOrder = sortOrder,
+                MoreToLoad = true
             };
-
+            if (fiveSortedCocktailsDtos.Count == 0)
+            {
+                _toast.AddInfoToastMessage("There are no more cocktails!");
+                litingViewModel.MoreToLoad = false;
+                //here i have to stop the request... return smthg..
+            }
             if (totalPages > currPage)
             {
                 litingViewModel.NextPage = currPage + 1;
@@ -155,6 +157,7 @@ namespace CM.Web.Areas.Cocktails.Controllers
             {
                 litingViewModel.PrevPage = currPage - 1;
             }
+            // To add timeSpan and animation ! 
             if (currPage == 1)
             {
                 return PartialView("_CocktailsGrid", litingViewModel);
@@ -172,10 +175,12 @@ namespace CM.Web.Areas.Cocktails.Controllers
             string userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
 
             var canUserReview = await _reviewServices.CheckIfUserCanReview(userId, cocktail);
-            var cocktailReviews = await _reviewServices.GetReviewsDetailsForCocktial(cocktail.Id);
+            var cocktailReviews = await _reviewServices.GetReviewsForCocktial(cocktail.Id);
+
+            var cocktailReviewsVm = cocktailReviews.Select(r =>r.MapToViewModel()).ToList();
 
             reviewVm.CanReview = !canUserReview;
-            reviewVm.Reviews = cocktailReviews;
+            reviewVm.Reviews = cocktailReviewsVm;
 
             return View(reviewVm);
         }
