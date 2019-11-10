@@ -162,6 +162,7 @@ namespace CM.Web.Areas.Cocktails.Controllers
             {
                 return PartialView("_CocktailsGrid", litingViewModel);
             }
+            
             return PartialView("_LoadMorePartial", litingViewModel);
             //return View(allCocktailsVms.ToList());
         }

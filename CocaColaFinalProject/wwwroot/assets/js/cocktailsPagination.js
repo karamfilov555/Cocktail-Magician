@@ -1,5 +1,4 @@
 ﻿
-
 $('#loadMore').on('click', function (event) {
     event.preventDefault();
     console.log($('#loadMore'))
@@ -12,7 +11,13 @@ $('#loadMore').on('click', function (event) {
 
     $(this).attr('data-currPage',currentPage)
 
-    console.log($('#pageCurrent'))
+    var animation = $('<img id="dynamic">'); 
+    animation.attr('src', '/assets/images/content/circle.gif');
+    animation.attr('alt', 'gif image');
+    animation.attr('width', '100');
+    animation.attr('height', '100');
+    animation.css('text-align', 'center');
+    //console.log($('animation'))
     //console.log($('#pageCurrent')
     $.ajax({
         url: "https://localhost:44344/Cocktails/Cocktails/ListCocktails",
@@ -20,8 +25,11 @@ $('#loadMore').on('click', function (event) {
         type: "get",
         cache: false,
         success: function (result) {
-            console.log(result)
+            animation.appendTo($('#tbody'));
+            setTimeout(function () {
+                animation.hide();
             $(result).appendTo($('#tbody'));
+            }, 1000);
         }
     })
 });
