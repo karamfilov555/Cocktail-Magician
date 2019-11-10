@@ -1,0 +1,85 @@
+﻿@model CocktailsListingViewModel
+
+@foreach (var cocktail in Model.FiveCocktailsList)
+{
+    <tr>
+        <td>
+            <a asp-area="Cocktails" asp-controller="Cocktails" asp-action="Details" asp-route-id="@cocktail.Id">
+                <img src="@cocktail.Image" height="250" width="250" style="border-radius:25px; padding-top:5px; padding-bottom:5px">
+            </a>
+        </td>
+        <td><h5 style="padding-left:30px;"> @cocktail.Name</h5></td>
+
+        <td>
+            @if (cocktail.Rating == 0)
+            {
+                <i>Not rated yet!</i>
+            }
+            else
+            {
+                if (cocktail.Rating * 10 % 10 == 0)
+                {
+                    for (int i = 0; i < cocktail.Rating - 1; i++)
+                    {
+                        <font color="gold">
+                            <i class="fa fa-star" style="color:gold"></i>
+                        </font>
+                    }
+                    <font color="gold">
+                        <i class="fa fa-star" style="color:gold"><font size="2"> @cocktail.Rating</font></i>
+                    </font>
+                }
+                else
+                {
+
+                    for (int i = 0; i < cocktail.Rating - 1; i++)
+                    {
+                        <font color="gold">
+                            <i class="fa fa-star" style="color:gold"></i>
+                        </font>
+                    }
+                    <font color="gold">
+                        <i class="fa fa-star-half" style="color:gold"> <font size="2"> @cocktail.Rating</font></i>
+                    </font>
+                    @*<span class="quntity">
+                        @Html.DisplayFor(modelItem => item.Rating)</span>*@
+                }
+            }
+
+        </td>
+        <td>
+            @foreach (var ingredient in cocktail.CocktailIngredients)
+            {
+                <h5 style="padding-left:0px">
+                    @ingredient.Ingredient.Name
+                </h5>
+            }
+        </td>
+        <td style="padding-top:50px">
+            @if (this.User.IsInRole("Member") || this.User.IsInRole("Manager") || this.User.IsInRole("Administrator"))
+            {
+                <p>
+                    <a class="btn btn-default btn-sm" asp-area="Cocktails" asp-controller="Cocktails" asp-action="RateCocktail" asp-route-id="@cocktail.Id"><font style="color:gold">Rate Cocktail</font></a>
+                </p>
+
+            }
+            @if (this.User.IsInRole("Administrator") || this.User.IsInRole("Manager"))
+            {
+                <p>
+                    <a class="btn btn-default btn-sm" asp-area="Cocktails" asp-controller="Cocktails" asp-action="DownloadRecepie" asp-route-id="@cocktail.Id"><font style="color:gold">Downoload Recepie</font></a>
+                </p>
+                <p>
+                    <a class="btn btn-default btn-sm" asp-area="Cocktails" asp-controller="Cocktails" asp-action="Edit" asp-route-id="@cocktail.Id"><font style="color:gold">Edit Cocktail</font></a>
+                </p>
+                <p>
+                    <a class="btn btn-default btn-sm" asp-area="Cocktails" asp-controller="Cocktails" asp-action="Delete" asp-route-id="@cocktail.Id"><font style="color:gold">Delete Cocktail</font></a>
+                </p>
+            }
+            <p>
+                <a class="btn btn-default btn-sm" asp-area="Cocktails" asp-controller="Cocktails" asp-action="Details" asp-route-id="@cocktail.Id"><font style="color:gold">Cocktail Details</font></a>
+            </p>
+        </td>
+    </tr>
+    <span hidden id="pageCurrent" value="@Model.CurrPage"></span>
+}
+

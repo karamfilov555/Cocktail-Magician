@@ -98,7 +98,7 @@ namespace CM.Web.Areas.Cocktails.Controllers
                 var cocktailDto = cocktailVm.MapToCocktailDto();
                 await _cocktailServices.AddCocktail(cocktailDto);
 
-             
+
 
                 _toast.AddSuccessToastMessage($"You successfully added cocktail {cocktailDto.Name}!");
                 return RedirectToAction("ListCocktails");
@@ -123,12 +123,16 @@ namespace CM.Web.Areas.Cocktails.Controllers
             {
                 sortOrder = orderByModel;
             }
-
+            //there is some logic for the traditional page-numbers pagination (DONT remove it for now)
             currPage = currPage ?? 1;
 
             var fiveSortedCocktailsDtos = await _cocktailServices
                                                     .GetFiveSortedCocktailsAsync(sortOrder, (int)currPage);
-
+            if (fiveSortedCocktailsDtos.Count == 0)
+            {
+                _toast.AddInfoToastMessage("There are no more cocktails!");
+                //here i have to stop the request... return smthg..
+            }
             var totalPages = await _cocktailServices.GetPageCountForCocktials(5);
 
             var fiveSortedCocktailsVm = fiveSortedCocktailsDtos
@@ -151,11 +155,14 @@ namespace CM.Web.Areas.Cocktails.Controllers
             {
                 litingViewModel.PrevPage = currPage - 1;
             }
-
-            return PartialView("_CocktailsGrid", litingViewModel);
+            if (currPage == 1)
+            {
+                return PartialView("_CocktailsGrid", litingViewModel);
+            }
+            return PartialView("_LoadMorePartial", litingViewModel);
             //return View(allCocktailsVms.ToList());
         }
-
+       
         [HttpGet]
         [Authorize]
         public async Task<IActionResult> RateCocktail(string Id)

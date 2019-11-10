@@ -32,140 +32,146 @@
 
 
 </head>
-
-<table class="table">
-    <thead>
-        <tr>
-            <th><h5>Cocktail's Picture</h5></th>
-            <th>
-                <h5>
-                    <a asp-action="ListCocktails" asp-route-sortOrder="@ViewData["NameSortCriteria"]">&uarr;&darr; Name</a>
-                </h5>
-            </th>
-            <th>
-                <h5 style="padding-right:60px">
-                    <a asp-action="ListCocktails" asp-route-sortOrder="@ViewData["RatingSortCriteria"]">&uarr;&darr; Rating</a>
-
-                </h5>
-            </th>
-            <th><h5>Ingredients</h5></th>
-            <th><h5>                      </h5></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var cocktail in Model.FiveCocktailsList)
-        {
+<div id="cocktailsTable">
+    <table class="table">
+        <thead>
             <tr>
-                <td>
-                    <a asp-area="Cocktails" asp-controller="Cocktails" asp-action="Details" asp-route-id="@cocktail.Id">
-                        <img src="@cocktail.Image" height="250" width="250" style="border-radius:25px; padding-top:5px; padding-bottom:5px">
-                    </a>
-                </td>
-                <td><h5 style="padding-left:30px;"> @cocktail.Name</h5></td>
+                <th><h5>Cocktail's Picture</h5></th>
+                <th>
+                    <h5>
+                        <a asp-action="ListCocktails" asp-route-sortOrder="@ViewData["NameSortCriteria"]">&uarr;&darr; Name</a>
+                    </h5>
+                </th>
+                <th>
+                    <h5 style="padding-right:60px">
+                        <a asp-action="ListCocktails" asp-route-sortOrder="@ViewData["RatingSortCriteria"]">&uarr;&darr; Rating</a>
 
-                <td>
-                    @if (cocktail.Rating == 0)
-                    {
-                        <i>Not rated yet!</i>
-                    }
-                    else
-                    {
-                        if (cocktail.Rating * 10 % 10 == 0)
+                    </h5>
+                </th>
+                <th><h5>Ingredients</h5></th>
+                <th><h5>                      </h5></th>
+            </tr>
+        </thead>
+
+        <tbody id="tbody">
+            @foreach (var cocktail in Model.FiveCocktailsList)
+            {
+                <tr>
+                    <td>
+                        <a asp-area="Cocktails" asp-controller="Cocktails" asp-action="Details" asp-route-id="@cocktail.Id">
+                            <img src="@cocktail.Image" height="250" width="250" style="border-radius:25px; padding-top:5px; padding-bottom:5px">
+                        </a>
+                    </td>
+                    <td><h5 style="padding-left:30px;"> @cocktail.Name</h5></td>
+
+                    <td>
+                        @if (cocktail.Rating == 0)
                         {
-                            for (int i = 0; i < cocktail.Rating - 1; i++)
-                            {
-                                <font color="gold">
-                                    <i class="fa fa-star" style="color:gold"></i>
-                                </font>
-                            }
-                            <font color="gold">
-                                <i class="fa fa-star" style="color:gold"><font size="2"> @cocktail.Rating</font></i>
-                            </font>
+                            <i>Not rated yet!</i>
                         }
                         else
                         {
-
-                            for (int i = 0; i < cocktail.Rating - 1; i++)
+                            if (cocktail.Rating * 10 % 10 == 0)
                             {
+                                for (int i = 0; i < cocktail.Rating - 1; i++)
+                                {
+                                    <font color="gold">
+                                        <i class="fa fa-star" style="color:gold"></i>
+                                    </font>
+                                }
                                 <font color="gold">
-                                    <i class="fa fa-star" style="color:gold"></i>
+                                    <i class="fa fa-star" style="color:gold"><font size="2"> @cocktail.Rating</font></i>
                                 </font>
                             }
-                            <font color="gold">
-                                <i class="fa fa-star-half" style="color:gold"> <font size="2"> @cocktail.Rating</font></i>
-                            </font>
-                            @*<span class="quntity">
-                                @Html.DisplayFor(modelItem => item.Rating)</span>*@
+                            else
+                            {
+
+                                for (int i = 0; i < cocktail.Rating - 1; i++)
+                                {
+                                    <font color="gold">
+                                        <i class="fa fa-star" style="color:gold"></i>
+                                    </font>
+                                }
+                                <font color="gold">
+                                    <i class="fa fa-star-half" style="color:gold"> <font size="2"> @cocktail.Rating</font></i>
+                                </font>
+                                @*<span class="quntity">
+                                    @Html.DisplayFor(modelItem => item.Rating)</span>*@
+                            }
                         }
-                    }
 
-                </td>
-                <td>
-                    @foreach (var ingredient in cocktail.CocktailIngredients)
-                    {
-                        <h5 style="padding-left:0px">
-                            @ingredient.Ingredient.Name
-                        </h5>
-                    }
-                </td>
-                <td style="padding-top:50px">
-                    @if (this.User.IsInRole("Member") || this.User.IsInRole("Manager") || this.User.IsInRole("Administrator"))
-                    {
-                        <p>
-                            <a class="btn btn-default btn-sm" asp-area="Cocktails" asp-controller="Cocktails" asp-action="RateCocktail" asp-route-id="@cocktail.Id"><font style="color:gold">Rate Cocktail</font></a>
-                        </p>
+                    </td>
+                    <td>
+                        @foreach (var ingredient in cocktail.CocktailIngredients)
+                        {
+                            <h5 style="padding-left:0px">
+                                @ingredient.Ingredient.Name
+                            </h5>
+                        }
+                    </td>
+                    <td style="padding-top:50px">
+                        @if (this.User.IsInRole("Member") || this.User.IsInRole("Manager") || this.User.IsInRole("Administrator"))
+                        {
+                            <p>
+                                <a class="btn btn-default btn-sm" asp-area="Cocktails" asp-controller="Cocktails" asp-action="RateCocktail" asp-route-id="@cocktail.Id"><font style="color:gold">Rate Cocktail</font></a>
+                            </p>
 
-                    }
-                    @if (this.User.IsInRole("Administrator") || this.User.IsInRole("Manager"))
-                    {
+                        }
+                        @if (this.User.IsInRole("Administrator") || this.User.IsInRole("Manager"))
+                        {
+                            <p>
+                                <a class="btn btn-default btn-sm" asp-area="Cocktails" asp-controller="Cocktails" asp-action="DownloadRecepie" asp-route-id="@cocktail.Id"><font style="color:gold">Downoload Recepie</font></a>
+                            </p>
+                            <p>
+                                <a class="btn btn-default btn-sm" asp-area="Cocktails" asp-controller="Cocktails" asp-action="Edit" asp-route-id="@cocktail.Id"><font style="color:gold">Edit Cocktail</font></a>
+                            </p>
+                            <p>
+                                <a class="btn btn-default btn-sm" asp-area="Cocktails" asp-controller="Cocktails" asp-action="Delete" asp-route-id="@cocktail.Id"><font style="color:gold">Delete Cocktail</font></a>
+                            </p>
+                        }
                         <p>
-                            <a class="btn btn-default btn-sm" asp-area="Cocktails" asp-controller="Cocktails" asp-action="DownloadRecepie" asp-route-id="@cocktail.Id"><font style="color:gold">Downoload Recepie</font></a>
+                            <a class="btn btn-default btn-sm" asp-area="Cocktails" asp-controller="Cocktails" asp-action="Details" asp-route-id="@cocktail.Id"><font style="color:gold">Cocktail Details</font></a>
                         </p>
-                        <p>
-                            <a class="btn btn-default btn-sm" asp-area="Cocktails" asp-controller="Cocktails" asp-action="Edit" asp-route-id="@cocktail.Id"><font style="color:gold">Edit Cocktail</font></a>
-                        </p>
-                        <p>
-                            <a class="btn btn-default btn-sm" asp-area="Cocktails" asp-controller="Cocktails" asp-action="Delete" asp-route-id="@cocktail.Id"><font style="color:gold">Delete Cocktail</font></a>
-                        </p>
-                    }
-                    <p>
-                        <a class="btn btn-default btn-sm" asp-area="Cocktails" asp-controller="Cocktails" asp-action="Details" asp-route-id="@cocktail.Id"><font style="color:gold">Cocktail Details</font></a>
-                    </p>
-                </td>
-            </tr>
-        }
-    </tbody>
+                    </td>
+                </tr>
+            }
+        </tbody>
 </table>
+</div>
 <center style="padding-bottom:20px">
     @if (Model.FiveCocktailsList.Count == 0)
     {
         <div class="card-body">
-            <h3>No Cocktails in the app yet!</h3>
+            <h3>This is all the Cocktails in the app yet!</h3>
         </div>
     }
     else
     {
-        @if (Model.PrevPage == null)
-        {
-            <a class="btn btn-default btn-sm disabled"><h5 style="margin-bottom:-5px"> <i class="fa fa-arrow-circle-o-left"></i> Previous Page</h5></a>
-        }
-        else
-        {
-            <a asp-area="Cocktails" asp-controller="Cocktails" asp-action="ListCocktails" class="btn btn-default btn-sm" asp-route-orderByModel="@Model.SortOrder" asp-route-currPage="@Model.PrevPage"><h5 style="margin-bottom:-5px"> <i class="fa fa-arrow-circle-o-left"></i> Previous Page</h5></a>
-            <a asp-area="Cocktails" asp-controller="Cocktails" asp-action="ListCocktails" class="btn btn-default btn-sm" asp-route-orderByModel="@Model.SortOrder" asp-route-currPage="@Model.PrevPage"><h5 style="margin-bottom:-5px">@Model.PrevPage</h5></a>
-        }
+        @*@if (Model.PrevPage == null)
+            {
+                <a class="btn btn-default btn-sm disabled"><h5 style="margin-bottom:-5px"> <i class="fa fa-arrow-circle-o-left"></i> Previous Page</h5></a>
+            }
+            else
+            {
+                <a asp-area="Cocktails" asp-controller="Cocktails" asp-action="ListCocktails" class="btn btn-default btn-sm" asp-route-orderByModel="@Model.SortOrder" asp-route-currPage="@Model.PrevPage"><h5 style="margin-bottom:-5px"> <i class="fa fa-arrow-circle-o-left"></i> Previous Page</h5></a>
+                <a asp-area="Cocktails" asp-controller="Cocktails" asp-action="ListCocktails" class="btn btn-default btn-sm" asp-route-orderByModel="@Model.SortOrder" asp-route-currPage="@Model.PrevPage"><h5 style="margin-bottom:-5px">@Model.PrevPage</h5></a>
+            }
 
-        <button style="background-color:cornsilk" class="btn btn-default btn-sm disabled"><h5 style="margin-bottom:-5px; color:gold">@Model.CurrPage</h5></button>
+            <button style="background-color:cornsilk" class="btn btn-default btn-sm disabled"><h5 style="margin-bottom:-5px; color:gold">@Model.CurrPage</h5></button>*@
 
         @if (Model.NextPage == null)
         {
-            <a class="btn btn-default btn-sm disabled"><h5 style="margin-bottom:-5px">Next Page <i class="fa fa-arrow-circle-o-right"></i></h5></a>
+            <a class="btn btn-default btn-sm disabled"><h5 style="margin-bottom:-5px">Load more cocktails<i class="fa fa-arrow-circle-o-right"></i></h5></a>
         }
         else
         {
-            <a asp-area="Cocktails" asp-controller="Cocktails" asp-action="ListCocktails" class="btn btn-default btn-sm " asp-route-orderByModel="@Model.SortOrder" asp-route-currPage="@Model.NextPage"><h5 style="margin-bottom:-5px">@Model.NextPage</h5></a>
+            @*<a asp-area="Cocktails" asp-controller="Cocktails" asp-action="ListCocktails" class="btn btn-default btn-sm " asp-route-orderByModel="@Model.SortOrder" asp-route-currPage="@Model.NextPage"><h5 style="margin-bottom:-5px">@Model.NextPage</h5></a>*@
 
-            <a asp-area="Cocktails" asp-controller="Cocktails" asp-action="ListCocktails" class="btn btn-default btn-sm" asp-route-orderByModel="@Model.SortOrder" asp-route-currPage="@Model.NextPage"><h5 style="margin-bottom:-5px">Next Page  <i class="fa fa-arrow-circle-o-right"></i></h5></a>
+            @*string sortOrder, int? currPage, string orderByModel*@
+            <a id="loadMore" asp-area="Cocktails" asp-controller="Cocktails" asp-action="LoadMoreCocktails" class="btn btn-default btn-sm" asp-route-orderByModel="@Model.SortOrder" asp-route-currPage="@Model.NextPage" data-sortOrder="@Model.SortOrder" data-currPage="@Model.CurrPage" data-orderByModel="@Model.SortOrder"><h5 style="margin-bottom:-5px">Load more cocktails <i class="fa fa-beer"></i></h5></a>
         }
     }
 </center>
+<script>
+
+</script>
