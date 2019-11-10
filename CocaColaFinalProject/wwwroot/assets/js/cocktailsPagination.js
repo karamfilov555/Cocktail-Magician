@@ -12,10 +12,11 @@ $('#loadMore').on('click', function (event) {
     $(this).attr('data-currPage',currentPage)
 
     var animation = $('<img id="dynamic">'); 
-    animation.attr('src', '/assets/images/content/circle.gif');
+    animation.attr('src', '/assets/images/content/wizard_doom.gif');
     animation.attr('alt', 'gif image');
-    animation.attr('width', '100');
-    animation.attr('height', '100');
+    animation.attr('width', '200');
+    animation.attr('height', '200');
+    //animation.attr('padding-bottom', '150px');
     animation.css('text-align', 'center');
     //console.log($('animation'))
     //console.log($('#pageCurrent')
@@ -25,9 +26,12 @@ $('#loadMore').on('click', function (event) {
         type: "get",
         cache: false,
         success: function (result) {
-            animation.appendTo($('#tbody'));
+            animation.insertBefore($('#loadMore'));
+            $('#loadMore').attr('class','btn btn-default btn-sm disabled')
+            //animation.appendTo($('#tbody'));
             setTimeout(function () {
-                animation.hide();
+                animation.remove();
+                $('#loadMore').attr('class', 'btn btn-default btn-sm')
             $(result).appendTo($('#tbody'));
             }, 1000);
         }
