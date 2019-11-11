@@ -22,6 +22,7 @@ namespace CM.Data
         //public DbSet<CocktailIngredient> CocktailIngredients { get; set; }
         public DbSet<CocktailComponent> CocktailComponent { get; set; }
         public DbSet<Ingredient> Ingredients { get; set; }
+        public DbSet<Notification> Notifications { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

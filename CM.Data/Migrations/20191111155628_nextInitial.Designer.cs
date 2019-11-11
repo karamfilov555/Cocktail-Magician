@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CM.Data.Migrations
 {
     [DbContext(typeof(CMContext))]
-    [Migration("20191111101541_dropCocktailIngr")]
-    partial class dropCocktailIngr
+    [Migration("20191111155628_nextInitial")]
+    partial class nextInitial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -320,6 +320,28 @@ namespace CM.Data.Migrations
                     b.ToTable("Ingredients");
                 });
 
+            modelBuilder.Entity("CM.Models.Notification", b =>
+                {
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Description");
+
+                    b.Property<DateTime>("EventDate");
+
+                    b.Property<bool>("IsSeen");
+
+                    b.Property<string>("UserId");
+
+                    b.Property<string>("Username");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Notifications");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.Property<int>("Id")
@@ -498,6 +520,13 @@ namespace CM.Data.Migrations
                     b.HasOne("CM.Models.CocktailReview", "CocktailReview")
                         .WithMany("CocktailReviewLikes")
                         .HasForeignKey("CocktailReviewID");
+                });
+
+            modelBuilder.Entity("CM.Models.Notification", b =>
+                {
+                    b.HasOne("CM.Models.AppUser", "User")
+                        .WithMany("Notifications")
+                        .HasForeignKey("UserId");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

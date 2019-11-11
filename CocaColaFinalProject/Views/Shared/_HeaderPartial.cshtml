@@ -5,14 +5,29 @@
 
 @if (SignInManager.IsSignedIn(User))
 {
-    @*<a href="tel:66-87-65-43-21" class="phoneIcon" style="display:none">+66 87 65 43 21</a>
-    <a href="http://goo.gl/maps/IUzKJ" class="locationIcon" target="_blank" style="display:none;">http://goo.gl/maps/IUzKJ</a>*@
+    if (User.IsInRole("Administrator"))
+    {
+        <ul class="notifications">
+            <div class="buttonNot">
+                <a asp-area="Notifications" asp-controller="Notifications" asp-action="Index">
+                    <i class="fa fa-bell fa-lg" style="color:gold;"></i>
+                    <span class="button__badge"><font style="padding-right:1px">5</font></span>
+                </a>
+            </div>
+        </ul>
+    }
+
     <ul class="smallSocials">
-        <li class="dropdown active" >
-            <a  class="btn twitter" asp-area="Identity" asp-page="/Account/Manage/Index"><font size="5">Hello @User.Identity.Name!</font></a>
+        <li class="dropdown active">
+            <a class="btn twitter" asp-area="Identity" asp-page="/Account/Manage/Index"><font size="5">Hello @User.Identity.Name!</font></a>
             <ul class="dropdown-menu" style="background-color:brown">
                 <li style="background-color:brown">
-                    <form  class="form-inline" asp-area="Identity" asp-page="/Account/Manage/Index">
+                    <form class="form-inline" asp-area="Identity" asp-page="/Account/Manage/Index">
+                        <button type="submit" class="progress-bar" style="border:0px"><font size="5">Notifications</font></button>
+                    </form>
+                </li>
+                <li style="background-color:brown">
+                    <form class="form-inline" asp-area="Identity" asp-page="/Account/Manage/Index">
                         <button type="submit" class="progress-bar" style="border:0px"><font size="5">Settings</font></button>
                     </form>
                 </li>
@@ -27,22 +42,22 @@
 }
 else
 {
-<ul class="smallSocials">
-    <li class="dropdown">
-        <a class="btn " asp-area="Identity" asp-page="/Account/Manage/Index"><font size="5">Account</font></a>
-        <ul class="dropdown-menu" style="background-color:brown">
-            <li style="background-color:brown">
+    <ul class="smallSocials">
+        <li class="dropdown">
+            <a class="btn " asp-area="Identity" asp-page="/Account/Manage/Index"><font size="5">Account</font></a>
+            <ul class="dropdown-menu" style="background-color:brown">
+                <li style="background-color:brown">
 
-                <form method="get" class="form-inline" action="/Identity/Account/Login">
-                    <button type="submit" class="progress-bar" style="border:0px"><font size="5">Login</font></button>
-                </form>
-            </li>
-            <li style="background-color:brown">
-                <form method="get" class="form-inline" action="/Identity/Account/Register">
-                    <button type="submit" class="progress-bar" style="border:0px"><font size="5">Register</font></button>
-                </form>
-            </li>
-        </ul>
+                    <form method="get" class="form-inline" action="/Identity/Account/Login">
+                        <button type="submit" class="progress-bar" style="border:0px"><font size="5">Login</font></button>
+                    </form>
+                </li>
+                <li style="background-color:brown">
+                    <form method="get" class="form-inline" action="/Identity/Account/Register">
+                        <button type="submit" class="progress-bar" style="border:0px"><font size="5">Register</font></button>
+                    </form>
+                </li>
+            </ul>
         </li>
-</ul>
+    </ul>
 }

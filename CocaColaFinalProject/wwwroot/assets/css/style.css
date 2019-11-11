@@ -258,7 +258,7 @@ body-search {
 
     .container-search .search-search {
         position: absolute;
-        margin:auto;
+        margin: auto;
         /*margin-left:-400px;*/
         top: 0;
         right: 0;
@@ -824,7 +824,7 @@ body-search {
 
     .btn:focus {
         outline: none;
-        color:gold;
+        color: gold;
     }
 
     .btn:active,
@@ -1215,6 +1215,14 @@ hr.line1 {
         z-index: 3;
     }
 
+    .navbar-header .notifications {
+        position: absolute;
+        padding-right: 800px;
+        top: 8px;
+        right: 0;
+        z-index: 3;
+    }
+
     .navbar-header .navbar-brand {
         position: relative;
         float: none;
@@ -1498,7 +1506,7 @@ li.dropdown:hover .dropdown-menu {
         display: block;
         float: left;
         margin-left: 42px;
-        background:  url("../images/MagicStickTransp.png") no-repeat 0 0;
+        background: url("../images/MagicStickTransp.png") no-repeat 0 0;
         /*-webkit-transition: background-position 0.2s ease;
         transition: background-position 0.2s ease;*/
     }
@@ -1517,10 +1525,86 @@ li.dropdown:hover .dropdown-menu {
 
         .smallSocials li:hover {
             /*background-position: 0 -30px;*/
-            color:gold;
-            font-display:block;
+            color: gold;
+            font-display: block;
+        }
+/*
+    NOTIFICATIONs custom
+*/
+.notifications {
+    display: inline-block;
+    margin: 0 0 0 -22px;
+    padding: 0;
+}
+
+    .notifications:before,
+    .notifications:after {
+        content: " ";
+        /* 1 */
+        display: table;
+        /* 2 */
+    }
+
+    .notifications:after {
+        clear: both;
+    }
+
+    .notifications li {
+        display: block;
+        float: left;
+        margin-left: 42px;
+        /*background: url("../images/MagicStickTransp.png") no-repeat 0 0;*/
+        /*-webkit-transition: background-position 0.2s ease;
+        transition: background-position 0.2s ease;*/
+    }
+
+        .notifications li a {
+            display: block;
+            width: 29px;
+            height: 30px;
+            padding-top: 2px;
+            text-align: center;
         }
 
+            .notifications li a img {
+                display: inline-block;
+            }
+
+        .notifications li:hover {
+            /*background-position: 0 -30px;*/
+            color: white !important;
+            font-display: block;
+        }
+
+.buttonNot {
+    color: white;
+    display: inline-block;
+    position: relative; 
+    padding: 3px 5px; 
+}
+
+.fa fa-bell  {
+    color: gold;
+}
+
+.fa:hover {
+    color: #FFF !important;
+}
+
+.button__badge {
+    background-color: red;
+    border-radius: 2px;
+    color: white;
+    padding: -2px 1px;
+    font-size: 12px;
+    position: absolute;
+    line-height:normal!important;
+    top: 0;
+    right: 0;
+}
+
+
+/*END OF custom class*/
 .bigSocials {
     display: block;
     margin: 30px 0 5px -30px;
@@ -2705,11 +2789,13 @@ li.dropdown:hover .dropdown-menu {
         display: table;
         /* 2 */
     }
+
     .progress-bar:hover,
     .progress-bar:focus {
         color: gold;
     }
-        .progress-bar:after {
+
+    .progress-bar:after {
         clear: both;
     }
 

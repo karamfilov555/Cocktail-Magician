@@ -1,15 +1,14 @@
 ﻿using System;
-using System.IO;
 using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
+//using CM.Services;
 using CM.Services.Contracts;
 using CM.Web.Areas.Cocktails.Models;
 using CM.Web.Mappers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using NToastNotify;
 
 namespace CM.Web.Areas.Cocktails.Controllers
@@ -22,6 +21,9 @@ namespace CM.Web.Areas.Cocktails.Controllers
         private readonly IIngredientServices _ingredientServices;
         private readonly IToastNotification _toast;
         private readonly IStreamWriterServices _streamWriter;
+        private readonly INotificationManager _notificationManager;
+        private readonly INotificationServices _notificationServices;
+        private readonly IAppUserServices _userServices;
 
         //ID!!!! string id = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
 
@@ -29,13 +31,19 @@ namespace CM.Web.Areas.Cocktails.Controllers
                                    IIngredientServices ingredientServices,
                                    IReviewServices reviewServices,
                                    IToastNotification toast,
-                                   IStreamWriterServices streamWriter)
+                                   IStreamWriterServices streamWriter,
+                                   INotificationManager notificationManager,
+                                   INotificationServices notificationServices,
+                                   IAppUserServices userServices)
         {
             _cocktailServices = cocktailServices;
             _ingredientServices = ingredientServices;
             _reviewServices = reviewServices;
             _toast = toast;
             _streamWriter = streamWriter;
+            _notificationManager = notificationManager;
+            _notificationServices = notificationServices;
+            _userServices = userServices;
         }
 
         [Route("cocktails/details/{id}")]
@@ -97,6 +105,12 @@ namespace CM.Web.Areas.Cocktails.Controllers
                 }
                 var cocktailDto = cocktailVm.MapToCocktailDTO();
                 await _cocktailServices.AddCocktail(cocktailDto);
+                //notification to admin
+                string id = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+                var username = await _userServices.GetUsernameById(id);
+                var notificationDescription = _notificationManager.CocktailAddedDescription(username, cocktailDto.Name);
+                var notification = await _notificationServices.CreateNotificationAsync(notificationDescription, username);
+
                 _toast.AddSuccessToastMessage($"You successfully added cocktail {cocktailDto.Name}!");
                 return RedirectToAction("ListCocktails");
             }

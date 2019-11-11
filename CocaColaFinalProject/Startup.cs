@@ -15,6 +15,7 @@ using CM.Data.DatabaseSeeder;
 using CM.Data.JsonManager;
 using CM.Services.Contracts;
 using CM.Services;
+using CM.Services.Common;
 
 namespace CocaColaFinalProject
 {
@@ -66,6 +67,8 @@ namespace CocaColaFinalProject
             services.AddScoped<ISearchServices, SearchServices>();
             services.AddScoped<IFileUploadService, FileUploadService>();
             services.AddScoped<IStreamWriterServices, StreamWriterServices>();
+            services.AddScoped<INotificationManager, NotificationManager>();
+            services.AddScoped<INotificationServices, NotificationServices>();
 
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);

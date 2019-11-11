@@ -3,12 +3,12 @@ using CM.DTOs;
 using CM.DTOs.Mappers;
 using CM.Models;
 using CM.Services.Common;
+using CM.Services.Contracts;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace CM.Services
@@ -85,6 +85,21 @@ namespace CM.Services
             var user = await this.GetUserByID(id);
             user.DateDeleted = DateTime.Now.Date;
             await _context.SaveChangesAsync();
+        }
+
+        public async Task<AppUser> GetAdmin()
+        {
+            var adminRole = await _context.Roles.FirstAsync(role => role.Name.ToLower() == "administrator").ConfigureAwait(false);
+            var adminId = await _context.UserRoles.FirstAsync(role => role.RoleId == adminRole.Id).ConfigureAwait(false);
+            var admin = await GetUserByID(adminId.UserId).ConfigureAwait(false);
+            return admin;
+        }
+        public async Task<AppUser> GetUserByUsernameAsync(string username)
+        {
+            var user = await _context.Users
+                //Some includes if needed (ban,cancel)
+                .FirstOrDefaultAsync(m => m.UserName == username).ConfigureAwait(false);
+            return user;
         }
     }
 }
