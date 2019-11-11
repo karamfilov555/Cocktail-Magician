@@ -19,7 +19,8 @@ namespace CM.Data
         public DbSet<CocktailReview> CocktailReviews { get; set; }
         public DbSet<BarReviewLike> BarReviewLikes { get; set; }
         public DbSet<CocktailReviewLike> CocktailReviewLikes { get; set; }
-        public DbSet<CocktailIngredient> CocktailIngredients { get; set; }
+        //public DbSet<CocktailIngredient> CocktailIngredients { get; set; }
+        public DbSet<CocktailComponent> CocktailComponent { get; set; }
         public DbSet<Ingredient> Ingredients { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
@@ -28,6 +29,7 @@ namespace CM.Data
             builder.ApplyConfiguration(new CocktailIngredientConfiguration());
             builder.ApplyConfiguration(new CocktailReviewConfiguration());
             builder.ApplyConfiguration(new BarReviewConfiguration());
+            builder.ApplyConfiguration(new CocktailComponentConfiguration());
 
             base.OnModelCreating(builder);
         }

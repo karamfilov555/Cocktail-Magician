@@ -1,4 +1,5 @@
-﻿using CM.Models;
+﻿using CM.DTOs;
+using CM.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
@@ -32,7 +33,7 @@ namespace CM.Web.Areas.Cocktails.Models
 
         public List<SelectListItem> Ingredients { get; set; } = new List<SelectListItem>();
         public List<string> IngredientsIDs { get; set; } = new List<string>();
-
+        public List<CocktailComponentDTO> CocktailComponents { get; set; } = new List<CocktailComponentDTO>();
         public List<CocktailIngredient> CocktailIngredients { get; set; } = new List<CocktailIngredient>();
         public List<BarCocktail> BarCocktails { get; set; } = new List<BarCocktail>();
         public DateTime? DateDeleted { get; set; }

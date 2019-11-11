@@ -11,6 +11,7 @@ namespace CM.Models
         [Required]
         public string Name { get; set; }
         public ICollection<CocktailIngredient> CocktailIngredients { get; set; }
+        public ICollection<CocktailComponent> CocktailComponents { get; set; }
         public DateTime? DateDeleted { get; set; }
     }
 }

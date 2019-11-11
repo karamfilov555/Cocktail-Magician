@@ -220,6 +220,29 @@ namespace CM.Data.Migrations
                     b.ToTable("Cocktails");
                 });
 
+            modelBuilder.Entity("CM.Models.CocktailComponent", b =>
+                {
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("CocktailId");
+
+                    b.Property<string>("IngredientId");
+
+                    b.Property<int>("Quantity");
+
+                    b.Property<string>("Unit")
+                        .IsRequired();
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CocktailId");
+
+                    b.HasIndex("IngredientId");
+
+                    b.ToTable("CocktailComponent");
+                });
+
             modelBuilder.Entity("CM.Models.CocktailIngredient", b =>
                 {
                     b.Property<string>("CocktailId");
@@ -230,7 +253,7 @@ namespace CM.Data.Migrations
 
                     b.HasIndex("IngredientId");
 
-                    b.ToTable("CocktailIngredients");
+                    b.ToTable("CocktailIngredient");
                 });
 
             modelBuilder.Entity("CM.Models.CocktailReview", b =>
@@ -428,10 +451,21 @@ namespace CM.Data.Migrations
                         .HasForeignKey("BarReviewID");
                 });
 
+            modelBuilder.Entity("CM.Models.CocktailComponent", b =>
+                {
+                    b.HasOne("CM.Models.Cocktail", "Cocktail")
+                        .WithMany("CocktailComponents")
+                        .HasForeignKey("CocktailId");
+
+                    b.HasOne("CM.Models.Ingredient", "Ingredient")
+                        .WithMany("CocktailComponents")
+                        .HasForeignKey("IngredientId");
+                });
+
             modelBuilder.Entity("CM.Models.CocktailIngredient", b =>
                 {
                     b.HasOne("CM.Models.Cocktail", "Cocktail")
-                        .WithMany("CocktailIngredients")
+                        .WithMany()
                         .HasForeignKey("CocktailId")
                         .OnDelete(DeleteBehavior.Cascade);
 

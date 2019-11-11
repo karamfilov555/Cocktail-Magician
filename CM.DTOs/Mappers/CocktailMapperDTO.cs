@@ -15,7 +15,7 @@ namespace CM.DTOs.Mappers
             cocktailDto.Name = cocktail.Name;
             cocktailDto.Rating = cocktail.Rating;
             cocktailDto.Image = cocktail.Image;
-            cocktailDto.CocktailIngredients = cocktail.CocktailIngredients.ToList();
+            cocktailDto.Ingredients = cocktail.CocktailComponents.Select(c=>c.MapToCocktailDto()).ToList();
             cocktailDto.CocktailReviews = cocktail.Reviews;
             cocktailDto.DateDeleted = cocktail.DateDeleted;
             cocktailDto.BarCocktails = cocktail.BarCocktails.ToList();
@@ -30,7 +30,8 @@ namespace CM.DTOs.Mappers
             cocktailModel.Id = cocktailDto.Id;
             cocktailModel.Rating = cocktailDto.Rating;
             cocktailModel.Image = cocktailDto.Image;
-            cocktailModel.Recepie = cocktailDto.Recepie;
+            //cocktailModel.Recepie = cocktailDto.Recepie;
+            cocktailModel.CocktailComponents = new List<CocktailComponent>();
             //cocktailModel.CocktailIngredients = cocktailDto.CocktailIngredients;
             cocktailModel.Reviews = cocktailDto.CocktailReviews;
             return cocktailModel;

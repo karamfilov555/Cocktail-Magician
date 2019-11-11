@@ -11,7 +11,10 @@
 //    {
 //        public void Configure(EntityTypeBuilder<Like> builder)
 //        {
-//            throw new NotImplementedException();
+//            builder
+//                 .Property(book => book.Category)
+//                 .IsRequired()
+//                 .HasConversion(b => b.ToString(), b => (CategoryType)Enum.Parse(typeof(CategoryType), b));
 //        }
 //    }
 //}

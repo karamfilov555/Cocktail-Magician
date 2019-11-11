@@ -14,7 +14,7 @@ namespace CM.Data.DatabaseSeeder
     {
         private const string cocktailsDirectory = @"..\CM.Data\JsonRaw\Cocktails.json";
         private const string ingredientsDirectory = @"..\CM.Data\JsonRaw\Ingredients.json";
-        private const string cocktailIngredientsDirectory = @"..\CM.Data\JsonRaw\CocktailIngredients.json";
+        private const string cocktailIngredientsDirectory = @"..\CM.Data\JsonRaw\CocktailComponents.json";
 
         public static void SeedDatabaseCocktails(this IApplicationBuilder app)
         {
@@ -30,12 +30,12 @@ namespace CM.Data.DatabaseSeeder
                     var cocktails = _jsonManager.ExtractTypesFromJson<Cocktail>(cocktailsDirectory);
                     var ingredients = _jsonManager.ExtractTypesFromJson<Ingredient>(ingredientsDirectory);
 
-                    var cocktailIngredients = _jsonManager
-                                    .ExtractTypesFromJson<CocktailIngredient>(cocktailIngredientsDirectory);
+                    var cocktailComponents = _jsonManager
+                                    .ExtractTypesFromJson<CocktailComponent>(cocktailIngredientsDirectory);
 
                     _context.Ingredients.AddRange(ingredients);
                     _context.Cocktails.AddRange(cocktails);
-                    _context.CocktailIngredients.AddRange(cocktailIngredients);
+                    _context.CocktailComponent.AddRange(cocktailComponents);
                     _context.SaveChanges();
                 }
             }

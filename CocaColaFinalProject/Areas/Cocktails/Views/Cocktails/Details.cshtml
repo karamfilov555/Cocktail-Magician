@@ -22,10 +22,10 @@
                 <h5>Rating: @Model.Rating</h5>
             </td>
             <td>
-                @foreach (var item in Model.CocktailIngredients)
+                @foreach (var item in Model.CocktailComponents)
                 {
                     <h5>
-                        @item.Ingredient.Name
+                        @item.Ingredient
                     </h5>
                 }
             </td>

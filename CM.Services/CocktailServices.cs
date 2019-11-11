@@ -1,11 +1,13 @@
 ﻿using CM.Data;
 using CM.DTOs;
 using CM.DTOs.Mappers;
+using CM.Models;
 using CM.Services.Contracts;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace CM.Services
@@ -26,7 +28,7 @@ namespace CM.Services
             // include ingredients ... posle ... da se vzima po rating 
             var cocktails = await _context.Cocktails
                                             .Where(c => c.DateDeleted == null)
-                                            .Include(c => c.CocktailIngredients)
+                                            .Include(c => c.CocktailComponents)
                                             .ThenInclude(c => c.Ingredient)
                                             .Include(c => c.BarCocktails)
                                             .ThenInclude(c => c.Bar)
@@ -43,7 +45,7 @@ namespace CM.Services
             var cocktail = await _context.Cocktails
                                             .Include(c => c.Reviews)
                                             .ThenInclude(c => c.User)
-                                            .Include(c => c.CocktailIngredients)
+                                            .Include(c => c.CocktailComponents)
                                             .ThenInclude(c => c.Ingredient)
                                             .Include(c => c.BarCocktails)
                                             .ThenInclude(c => c.Bar)
@@ -66,10 +68,23 @@ namespace CM.Services
             var uniqueFileNamePath = _fileUploadService.UploadFile(cocktailDto.CocktailImage);
             cocktailDto.Image = uniqueFileNamePath;
             var cocktail = cocktailDto.MapToCocktailModel();
+            foreach (var cocktailComponenetDTO in cocktailDto.Ingredients)
+            {
+                var cocktailComponent = cocktailComponenetDTO.MapToCocktailModel();
+                var ingredient = await _context.Ingredients.FirstOrDefaultAsync(i => i.Name.ToLower() == cocktailComponenetDTO.Ingredient.ToLower());
+                if (ingredient == null)
+                {
+                    ingredient = new Ingredient() { Name = cocktailComponenetDTO.Ingredient };
+                    _context.Ingredients.Add(ingredient);
+                    await _context.SaveChangesAsync();
+                }
+                cocktailComponent.IngredientId = ingredient.Id;
+                cocktail.CocktailComponents.Add(cocktailComponent);
+            }
             _context.Cocktails.Add(cocktail);
             await _context.SaveChangesAsync();
-            cocktailDto.CocktailIngredients.ForEach(ci => ci.CocktailId = cocktail.Id);
-            cocktail.CocktailIngredients = cocktailDto.CocktailIngredients;
+            //cocktailDto.CocktailIngredients.ForEach(ci => ci.CocktailId = cocktail.Id);
+            //cocktail.CocktailIngredients = cocktailDto.CocktailIngredients;
             await _context.SaveChangesAsync();
 
         }
@@ -79,7 +94,7 @@ namespace CM.Services
             var allCocktailsModels = await _context.Cocktails
                                                 .Include(c => c.Reviews)
                                                 .ThenInclude(c => c.User)
-                                                .Include(c => c.CocktailIngredients)
+                                                .Include(c => c.CocktailComponents)
                                                 .ThenInclude(c => c.Ingredient)
                                                 .Include(c => c.BarCocktails)
                                                 .ThenInclude(c => c.Bar)
@@ -109,7 +124,7 @@ namespace CM.Services
             var sortedCocktails = _context.Cocktails
                                                 .Include(c => c.Reviews)
                                                 .ThenInclude(c => c.User)
-                                                .Include(c => c.CocktailIngredients)
+                                                .Include(c => c.CocktailComponents)
                                                 .ThenInclude(c => c.Ingredient)
                                                 .Include(c => c.BarCocktails)
                                                 .ThenInclude(c => c.Bar)
@@ -165,7 +180,7 @@ namespace CM.Services
             var cocktails = await _context.Cocktails
                             .Include(c => c.Reviews)
                             .ThenInclude(c => c.User)
-                            .Include(c => c.CocktailIngredients)
+                            .Include(c => c.CocktailComponents)
                             .ThenInclude(c => c.Ingredient)
                             .Include(c => c.BarCocktails)
                             .ThenInclude(c => c.Bar)
@@ -173,7 +188,6 @@ namespace CM.Services
                              StringComparison.OrdinalIgnoreCase)
                              && c.DateDeleted == null)
                             .ToListAsync();
-
             var cocktailsDtos = cocktails.Select(c => c.MapToCocktailDto()).ToList();
             return cocktailsDtos;
         }
@@ -191,8 +205,17 @@ namespace CM.Services
         public async Task<string> GetCocktailRecepie(string id)
         {
             var cocktail = await _context.Cocktails
-                                         .FirstOrDefaultAsync(c => c.Id == id);
-            return cocktail.Recepie;
+                .Include(c => c.CocktailComponents)
+                            .ThenInclude(c => c.Ingredient)
+                            .FirstOrDefaultAsync(c => c.Id == id);
+
+            var recipeSB = new StringBuilder();
+            foreach (var component in cocktail.CocktailComponents)
+            {
+
+                recipeSB.AppendLine(component.Ingredient.Name+" "+component.Quantity+" "+component.Unit);
+            }
+            return recipeSB.ToString();
         }
     }
 }

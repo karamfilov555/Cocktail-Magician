@@ -1,4 +1,5 @@
-﻿using CM.Models;
+﻿using CM.DTOs;
+using CM.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -30,8 +31,8 @@ namespace CM.Web.Areas.Cocktails.Models
 
         public int LikeCount { get; set; }
         public List<string> LikedByUsers { get; set; }
-        public List<CocktailIngredientViewModel> CocktailIngredients { get; set; } 
-            = new List<CocktailIngredientViewModel>();
+        public ICollection<CocktailComponentDTO> Ingredients { get; set; } 
+            = new List<CocktailComponentDTO>();
         public bool CanReview { get; set; }
         public List<CocktailReviewViewModel> Reviews { get; set; }
             = new List<CocktailReviewViewModel>();

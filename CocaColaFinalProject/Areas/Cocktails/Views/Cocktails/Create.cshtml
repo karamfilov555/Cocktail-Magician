@@ -1,8 +1,10 @@
-﻿@model CocktailViewModel
+﻿
+@model CreateCocktailViewModel
 
 @{
     ViewData["Title"] = "View";
     Layout = "~/Views/Shared/_LayoutCustom.cshtml";
+}
 }
 <center style="padding-bottom:50px">
 
@@ -17,34 +19,60 @@
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
                 <div class="form-group">
-                    <label asp-for="Name" class="control-label"></label>
-                    <input asp-for="Name" class="form-control" />
-                    <span asp-validation-for="Name" class="text-danger"></span>
+                    <label asp-for="@Model.Name" class="control-label"></label>
+                    <input asp-for="@Model.Name" class="form-control" />
+                    <span asp-validation-for="@Model.Name" class="text-danger"></span>
                 </div>
                 <div>
-                    <label asp-for="CocktailImage" class="control-label">Upload Image</label>
-                    <input asp-for="CocktailImage" class="btn btn-primary btn-sm" />
+                    <label asp-for="@Model.CocktailImage" class="control-label">Upload Image</label>
+                    <input asp-for="@Model.CocktailImage" class="btn btn-primary btn-sm" />
 
                 </div>
-                <div class="form-group">
-                    <label asp-for="Rating" class="control-label"></label>
-                    <input asp-for="Rating" class="form-control" />
-                    <span asp-validation-for="Rating" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="IngredientsIDs" class="control-label">Ingredients</label>
-                    <select id="selectmenu" asp-for="IngredientsIDs" class="js-example-basic-multiple form-control" asp-items="@Model.Ingredients" multiple="multiple" placeholder="Choose Ingredients..."></select>
-                </div>
-                <div class="form-group">
+                @*<div class="form-group">
+                        <label asp-for="@Model.Rating" class="control-label"></label>
+                        <input asp-for="@Model.Rating" class="form-control" />
+                        <span asp-validation-for="@Model.Rating" class="text-danger"></span>
+                    </div>*@
+                <label class="control-label">Add Ingredients</label>
+                <table class="table table-bordered">
+                    <tr>
+                        <th>Ingredient</th>
+                        <th>Quantity</th>
+                        <th>Units</th>
+                    </tr>
 
-                    <textarea asp-for="Recepie" class="form-control" placeholder="Write the full recepie here..."> </textarea>
+                    @for (var i = 0; i < 10; i++)
+                    {
+                        <tr>
+                            <td>
+                                <input asp-for="@Model.Ingredients[@i].Ingredient" class="control-label" />
+                            </td>
+                            <td>
+                                <input asp-for="@Model.Ingredients[@i].Quantity" class="control-label" />
+                            </td>
+                            <td>
+                                <select class="control-label" asp-for="@Model.Ingredients[@i].Unit" asp-items="Html.GetEnumSelectList<Unit>()" class="form-control">
+                                    <option hidden disabled selected value="">Choose Unit Type:</option>
+                                </select>
+                                
+                            </td>
+                        </tr>
+                    }
+                </table>
+                @*<div class="form-group">
+                        <label asp-for="IngredientsIDs" class="control-label">Ingredients</label>
+                        <select id="selectmenu" asp-for="IngredientsIDs" class="js-example-basic-multiple form-control" asp-items="@Model.Ingredients" multiple="multiple" placeholder="Choose Ingredients..."></select>
+                    </div>*@
+                @*<div class="form-group">
 
-                </div>
+                        <textarea asp-for="@Model.Recepie" class="form-control" placeholder="Write the full recepie here..."> </textarea>
+
+                    </div>*@
                 <div class="form-group">
                     <input type="submit" value="Create" class="btn btn-primary" />
                 </div>
             </form>
-                
+
         </div>
     </div>
     <div>

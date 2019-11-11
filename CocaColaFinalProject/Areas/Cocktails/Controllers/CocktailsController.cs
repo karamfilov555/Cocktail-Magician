@@ -70,15 +70,15 @@ namespace CM.Web.Areas.Cocktails.Controllers
         public async Task<IActionResult> Create()
         {
             //expouse-vame ctx model
-            var ingr = await _ingredientServices.GetAllIngredients();
-            var cocktailVM = new CocktailViewModel();
-            cocktailVM.Ingredients.AddRange(ingr.Select(i => new SelectListItem(i.Name, i.Id)));
-            return View(cocktailVM);
+            //var ingr = await _ingredientServices.GetAllIngredients();
+            //cocktailVM.Ingredients.AddRange(ingr.Select(i => new SelectListItem(i.Name, i.Id)));
+            var createCocktailVM = new CreateCocktailViewModel();
+            return View(createCocktailVM);
         }
 
         [HttpPost]
         [Authorize(Roles = "Administrator, Manager")]
-        public async Task<IActionResult> Create(CocktailViewModel cocktailVm)
+        public async Task<IActionResult> Create(CreateCocktailViewModel cocktailVm)
         {
             if (ModelState.IsValid)
             {
@@ -95,18 +95,15 @@ namespace CM.Web.Areas.Cocktails.Controllers
                     _toast.AddErrorToastMessage($"The picture size is too big! Maximum size: 100 kb");
                     return View(cocktailVm);
                 }
-                var cocktailDto = cocktailVm.MapToCocktailDto();
+                var cocktailDto = cocktailVm.MapToCocktailDTO();
                 await _cocktailServices.AddCocktail(cocktailDto);
-
-
-
                 _toast.AddSuccessToastMessage($"You successfully added cocktail {cocktailDto.Name}!");
                 return RedirectToAction("ListCocktails");
             }
             else
             {
                 var ingr = await _ingredientServices.GetAllIngredients();
-                cocktailVm.Ingredients.AddRange(ingr.Select(i => new SelectListItem(i.Name, i.Id)));
+                //cocktailVm.Ingredients.AddRange(ingr.Select(i => new SelectListItem(i.Name, i.Id)));
                 return View(cocktailVm);
             }
         }
