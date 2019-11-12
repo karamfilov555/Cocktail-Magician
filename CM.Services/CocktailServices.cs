@@ -79,6 +79,7 @@ namespace CM.Services
                     await _context.SaveChangesAsync();
                 }
                 cocktailComponent.IngredientId = ingredient.Id;
+                _context.CocktailComponent.Add(cocktailComponent);
                 cocktail.CocktailComponents.Add(cocktailComponent);
             }
             var recipeSB = new StringBuilder();

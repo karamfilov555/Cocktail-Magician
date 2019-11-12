@@ -3,13 +3,15 @@
     $("#total_row").val(new_id);
     if (new_id < 10) {
         var table = document.getElementById('ingredients');
+        var tableBody = document.getElementById('ingredients').getElementsByTagName('tbody')[0];
         var row = document.getElementsByTagName('tr')[1];
+        debugger;
         var newRow = row.cloneNode(true);
         var firstCell = newRow.getElementsByTagName('td')[0];
         var selectField = firstCell.getElementsByTagName('select')[0];
         selectField.name = 'Ingredients[' + new_id + '].Ingredient';
-        var inputField = firstCell.getElementsByTagName('input')[0];
-        inputField.name = 'Ingredients[' + new_id + '].Ingredient';
+        //var inputField = firstCell.getElementsByTagName('input')[0];
+        //inputField.name = 'Ingredients[' + new_id + '].Ingredient';
         var secondCell = newRow.getElementsByTagName("td")[1];
         var inputField2 = secondCell.getElementsByTagName('input')[0];
         inputField2.name = 'Ingredients[' + new_id + '].Quantity';
@@ -18,7 +20,7 @@
         selectField2.name = 'Ingredients[' + new_id + '].Unit';
 
 
-        table.appendChild(newRow);
+        tableBody.appendChild(newRow);
 
     }
     //var currentRow = $("#row_0").clone();

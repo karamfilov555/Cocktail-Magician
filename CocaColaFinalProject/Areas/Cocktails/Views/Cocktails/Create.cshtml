@@ -31,38 +31,42 @@
                         <input asp-for="@Model.Rating" class="form-control" />
                         <span asp-validation-for="@Model.Rating" class="text-danger"></span>
                     </div>*@
-            <div>
-                <label class="control-label">Add Ingredients</label>
-                <table id="ingredients" class="table table-responsive">
-                    <tr>
-                        <th>Ingredient</th>
-                        <th>Quantity</th>
-                        <th>Units</th>
-                    </tr>
-                    <tr class="tableRow">
-                        <td >
-                            <select id="selectmenu" asp-for="@Model.Ingredients[0].Ingredient"
-                                    class="select-editable form-control" asp-items="@Model.IngredientsNames"
-                                    input="text" placeholder="Choose Ingredients..."></select>
-                            <input asp-for="@Model.Ingredients[0].Ingredient" class="form-control"
-                                   type="text" placeholder="Or add a new one:" />
-                        </td>
-                        <td>
-                            <input asp-for="@Model.Ingredients[0].Quantity" class="form-control" />
-                        </td>
-                        <td>
-                            <select class="form-control" asp-for="@Model.Ingredients[0].Unit" asp-items="Html.GetEnumSelectList<Unit>()">
-                                <option hidden disabled selected value="">Choose Unit Type:</option>
-                            </select>
-                        </td>
-                    </tr>
-                </table>
-                <input type="hidden" value="0" id="total_row">
-                <input class="btn btn-success btn-sm" type="button" onclick="addRow()" value="+ Add more ingredients">
-                
                 <br />
-                <br />
-            </div>
+                <div>
+                    <label>Add Ingredients</label>
+                    <table id="ingredients" class="table table-responsive">
+                        <tbody>
+                            <tr>
+                                <th width="50%" valign="middle"><h6>Ingredient</h6></th>
+                                <th><h6>Quantity</h6></th>
+                                <th><h6>Units</h6></th>
+                            </tr>
+                            <tr class="tableRow">
+                                <td>
+                                    <select id="selectmenu" asp-for="@Model.Ingredients[0].Ingredient"
+                                            class="select-editable form-control" asp-items="@Model.IngredientsNames"
+                                            input="text" placeholder="Choose Ingredients..."></select>
+                                    @*<input asp-for="@Model.Ingredients[0].Ingredient" class="form-control"
+                type="text" placeholder="Or add a new one:" value="" />*@
+                                </td>
+                                <td>
+                                    <input asp-for="@Model.Ingredients[0].Quantity" class="form-control" />
+                                </td>
+                                <td>
+                                    <select class="form-control" asp-for="@Model.Ingredients[0].Unit" asp-items="Html.GetEnumSelectList<Unit>()">
+                                        <option hidden disabled selected value="">Choose Unit Type:</option>
+                                    </select>
+                                </td>
+                            </tr>
+                        </tbody>
+                        
+                    </table>
+                    <input type="hidden" value="0" id="total_row">
+                    <input class="btn btn-success btn-sm" type="button" onclick="addRow()" value="+ Add more ingredients">
+
+                    <br />
+                    <br />
+                </div>
                 <div class="form-group">
 
                     <textarea asp-for="@Model.Recipe" class="form-control" placeholder="Write the full recepie here..."> </textarea>
@@ -100,10 +104,10 @@
 
 
 </script>
-                @*<div class="form-group">
-                        <label asp-for="IngredientsIDs" class="control-label">Ingredients</label>
-                        <select id="selectmenu" asp-for="IngredientsIDs" class="js-example-basic-multiple form-control" asp-items="@Model.Ingredients" multiple="multiple" placeholder="Choose Ingredients..."></select>
-                    </div>*@
+@*<div class="form-group">
+        <label asp-for="IngredientsIDs" class="control-label">Ingredients</label>
+        <select id="selectmenu" asp-for="IngredientsIDs" class="js-example-basic-multiple form-control" asp-items="@Model.Ingredients" multiple="multiple" placeholder="Choose Ingredients..."></select>
+    </div>*@
 @*<div class="row">
 
             <div class="input-group dropdown">
