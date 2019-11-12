@@ -241,7 +241,7 @@ namespace CM.Web.Areas.Cocktails.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> DownloadRecepie(string Id)
+        public async Task<IActionResult> DownloadRecipe(string Id)
         {
             if (Id == null)
             {

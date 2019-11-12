@@ -31,5 +31,32 @@ namespace CM.Web.Areas.Notifications.Controllers
             var notificationsVmSortedByDate = notificationsVm.OrderByDescending(n => n.EventDate);
             return View(notificationsVmSortedByDate);
         }
+        [HttpPost]
+        public async Task<IActionResult> MarkAsSeen(string Id)
+        {
+            if (Id == null)
+            {
+                ViewBag.ErrorTitle = $"You are tring to see a notification with invalid model state!";
+                return View("Error");
+            }
+            var notification = await _notificationServices.MarkAsSeenAsync(Id);
+            if (notification == null)
+            {
+                ViewBag.ErrorTitle = $"You are tring to see a notification with invalid model state!";
+                return View("Error");
+            }
+            _toast.AddInfoToastMessage("Message marked as seen.");
+
+            return PartialView("_NotificationSeenPartial", notification.MapToNotificationVM());
+            //return ok
+        }
+
+        public async Task<int> GetNotificationsCount()
+        {
+            string id = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var notificatonsCount = await _notificationServices.GetUnseenNotificationsCountForUserAsync(id);
+
+            return notificatonsCount;
+        }
     }
 }

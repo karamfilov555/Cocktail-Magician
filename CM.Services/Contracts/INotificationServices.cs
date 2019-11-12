@@ -12,7 +12,7 @@ namespace CM.Services.Contracts
         Task<NotificationDTO> CreateNotificationAsync(string description, string username);
         Task<NotificationDTO> SendNotificationToUserAsync(string description, string username);
         Task<ICollection<NotificationDTO>> GetNotificationsForUserAsync(string userId);
-        Task<int> GetNotificationsCountForUserAsync(string userId);
+        Task<int> GetUnseenNotificationsCountForUserAsync(string userId);
         Task<NotificationDTO> MarkAsSeenAsync(string notificationId);
 
     }
