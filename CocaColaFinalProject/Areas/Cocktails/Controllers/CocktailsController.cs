@@ -11,6 +11,7 @@ using CM.Web.Areas.Cocktails.Models;
 using CM.Web.Mappers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using NToastNotify;
 
 namespace CM.Web.Areas.Cocktails.Controllers
