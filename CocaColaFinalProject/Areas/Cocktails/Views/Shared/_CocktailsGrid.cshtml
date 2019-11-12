@@ -109,28 +109,28 @@
                             </h5>
                         }
                     </td>
-                    <td style="padding-top:50px">
+                    <td style="padding-top:10px">
                         @if (this.User.IsInRole("Member") || this.User.IsInRole("Manager") || this.User.IsInRole("Administrator"))
                         {
                             <p>
-                                <a class="btn btn-default btn-sm" asp-area="Cocktails" asp-controller="Cocktails" asp-action="RateCocktail" asp-route-id="@cocktail.Id"><font style="color:gold">Rate Cocktail</font></a>
+                                <a class="btn btn-default btn-sm" asp-area="Cocktails" asp-controller="Cocktails" asp-action="RateCocktail" asp-route-id="@cocktail.Id"><font style="color:gold"><i class="fa fa-star"></i> Rate Cocktail</font></a>
                             </p>
 
                         }
                         @if (this.User.IsInRole("Administrator") || this.User.IsInRole("Manager"))
                         {
                             <p>
-                                <a class="btn btn-default btn-sm" asp-area="Cocktails" asp-controller="Cocktails" asp-action="DownloadRecepie" asp-route-id="@cocktail.Id"><font style="color:gold">Downoload Recepie</font></a>
+                                <a class="btn btn-default btn-sm" asp-area="Cocktails" asp-controller="Cocktails" asp-action="DownloadRecipe" asp-route-id="@cocktail.Id"><font style="color:gold"><i class="fa fa-arrow-circle-down"></i> Downoload Recipe</font></a>
                             </p>
                             <p>
-                                <a class="btn btn-default btn-sm" asp-area="Cocktails" asp-controller="Cocktails" asp-action="Edit" asp-route-id="@cocktail.Id"><font style="color:gold">Edit Cocktail</font></a>
+                                <a class="btn btn-default btn-sm" asp-area="Cocktails" asp-controller="Cocktails" asp-action="Edit" asp-route-id="@cocktail.Id"><font style="color:gold"><i class="fa fa-magic"></i> Edit Cocktail</font></a>
                             </p>
                             <p>
-                                <a class="btn btn-default btn-sm" asp-area="Cocktails" asp-controller="Cocktails" asp-action="Delete" asp-route-id="@cocktail.Id"><font style="color:gold">Delete Cocktail</font></a>
+                                <a class="btn btn-default btn-sm" asp-area="Cocktails" asp-controller="Cocktails" asp-action="Delete" asp-route-id="@cocktail.Id"><font style="color:gold"><i class="fa fa-trash-o"></i> Delete Cocktail</font></a>
                             </p>
                         }
                         <p>
-                            <a class="btn btn-default btn-sm" asp-area="Cocktails" asp-controller="Cocktails" asp-action="Details" asp-route-id="@cocktail.Id"><font style="color:gold">Cocktail Details</font></a>
+                            <a class="btn btn-default btn-sm" asp-area="Cocktails" asp-controller="Cocktails" asp-action="Details" asp-route-id="@cocktail.Id"><font style="color:gold"><i class="fa fa-search-plus"></i> Cocktail Details</font></a>
                         </p>
                     </td>
                 </tr>

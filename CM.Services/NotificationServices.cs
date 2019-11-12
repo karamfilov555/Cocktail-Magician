@@ -63,7 +63,7 @@ namespace CM.Services
             return notification.Select(n=>n.MapNotificationToDTO()).ToList();
         }
 
-        public async Task<int> GetNotificationsCountForUserAsync(string userId)
+        public async Task<int> GetUnseenNotificationsCountForUserAsync(string userId)
         {
             var notificationsCount = await _context.Notifications
                                                    .Where(n => n.IsSeen == false && n.UserId == userId)
