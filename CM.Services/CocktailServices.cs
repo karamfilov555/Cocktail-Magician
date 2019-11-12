@@ -81,11 +81,17 @@ namespace CM.Services
                 cocktailComponent.IngredientId = ingredient.Id;
                 cocktail.CocktailComponents.Add(cocktailComponent);
             }
+            var recipeSB = new StringBuilder();
+            foreach (var component in cocktailDto.Ingredients)
+            {
+
+                recipeSB.AppendLine(component.Ingredient + " " + component.Quantity + " " + component.Unit);
+            }
+            recipeSB.AppendLine(cocktailDto.Recipe);
+            cocktail.Recepie = recipeSB.ToString();
             _context.Cocktails.Add(cocktail);
             await _context.SaveChangesAsync();
-            //cocktailDto.CocktailIngredients.ForEach(ci => ci.CocktailId = cocktail.Id);
-            //cocktail.CocktailIngredients = cocktailDto.CocktailIngredients;
-            await _context.SaveChangesAsync();
+            
 
         }
         // to be deleted !  !
@@ -209,13 +215,8 @@ namespace CM.Services
                             .ThenInclude(c => c.Ingredient)
                             .FirstOrDefaultAsync(c => c.Id == id);
 
-            var recipeSB = new StringBuilder();
-            foreach (var component in cocktail.CocktailComponents)
-            {
-
-                recipeSB.AppendLine(component.Ingredient.Name+" "+component.Quantity+" "+component.Unit);
-            }
-            return recipeSB.ToString();
+            
+            return cocktail.Recepie;
         }
     }
 }

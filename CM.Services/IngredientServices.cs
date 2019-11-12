@@ -23,9 +23,11 @@ namespace CM.Services
             return ingredient.Name;
         }
 
-        public async Task<ICollection<Ingredient>> GetAllIngredients()
+        public async Task<ICollection<String>> GetAllIngredientsNames()
         {
-            var ingredients = await _context.Ingredients.Where(i=>i.DateDeleted==null).ToListAsync();
+            var ingredients = await _context.Ingredients
+                .Where(i=>i.DateDeleted==null)
+                .Select(i=>i.Name).ToListAsync();
             return ingredients;
         }
     }

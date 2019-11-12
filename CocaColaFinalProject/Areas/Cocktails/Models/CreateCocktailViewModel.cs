@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -24,19 +25,17 @@ namespace CM.Web.Areas.Cocktails.Models
         [Display(Name = "Image")]
 
         public string Image { get; set; }
+        public string Recipe { get; set; }
 
         public IFormFile CocktailImage { set; get; }
         [BindProperty]
-        public List<CocktailComponentViewModel> Ingredients { get; set; } 
+        public List<CocktailComponentViewModel> Ingredients { get; set; }
+        public List<SelectListItem> IngredientsNames { get; set; } = new List<SelectListItem>();
 
 
         public CreateCocktailViewModel()
         {
-            this.Ingredients= new List<CocktailComponentViewModel>();
-            for (int i = 0; i < 10; i++)
-            {
-                this.Ingredients.Add(new CocktailComponentViewModel());
-            }
+            
         }
     }
 }

@@ -36,7 +36,7 @@ namespace CM.DTOs
         public ICollection<CocktailReview> CocktailReviews { get; set; }
            = new List<CocktailReview>();
         public DateTime? DateDeleted { get; set; }
-        //public string Recepie { get; set; }
+        public string Recipe { get; set; }
         public int LikeCount { get; set; }
         public List<string> LikedByUsers { get; set; }
     }

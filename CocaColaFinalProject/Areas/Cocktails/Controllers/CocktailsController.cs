@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Security.Claims;
 using System.Text;
@@ -78,9 +80,15 @@ namespace CM.Web.Areas.Cocktails.Controllers
         public async Task<IActionResult> Create()
         {
             //expouse-vame ctx model
-            //var ingr = await _ingredientServices.GetAllIngredients();
-            //cocktailVM.Ingredients.AddRange(ingr.Select(i => new SelectListItem(i.Name, i.Id)));
+            var ingr = await _ingredientServices.GetAllIngredientsNames();
             var createCocktailVM = new CreateCocktailViewModel();
+            createCocktailVM.IngredientsNames.Add(new SelectListItem("Choose an igredient", ""));
+            createCocktailVM.IngredientsNames.AddRange(ingr.Select(i => new SelectListItem(i, i)));
+            createCocktailVM.Ingredients = new List<CocktailComponentViewModel>();
+            for (int i = 0; i < 10; i++)
+            {
+                createCocktailVM.Ingredients.Add(new CocktailComponentViewModel());
+            }
             return View(createCocktailVM);
         }
 
@@ -116,7 +124,9 @@ namespace CM.Web.Areas.Cocktails.Controllers
             }
             else
             {
-                var ingr = await _ingredientServices.GetAllIngredients();
+                var ingr = await _ingredientServices.GetAllIngredientsNames();
+                cocktailVm.IngredientsNames.Add(new SelectListItem("Choose an igredient", ""));
+                cocktailVm.IngredientsNames.AddRange(ingr.Select(i => new SelectListItem(i, i)));
                 //cocktailVm.Ingredients.AddRange(ingr.Select(i => new SelectListItem(i.Name, i.Id)));
                 return View(cocktailVm);
             }

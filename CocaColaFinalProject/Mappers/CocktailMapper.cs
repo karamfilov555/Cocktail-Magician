@@ -37,6 +37,7 @@ namespace CM.Web.Mappers
                 .Select(
                 i=>i.MapCockTailComponentVMToDTo()           
                 ).ToList();
+            cocktailDto.Recipe = cocktailVM.Recipe;
             return cocktailDto;
 
         }
