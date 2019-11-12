@@ -9,12 +9,12 @@
     if (User.IsInRole("Administrator"))
     {
         <ul class="notifications">
-            <div class="buttonNot">
+            <div id="bellNot" class="buttonNot">
                 <a asp-area="Notifications" asp-controller="Notifications" asp-action="Index">
 
                     @if (await notificationServices.GetUnseenNotificationsCountForUserAsync(this.User.FindFirstValue(ClaimTypes.NameIdentifier)) > 0)
                     {
-                        <i class="fa fa-bell fa-lg" style="color:gold;"></i>
+                        <i id="" class="fa fa-bell fa-lg" style="color:gold;"></i>
                         <span id="notificationsCount" class="button__badge">
                             <font style="padding-right:1px">
                                 @await notificationServices.GetUnseenNotificationsCountForUserAsync(this.User.FindFirstValue(ClaimTypes.NameIdentifier))

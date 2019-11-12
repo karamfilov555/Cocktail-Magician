@@ -2,7 +2,10 @@
     e.preventDefault();
 
             console.log("kliknah");
-            e.preventDefault();
+    const thisForm = $(this).closest('form');
+
+    $.post(thisForm.attr('action'), {}, response => thisForm.closest('tr').replaceWith(response));
+
             let notificationsElem = document.getElementById("notificationsCount");
 
             console.log(notificationsElem);
@@ -18,3 +21,8 @@
             })
     //TODO !!
 });
+
+//$('#notificationBtn').on('click', function (e) {
+//    e.preventDefault();
+
+//});
