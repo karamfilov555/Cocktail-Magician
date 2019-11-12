@@ -82,6 +82,8 @@ namespace CM.Data.Migrations
 
                     b.Property<bool>("EmailConfirmed");
 
+                    b.Property<string>("ImageURL");
+
                     b.Property<bool>("LockoutEnabled");
 
                     b.Property<DateTimeOffset?>("LockoutEnd");

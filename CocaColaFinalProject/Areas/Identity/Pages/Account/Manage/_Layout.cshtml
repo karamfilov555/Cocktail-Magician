@@ -1,17 +1,27 @@
-﻿@{
-    Layout = "/Areas/Identity/Pages/_Layout.cshtml";
+﻿@model IndexModel
+@{
+    Layout = "_LayoutCustom";
 }
 
-<h1>Manage your account</h1>
+<h1 class="text-center">Manage your account</h1>
 
+>
 <div>
-    <h4>Change your account settings</h4>
+    <h3 class="text-center">Change your account settings</h3>
+    <br>
+    <br>
+    <br>
     <hr />
     <div class="row">
-        <div class="col-md-3">
-            <partial name="_ManageNav" />
+        <div class="col-md-1">
+
         </div>
-        <div class="col-md-9">
+        <div class="col-md-3">
+            <div class="form-group">
+                <img src="@Model.Input.ImageUrl" />
+            </div><partial name="_ManageNav" />
+        </div>
+        <div class="col-md-8">
             @RenderBody()
         </div>
     </div>

@@ -6,6 +6,7 @@ namespace CM.Models
 {
     public class AppUser : IdentityUser
     {
+        public string ImageURL { get; set; }
         public DateTime? DateDeleted { get; set; }
         public AppUser()
         {

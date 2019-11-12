@@ -101,5 +101,15 @@ namespace CM.Services
                 .FirstOrDefaultAsync(m => m.UserName == username).ConfigureAwait(false);
             return user;
         }
+
+        //public async Task<AppUser> GetImageUrlForUser(string username)
+        //{
+        //    var user = await _context.Users
+        //        //Some includes if needed (ban,cancel)
+        //        .FirstOrDefaultAsync(m => m.UserName == username).ConfigureAwait(false);
+        //    return user;
+        //}
+
+
     }
 }
