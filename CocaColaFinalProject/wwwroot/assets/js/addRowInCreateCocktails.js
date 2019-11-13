@@ -5,7 +5,7 @@
         var table = document.getElementById('ingredients');
         var tableBody = document.getElementById('ingredients').getElementsByTagName('tbody')[0];
         var row = document.getElementsByTagName('tr')[1];
-        debugger;
+     
         var newRow = row.cloneNode(true);
         var firstCell = newRow.getElementsByTagName('td')[0];
         var selectField = firstCell.getElementsByTagName('select')[0];
@@ -21,6 +21,9 @@
 
 
         tableBody.appendChild(newRow);
+
+        
+
 
     }
     //var currentRow = $("#row_0").clone();

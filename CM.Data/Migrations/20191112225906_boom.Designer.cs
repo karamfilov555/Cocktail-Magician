@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CM.Data.Migrations
 {
     [DbContext(typeof(CMContext))]
-    [Migration("20191112021424_initial")]
-    partial class initial
+    [Migration("20191112225906_boom")]
+    partial class boom
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -83,6 +83,8 @@ namespace CM.Data.Migrations
                         .HasMaxLength(256);
 
                     b.Property<bool>("EmailConfirmed");
+
+                    b.Property<string>("ImageURL");
 
                     b.Property<bool>("LockoutEnabled");
 

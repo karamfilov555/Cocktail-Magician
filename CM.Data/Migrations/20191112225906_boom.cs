@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace CM.Data.Migrations
 {
-    public partial class initial : Migration
+    public partial class boom : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -41,6 +41,7 @@ namespace CM.Data.Migrations
                     LockoutEnd = table.Column<DateTimeOffset>(nullable: true),
                     LockoutEnabled = table.Column<bool>(nullable: false),
                     AccessFailedCount = table.Column<int>(nullable: false),
+                    ImageURL = table.Column<string>(nullable: true),
                     DateDeleted = table.Column<DateTime>(nullable: true)
                 },
                 constraints: table =>

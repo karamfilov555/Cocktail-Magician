@@ -40,6 +40,7 @@
                                 <th width="50%" valign="middle"><h6>Ingredient</h6></th>
                                 <th><h6>Quantity</h6></th>
                                 <th><h6>Units</h6></th>
+                                <th></th>
                             </tr>
                             <tr class="tableRow">
                                 <td>
@@ -56,6 +57,9 @@
                                     <select class="form-control" asp-for="@Model.Ingredients[0].Unit" asp-items="Html.GetEnumSelectList<Unit>()">
                                         <option hidden disabled selected value="">Choose Unit Type:</option>
                                     </select>
+                                </td>
+                                <td>
+                                    <a class="xSignIngredients" onclick="removeRow(this)"><i class="fa fa-times"></i></a>
                                 </td>
                             </tr>
                         </tbody>
