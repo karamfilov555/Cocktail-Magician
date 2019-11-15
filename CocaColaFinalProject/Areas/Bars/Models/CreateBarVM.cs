@@ -38,6 +38,8 @@ namespace CM.Web.Areas.Bars.Models
         public IFormFile BarImage { set; get; }
 
         public List<SelectListItem> AllCocktails { get; set; } = new List<SelectListItem>();
+        public List<SelectListItem> AllCountries { get; set; } = new List<SelectListItem>();
+
         [Required(ErrorMessage = "You must specify cocktails for the bar!")]
         public List<string> AllCocktailsIDs { get; set; } = new List<string>();
         public List<BarCocktail> CocktailsInBar { get; set; } = new List<BarCocktail>();

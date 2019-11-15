@@ -61,6 +61,15 @@
                     </div>
                 </div>
                 <div class="form-group">
+                    <div class="js-example-basic-single">
+                        <label asp-for="Country" class="control-label">Choose country:</label>
+                        <select asp-for="Country" asp-items="@Model.AllCountries" class="form-control">
+                            <option hidden disabled selected value=""></option>
+                        </select>
+
+                    </div>
+                </div>
+                <div class="form-group">
                     <input type="submit" value="Create" class="btn btn-primary" />
                 </div>
             </form>
@@ -72,3 +81,10 @@
     </div>
 
 </center>
+
+<script>
+
+    $(document).ready(function() {
+    $('.js-example-basic-single').select2();
+});
+</script>

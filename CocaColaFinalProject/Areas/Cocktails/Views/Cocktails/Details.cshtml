@@ -43,7 +43,7 @@
 @foreach (var item in Model.BarCocktails)
 {
 
-    var addressNew = item.Bar.Address.Country + ", " + item.Bar.Address.City + ", "+ item.Bar.Address.Details;
+    var addressNew = item.Bar.Address.Country.Name + ", " + item.Bar.Address.City + ", "+ item.Bar.Address.Details;
 
     <div class="eventBox">
         <span class="date">SEP <span>06</span></span>

@@ -1,49 +1,49 @@
 [
   {
     "Id": "1",
-    "Country": "United Kingdom",
+    "CountryId": "1",
     "City": "London",
     "Details": "The Savoy Hotel, 100 Strand, WC2R 0EZ",
     "BarID": "1"
   },
   {
     "Id": "2",
-    "Country": "Singapore",
+    "CountryId": "3",
     "City": "Singapore",
     "Details": "1 Cuscaden Road, WC2R 0EZ",
     "BarID": "2"
   },
   {
     "Id": "3",
-    "Country": "United States",
+    "CountryId": "2",
     "City": "New York City",
     "Details": "NoMad Hotel, 10 West 28th Street, NY 10001-6403",
     "BarID": "3"
   },
   {
     "Id": "4",
-    "Country": "United Kingdom",
+    "CountryId": "1",
     "City": "London",
     "Details": "Carlos Place, Mayfair, W1K 2AL",
     "BarID": "4"
   },
   {
     "Id": "5",
-    "Country": "Greece",
+    "CountryId": "4",
     "City": "Athens",
     "Details": "105, 61 Praxitelous 30",
     "BarID": "5"
   },
   {
     "Id": "6",
-    "Country": "United States",
+    "CountryId": "2",
     "City": "New York",
     "Details": "79-81 MacDougal Street, 10012",
     "BarID": "6"
   },
   {
     "Id": "7",
-    "Country": "China",
+    "CountryId": "5",
     "City": "Hong Kong",
     "Details": "Lower G/F, 37-39 Aberdeen Street, Soho, Central",
     "BarID": "7"

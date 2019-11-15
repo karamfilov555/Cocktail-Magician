@@ -8,6 +8,7 @@ namespace CM.DTOs
 {
     public class CocktailDto
     {
+        
         // some validations ?
         [Key]
         public string Id { get; set; }

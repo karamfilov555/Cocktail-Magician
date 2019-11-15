@@ -33,7 +33,7 @@ namespace CM.DTOs.Mappers
             newBarDTO.DateDeleted = bar.DateDeleted;
             if (bar.Address != null)
             {
-                newBarDTO.Country = bar.Address.Country;
+                newBarDTO.Country = bar.Address.Country.Name;
                 newBarDTO.City = bar.Address.City;
                 newBarDTO.Details = bar.Address.Details;
             }

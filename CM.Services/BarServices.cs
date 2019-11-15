@@ -40,13 +40,14 @@ namespace CM.Services
             var bar = await _context.Bars
                 .Where(b => b.Id == id)
                 .Include(b=>b.Address)
+                .ThenInclude(a=>a.Country)
                 .Include(b => b.BarCocktails)
                 .ThenInclude(b => b.Cocktail)
                 .FirstOrDefaultAsync()
                 .ConfigureAwait(false);
             bar.ValidateIfNull();
             var barDTO = bar.MapBarToDTO();
-            barDTO.Country = bar.Address.Country;
+            barDTO.Country = bar.Address.Country.Name;
             barDTO.City = bar.Address.City;
             barDTO.Details = bar.Address.Details;
             return barDTO;
@@ -154,6 +155,16 @@ namespace CM.Services
                                                   //Change the method;s name ?
             var allBarsDtos = bars.Select(b => b.MapBarToDTOWithFullAdress()).ToList();
             return allBarsDtos;
+        }
+
+        public async Task<ICollection<CountryDTO>> GetAllCountries()
+        {
+            var countries = _context.Countries;
+            var countriesDTO = await countries.Select(c => new CountryDTO
+            { Id = c.Id,
+                Name = c.Name
+            }).ToListAsync();
+            return countriesDTO;
         }
     }
 }

@@ -90,8 +90,11 @@ namespace CM.Web.Areas.Bars.Controllers
         public async Task<IActionResult> Create()
         {
             var allCocktails = await _cocktailServices.GetAllCocktails();
+            var allCountries = await _barServices.GetAllCountries();
             var createBarVM = new CreateBarVM();
             createBarVM.AllCocktails = allCocktails
+                .Select(c => new SelectListItem(c.Name, c.Id)).ToList();
+            createBarVM.AllCountries = allCountries
                 .Select(c => new SelectListItem(c.Name, c.Id)).ToList();
             return View(createBarVM);
         }

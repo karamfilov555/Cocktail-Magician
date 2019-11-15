@@ -41,6 +41,7 @@ namespace CM.Services
         }
         public async Task<CocktailDto> FindCocktailById(string id)
         {
+            
             // INCLUDE !!
             var cocktail = await _context.Cocktails
                                             .Include(c => c.Reviews)
@@ -50,10 +51,10 @@ namespace CM.Services
                                             .Include(c => c.BarCocktails)
                                             .ThenInclude(c => c.Bar)
                                             .ThenInclude(c => c.Address)
+                                            .ThenInclude(b=>b.Country)
                                             .FirstOrDefaultAsync(c => c.Id == id
                                              && c.DateDeleted == null)
                                             .ConfigureAwait(false);
-
             var cocktailDto = cocktail.MapToCocktailDto();
 
             return cocktailDto;
@@ -122,6 +123,7 @@ namespace CM.Services
         }
         public async Task<string> GetCocktailNameById(string id)
         {
+                
             var cocktail = await _context.Cocktails.FirstAsync(c => c.Id == id);
             return cocktail.Name;
         }

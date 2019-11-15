@@ -13,6 +13,7 @@ namespace CM.DTOs
         public decimal Rating { get; set; }
         public String ImageUrl { get; set; }
         public IFormFile BarImage { set; get; }
+        public string CountryId { get; set; }
         public String Country { get; set; }
         public String City { get; set; }
         public String Details { get; set; }
@@ -26,7 +27,7 @@ namespace CM.DTOs
 
         public BarDTO()
         {
-           
+
         }
     }
 }

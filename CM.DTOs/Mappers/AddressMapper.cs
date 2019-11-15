@@ -10,7 +10,8 @@ namespace CM.DTOs.Mappers
         public static Address MapBarDTOToAddress(this BarDTO bar)
         {
             var newAddress = new Address();
-            newAddress.Country = bar.Country;
+
+            newAddress.CountryId = bar.CountryId;
             newAddress.City = bar.City;
             newAddress.Details = bar.Details;
             return newAddress;

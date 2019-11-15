@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CM.Data.Migrations
 {
     [DbContext(typeof(CMContext))]
-    [Migration("20191112225906_boom")]
+    [Migration("20191115120817_boom")]
     partial class boom
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -30,7 +30,7 @@ namespace CM.Data.Migrations
 
                     b.Property<string>("City");
 
-                    b.Property<string>("Country");
+                    b.Property<string>("CountryId");
 
                     b.Property<string>("Details");
 
@@ -39,6 +39,8 @@ namespace CM.Data.Migrations
                     b.HasIndex("BarId")
                         .IsUnique()
                         .HasFilter("[BarId] IS NOT NULL");
+
+                    b.HasIndex("CountryId");
 
                     b.ToTable("Addresses");
                 });
@@ -307,6 +309,18 @@ namespace CM.Data.Migrations
                     b.ToTable("CocktailReviewLikes");
                 });
 
+            modelBuilder.Entity("CM.Models.Country", b =>
+                {
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Name");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Countries");
+                });
+
             modelBuilder.Entity("CM.Models.Ingredient", b =>
                 {
                     b.Property<string>("Id")
@@ -439,6 +453,10 @@ namespace CM.Data.Migrations
                     b.HasOne("CM.Models.Bar", "Bar")
                         .WithOne("Address")
                         .HasForeignKey("CM.Models.Address", "BarId");
+
+                    b.HasOne("CM.Models.Country", "Country")
+                        .WithMany("Adresses")
+                        .HasForeignKey("CountryId");
                 });
 
             modelBuilder.Entity("CM.Models.BarCocktail", b =>

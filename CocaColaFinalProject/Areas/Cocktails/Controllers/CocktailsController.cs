@@ -81,6 +81,8 @@ namespace CM.Web.Areas.Cocktails.Controllers
         public async Task<IActionResult> Create()
         {
             //expouse-vame ctx model
+
+            //review this block
             var ingr = await _ingredientServices.GetAllIngredientsNames();
             var createCocktailVM = new CreateCocktailViewModel();
             createCocktailVM.IngredientsNames.Add(new SelectListItem("Choose an igredient", ""));

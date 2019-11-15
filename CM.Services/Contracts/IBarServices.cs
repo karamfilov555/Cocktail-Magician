@@ -14,6 +14,7 @@ namespace CM.Services.Contracts
         Task<string> Delete(string id);
         Task<string> Update(BarDTO barDTO);
         Task<ICollection<BarDTO>> GetAllBarsByName(string searchCriteria);
+        Task<ICollection<CountryDTO>> GetAllCountries();
 
     }
 }
