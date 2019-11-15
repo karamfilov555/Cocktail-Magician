@@ -324,10 +324,13 @@ namespace CM.Data.Migrations
                     b.Property<string>("Id")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<string>("Brand");
+
+                    b.Property<string>("Country");
+
                     b.Property<DateTime?>("DateDeleted");
 
-                    b.Property<string>("Name")
-                        .IsRequired();
+                    b.Property<string>("Name");
 
                     b.HasKey("Id");
 
@@ -512,7 +515,7 @@ namespace CM.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("CM.Models.Ingredient", "Ingredient")
-                        .WithMany("CocktailIngredients")
+                        .WithMany()
                         .HasForeignKey("IngredientId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });

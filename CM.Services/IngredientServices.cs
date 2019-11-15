@@ -1,4 +1,6 @@
 ﻿using CM.Data;
+using CM.DTOs;
+using CM.DTOs.Mappers;
 using CM.Models;
 using CM.Services.Contracts;
 using Microsoft.EntityFrameworkCore;
@@ -16,6 +18,18 @@ namespace CM.Services
         public IngredientServices(CMContext context)
         {
             _context = context;
+        }
+        public async Task<IList<IngredientDTO>> GetAllIngredients()
+        {
+             return await  _context.Ingredients
+                                   .Select(i=>i.MapToDtoModel())
+                                   .ToListAsync();
+        }
+        public async Task AddIngredient(IngredientDTO ingredientDto)
+        {
+            var ingredientCtx = ingredientDto.MapToCtxModel();
+            _context.Add(ingredientCtx);
+            await _context.SaveChangesAsync();
         }
         public async Task<string> GetIngredientNameById(string id)
         {

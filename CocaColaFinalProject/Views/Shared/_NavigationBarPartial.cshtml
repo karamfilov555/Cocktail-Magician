@@ -11,10 +11,6 @@
         {
             <li><a asp-area="Bars" asp-controller="Bars" asp-action="Create">Add new bar</a></li>
         }
-        @*<li><a href="3_shortcodes_contact.html">List</a></li>
-            <li><a href="4_buttons_typography.html">Typography</a></li>
-            <li><a href="5_shortcodes_elements.html">Elements</a></li>
-            <li><a href="6_images_sliders.html">Sliders</a></li>*@
     </ul>
 </li>
 <li class="dropdown">
@@ -25,12 +21,18 @@
         {
             <li><a asp-area="Cocktails" asp-controller="Cocktails" asp-action="Create">Add new cocktail</a></li>
         }
-        @*<li><a href="3_shortcodes_contact.html">List</a></li>
-            <li><a href="4_buttons_typography.html">Typography</a></li>
-            <li><a href="5_shortcodes_elements.html">Elements</a></li>
-            <li><a href="6_images_sliders.html">Sliders</a></li>*@
     </ul>
 </li>
+@if (User.IsInRole("Administrator") || User.IsInRole("Manager"))
+{
+    <li class="dropdown">
+        <a asp-area="Ingredients" asp-controller="Ingredients" asp-action="Index" class="dropdown-toggle">Ingredients</a>
+        <ul class="dropdown-menu">
+            <li><a asp-area="Ingredients" asp-controller="Ingredients" asp-action="Index">Ingredients List</a></li>
+            <li><a asp-area="Ingredients" asp-controller="Ingredients" asp-action="Create">Add new Ingredient</a></li>
+        </ul>
+    </li>
+}
 @if (User.IsInRole("Administrator"))
 {
     <li><a asp-area="" asp-controller="AppUser" asp-action="ListUsers">Users</a></li>
