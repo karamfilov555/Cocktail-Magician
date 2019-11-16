@@ -24,15 +24,17 @@ namespace CM.Services
            _fileUploadService = fileUploadService;
         }
 
-        public async Task<ICollection<BarDTO>> GetHomePageBars()
+        public async Task<ICollection<HomePageBarDTO>> GetHomePageBars()
         {
-            //TODO reduce number and get only required fields
             var bars = await _context.Bars
+                .Include(b=>b.Address)
                 .Where(b => b.DateDeleted == null)
+                .OrderByDescending(b=>b.BarRating)
+                .Take(5)
+                .Select(b=>b.MapBarToHomePageBarDTO())
                 .ToListAsync()
                 .ConfigureAwait(false);
-            var barDTOs = bars.Select(b => b.MapBarToDTO()).ToList();
-            return barDTOs;
+            return bars;
         }
 
         public async Task<BarDTO> GetBarByID(string id)

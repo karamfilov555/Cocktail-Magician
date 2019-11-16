@@ -39,6 +39,16 @@ namespace CM.Web.Mappers
             return newBarVM;
         }
 
+        public static HomePageBarViewModel MapToHomePageBarVM(this HomePageBarDTO bar)
+        {
+            var homePageBarVM = new HomePageBarViewModel();
+            homePageBarVM.Id = bar.Id;
+            homePageBarVM.Name = bar.Name;
+            homePageBarVM.City = bar.City;
+            homePageBarVM.ImageUrl = bar.ImageUrl;
+            return homePageBarVM;
+        }
+
         public static BarDTO MapBarVMToDTO(this CreateBarVM bar)
         {
             var newBarDTO = new BarDTO();

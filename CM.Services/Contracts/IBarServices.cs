@@ -7,7 +7,7 @@ namespace CM.Services.Contracts
 {
     public interface IBarServices
     {
-        Task<ICollection<BarDTO>> GetHomePageBars();
+        Task<ICollection<HomePageBarDTO>> GetHomePageBars();
         Task<BarDTO> GetBarByID(string id);
         Task<PaginatedList<BarDTO>> GetAllBars(int? pageNumber, string sortOrder);
         Task<string> AddBar(BarDTO barDTO);

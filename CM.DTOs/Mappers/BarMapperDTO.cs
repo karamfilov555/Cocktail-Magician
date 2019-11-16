@@ -21,6 +21,16 @@ namespace CM.DTOs.Mappers
             return newBarDTO;
         }
 
+        public static HomePageBarDTO MapBarToHomePageBarDTO(this Bar bar)
+        {
+            var newBarDTO = new HomePageBarDTO();
+            newBarDTO.Id = bar.Id;
+            newBarDTO.Name = bar.Name;
+            newBarDTO.ImageUrl = bar.Image;
+            newBarDTO.City = bar.Address.City;
+            return newBarDTO;
+        }
+
         public static BarDTO MapBarToDTOWithFullAdress(this Bar bar)
         {
             var newBarDTO = new BarDTO();

@@ -4,7 +4,7 @@
 @inject UserManager<AppUser> UserManager
 @inject CM.Services.Contracts.INotificationServices notificationServices
 
-@{ 
+@{
 
     var profilePicture = ViewData["IMG"];
 }
@@ -37,9 +37,14 @@
         </ul>
     }
 
-    <ul class="smallSocials">
+    <ul class="smallSocials" style="padding-left:500px">
+        <li>
+            <img src="@profilePicture" width="40" align="left" />
+        </li>
+
         <li class="dropdown active">
-            <a class="btn twitter" asp-area="Identity" asp-page="/Account/Manage/Index"><font size="5">Hello @User.Identity.Name!</font></a>
+            <a class="btn twitter" asp-area="Identity" asp-page="/Account/Manage/Index"><font size="5">                  Hello @User.Identity.Name!</font></a>
+
             <ul class="dropdown-menu" style="background-color:brown">
                 <li style="background-color:brown">
                     <form class="form-inline" asp-area="Identity" asp-page="/Account/Manage/Index">
@@ -58,6 +63,8 @@
                 </li>
             </ul>
         </li>
+
+
     </ul>
 }
 else

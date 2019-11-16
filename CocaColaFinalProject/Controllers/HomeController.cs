@@ -28,7 +28,7 @@ namespace CocaColaFinalProject.Controllers
             var cocktailDtos =  await _cocktailServices.GetCocktailsForHomePage();
             var cocktailsVM = cocktailDtos.Select(c => c.MapToCocktailViewModel()).ToList();
             var barDTOs = await _barServices.GetHomePageBars();
-            var barsVM = barDTOs.Select(b => b.MapBarToVM()).ToList();
+            var barsVM = barDTOs.Select(b => b.MapToHomePageBarVM()).ToList();
             var homePageVM = new HomePageViewModel(barsVM, cocktailsVM);
             return View(homePageVM);
         }
