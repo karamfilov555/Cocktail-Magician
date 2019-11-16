@@ -17,6 +17,7 @@ namespace CM.Web.Mappers
                 newAppUserVM.Username = user.Username;
                 newAppUserVM.Email = user.Email;
                 newAppUserVM.Role = user.Role;
+                newAppUserVM.ImageURL = user.ImageURL;
 
             return newAppUserVM;
             }

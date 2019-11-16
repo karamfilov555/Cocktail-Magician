@@ -4,6 +4,11 @@
 @inject UserManager<AppUser> UserManager
 @inject CM.Services.Contracts.INotificationServices notificationServices
 
+@{ 
+
+    var profilePicture = ViewData["IMG"];
+}
+
 @if (SignInManager.IsSignedIn(User))
 {
     if (User.IsInRole("Administrator"))

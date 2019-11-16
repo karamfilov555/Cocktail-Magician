@@ -13,6 +13,7 @@ namespace CM.DTOs.Mappers
             userDTO.Id = user.Id;
             userDTO.Username = user.UserName;
             userDTO.Email = user.Email;
+            userDTO.ImageURL = user.ImageURL;
             return userDTO;
         }
     }

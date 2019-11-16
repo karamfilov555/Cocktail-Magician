@@ -4,6 +4,7 @@ using CM.Web.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace CocaColaFinalProject.Controllers
@@ -12,14 +13,18 @@ namespace CocaColaFinalProject.Controllers
     {
         private readonly ICocktailServices _cocktailServices;
         private readonly IBarServices _barServices;
+        private readonly IAppUserServices _appUserServices;
 
-        public HomeController(ICocktailServices cocktailServices, IBarServices barServices)
+        public HomeController(ICocktailServices cocktailServices, IBarServices barServices, IAppUserServices appUserServices)
         {
             _cocktailServices = cocktailServices;
             _barServices = barServices;
+            _appUserServices = appUserServices;
         }
         public async Task<IActionResult> Index()
         {
+            var userID = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            ViewData["IMG"] = await _appUserServices.GetProfilePictureURL(userID);
             var cocktailDtos =  await _cocktailServices.GetCocktailsForHomePage();
             var cocktailsVM = cocktailDtos.Select(c => c.MapToCocktailViewModel()).ToList();
             var barDTOs = await _barServices.GetHomePageBars();

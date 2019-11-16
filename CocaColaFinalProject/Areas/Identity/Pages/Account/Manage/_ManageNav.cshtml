@@ -2,6 +2,7 @@
 
 @{
     var hasExternalLogins = (await SignInManager.GetExternalAuthenticationSchemesAsync()).Any();
+    var profilePicture = ViewData["IMG"];
 }
 @*<ul class="nav nav-pills flex-column">
         <li class="nav-item"><a class="nav-link @ManageNavPages.IndexNavClass(ViewContext)" id="profile" asp-page="./Index">Profile</a></li>
@@ -14,15 +15,18 @@
         <li class="nav-item"><a class="nav-link @ManageNavPages.PersonalDataNavClass(ViewContext)" id="personal-data" asp-page="./PersonalData">Personal data</a></li>
     </ul>*@
 
-<div class="widget widget_categories">
-    <ul>
-        <li class="nav-item"><a class="nav-link @ManageNavPages.IndexNavClass(ViewContext)" id="profile" asp-page="./Index"><h4>Profile</h4></a></li>
-        <li class="nav-item"><a class="nav-link @ManageNavPages.ChangePasswordNavClass(ViewContext)" id="change-password" asp-page="./ChangePassword"><h4>Password</h4></a></li>
-        @if (hasExternalLogins)
-        {
-            <li id="external-logins" class="nav-item"><a id="external-login" class="nav-link @ManageNavPages.ExternalLoginsNavClass(ViewContext)" asp-page="./ExternalLogins">External logins</a></li>
-        }
+    <div class="widget widget_categories">
+        
+            <img src="@profilePicture" />
+            <br/>
+        <ul>
+            <li class="nav-item"><a class="nav-link @ManageNavPages.IndexNavClass(ViewContext)" id="profile" asp-page="./Index"><h4>Profile</h4></a></li>
+            <li class="nav-item"><a class="nav-link @ManageNavPages.ChangePasswordNavClass(ViewContext)" id="change-password" asp-page="./ChangePassword"><h4>Password</h4></a></li>
+            @if (hasExternalLogins)
+            {
+                <li id="external-logins" class="nav-item"><a id="external-login" class="nav-link @ManageNavPages.ExternalLoginsNavClass(ViewContext)" asp-page="./ExternalLogins">External logins</a></li>
+            }
 
-        <li class="nav-item"><a class="nav-link @ManageNavPages.PersonalDataNavClass(ViewContext)" id="personal-data" asp-page="./PersonalData"><h4>Delete account</h4></a></li>
-    </ul>
-</div>
+            <li class="nav-item"><a class="nav-link @ManageNavPages.PersonalDataNavClass(ViewContext)" id="personal-data" asp-page="./PersonalData"><h4>Delete account</h4></a></li>
+        </ul>
+    </div>

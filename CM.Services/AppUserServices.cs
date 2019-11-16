@@ -31,6 +31,34 @@ namespace CM.Services
             user.ValidateIfNull();
             return user;
         }
+
+        public async Task<AppUserDTO> GetUserDToByID(string id)
+        {
+            var user = await this.GetUserByID(id);
+            user.ValidateIfNull();
+            return user.MapToAppUserDTO();
+        }
+
+        public async Task<string> GetProfilePictureURL(string id)
+        {
+
+            var pictureURL = await _context.Users.Where(u=>u.Id==id)
+                .Select(u=>u.ImageURL)
+                .FirstOrDefaultAsync();
+            
+            return pictureURL;
+        }
+
+        public async Task SetProfilePictureURL(string userId, string url)
+        {
+
+            var user = await _context.Users.Where(u => u.Id == userId && u.DateDeleted==null)
+                .FirstOrDefaultAsync();
+            user.ValidateIfNull("No such user!");
+            user.ImageURL = url;
+            await _context.SaveChangesAsync();
+           
+        }
         public async Task<string> GetUsernameById(string id)
         {
             if (id == null)

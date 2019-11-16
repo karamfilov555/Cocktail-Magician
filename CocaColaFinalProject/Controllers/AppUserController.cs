@@ -1,7 +1,9 @@
 ﻿using CM.Services.Contracts;
 using CM.Web.Mappers;
+using CM.Web.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace CM.Web.Controllers
@@ -33,6 +35,19 @@ namespace CM.Web.Controllers
         {
             await _appUserServices.Delete(id);
             return RedirectToAction("ListUsers", "AppUser");
+        }
+
+        public async Task<IActionResult> CurrentUser()
+        {
+            var userID = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var viewModel = new AppUserViewModel();
+            if (userID==null)
+            {
+                return View(viewModel);
+            }
+            var user = await _appUserServices.GetUserDToByID(userID);
+            viewModel = user.MapAppUserToVM();
+            return View(viewModel);
         }
     }
 }

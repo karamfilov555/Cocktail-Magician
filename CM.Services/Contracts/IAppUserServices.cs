@@ -13,5 +13,8 @@ namespace CM.Services.Contracts
         Task<string> GetUsernameById(string id);
         Task<AppUser> GetAdmin();
         Task<AppUser> GetUserByUsernameAsync(string username);
+        Task<string> GetProfilePictureURL(string id);
+        Task<AppUserDTO> GetUserDToByID(string id);
+        Task SetProfilePictureURL(string userId, string url);
     }
 }

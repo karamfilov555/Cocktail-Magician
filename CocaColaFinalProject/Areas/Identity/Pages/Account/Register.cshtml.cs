@@ -21,7 +21,7 @@ namespace CM.Web.Areas.Identity.Pages.Account
     {
         private readonly SignInManager<AppUser> _signInManager;
         private readonly UserManager<AppUser> _userManager;
-        private readonly ILogger<RegisterModel> _logger;        
+        private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
         private readonly IFileUploadService _fileUploadService;
         private readonly IToastNotification _toast;
@@ -39,7 +39,7 @@ namespace CM.Web.Areas.Identity.Pages.Account
             _logger = logger;
             _emailSender = emailSender;
             _fileUploadService = fileUploadService;
-           _toast = toast;
+            _toast = toast;
         }
 
         [BindProperty]
@@ -52,7 +52,7 @@ namespace CM.Web.Areas.Identity.Pages.Account
         public class InputModel
         {
             [Required]
-           
+
             public string Username { get; set; }
             [Required]
             [EmailAddress]
@@ -82,20 +82,28 @@ namespace CM.Web.Areas.Identity.Pages.Account
             returnUrl = returnUrl ?? Url.Content("~/");
             if (ModelState.IsValid)
             {
-                var imageSizeInKb = Input.Image.Length / 1024;
-                var type = Input.Image.ContentType;
-                if (type != "image/jpeg" && type != "image/jpg" && type != "image/png")
+                string uniqueFileNamePath;
+                if (Input.Image != null)
                 {
-                    _toast.AddErrorToastMessage($"Allowed picture formats: \".jpg\", \".jpeg\" and \".png\"!");
-                    return Page();
+                    var imageSizeInKb = Input.Image.Length / 1024;
+                    var type = Input.Image.ContentType;
+                    if (type != "image/jpeg" && type != "image/jpg" && type != "image/png")
+                    {
+                        _toast.AddErrorToastMessage($"Allowed picture formats: \".jpg\", \".jpeg\" and \".png\"!");
+                        return Page();
+                    }
+                    if (imageSizeInKb > 100)
+                    {
+                        _toast.AddErrorToastMessage($"The picture size is too big! Maximum size: 100 kb");
+                        return Page();
+                    }
+                uniqueFileNamePath = _fileUploadService.UploadFile(Input.Image);
                 }
-                if (imageSizeInKb > 100)
+                else
                 {
-                    _toast.AddErrorToastMessage($"The picture size is too big! Maximum size: 100 kb");
-                    return Page();
+                    uniqueFileNamePath = "/images/hat.jpg";
                 }
-                var uniqueFileNamePath = _fileUploadService.UploadFile(Input.Image);
-                var user = new AppUser { UserName = Input.Username, Email = Input.Email, ImageURL= uniqueFileNamePath };
+                var user = new AppUser { UserName = Input.Username, Email = Input.Email, ImageURL = uniqueFileNamePath };
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 await _userManager.AddToRoleAsync(user, "Member");
                 if (result.Succeeded)
