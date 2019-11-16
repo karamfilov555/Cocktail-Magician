@@ -1,6 +1,7 @@
 ﻿using CM.Services.Contracts;
 using CM.Web.Mappers;
 using CM.Web.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
 using System.Security.Claims;
@@ -30,12 +31,24 @@ namespace CM.Web.Controllers
             await _appUserServices.ConvertToManager(id);
             return RedirectToAction("ListUsers", "AppUser");
         }
-
+        
+        [Authorize(Roles = "Administrator")]
+        [HttpGet]
         public async Task<IActionResult> Delete(string id)
+        {
+            var userDTO = await _appUserServices.GetUserDToByID(id);
+            var appUserVM = userDTO.MapAppUserToVM();
+            return View(appUserVM);
+        }
+
+        [Authorize(Roles = "Administrator")]
+        [HttpPost]
+        public async Task<IActionResult> DeleteConfirmed(string id)
         {
             await _appUserServices.Delete(id);
             return RedirectToAction("ListUsers", "AppUser");
         }
+
 
         public async Task<IActionResult> CurrentUser()
         {

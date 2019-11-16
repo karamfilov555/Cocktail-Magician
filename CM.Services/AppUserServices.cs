@@ -36,16 +36,16 @@ namespace CM.Services
         {
             var user = await this.GetUserByID(id);
             user.ValidateIfNull();
-            return user.MapToAppUserDTO();
+            var userDTO= user.MapToAppUserDTO();
+            userDTO.Role =await this.GetRole(user);
+            return userDTO;
         }
 
         public async Task<string> GetProfilePictureURL(string id)
         {
-
             var pictureURL = await _context.Users.Where(u=>u.Id==id)
                 .Select(u=>u.ImageURL)
                 .FirstOrDefaultAsync();
-            
             return pictureURL;
         }
 
@@ -78,21 +78,27 @@ namespace CM.Services
             var userDTOs = new List<AppUserDTO>();
             foreach (var user in users)
             {
-                var roles = await _userManager.GetRolesAsync(user).ConfigureAwait(false);
-                string role;
-                if (roles.Count == 0)
-                {
-                    role = "No role";
-                }
-                else
-                {
-                    role = roles[0];
-                }
                 var newDTO = user.MapToAppUserDTO();
-                newDTO.Role = role;
+                
+                newDTO.Role = await GetRole(user); ;
                 userDTOs.Add(newDTO);
             }
             return userDTOs;
+        }
+
+        private async Task<string> GetRole(AppUser user)
+        {
+            var roles = await _userManager.GetRolesAsync(user).ConfigureAwait(false);
+            string role;
+            if (roles.Count == 0)
+            {
+                role = "No role";
+            }
+            else
+            {
+                role = roles[0];
+            }
+            return role;
         }
 
         public async Task ConvertToManager(string id)
