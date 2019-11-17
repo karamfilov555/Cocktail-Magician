@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CM.Data.Migrations
 {
     [DbContext(typeof(CMContext))]
-    [Migration("20191115125614_initial")]
-    partial class initial
+    [Migration("20191117172243_boom")]
+    partial class boom
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -234,6 +234,8 @@ namespace CM.Data.Migrations
                     b.Property<string>("CocktailId");
 
                     b.Property<string>("IngredientId");
+
+                    b.Property<string>("Name");
 
                     b.Property<int>("Quantity");
 

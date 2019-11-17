@@ -233,6 +233,8 @@ namespace CM.Data.Migrations
 
                     b.Property<string>("IngredientId");
 
+                    b.Property<string>("Name");
+
                     b.Property<int>("Quantity");
 
                     b.Property<string>("Unit")

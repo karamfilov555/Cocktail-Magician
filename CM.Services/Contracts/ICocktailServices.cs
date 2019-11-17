@@ -21,5 +21,6 @@ namespace CM.Services.Contracts
         Task<bool> CheckIfCocktailExist(string id);
         Task<string> GetCocktailIdByName(string cocktailName);
         Task<string> GetCocktailRecepie(string id);
+        Task<string> Update(CocktailDto cocktailDto);
     }
 }

@@ -69,6 +69,7 @@ namespace CocaColaFinalProject
             services.AddScoped<IStreamWriterServices, StreamWriterServices>();
             services.AddScoped<INotificationManager, NotificationManager>();
             services.AddScoped<INotificationServices, NotificationServices>();
+            services.AddScoped<IRecipeServices, RecipeServices>();
 
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);

@@ -8,6 +8,7 @@ namespace CM.Models
     {
         public string Id { get; set; }
         public string IngredientId { get; set; }
+        public string Name { get; set; }
         public Ingredient Ingredient { get; set; }
         public int Quantity { get; set; }
         public Unit Unit { get; set; }

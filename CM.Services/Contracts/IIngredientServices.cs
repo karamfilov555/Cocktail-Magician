@@ -13,5 +13,6 @@ namespace CM.Services.Contracts
         Task<string> GetIngredientNameById(string id);
         Task<ICollection<String>> GetAllIngredientsNames();
         Task<IList<IngredientDTO>> GetAllIngredients();
+        Task<string> GetIngredientIdByName(string name);
     }
 }

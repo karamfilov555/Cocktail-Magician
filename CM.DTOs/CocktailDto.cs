@@ -12,6 +12,8 @@ namespace CM.DTOs
         // some validations ?
         [Key]
         public string Id { get; set; }
+        public string CocktailId { get; set; }
+        public string IngredientId { get; set; }
 
         //care B-52 ;)
         [Display(Name = "Cocktail's Name")]
@@ -30,12 +32,12 @@ namespace CM.DTOs
         // model?
         public List<CocktailComponentDTO> Ingredients { get; set; }
             = new List<CocktailComponentDTO>();
-        public List<CocktailIngredient> CocktailIngredients { get; set; }
-            = new List<CocktailIngredient>();
+        //public List<CocktailIngredient> CocktailIngredients { get; set; }
+        //    = new List<CocktailIngredient>();
         public List<BarCocktail> BarCocktails { get; set; }
-           = new List<BarCocktail>();
+           = new List<BarCocktail>(); // todo
         public ICollection<CocktailReview> CocktailReviews { get; set; }
-           = new List<CocktailReview>();
+           = new List<CocktailReview>(); //todo
         public DateTime? DateDeleted { get; set; }
         public string Recipe { get; set; }
         public int LikeCount { get; set; }

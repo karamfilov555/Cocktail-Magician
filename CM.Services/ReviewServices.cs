@@ -64,7 +64,7 @@ namespace CM.Services
                                     .Include(r => r.User)
                                     .Include(r => r.CocktailReviewLikes)
                                     .Include(r => r.Cocktail)
-                                    .Select(r => r.BarMapReviewToDTO())
+                                    .Select(r => r.MapReviewToDTO())
                                     .ToListAsync();
 
 

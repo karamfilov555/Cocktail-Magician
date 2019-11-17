@@ -1,6 +1,7 @@
 ﻿using CM.DTOs;
 using CM.Models;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
@@ -31,14 +32,21 @@ namespace CM.Web.Areas.Cocktails.Models
 
         public IFormFile CocktailImage { set; get; }
 
-        public List<SelectListItem> Ingredients { get; set; } = new List<SelectListItem>();
         public List<string> IngredientsIDs { get; set; } = new List<string>();
-        public List<CocktailComponentDTO> CocktailComponents { get; set; } = new List<CocktailComponentDTO>();
-        public List<CocktailIngredient> CocktailIngredients { get; set; } = new List<CocktailIngredient>();
+        public List<CocktailComponentViewModel> CocktailComponents { get; set; } = new List<CocktailComponentViewModel>();
+
         public List<BarCocktail> BarCocktails { get; set; } = new List<BarCocktail>();
+        //make view model
         public DateTime? DateDeleted { get; set; }
         public string Recepie { get; set; }
         public int LikeCount { get; set; }
         public List<string> LikeByUsers { get; set; }
+        public List<SelectListItem> AllIngredients { get; set; } 
+                                        = new List<SelectListItem>();
+        public List<SelectListItem> IngredientsNames { get; set; } = new List<SelectListItem>();
+        [BindProperty]
+        public List<CocktailComponentViewModel> Ingredients { get; set; }
+        public List<string> AllIngredientsCocktail { get; set; } = new List<string>();
+        public string Recipe { get; set; }
     }
 }

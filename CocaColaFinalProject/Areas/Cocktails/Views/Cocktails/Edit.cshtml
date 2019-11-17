@@ -1,0 +1,78 @@
+﻿@model CocktailViewModel
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Views/Shared/_LayoutCustom.cshtml";
+}
+
+    <center>
+        <h1>Edit Cocktail's Details</h1>
+
+        <hr />
+        <div class="row">
+            <div class="col-md-4 col-md-offset-4">
+                <form asp-area="Cocktails" asp-controller="Cocktails" asp-action="Edit" method="post"
+                      enctype="multipart/form-data">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input type="hidden" asp-for="Id" />
+                    <div class="form-group">
+                        <label asp-for="Name" class="control-label"></label>
+                        <input asp-for="Name" class="form-control" />
+                        <span asp-validation-for="Name" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="@Model.CocktailImage" class="control-label">Upload Image</label>
+                        <input asp-for="@Model.CocktailImage" class="btn btn-primary btn-sm" />
+                    </div>
+                    <div>
+                        <label>Add Ingredients</label>
+                        <table id="ingredients" class="table table-responsive">
+                            <tbody>
+                                <tr>
+                                    <th width="50%" valign="middle"><h6>Ingredient</h6></th>
+                                    <th><h6>Quantity</h6></th>
+                                    <th><h6>Units</h6></th>
+                                    <th></th>
+                                </tr>
+                                <tr class="tableRow">
+                                    <td>
+                                        <select id="selectmenu" asp-for="@Model.Ingredients[0].Ingredient" 
+                                                class="select-editable form-control" asp-items="@Model.IngredientsNames"
+                                                input="text" placeholder="Choose Ingredients..."></select>
+                                    </td>
+                                    <td>
+                                        <input asp-for="@Model.Ingredients[0].Quantity" class="form-control" />
+                                    </td>
+                                    <td>
+                                        <select class="form-control" asp-for="@Model.Ingredients[0].Unit" asp-items="Html.GetEnumSelectList<Unit>()">
+                                            <option hidden disabled selected value="">Choose Unit Type:</option>
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <a class="xSignIngredients" onclick="removeRow(this)"><i class="fa fa-times"></i></a>
+                                    </td>
+                                </tr>
+                            </tbody>
+
+                        </table>
+                        <input type="hidden" value="0" id="total_row">
+                        <input class="btn btn-success btn-sm" type="button" onclick="addRow()" value="+ Add more ingredients">
+
+                        <br />
+                        <br />
+                    </div>
+                    <div class="form-group">
+
+                        <textarea asp-for="@Model.Recipe" class="form-control" placeholder="Write the full recepie here..."> </textarea>
+
+                    </div>
+               
+                    <div class="form-group">
+                        <input type="submit" value="Save" class="btn btn-primary" />
+                        <a class="btn btn-default" asp-controller="Home" asp-action="Index">Cancel</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </center>

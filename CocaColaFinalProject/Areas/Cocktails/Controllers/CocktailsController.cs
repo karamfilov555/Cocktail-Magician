@@ -151,12 +151,13 @@ namespace CM.Web.Areas.Cocktails.Controllers
             currPage = currPage ?? 1;
 
             var fiveSortedCocktailsDtos = await _cocktailServices
-                                                    .GetFiveSortedCocktailsAsync(sortOrder, (int)currPage);
-           
-            var totalPages = await _cocktailServices.GetPageCountForCocktials(5);
+                                    .GetFiveSortedCocktailsAsync(sortOrder, (int)currPage);
+
+            var totalPages = await _cocktailServices
+                                    .GetPageCountForCocktials(5);
 
             var fiveSortedCocktailsVm = fiveSortedCocktailsDtos
-                                                    .Select(c => c.MapToCocktailViewModel()).ToList();
+                                    .Select(c => c.MapToCocktailViewModel()).ToList();
 
             var litingViewModel = new CocktailsListingViewModel()
             {
@@ -186,11 +187,11 @@ namespace CM.Web.Areas.Cocktails.Controllers
             {
                 return PartialView("_CocktailsGrid", litingViewModel);
             }
-            
+
             return PartialView("_LoadMorePartial", litingViewModel);
             //return View(allCocktailsVms.ToList());
         }
-       
+
         [HttpGet]
         [Authorize]
         public async Task<IActionResult> RateCocktail(string Id)
@@ -202,7 +203,7 @@ namespace CM.Web.Areas.Cocktails.Controllers
             var canUserReview = await _reviewServices.CheckIfUserCanReview(userId, cocktail);
             var cocktailReviews = await _reviewServices.GetReviewsForCocktial(cocktail.Id);
 
-            var cocktailReviewsVm = cocktailReviews.Select(r =>r.MapToViewModel()).ToList();
+            var cocktailReviewsVm = cocktailReviews.Select(r => r.MapToViewModel()).ToList();
 
             reviewVm.CanReview = !canUserReview;
             reviewVm.Reviews = cocktailReviewsVm;
@@ -272,6 +273,47 @@ namespace CM.Web.Areas.Cocktails.Controllers
                 _toast.AddInfoToastMessage("This cocktail's recepie is a secret!");
                 return RedirectToAction("ListCocktails", "Cocktails");
             }
+        }
+
+        [Authorize(Roles = "Manager, Administrator")]
+        public async Task<IActionResult> Edit(string id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            var allIngredients = await _ingredientServices.GetAllIngredients();
+            var cocktailDto = await _cocktailServices.FindCocktailById(id);
+            var cocktailVM = cocktailDto.MapToCocktailViewModel();
+            var ingr = await _ingredientServices.GetAllIngredientsNames();
+            cocktailVM.IngredientsNames.Add(new SelectListItem("Choose an igredient", ""));
+            cocktailVM.IngredientsNames.AddRange(ingr.Select(i => new SelectListItem(i, i)));
+            cocktailVM.Ingredients = new List<CocktailComponentViewModel>();
+            for (int i = 0; i < 10; i++)
+            {
+                cocktailVM.Ingredients.Add(new CocktailComponentViewModel());
+            }
+
+            cocktailVM.AllIngredients = allIngredients.Select(i => new SelectListItem(i.Name, i.Id)).ToList();
+
+            return View(cocktailVM);
+        }
+        [HttpPost]
+        [Authorize(Roles = "Manager, Administrator")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(CocktailViewModel cocktailVm)
+        {
+            if (ModelState.IsValid)
+            {
+                //image check
+                var cocktailDto = cocktailVm.MapToCocktailDTO();
+                var cocktailName = await _cocktailServices.Update(cocktailDto);
+                _toast.AddSuccessToastMessage($"You successfully edited \"{cocktailName}\" cocktail!");
+                return RedirectToAction(nameof(ListCocktails));
+
+            }
+           
+            return View(cocktailVm);
         }
     }
 }

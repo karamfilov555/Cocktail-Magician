@@ -15,11 +15,12 @@ namespace CM.Web.Mappers
             cocktailVm.Rating = cocktailDto.Rating;
             cocktailVm.Image = cocktailDto.Image;
             cocktailVm.DateDeleted = cocktailDto.DateDeleted;
-            cocktailVm.CocktailIngredients = cocktailDto.CocktailIngredients;
-            cocktailVm.CocktailComponents = cocktailDto.Ingredients;
+            //cocktailVm.CocktailIngredients = cocktailDto.CocktailIngredients;
+            cocktailVm.CocktailComponents = cocktailDto.Ingredients.Select(i => i.MapToCocktailComponentVM()).ToList(); 
             cocktailVm.BarCocktails = cocktailDto.BarCocktails;
             cocktailVm.LikeCount = cocktailDto.LikeCount;
             cocktailVm.LikeByUsers = cocktailDto.LikedByUsers;
+            //cocktailVm.Ingredients = cocktailDto.Ingredients.Select(i => i.MapIngredientToViewModel());
             //Recepie .? mai nqma smisul ako samo moje da se dl
             return cocktailVm; 
 
@@ -41,26 +42,23 @@ namespace CM.Web.Mappers
             return cocktailDto;
 
         }
-        //public static CocktailDto MapToCocktailDto(this CocktailViewModel cocktailVm)
-        //{
-        //    var cocktailDto = new CocktailDto();
-        //    cocktailDto.Id = cocktailVm.Id;
-        //    cocktailDto.Name = cocktailVm.Name;
-        //    cocktailDto.Image = cocktailVm.Image;
-        //    cocktailDto.Rating = cocktailVm.Rating;
-        //    cocktailDto.CocktailImage = cocktailVm.CocktailImage;
-        //    cocktailDto.Recepie = cocktailVm.Recepie;
+        public static CocktailDto MapToCocktailDTO(this CocktailViewModel cocktailVM)
+        {
+            var cocktailDto = new CocktailDto();
+            cocktailDto.Id = cocktailVM.Id;
+            cocktailDto.Name = cocktailVM.Name;
+            cocktailDto.Image = cocktailVM.Image;
+            cocktailDto.CocktailImage = cocktailVM.CocktailImage;
+            cocktailDto.Ingredients = cocktailVM.Ingredients
+                .Where(i => i.Ingredient != null)
+                .Select(
+                i => i.MapCockTailComponentVMToDTo()
+                ).ToList();
+            cocktailDto.Recipe = cocktailVM.Recipe;
+            return cocktailDto;
 
-        //    //TODO
-        //    cocktailDto.CocktailIngredients = cocktailVm.IngredientsIDs
-        //        .Select(i=>new CocktailIngredient()
-        //        {
-        //            CocktailId = cocktailVm.Id, IngredientId=i
-        //        })
-        //        .ToList();
-        //    // colleciton bars , kudeto se predlaga kokteila ? 
-        //    return cocktailDto;
-        //}
+        }
+      
         public static CocktailDto MapToCocktailDto(this CocktailReviewViewModel cocktailVm)
         {
             var cocktailDto = new CocktailDto();
@@ -82,5 +80,6 @@ namespace CM.Web.Mappers
             cocktailVm.LikedByUsers = cocktailDto.LikedByUsers;
             return cocktailVm;
         }
+      
     }
 }

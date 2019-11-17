@@ -12,6 +12,7 @@ namespace CM.DTOs
         public decimal Rating { get; set; }
         public string UserName { get; set; }
         public string UserID { get; set; }
+        public string CocktailId { get; set; }
         public DateTime ReviewDate { get; set; }
         public int LikeCount { get; set; }
         public List<string> LikedByUsers { get; set; }

@@ -15,8 +15,19 @@ namespace CM.Web.Mappers
             componentDTO.Quantity = componentViewModel.Quantity;
             componentDTO.Unit = componentViewModel.Unit;
             componentDTO.Ingredient = componentViewModel.Ingredient;
+            componentDTO.CocktailId = componentViewModel.CocktailId;
+            componentDTO.IngredientId = componentViewModel.IngredientId;
             return componentDTO;
         }
-
+        public static CocktailComponentViewModel MapToCocktailComponentVM(this CocktailComponentDTO componentDto)
+        {
+            var componentVm = new CocktailComponentViewModel();
+            componentVm.Quantity = componentDto.Quantity;
+            componentVm.Unit = componentDto.Unit;
+            componentVm.Ingredient = componentDto.Ingredient;
+            componentVm.CocktailId = componentDto.CocktailId;
+            componentVm.IngredientId = componentDto.IngredientId;
+            return componentVm;
+        }
     }
 }

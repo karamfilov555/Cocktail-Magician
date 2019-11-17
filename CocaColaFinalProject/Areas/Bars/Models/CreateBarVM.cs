@@ -42,7 +42,7 @@ namespace CM.Web.Areas.Bars.Models
 
         [Required(ErrorMessage = "You must specify cocktails for the bar!")]
         public List<string> AllCocktailsIDs { get; set; } = new List<string>();
-        public List<BarCocktail> CocktailsInBar { get; set; } = new List<BarCocktail>();
+        public List<BarCocktail> CocktailsInBar { get; set; } = new List<BarCocktail>();//make view model
 
 
     }

@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace CM.Data.Migrations
 {
-    public partial class initial : Migration
+    public partial class boom : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -351,6 +351,7 @@ namespace CM.Data.Migrations
                 {
                     Id = table.Column<string>(nullable: false),
                     IngredientId = table.Column<string>(nullable: true),
+                    Name = table.Column<string>(nullable: true),
                     Quantity = table.Column<int>(nullable: false),
                     Unit = table.Column<string>(nullable: false),
                     CocktailId = table.Column<string>(nullable: true)

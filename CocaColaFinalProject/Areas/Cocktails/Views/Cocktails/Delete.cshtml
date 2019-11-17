@@ -1,4 +1,4 @@
-﻿
+﻿@model  CocktailViewModel
 @{
     ViewData["Title"] = "Delete";
     Layout = "~/Views/Shared/_LayoutCustom.cshtml";
@@ -27,10 +27,10 @@
 
             </td>
             <td>
-                @foreach (var ingredient in Model.CocktailIngredients)
+                @foreach (var ingredient in Model.CocktailComponents)
                 {
                     <h5>
-                        @ingredient.Ingredient.Name
+                        @ingredient.Ingredient
                     </h5>
                 }
             </td>

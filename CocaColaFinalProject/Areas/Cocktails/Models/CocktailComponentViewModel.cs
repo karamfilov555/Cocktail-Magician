@@ -11,5 +11,7 @@ namespace CM.Web.Areas.Cocktails.Models
         public string Ingredient { get; set; }
         public int Quantity { get; set; }
         public Unit Unit { get; set; }
+        public string CocktailId { get; set; }
+        public string IngredientId { get; set; }
     }
 }

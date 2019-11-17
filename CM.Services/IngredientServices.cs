@@ -36,7 +36,11 @@ namespace CM.Services
             var ingredient = await _context.Ingredients.FirstOrDefaultAsync(i => i.Id == id);
             return ingredient.Name;
         }
-
+         public async Task<string> GetIngredientIdByName(string name)
+        {
+            var ingredient = await _context.Ingredients.FirstOrDefaultAsync(i => i.Name == name);
+            return ingredient.Id;
+        }
         public async Task<ICollection<String>> GetAllIngredientsNames()
         {
             var ingredients = await _context.Ingredients
