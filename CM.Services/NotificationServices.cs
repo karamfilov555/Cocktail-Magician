@@ -16,14 +16,17 @@ namespace CM.Services
     {
         private readonly CMContext _context;
         private readonly IAppUserServices _userService;
+        private readonly INotificationManager _notificationManager;
 
         public NotificationServices(CMContext context,
-                                   IAppUserServices userService)
+                                   IAppUserServices userService,
+                                   INotificationManager notificationManager)
         {
             _context = context;
             _userService = userService;
+            _notificationManager = notificationManager;
         }
-        public async Task<NotificationDTO> CreateNotificationAsync(string description, string username)
+        private async Task<NotificationDTO> CreateNotificationAsync(string description, string username)
         {
             //notifications for admin
             var admin = await _userService.GetAdmin().ConfigureAwait(false);
@@ -60,7 +63,7 @@ namespace CM.Services
             var notification = await _context.Notifications
                                              .Where(n => n.UserId == userId)
                                              .ToListAsync().ConfigureAwait(false);
-            return notification.Select(n=>n.MapNotificationToDTO()).ToList();
+            return notification.Select(n => n.MapNotificationToDTO()).ToList();
         }
 
         public async Task<int> GetUnseenNotificationsCountForUserAsync(string userId)
@@ -79,6 +82,41 @@ namespace CM.Services
 
             return notificationToSee.MapNotificationToDTO();
         }
+        public async Task BarNotificationToAdminAsync(string id, string entityName)
+        {
+            var username = await _userService.GetUsernameById(id);
+            var notificationDescription = _notificationManager.BarAddedDescription(username, entityName);
+            var notification = await CreateNotificationAsync(notificationDescription, username);
+        }
+        public async Task CocktailNotificationToAdminAsync(string id, string entityName)
+        {
+            var username = await _userService.GetUsernameById(id);
+            var notificationDescription = _notificationManager.CocktailAddedDescription(username, entityName);
+            var notification = await CreateNotificationAsync(notificationDescription, username);
+        }
+        public async Task CocktailEditNotificationToAdminAsync(string id, string entityName, string newName)
+        {
+            var username = await _userService.GetUsernameById(id);
+            string notificationDescription;
 
+            if (entityName != newName)
+                notificationDescription = _notificationManager.CocktailEditedDescription(username, entityName, newName);
+            else
+                notificationDescription = _notificationManager.CocktailEditedSameNameDescription(username, entityName);
+
+                await CreateNotificationAsync(notificationDescription, username);
+        }
+        public async Task CocktailDeletedNotificationToAdminAsync(string id, string entityName)
+        {
+            var username = await _userService.GetUsernameById(id);
+            var notificationDescription = _notificationManager.CocktailDeletedDescription(username, entityName);
+
+            await CreateNotificationAsync(notificationDescription, username);
+        }
+        public async Task BarDeletedNotificationToAdminAsync(string id, string entityName)
+        {
+            var username = await _userService.GetUsernameById(id);
+            var notificationDescription = _notificationManager.BarDeletedDescription(username, entityName);
+        }
     }
 }

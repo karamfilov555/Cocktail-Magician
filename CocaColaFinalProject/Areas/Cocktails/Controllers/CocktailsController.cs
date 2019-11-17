@@ -24,9 +24,7 @@ namespace CM.Web.Areas.Cocktails.Controllers
         private readonly IIngredientServices _ingredientServices;
         private readonly IToastNotification _toast;
         private readonly IStreamWriterServices _streamWriter;
-        private readonly INotificationManager _notificationManager;
         private readonly INotificationServices _notificationServices;
-        private readonly IAppUserServices _userServices;
 
         //ID!!!! string id = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
 
@@ -35,18 +33,14 @@ namespace CM.Web.Areas.Cocktails.Controllers
                                    IReviewServices reviewServices,
                                    IToastNotification toast,
                                    IStreamWriterServices streamWriter,
-                                   INotificationManager notificationManager,
-                                   INotificationServices notificationServices,
-                                   IAppUserServices userServices)
+                                   INotificationServices notificationServices)
         {
             _cocktailServices = cocktailServices;
             _ingredientServices = ingredientServices;
             _reviewServices = reviewServices;
             _toast = toast;
             _streamWriter = streamWriter;
-            _notificationManager = notificationManager;
             _notificationServices = notificationServices;
-            _userServices = userServices;
         }
 
         [Route("cocktails/details/{id}")]
@@ -107,20 +101,25 @@ namespace CM.Web.Areas.Cocktails.Controllers
                 if (type != "image/jpeg" && type != "image/jpg" && type != "image/png")
                 {
                     _toast.AddErrorToastMessage($"Allowed picture formats: \".jpg\", \".jpeg\" and \".png\"!");
+                    var ingr = await _ingredientServices.GetAllIngredientsNames();
+                    cocktailVm.IngredientsNames.Add(new SelectListItem("Choose an igredient", ""));
+                    cocktailVm.IngredientsNames.AddRange(ingr.Select(i => new SelectListItem(i, i)));
                     return View(cocktailVm);
                 }
                 if (imageSizeInKb > 100)
                 {
                     _toast.AddErrorToastMessage($"The picture size is too big! Maximum size: 100 kb");
+                    var ingr = await _ingredientServices.GetAllIngredientsNames();
+                    cocktailVm.IngredientsNames.Add(new SelectListItem("Choose an igredient", ""));
+                    cocktailVm.IngredientsNames.AddRange(ingr.Select(i => new SelectListItem(i, i)));
                     return View(cocktailVm);
                 }
                 var cocktailDto = cocktailVm.MapToCocktailDTO();
                 await _cocktailServices.AddCocktail(cocktailDto);
+
                 //notification to admin
                 string id = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-                var username = await _userServices.GetUsernameById(id);
-                var notificationDescription = _notificationManager.CocktailAddedDescription(username, cocktailDto.Name);
-                var notification = await _notificationServices.CreateNotificationAsync(notificationDescription, username);
+                await _notificationServices.CocktailNotificationToAdminAsync(id, cocktailDto.Name);
 
                 _toast.AddSuccessToastMessage($"You successfully added cocktail {cocktailDto.Name}!");
                 return RedirectToAction("ListCocktails");
@@ -239,6 +238,10 @@ namespace CM.Web.Areas.Cocktails.Controllers
         public async Task<IActionResult> Delete(CocktailViewModel cocktailVm)
         {
             var cocktailName = await _cocktailServices.DeleteCocktial(cocktailVm.Id);
+
+            var id = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            await _notificationServices.CocktailDeletedNotificationToAdminAsync(id, cocktailName);
+
             _toast.AddSuccessToastMessage($"You successfully delete \"{cocktailName}\" cocktail!");
             return RedirectToAction("ListCocktails", "Cocktails");
         }
@@ -307,12 +310,21 @@ namespace CM.Web.Areas.Cocktails.Controllers
             {
                 //image check
                 var cocktailDto = cocktailVm.MapToCocktailDTO();
+                var oldName = await _cocktailServices.GetCocktailNameById(cocktailVm.Id);
                 var cocktailName = await _cocktailServices.Update(cocktailDto);
-                _toast.AddSuccessToastMessage($"You successfully edited \"{cocktailName}\" cocktail!");
-                return RedirectToAction(nameof(ListCocktails));
+                var id = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+                await _notificationServices.CocktailEditNotificationToAdminAsync(id, oldName, cocktailName);
 
+                if (oldName != cocktailName)
+                    _toast.AddSuccessToastMessage
+                ($"You successfully edited \"{oldName}\" cocktail - new name\"{cocktailName}\"!");
+
+                else
+                    _toast.AddSuccessToastMessage
+                        ($"You successfully edited \"{cocktailName}\" cocktail!");
+
+                return RedirectToAction(nameof(ListCocktails));
             }
-           
             return View(cocktailVm);
         }
     }

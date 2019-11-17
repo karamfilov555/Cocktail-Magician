@@ -1,23 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using CM.Data;
-using CM.Models;
 using CM.Services.Contracts;
 using CM.Web.Mappers;
 using CM.Web.Areas.Bars.Models;
-using CM.Web.Areas.Reviews.Models;
 using Microsoft.AspNetCore.Authorization;
 using NToastNotify;
-using System.IO;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using CM.DTOs;
 using CM.Services.Common;
+using System.Security.Claims;
 
 namespace CM.Web.Areas.Bars.Controllers
 {
@@ -29,14 +22,19 @@ namespace CM.Web.Areas.Bars.Controllers
         private readonly ICocktailServices _cocktailServices;
         private readonly IReviewServices _reviewServices;
         private readonly IToastNotification _toast;
+        private readonly INotificationServices _notificationServices;
 
-        public BarsController(IBarServices barServices, ICocktailServices cocktailServices,
-            IReviewServices reviewServices, IToastNotification toast)
+        public BarsController(IBarServices barServices, 
+                              ICocktailServices cocktailServices,
+                              IReviewServices reviewServices, 
+                              IToastNotification toast,
+                              INotificationServices notificationServices)
         {
             _barServices = barServices;
             _cocktailServices = cocktailServices;
             _reviewServices = reviewServices;
             _toast = toast;
+            _notificationServices = notificationServices;
         }
 
 
@@ -109,6 +107,11 @@ namespace CM.Web.Areas.Bars.Controllers
                 {
                     var barDTO = barVM.MapBarVMToDTO();
                     var barName = await _barServices.AddBar(barDTO);
+
+                    //notification for admin
+                    string id = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+                    await _notificationServices.BarNotificationToAdminAsync(id, barName);
+
                     _toast.AddSuccessToastMessage($"You successfully added \"{barName}\" bar!");
                     return RedirectToAction(nameof(Index));
                 }
@@ -194,6 +197,10 @@ namespace CM.Web.Areas.Bars.Controllers
         public async Task<IActionResult> DeleteConfirmed(string id)
         {
             var barName = await _barServices.Delete(id);
+
+            string userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            await _notificationServices.BarDeletedNotificationToAdminAsync(userId,barName);
+
             _toast.AddSuccessToastMessage($"You successfully deleted \"{barName}\" bar!");
             return RedirectToAction(nameof(Index));
         }

@@ -24,13 +24,13 @@ namespace CM.Services
                                 IIngredientServices ingredientServices,
                                 IRecipeServices recipeServices)
         {
-            _context = context 
+            _context = context
                 ?? throw new ArgumentNullException(nameof(context));
-            _fileUploadService = fileUploadService 
+            _fileUploadService = fileUploadService
                 ?? throw new ArgumentNullException(nameof(fileUploadService));
-            _ingredientServices = ingredientServices 
+            _ingredientServices = ingredientServices
                 ?? throw new ArgumentNullException(nameof(ingredientServices));
-            _recipeServices = recipeServices 
+            _recipeServices = recipeServices
                 ?? throw new ArgumentNullException(nameof(recipeServices));
         }
 
@@ -87,34 +87,18 @@ namespace CM.Services
             {
                 var ingridientId = await _ingredientServices.GetIngredientIdByName(cocktailComponenetDTO.Ingredient);
 
-                _context.CocktailComponent.Add(new CocktailComponent
-                { CocktailId = cocktail.Id, IngredientId = ingridientId, Quantity = cocktailComponenetDTO.Quantity, Unit = cocktailComponenetDTO.Unit, Name = cocktailComponenetDTO.Ingredient });
-
-                //var cocktailComponent = cocktailComponenetDTO.MapToCocktailModel();
-                //var ingredient = await _context.Ingredients.FirstOrDefaultAsync(i => i.Name.ToLower() == cocktailComponenetDTO.Ingredient.ToLower());
-                //if (ingredient == null)
-                //{
-                //    ingredient = new Ingredient() { Name = cocktailComponenetDTO.Ingredient };
-                //    _context.Ingredients.Add(ingredient);
-                //    await _context.SaveChangesAsync();
-                //}
-                //cocktailComponent.IngredientId = ingredient.Id;
-                //_context.CocktailComponent.Add(cocktailComponent);
-                //cocktail.CocktailComponents.Add(cocktailComponent);
+                _context.CocktailComponent.Add(
+                    new CocktailComponent
+                    {
+                        CocktailId = cocktail.Id,
+                        IngredientId = ingridientId,
+                        Quantity = cocktailComponenetDTO.Quantity,
+                        Unit = cocktailComponenetDTO.Unit,
+                        Name = cocktailComponenetDTO.Ingredient
+                    });
             }
-            //var recipeSB = new StringBuilder();
-            //foreach (var component in cocktailDto.Ingredients)
-            //{
-
-            //    recipeSB.AppendLine(component.Ingredient + " " + component.Quantity + " " + component.Unit);
-            //}
-            //recipeSB.AppendLine(cocktailDto.Recipe);
-            //var cocktail = cocktailDto.MapToCocktailModel();
             cocktail.Recepie = await _recipeServices.ExtractRecipe(cocktail);
-            //_context.Cocktails.Add(cocktail);
             await _context.SaveChangesAsync();
-
-
         }
         // to be deleted !  !
         public async Task<ICollection<CocktailDto>> GetAllCocktails()
