@@ -213,6 +213,8 @@ namespace CM.Services
                             .ThenInclude(c => c.Ingredient)
                             .Include(c => c.BarCocktails)
                             .ThenInclude(c => c.Bar)
+                            .ThenInclude(b => b.Address)
+                            .ThenInclude(a => a.Country)
                             .Where(c => c.Name.Contains(searchCriteria,
                              StringComparison.OrdinalIgnoreCase)
                              && c.DateDeleted == null)

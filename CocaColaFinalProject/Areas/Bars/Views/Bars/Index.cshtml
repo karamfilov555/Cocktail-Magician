@@ -104,7 +104,7 @@
                         <p>
                             <a class="btn btn-default btn-sm" asp-area="Reviews" asp-controller="BarReviews" asp-action="BarReviews"
                                asp-route-id="@bar.Id" asp-route-name="@bar.Name">
-                                <font style="color:gold">
+                                <font style="color:gold"><i class="fa fa-star"></i>
                                     Reviews
                                 </font>
                             </a>
@@ -113,7 +113,7 @@
                         {
                             <p>
                                 <a class="btn btn-default btn-sm" asp-area="Bars" asp-action="Details" asp-route-id="@bar.Id">
-                                    <font style="color:gold">
+                                    <font style="color:gold"><i class="fa fa-search-plus"></i>
                                         Details
                                     </font>
                                 </a>
@@ -123,14 +123,14 @@
                         {
                             <p>
                                 <a class="btn btn-default btn-sm" asp-area="Bars" asp-action="Edit" asp-route-id="@bar.Id">
-                                    <font style="color:gold">
+                                    <font style="color:gold"><i class="fa fa-magic"></i>
                                         Edit
                                     </font>
                                 </a>
                             </p>
                             <p>
                                 <a class="btn btn-default btn-sm" asp-area="Bars" asp-controller="Bars" asp-action="Delete" asp-route-id="@bar.Id">
-                                    <font style="color:gold">
+                                    <font style="color:gold"> <i class="fa fa-trash-o"></i>
                                         Delete
                                     </font>
                                 </a>

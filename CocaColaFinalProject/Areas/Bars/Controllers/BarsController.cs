@@ -30,8 +30,6 @@ namespace CM.Web.Areas.Bars.Controllers
         private readonly IReviewServices _reviewServices;
         private readonly IToastNotification _toast;
 
-
-
         public BarsController(IBarServices barServices, ICocktailServices cocktailServices,
             IReviewServices reviewServices, IToastNotification toast)
         {

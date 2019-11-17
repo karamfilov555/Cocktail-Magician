@@ -25,10 +25,18 @@
                     <input asp-for="Website" class="form-control" />
                     <span asp-validation-for="Website" class="text-danger"></span>
                 </div>
+
                 <div class="form-group">
-                    <label asp-for="Country" class="control-label"></label>
-                    <input asp-for="Country" class="form-control" />
-                    <span asp-validation-for="Country" class="text-danger"></span>
+                    @*<div >*@
+                        <label asp-for="Country" class="control-label">Choose country:</label>
+                        <select class="select-editable form-control" asp-for="Country" 
+                                input="text" asp-items="@Model.AllCountries">
+                            <option disabled hidden selected value="">Start Typing...</option>
+                        </select>
+                        @*select id="selectmenu" asp-for="@Model.Ingredients[0].Ingredient"
+                        class="select-editable form-control" asp-items="@Model.IngredientsNames"
+                        input="text" placeholder="Choose Ingredients..."></select>*@
+                    @*</div>*@
                 </div>
                 <div class="form-group">
                     <label asp-for="City" class="control-label"></label>
@@ -41,34 +49,47 @@
                     <span asp-validation-for="Details" class="text-danger"></span>
                 </div>
                 @*<div class="form-group">
-            <label asp-for="ImageURL" class="control-label"></label>
-            <input asp-for="ImageURL" class="form-control" />
-            <span asp-validation-for="ImageURL" class="text-danger"></span>
-        </div>*@
+                        <label asp-for="ImageURL" class="control-label"></label>
+                        <input asp-for="ImageURL" class="form-control" />
+                        <span asp-validation-for="ImageURL" class="text-danger"></span>
+                    </div>*@
                 <div>
                     <label asp-for="BarImage" class="control-label">Upload Image</label>
                     <input asp-for="BarImage" class="btn btn-primary btn-sm" />
                     <span asp-validation-for="BarImage" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <div class="select-editable">
-
-                        <label asp-for="AllCocktailsIDs" class="control-label">All Cocktails</label>
-                        <select asp-for="AllCocktailsIDs" asp-items="@Model.AllCocktails" class="form-control">
-                            <option hidden disabled selected value=""></option>
+                    <div>
+                        <br />
+                        <label asp-for="AllCocktailsIDs" class="control-label">Choose Cocktails:</label>
+                        <select style="width:500px"
+                                class="js-example-basic-multiple control-label" 
+                                asp-for="AllCocktailsIDs" asp-items="@Model.AllCocktails"  multiple="multiple">
+                           
                         </select>
 
                     </div>
                 </div>
-                <div class="form-group">
-                    <div class="js-example-basic-single">
-                        <label asp-for="Country" class="control-label">Choose country:</label>
-                        <select asp-for="Country" asp-items="@Model.AllCountries" class="form-control">
-                            <option hidden disabled selected value=""></option>
-                        </select>
+                @*<div class="form-group">
+                        <label asp-for="IngredientsIDs" class="control-label">Ingredients</label>
+                        <select id="selectmenu" asp-for="IngredientsIDs" class="js-example-basic-multiple form-control" asp-items="@Model.Ingredients" multiple="multiple" placeholder="Choose Ingredients..."></select>
+                    </div>*@
+                @*<div class="row">
 
-                    </div>
-                </div>
+                            <div class="input-group dropdown">
+                                <input type="text" class="form-control dropdown-toggle" value="">
+                                <ul class="dropdown-menu">
+                                    @foreach (var item in @Model.IngredientsNames)
+                                    {
+                                        <li>
+                                            <a data-value="@item">@item.Text</a>
+                                        </li>
+                                    }
+
+                                </ul>
+                                <span role="button" class="input-group-addon dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="caret"></span></span>
+                            </div>
+                    </div>*@
                 <div class="form-group">
                     <input type="submit" value="Create" class="btn btn-primary" />
                 </div>
@@ -83,8 +104,7 @@
 </center>
 
 <script>
-
-    $(document).ready(function() {
-    $('.js-example-basic-single').select2();
-});
+     window.onload = function () {
+        $('.js-example-basic-multiple').select2();
+};
 </script>

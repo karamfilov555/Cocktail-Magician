@@ -57,19 +57,19 @@ namespace CocaColaFinalProject
                 .AddEntityFrameworkStores<CMContext>();
 
             //register services here :
-
-            services.AddScoped<IJsonManager, JsonManager>();
-            services.AddScoped<ICocktailServices, CocktailServices>();
-            services.AddScoped<IBarServices, BarServices>();
-            services.AddScoped<IAppUserServices, AppUserServices>();
-            services.AddScoped<IIngredientServices, IngredientServices>();
-            services.AddScoped<IReviewServices, ReviewServices>();
-            services.AddScoped<ISearchServices, SearchServices>();
-            services.AddScoped<IFileUploadService, FileUploadService>();
-            services.AddScoped<IStreamWriterServices, StreamWriterServices>();
-            services.AddScoped<INotificationManager, NotificationManager>();
-            services.AddScoped<INotificationServices, NotificationServices>();
-            services.AddScoped<IRecipeServices, RecipeServices>();
+            services.AddDomainServices();
+            //services.AddScoped<IJsonManager, JsonManager>();
+            //services.AddScoped<ICocktailServices, CocktailServices>();
+            //services.AddScoped<IBarServices, BarServices>();
+            //services.AddScoped<IAppUserServices, AppUserServices>();
+            //services.AddScoped<IIngredientServices, IngredientServices>();
+            //services.AddScoped<IReviewServices, ReviewServices>();
+            //services.AddScoped<ISearchServices, SearchServices>();
+            //services.AddScoped<IFileUploadService, FileUploadService>();
+            //services.AddScoped<IStreamWriterServices, StreamWriterServices>();
+            //services.AddScoped<INotificationManager, NotificationManager>();
+            //services.AddScoped<INotificationServices, NotificationServices>();
+            //services.AddScoped<IRecipeServices, RecipeServices>();
 
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);

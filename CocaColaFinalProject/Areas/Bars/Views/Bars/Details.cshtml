@@ -40,7 +40,17 @@
             <td><img src="@Model.ImageURL" width="400" style="border-radius:25px; padding-top:5px; padding-bottom:5px"></td>
             <td>
 
-                <h5>Rating: @Model.Rating</h5>
+                <h5>
+                    Rating:
+                    @if (@Model.Rating == 0)
+                    {
+                        <i>Not rated yet!</i>
+                    }
+                    else
+                    {
+                        @Model.Rating
+                    }
+                </h5>
                 <h5>Website: <a href="@Model.Website">@Model.Website </a> </h5>
                 <br />
                 <h5>Location: </h5>

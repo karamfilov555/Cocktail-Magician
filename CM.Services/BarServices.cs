@@ -147,6 +147,7 @@ namespace CM.Services
         {
             var bars = await _context.Bars
                 .Include(b => b.Address)
+                .ThenInclude(a=>a.Country)
                 .Include(b => b.BarCocktails)
                 .ThenInclude(b => b.Cocktail)
                 .Where(b => b.Name.Contains(searchCriteria,
@@ -165,7 +166,8 @@ namespace CM.Services
             var countriesDTO = await countries.Select(c => new CountryDTO
             { Id = c.Id,
                 Name = c.Name
-            }).ToListAsync();
+            }).OrderByDescending(c=>c.Name)
+            .ToListAsync();
             return countriesDTO;
         }
     }

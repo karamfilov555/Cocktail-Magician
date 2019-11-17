@@ -55,7 +55,7 @@ namespace CM.Web.Mappers
             newBarDTO.Id = bar.Id;
             newBarDTO.Name = bar.Name;
             newBarDTO.City = bar.City;
-            newBarDTO.Country = bar.Country;
+            newBarDTO.CountryId = bar.Country;
             newBarDTO.Details = bar.Details;
             newBarDTO.BarImage = bar.BarImage;
             newBarDTO.Website = bar.Website;
