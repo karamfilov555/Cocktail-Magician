@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using CM.DTOs;
 using CM.Models;
 using CM.Web.Areas.Cocktails.Models;
@@ -25,7 +26,7 @@ namespace CM.Web.Mappers
             return cocktailVm; 
 
         }
-
+       
         public static CocktailDto MapToCocktailDTO(this CreateCocktailViewModel cocktailVM)
         {
             var cocktailDto = new CocktailDto();

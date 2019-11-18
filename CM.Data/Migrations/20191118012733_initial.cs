@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace CM.Data.Migrations
 {
-    public partial class boom : Migration
+    public partial class initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -101,6 +101,7 @@ namespace CM.Data.Migrations
                     Name = table.Column<string>(nullable: true),
                     Brand = table.Column<string>(nullable: true),
                     Country = table.Column<string>(nullable: true),
+                    ImageUrl = table.Column<string>(nullable: true),
                     DateDeleted = table.Column<DateTime>(nullable: true)
                 },
                 constraints: table =>

@@ -332,6 +332,8 @@ namespace CM.Data.Migrations
 
                     b.Property<DateTime?>("DateDeleted");
 
+                    b.Property<string>("ImageUrl");
+
                     b.Property<string>("Name");
 
                     b.HasKey("Id");

@@ -11,6 +11,7 @@ namespace CM.Models
         public string Name { get; set; }
         public string Brand { get;set; }
         public string Country { get; set; }
+        public string ImageUrl { get; set; }
         public ICollection<CocktailComponent> CocktailComponents { get; set; }
         public DateTime? DateDeleted { get; set; }
     }

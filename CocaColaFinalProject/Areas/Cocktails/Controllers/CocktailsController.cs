@@ -74,8 +74,6 @@ namespace CM.Web.Areas.Cocktails.Controllers
         [Authorize(Roles = "Administrator, Manager")]
         public async Task<IActionResult> Create()
         {
-            //expouse-vame ctx model
-
             //review this block
             var ingr = await _ingredientServices.GetAllIngredientsNames();
             var createCocktailVM = new CreateCocktailViewModel();
@@ -119,7 +117,7 @@ namespace CM.Web.Areas.Cocktails.Controllers
 
                 //notification to admin
                 string id = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-                await _notificationServices.CocktailNotificationToAdminAsync(id, cocktailDto.Name);
+                await _notificationServices.CocktailCreateNotificationToAdminAsync(id, cocktailDto.Name);
 
                 _toast.AddSuccessToastMessage($"You successfully added cocktail {cocktailDto.Name}!");
                 return RedirectToAction("ListCocktails");

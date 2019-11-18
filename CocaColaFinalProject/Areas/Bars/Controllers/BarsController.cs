@@ -110,7 +110,7 @@ namespace CM.Web.Areas.Bars.Controllers
 
                     //notification for admin
                     string id = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-                    await _notificationServices.BarNotificationToAdminAsync(id, barName);
+                    await _notificationServices.BarCreateNotificationToAdminAsync(id, barName);
 
                     _toast.AddSuccessToastMessage($"You successfully added \"{barName}\" bar!");
                     return RedirectToAction(nameof(Index));
@@ -127,6 +127,7 @@ namespace CM.Web.Areas.Bars.Controllers
                 .Select(c => new SelectListItem(c.Name, c.Id)).ToList();
             return View(barVM);
         }
+        //Check: if image is invalid , countries will disapear (is this the place for this check?)
 
         private bool ImageIsValid(IFormFile barImage)
         {

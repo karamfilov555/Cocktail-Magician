@@ -47,6 +47,7 @@ namespace CM.Web.Areas.Cocktails.Models
         [BindProperty]
         public List<CocktailComponentViewModel> Ingredients { get; set; }
         public List<string> AllIngredientsCocktail { get; set; } = new List<string>();
+        
         public string Recipe { get; set; }
     }
 }

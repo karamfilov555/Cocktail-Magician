@@ -82,13 +82,13 @@ namespace CM.Services
 
             return notificationToSee.MapNotificationToDTO();
         }
-        public async Task BarNotificationToAdminAsync(string id, string entityName)
+        public async Task BarCreateNotificationToAdminAsync(string id, string entityName)
         {
             var username = await _userService.GetUsernameById(id);
             var notificationDescription = _notificationManager.BarAddedDescription(username, entityName);
             var notification = await CreateNotificationAsync(notificationDescription, username);
         }
-        public async Task CocktailNotificationToAdminAsync(string id, string entityName)
+        public async Task CocktailCreateNotificationToAdminAsync(string id, string entityName)
         {
             var username = await _userService.GetUsernameById(id);
             var notificationDescription = _notificationManager.CocktailAddedDescription(username, entityName);

@@ -21,9 +21,9 @@ namespace CM.Services
         }
         public async Task<IList<IngredientDTO>> GetAllIngredients()
         {
-             return await  _context.Ingredients
-                                   .Select(i=>i.MapToDtoModel())
-                                   .ToListAsync();
+            return await _context.Ingredients
+                                  .Select(i => i.MapToDtoModel())
+                                  .ToListAsync();
         }
         public async Task AddIngredient(IngredientDTO ingredientDto)
         {
@@ -36,7 +36,7 @@ namespace CM.Services
             var ingredient = await _context.Ingredients.FirstOrDefaultAsync(i => i.Id == id);
             return ingredient.Name;
         }
-         public async Task<string> GetIngredientIdByName(string name)
+        public async Task<string> GetIngredientIdByName(string name)
         {
             var ingredient = await _context.Ingredients.FirstOrDefaultAsync(i => i.Name == name);
             return ingredient.Id;
@@ -44,9 +44,15 @@ namespace CM.Services
         public async Task<ICollection<String>> GetAllIngredientsNames()
         {
             var ingredients = await _context.Ingredients
-                .Where(i=>i.DateDeleted==null)
-                .Select(i=>i.Name).ToListAsync();
+                .Where(i => i.DateDeleted == null)
+                .Select(i => i.Name).ToListAsync();
             return ingredients;
+        }
+        public async Task<List<String>> GetImagesForHpAsync()
+        {
+            var ingredientImgsForHp = await _context.Ingredients.Where(i =>  i.Id == "7" 
+            || i.Id == "9" || i.Id == "13" || i.Id == "15" || i.Id == "17").Select(i=>i.ImageUrl).ToListAsync();
+            return ingredientImgsForHp;
         }
     }
 }

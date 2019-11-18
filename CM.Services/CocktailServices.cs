@@ -38,7 +38,8 @@ namespace CM.Services
         {
             // include ingredients ... posle ... da se vzima po rating 
             var cocktails = await _context.Cocktails
-                                            .Where(c => c.DateDeleted == null)
+                                            .Where(c => c.Id == "13" || c.Id == "14" 
+                                            || c.Id == "1" || c.Id == "9" || c.Id == "11")
                                             .Include(c => c.CocktailComponents)
                                             .ThenInclude(c => c.Ingredient)
                                             .Include(c => c.BarCocktails)

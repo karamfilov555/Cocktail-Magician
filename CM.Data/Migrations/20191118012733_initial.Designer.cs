@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CM.Data.Migrations
 {
     [DbContext(typeof(CMContext))]
-    [Migration("20191117172243_boom")]
-    partial class boom
+    [Migration("20191118012733_initial")]
+    partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -333,6 +333,8 @@ namespace CM.Data.Migrations
                     b.Property<string>("Country");
 
                     b.Property<DateTime?>("DateDeleted");
+
+                    b.Property<string>("ImageUrl");
 
                     b.Property<string>("Name");
 
