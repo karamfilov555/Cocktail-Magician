@@ -117,6 +117,7 @@ namespace CM.Services
         {
             var username = await _userService.GetUsernameById(id);
             var notificationDescription = _notificationManager.BarDeletedDescription(username, entityName);
+            await CreateNotificationAsync(notificationDescription, username);
         }
     }
 }

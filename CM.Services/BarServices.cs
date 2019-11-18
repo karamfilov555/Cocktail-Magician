@@ -96,7 +96,16 @@ namespace CM.Services
 
         public async Task<string> AddBar(BarDTO barDTO)
         {
-            var uniqueFileNamePath = _fileUploadService.UploadFile(barDTO.BarImage);
+            string uniqueFileNamePath;
+            if (barDTO.ImageUrl!=null)
+            {
+            uniqueFileNamePath = _fileUploadService.UploadFile(barDTO.BarImage);
+
+            }
+            else
+            {
+                uniqueFileNamePath= "/images/defaultBarImage.jpg";
+            }
             barDTO.ImageUrl = uniqueFileNamePath;
             var newBar = barDTO.MapBarDTOToBar();
             var newAddress = barDTO.MapBarDTOToAddress();
@@ -118,7 +127,7 @@ namespace CM.Services
         }
         public async Task<string> Delete(string id)
         {
-            var barToDelete = await this.GetBarByID(id);
+            var barToDelete = await this.GetBar(id);
             barToDelete.DateDeleted = DateTime.Now.Date;
             await _context.SaveChangesAsync();
             return barToDelete.Name;

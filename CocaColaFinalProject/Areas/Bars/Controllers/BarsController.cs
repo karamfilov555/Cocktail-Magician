@@ -103,7 +103,7 @@ namespace CM.Web.Areas.Bars.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (ImageIsValid(barVM.BarImage))
+                if (barVM.BarImage==null||ImageIsValid(barVM.BarImage))
                 {
                     var barDTO = barVM.MapBarVMToDTO();
                     var barName = await _barServices.AddBar(barDTO);
@@ -117,8 +117,13 @@ namespace CM.Web.Areas.Bars.Controllers
                 }
 
             }
+            
             var allCocktails = await _cocktailServices.GetAllCocktails();
+            var allCountries = await _barServices.GetAllCountries();
+
             barVM.AllCocktails = allCocktails
+                .Select(c => new SelectListItem(c.Name, c.Id)).ToList();
+            barVM.AllCountries = allCountries
                 .Select(c => new SelectListItem(c.Name, c.Id)).ToList();
             return View(barVM);
         }

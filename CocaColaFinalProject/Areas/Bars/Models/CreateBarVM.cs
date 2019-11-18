@@ -24,17 +24,16 @@ namespace CM.Web.Areas.Bars.Models
             MaxLength(100, ErrorMessage = "City must be between 3 and 100 symbols")]
         public string City { get; set; }
         [Required(ErrorMessage = "Country is required!")]
-        [MinLength(3, ErrorMessage = "Country must be between 3 and 100 symbols"),
-            MaxLength(100, ErrorMessage = "Country must be between 3 and 100 symbols")]
+        
         public string Country { get; set; }
-        [Required(ErrorMessage = "Address details are required!")]
-        [MinLength(3, ErrorMessage = "Address must be between 3 and 100 symbols"),
-            MaxLength(100, ErrorMessage = "Address must be between 3 and 100 symbols")]
+        //[Required(ErrorMessage = "Address details are required!")]
+        //[MinLength(3, ErrorMessage = "Address must be between 3 and 100 symbols"),
+        //    MaxLength(100, ErrorMessage = "Address must be between 3 and 100 symbols")]
         public string Details { get; set; }
         [Required(ErrorMessage = "Website is required!")]
         [Url]
         public string Website { get; set; }
-        [Required(ErrorMessage = "Image is required!")]
+        
         public IFormFile BarImage { set; get; }
 
         public List<SelectListItem> AllCocktails { get; set; } = new List<SelectListItem>();
