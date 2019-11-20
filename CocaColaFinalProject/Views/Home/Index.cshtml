@@ -58,16 +58,21 @@
                     <div class="col-md-4">
                         <h4 class="hdr7">The magic happens...</h4>
 
-                        <div class="roundedImg pull-right" data-size="160" style="background-image: url(&quot;./assets/images/content/photo-5.jpg&quot;); width: 160px; height: 160px;">
-                            <img class="media-object" src="./assets/images/content/photo-5.jpg" alt=" ">
+                        <div class="roundedImg pull-right" data-size="160" style="background-image: url(&quot;./assets/images/content/jitLogo.png&quot;); width: 160px; height: 160px;">
+                            <img class="media-object" src="/assets/images/content/jitLogo.png" alt=" ">
                         </div>
                         <p class="bigger">
-                            Cocktail Magician allows creation of recipes for innovative, exotic, awesome Cocktails and follows their distribution and success in amazing Bars.
-                            <br>
-                            We Cocktail Magicians only use the best Ingredients from all around the world!<br><br>
-                            Please consider yourself. It's Magic!<br>
-                            JiT™ Team<br>
-                        </p>
+                            Cocktail Magician allows creation of recipes for innovative, exotic, awesome <a asp-area="Cocktails" asp-controller="Cocktails" asp-action="ListCocktails"><font style="color:gold">Cocktails</font></a> and follows their distribution and success in amazing <a asp-area="Bars" asp-controller="Bars" asp-action="Index">
+    <font style="color:gold">
+        Bars.
+    </font></a>
+    <br>
+    We Cocktail Magicians only use the best <a asp-area="Ingredients" asp-controller="Ingredients" asp-action="Index">
+    <font style="color:gold">
+        Ingredients</font></a> from all around the world!<br><br>
+        Please consider yourself. It's Magic!<br>
+        JiT™ Team<br>
+</p>
 
                     </div>
                 </div>

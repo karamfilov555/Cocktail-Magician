@@ -21,7 +21,7 @@ namespace CM.DTOs.Mappers
             return newBarDTO;
         }
 
-        public static HomePageBarDTO MapBarToHomePageBarDTO(this Bar bar)
+        public static HomePageBarDTO MapBarToHomePageBarDTO(this Bar bar) 
         {
             var newBarDTO = new HomePageBarDTO();
             newBarDTO.Id = bar.Id;
@@ -50,7 +50,7 @@ namespace CM.DTOs.Mappers
             return newBarDTO;
         }
 
-        public static Bar MapBarDTOToBar(this BarDTO bar)
+        public static Bar MapBarDTOToBar(this BarDTO bar) // tested
         {
             var newBar = new Bar();
             newBar.Id = bar.Id;

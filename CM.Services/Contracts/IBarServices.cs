@@ -10,7 +10,7 @@ namespace CM.Services.Contracts
         Task<ICollection<HomePageBarDTO>> GetHomePageBars();
         Task<BarDTO> GetBarByID(string id);
         Task<PaginatedList<BarDTO>> GetAllBars(int? pageNumber, string sortOrder);
-        Task<string> AddBar(BarDTO barDTO);
+        Task<string> AddBarAsync(BarDTO barDTO);
         Task<string> Delete(string id);
         Task<string> Update(BarDTO barDTO);
         Task<ICollection<BarDTO>> GetAllBarsByName(string searchCriteria);

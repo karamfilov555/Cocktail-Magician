@@ -1,5 +1,5 @@
 ﻿
-$('#loadMore').on('click', function (event) {
+$('#loadMore').on('s', function (event) {
     event.preventDefault();
     console.log($('#loadMore'))
   

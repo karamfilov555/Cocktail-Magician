@@ -106,7 +106,7 @@ namespace CM.Web.Areas.Bars.Controllers
                 if (barVM.BarImage==null||ImageIsValid(barVM.BarImage))
                 {
                     var barDTO = barVM.MapBarVMToDTO();
-                    var barName = await _barServices.AddBar(barDTO);
+                    var barName = await _barServices.AddBarAsync(barDTO);
 
                     //notification for admin
                     string id = this.User.FindFirstValue(ClaimTypes.NameIdentifier);

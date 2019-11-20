@@ -94,7 +94,7 @@ namespace CM.Services
             return bar;
         }
 
-        public async Task<string> AddBar(BarDTO barDTO)
+        public async Task<string> AddBarAsync(BarDTO barDTO)
         {
             string uniqueFileNamePath;
             if (barDTO.ImageUrl!=null)

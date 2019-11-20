@@ -11,7 +11,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CM.Models", "CM.Models\CM.M
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CM.Services", "CM.Services\CM.Services.csproj", "{E38F509D-FE42-4C85-B7FB-91C94AA7A2DD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CM.DTOs", "CM.DTOs\CM.DTOs.csproj", "{9F6E65BD-30CC-4E83-A01C-9B39F133267F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CM.DTOs", "CM.DTOs\CM.DTOs.csproj", "{9F6E65BD-30CC-4E83-A01C-9B39F133267F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CM.Services.Tests", "CM.Services.Tests\CM.Services.Tests.csproj", "{67334565-F67D-4845-A9D0-AA1F067B00F8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CM.DtoMappers.Tests", "CM.DtoMappers.Tests\CM.DtoMappers.Tests.csproj", "{A5A5B0F9-EDA3-4050-BC5F-8DF1766948A0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +43,14 @@ Global
 		{9F6E65BD-30CC-4E83-A01C-9B39F133267F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9F6E65BD-30CC-4E83-A01C-9B39F133267F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9F6E65BD-30CC-4E83-A01C-9B39F133267F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{67334565-F67D-4845-A9D0-AA1F067B00F8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{67334565-F67D-4845-A9D0-AA1F067B00F8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{67334565-F67D-4845-A9D0-AA1F067B00F8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{67334565-F67D-4845-A9D0-AA1F067B00F8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A5A5B0F9-EDA3-4050-BC5F-8DF1766948A0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A5A5B0F9-EDA3-4050-BC5F-8DF1766948A0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A5A5B0F9-EDA3-4050-BC5F-8DF1766948A0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A5A5B0F9-EDA3-4050-BC5F-8DF1766948A0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
