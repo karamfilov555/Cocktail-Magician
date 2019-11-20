@@ -24,12 +24,7 @@ namespace CM.Web.Areas.Bars.Models
         public string Country { get; set; }
         public string Details { get; set; }
         public decimal Rating { get; set; }
-        public string Description { get; set; }
-
-        [Required(ErrorMessage = "A website is required!")]
         public string Website { get; set; }
-
-        [Required(ErrorMessage = "A link to an image is required!")]
         public string ImageURL { get; set; }
         public List<BarReviewViewModel> Reviews { get; set; } = new List<BarReviewViewModel>();
         public List<CocktailViewModel> Cocktails { get; set; } = new List<CocktailViewModel>();

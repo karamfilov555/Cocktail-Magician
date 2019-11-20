@@ -10,10 +10,7 @@ namespace CM.Web.Areas.Bars.Models
     {
         public string CurrentSortOrder;
         public string NameSortParm;
-
         public string RatingSortParm;
-
         public PaginatedList<BarViewModel> AllBars { get; set; }
-
     }
 }

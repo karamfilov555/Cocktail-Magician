@@ -49,6 +49,7 @@ namespace CM.Services
                 .ConfigureAwait(false);
             bar.ValidateIfNull();
             var barDTO = bar.MapBarToDTO();
+            barDTO.CountryId = bar.Address.Country.Id;
             barDTO.Country = bar.Address.Country.Name;
             barDTO.City = bar.Address.City;
             barDTO.Details = bar.Address.Details;
@@ -86,6 +87,8 @@ namespace CM.Services
         {
             var bar = await _context.Bars
                 .Where(b => b.Id == id && b.DateDeleted == null)
+                .Include(b => b.Address)
+                .ThenInclude(a=>a.Country)
                 .Include(b => b.BarCocktails)
                 .ThenInclude(b => b.Cocktail)
                 .FirstOrDefaultAsync()
@@ -115,15 +118,18 @@ namespace CM.Services
             var coctailsInBar = barDTO.Cocktails.Select(c => c.MapToCocktailModel()).ToList();
             foreach (var cocktail in coctailsInBar)
             {
-                await AddCocktailToBar(cocktail, newBar);
+                AddCocktailToBar(cocktail, newBar);
             }
             await _context.SaveChangesAsync();
             return newBar.Name;
         }
 
-        public async Task AddCocktailToBar(Cocktail cocktail, Bar bar)
+        public void AddCocktailToBar(Cocktail cocktail, Bar bar)
         {
+            if (!bar.BarCocktails.Any(bc=>bc.CocktailId==cocktail.Id))
+            {
             bar.BarCocktails.Add(new BarCocktail() { BarId = bar.Id, CocktailId = cocktail.Id });
+            }
         }
         public async Task<string> Delete(string id)
         {
@@ -136,18 +142,20 @@ namespace CM.Services
         public async Task<string> Update(BarDTO barDto)
         {
             var barToEdit = await this.GetBar(barDto.Id);
-            var uniqueFileNamePath = _fileUploadService.UploadFile(barDto.BarImage);
-            barDto.ImageUrl = uniqueFileNamePath;
-            var bar = barDto.MapBarDTOToBar();
-            bar.BarRating = barToEdit.BarRating;
+            if (barDto.BarImage != null)
+            {
+                var uniqueFileNamePath = _fileUploadService.UploadFile(barDto.BarImage);
+                barDto.ImageUrl = uniqueFileNamePath;
+            }
+            barToEdit = barDto.EditBarDTOToBar(barToEdit);
             var coctailsInBar = barDto.Cocktails.Select(c => c.MapToCocktailModel()).ToList();
             foreach (var cocktail in coctailsInBar)
             {
-                await AddCocktailToBar(cocktail, bar);
+               AddCocktailToBar(cocktail, barToEdit);
             }
-            _context.Entry(barToEdit).CurrentValues.SetValues(bar);
-            _context.RemoveRange(barToEdit.BarCocktails);
-            _context.AddRange(bar.BarCocktails);
+            //_context.Entry(barToEdit).CurrentValues.SetValues(barToEdit);
+            //_context.RemoveRange(barToEdit.BarCocktails);
+            //_context.AddRange(barToEdit.BarCocktails);
             await _context.SaveChangesAsync();
             return barToEdit.Name;
         }

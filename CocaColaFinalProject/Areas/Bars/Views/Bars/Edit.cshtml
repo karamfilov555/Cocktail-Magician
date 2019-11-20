@@ -14,6 +14,16 @@
                       enctype="multipart/form-data">
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                     <input type="hidden" asp-for="Id" />
+                    <input type="hidden" asp-for="@Model.AllCountries" />
+                    <input type="hidden" asp-for="@Model.AllCocktails" />
+                    <div>
+                        <img src="@Model.BarImageURL" height="250" />
+                        <br />
+                        <label asp-for="BarImage" class="control-label">Upload New Image</label>
+                        <input asp-for="BarImage" class="btn btn-primary btn-sm" />
+                        <span asp-validation-for="BarImage" class="text-danger"></span>
+                        <br />
+                    </div>
                     <div class="form-group">
                         <label asp-for="Name" class="control-label"></label>
                         <input asp-for="Name" class="form-control" />
@@ -26,9 +36,11 @@
                         <span asp-validation-for="Website" class="text-danger"></span>
                     </div>
                     <div class="form-group">
-                        <label asp-for="Country" class="control-label"></label>
-                        <input asp-for="Country" class="form-control" />
-                        <span asp-validation-for="Country" class="text-danger"></span>
+                        <label asp-for="Country" class="control-label">Choose country:</label>
+                        <select class="select-editable form-control" asp-for="Country"
+                                input="text" asp-items="@Model.AllCountries" id="Country" name="Country">
+                            @*<option disabled hidden selected asp-for="Country" value="">@Model.Country</option>*@
+                        </select>
                     </div>
                     <div class="form-group">
                         <label asp-for="City" class="control-label"></label>
@@ -40,16 +52,14 @@
                         <input asp-for="Details" class="form-control" />
                         <span asp-validation-for="Details" class="text-danger"></span>
                     </div>
-                    <div>
-                        <label asp-for="BarImage" class="control-label">Upload Image</label>
-                        <input asp-for="BarImage" class="btn btn-primary btn-sm" />
-                        <span asp-validation-for="BarImage" class="text-danger"></span>
-                    </div>
+                    
                     <div class="form-group">
-                        <div class="select-editable">
-                            <label asp-for="AllCocktailsIDs" class="control-label">All Cocktails</label>
-                            <select asp-for="AllCocktailsIDs" asp-items="@Model.AllCocktails" class="form-control">
-                                <option hidden disabled selected value=""></option>
+                        <div>
+                            <br />
+                            <label asp-for="AllCocktailsIDs" class="control-label">Choose Cocktails:</label>
+                            <select style="width:500px"
+                                    class="js-example-basic-multiple control-label"
+                                    asp-for="AllCocktailsIDs" asp-items="@Model.AllCocktails" multiple="multiple">
                             </select>
                         </div>
                     </div>
@@ -65,3 +75,9 @@
             <a asp-action="Index">Back to List</a>
         </div>
         </center>
+
+    <script>
+     window.onload = function () {
+        $('.js-example-basic-multiple').select2();
+};
+    </script>

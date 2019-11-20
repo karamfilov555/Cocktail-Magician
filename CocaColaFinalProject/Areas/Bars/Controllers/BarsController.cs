@@ -115,19 +115,15 @@ namespace CM.Web.Areas.Bars.Controllers
                     _toast.AddSuccessToastMessage($"You successfully added \"{barName}\" bar!");
                     return RedirectToAction(nameof(Index));
                 }
-
             }
-            
             var allCocktails = await _cocktailServices.GetAllCocktails();
             var allCountries = await _barServices.GetAllCountries();
-
             barVM.AllCocktails = allCocktails
                 .Select(c => new SelectListItem(c.Name, c.Id)).ToList();
             barVM.AllCountries = allCountries
                 .Select(c => new SelectListItem(c.Name, c.Id)).ToList();
             return View(barVM);
         }
-        //Check: if image is invalid , countries will disapear (is this the place for this check?)
 
         private bool ImageIsValid(IFormFile barImage)
         {
@@ -155,35 +151,42 @@ namespace CM.Web.Areas.Bars.Controllers
             {
                 return NotFound();
             }
-            var allCocktails = await _cocktailServices.GetAllCocktails();
             var bar = await _barServices.GetBarByID(id);
-            var barVM = bar.MapBarToCreateBarVM();
-            barVM.AllCocktails = allCocktails
+            var allCocktails = await _cocktailServices.GetAllCocktails();
+            var allCountries = await _barServices.GetAllCountries();
+            var createBarVM = bar.MapBarToCreateBarVM();
+            createBarVM.AllCocktailsIDs = bar.Cocktails.Select(c => c.Id).ToList();
+            createBarVM.AllCocktails = allCocktails
                 .Select(c => new SelectListItem(c.Name, c.Id)).ToList();
-            return View(barVM);
+            createBarVM.AllCountries = allCountries
+                .Select(c => new SelectListItem(c.Name, c.Id)).ToList();
+            return View(createBarVM);
+            
         }
 
         // POST: Bars/Bars/Edit/5
         [HttpPost]
         [Authorize(Roles = "Manager, Administrator")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(CreateBarVM barVM)
+        public async Task<IActionResult> Edit(CreateBarVM createBarVM)
         {
-
             if (ModelState.IsValid)
             {
-                if (ImageIsValid(barVM.BarImage))
+                if (createBarVM.BarImage == null||ImageIsValid(createBarVM.BarImage))
                 {
-                    var barDTO = barVM.MapBarVMToDTO();
+                    var barDTO = createBarVM.MapBarVMToDTO();
                     var barName = await _barServices.Update(barDTO);
                     _toast.AddSuccessToastMessage($"You successfully edited \"{barName}\" bar!");
                     return RedirectToAction(nameof(Index));
                 }
             }
+            var allCountries = await _barServices.GetAllCountries();
             var allCocktails = await _cocktailServices.GetAllCocktails();
-            barVM.AllCocktails = allCocktails
+            createBarVM.AllCocktails = allCocktails
                 .Select(c => new SelectListItem(c.Name, c.Id)).ToList();
-            return View(barVM);
+            createBarVM.AllCountries = allCountries
+                .Select(c => new SelectListItem(c.Name, c.Id)).ToList();
+            return View(createBarVM);
         }
 
         // GET: Bars/Bars/Delete/5
@@ -195,7 +198,6 @@ namespace CM.Web.Areas.Bars.Controllers
             var barVM = barDTO.MapBarToVM();
             return View(barVM);
         }
-
 
         [Authorize(Roles = "Manager, Administrator")]
         [HttpPost, ActionName("Delete")]
@@ -210,7 +212,5 @@ namespace CM.Web.Areas.Bars.Controllers
             _toast.AddSuccessToastMessage($"You successfully deleted \"{barName}\" bar!");
             return RedirectToAction(nameof(Index));
         }
-
-
     }
 }

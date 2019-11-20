@@ -31,8 +31,8 @@ namespace CM.Web.Areas.Cocktails.Models
 
         public int LikeCount { get; set; }
         public List<string> LikedByUsers { get; set; }
-        public ICollection<CocktailComponentDTO> Ingredients { get; set; } 
-            = new List<CocktailComponentDTO>(); //make view model
+        public ICollection<CocktailComponentViewModel> Ingredients { get; set; } 
+            = new List<CocktailComponentViewModel>(); //make view model
         public bool CanReview { get; set; }
         public List<CocktailReviewViewModel> Reviews { get; set; }
             = new List<CocktailReviewViewModel>();

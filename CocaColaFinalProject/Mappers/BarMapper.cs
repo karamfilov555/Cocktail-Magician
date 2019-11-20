@@ -32,10 +32,11 @@ namespace CM.Web.Mappers
             newBarVM.Id = bar.Id;
             newBarVM.Name = bar.Name;
             newBarVM.City = bar.City;
-            newBarVM.Country = bar.Country;
+            newBarVM.Country = bar.CountryId;
             newBarVM.Details = bar.Details;
-            newBarVM.BarImage = bar.BarImage;
-            newBarVM.Website = bar.Website; 
+            newBarVM.BarImageURL = bar.ImageUrl;
+            newBarVM.Website = bar.Website;
+            newBarVM.AllCocktailsIDs = bar.Cocktails.Select(c => c.CocktailId).ToList();
             return newBarVM;
         }
 

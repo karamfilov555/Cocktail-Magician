@@ -195,6 +195,7 @@ namespace CM.Web.Areas.Cocktails.Controllers
         {
             var cocktail = await _cocktailServices.FindCocktailById(Id);
             var reviewVm = cocktail.MapToCocktailReviewViewModel();
+            reviewVm.Ingredients = cocktail.Ingredients.Select(i=>i.MapToCocktailComponentVM()).ToList();
             string userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
 
             var canUserReview = await _reviewServices.CheckIfUserCanReview(userId, cocktail);
