@@ -29,7 +29,7 @@ namespace CM.Web.Areas.Cocktails.Models
         [Display(Name = "Cocktail's Rating")]
         [Range(0,10, ErrorMessage = "Cocktail's rating should be between 0 and 10!")]
         public decimal Rating { get; set; }
-        [MaxImageSize(50000)]
+        [MaxImageSize(500000)]
         [AllowedImageFormat(new string[] { ".jpg", ".png", "jpeg" })]
         public IFormFile CocktailImage { set; get; }
         public List<string> IngredientsIDs { get; set; } = new List<string>();

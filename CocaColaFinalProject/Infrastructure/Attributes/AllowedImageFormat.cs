@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace CM.Web.Infrastructure.Attributes
 {
-    public class AllowedImageFormat: ValidationAttribute
+    public class AllowedImageFormat : ValidationAttribute
     {
         private readonly string[] _extensions;
         public AllowedImageFormat(string[] extensions)
@@ -19,15 +19,17 @@ namespace CM.Web.Infrastructure.Attributes
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
             var file = value as IFormFile;
-            var extension = Path.GetExtension(file.FileName);
-            if (!(file == null))
+            if (file != null)
             {
-                if (!_extensions.Contains(extension.ToLower()))
+                var extension = Path.GetExtension(file.FileName);
+                if (!(file == null))
                 {
-                    return new ValidationResult(GetErrorMessage());
+                    if (!_extensions.Contains(extension.ToLower()))
+                    {
+                        return new ValidationResult(GetErrorMessage());
+                    }
                 }
             }
-
             return ValidationResult.Success;
         }
 

@@ -27,7 +27,7 @@ namespace CM.Web.Areas.Cocktails.Models
 
         public string Image { get; set; }
         public string Recipe { get; set; }
-        [MaxImageSize(50000)]
+        [MaxImageSize(500000)]
         [AllowedImageFormat(new string[] { ".jpg", ".png", "jpeg" })]
         public IFormFile CocktailImage { set; get; }
         [BindProperty]

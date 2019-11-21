@@ -1,71 +1,11 @@
-﻿@using Microsoft.AspNetCore.Identity
-@using CM.Models
+﻿
 @inject SignInManager<AppUser> SignInManager
 @inject UserManager<AppUser> UserManager
-@inject CM.Services.Contracts.INotificationServices notificationServices
-
-@{
-
-    var profilePicture = ViewData["IMG"];
-}
 
 @if (SignInManager.IsSignedIn(User))
 {
-    if (User.IsInRole("Administrator"))
-    {
-        <ul class="notifications">
-            <div id="bellNot" class="buttonNot">
-                <a asp-area="Notifications" asp-controller="Notifications" asp-action="Index">
+    @await Component.InvokeAsync("LoggedUserHeader", this.User.FindFirstValue(ClaimTypes.NameIdentifier));
 
-                    @if (await notificationServices.GetUnseenNotificationsCountForUserAsync(this.User.FindFirstValue(ClaimTypes.NameIdentifier)) > 0)
-                    {
-                        <i id="" class="fa fa-bell fa-lg" style="color:gold;"></i>
-                        <span id="notificationsCount" class="button__badge">
-                            <font style="padding-right:1px">
-                                @await notificationServices.GetUnseenNotificationsCountForUserAsync(this.User.FindFirstValue(ClaimTypes.NameIdentifier))
-
-                            </font>
-                        </span>
-                    }
-                    else
-                    {
-                        <i class="fa fa-bell fa-lg" style="color:white;"></i>
-                    }
-
-                </a>
-            </div>
-        </ul>
-    }
-
-    <ul class="smallSocials" style="padding-left:500px">
-        <li>
-            <img src="@profilePicture" width="40" align="left" />
-        </li>
-
-        <li class="dropdown active">
-            <a class="btn twitter" asp-area="Identity" asp-page="/Account/Manage/Index"><font size="5">                  Hello @User.Identity.Name!</font></a>
-
-            <ul class="dropdown-menu" style="background-color:brown">
-                <li style="background-color:brown">
-                    <form class="form-inline" asp-area="Identity" asp-page="/Account/Manage/Index">
-                        <button type="submit" class="progress-bar" style="border:0px"><font size="5">Notifications</font></button>
-                    </form>
-                </li>
-                <li style="background-color:brown">
-                    <form class="form-inline" method="get" asp-area="Identity" asp-page="/Account/Manage/Index">
-                        <button type="submit" class="progress-bar" style="border:0px"><font size="5">Settings</font></button>
-                    </form>
-                </li>
-                <li style="background-color:brown">
-                    <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
-                        <button type="submit" class="progress-bar" style="border:0px"><font size="5">Logout</font></button>
-                    </form>
-                </li>
-            </ul>
-        </li>
-
-
-    </ul>
 }
 else
 {

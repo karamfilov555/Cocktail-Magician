@@ -13,6 +13,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Http;
 using CM.Services;
 using NToastNotify;
+using CM.Web.Infrastructure.Attributes;
 
 namespace CM.Web.Areas.Identity.Pages.Account
 {
@@ -69,6 +70,8 @@ namespace CM.Web.Areas.Identity.Pages.Account
             [Display(Name = "Confirm password")]
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; }
+            [MaxImageSize(500000)]
+            [AllowedImageFormat(new string[] { ".jpg", ".png", "jpeg" })]
             public IFormFile Image { get; set; }
         }
 
@@ -85,18 +88,6 @@ namespace CM.Web.Areas.Identity.Pages.Account
                 string uniqueFileNamePath;
                 if (Input.Image != null)
                 {
-                    var imageSizeInKb = Input.Image.Length / 1024;
-                    var type = Input.Image.ContentType;
-                    if (type != "image/jpeg" && type != "image/jpg" && type != "image/png")
-                    {
-                        _toast.AddErrorToastMessage($"Allowed picture formats: \".jpg\", \".jpeg\" and \".png\"!");
-                        return Page();
-                    }
-                    if (imageSizeInKb > 100)
-                    {
-                        _toast.AddErrorToastMessage($"The picture size is too big! Maximum size: 100 kb");
-                        return Page();
-                    }
                 uniqueFileNamePath = _fileUploadService.UploadFile(Input.Image);
                 }
                 else

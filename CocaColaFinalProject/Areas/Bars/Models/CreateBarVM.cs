@@ -32,7 +32,7 @@ namespace CM.Web.Areas.Bars.Models
         [Required(ErrorMessage = "Website is required!")]
         [Url]
         public string Website { get; set; }
-        [MaxImageSize(50000)]
+        [MaxImageSize(500000)]
         [AllowedImageFormat(new string[] { ".jpg", ".png", "jpeg" })]
         public IFormFile BarImage { set; get; }
         public string BarImageURL { set; get; }

@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using CM.Models;
 using CM.Services;
 using CM.Services.Contracts;
+using CM.Web.Infrastructure.Attributes;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
@@ -34,8 +35,8 @@ namespace CM.Web.Areas.Identity.Pages.Account.Manage
             _userManager = userManager;
             _signInManager = signInManager;
             _emailSender = emailSender;
-           _fileUploadService = fileUploadService;
-           _toast = toast;
+            _fileUploadService = fileUploadService;
+            _toast = toast;
             _appUserServices = appUserServices;
         }
 
@@ -59,6 +60,8 @@ namespace CM.Web.Areas.Identity.Pages.Account.Manage
             [Display(Name = "Phone number")]
             public string PhoneNumber { get; set; }
             public string ImageUrl { get; set; }
+            [MaxImageSize(500000)]
+            [AllowedImageFormat(new string[] { ".jpg", ".png", "jpeg" })]
             public IFormFile Image { get; set; }
 
         }
@@ -82,7 +85,7 @@ namespace CM.Web.Areas.Identity.Pages.Account.Manage
             {
                 Email = email,
                 PhoneNumber = phoneNumber,
-                ImageUrl=imageURL
+                ImageUrl = imageURL
             };
             ViewData["IMG"] = await _appUserServices.GetProfilePictureURL(user.Id);
             IsEmailConfirmed = await _userManager.IsEmailConfirmedAsync(user);
@@ -102,7 +105,7 @@ namespace CM.Web.Areas.Identity.Pages.Account.Manage
             {
                 return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
             }
-           
+
 
             var email = await _userManager.GetEmailAsync(user);
             if (Input.Email != email)
@@ -127,26 +130,9 @@ namespace CM.Web.Areas.Identity.Pages.Account.Manage
             }
             if (Input.Image != null)
             {
-                var imageSizeInKb = Input.Image.Length / 1024;
-                var type = Input.Image.ContentType;
-                if (type != "image/jpeg" && type != "image/jpg" && type != "image/png")
-                {
-                     _toast.AddErrorToastMessage($"Allowed picture formats: \".jpg\", \".jpeg\" and \".png\"!");
-                    return Page();
-                }
-                if (imageSizeInKb > 100)
-                {
-                    _toast.AddErrorToastMessage($"The picture size is too big! Maximum size: 100 kb");
-                    return Page();
-                }
                 var uniqueFileNamePath = _fileUploadService.UploadFile(Input.Image);
-                if (user.ImageURL!= uniqueFileNamePath)
-                {
-                    await _appUserServices.SetProfilePictureURL(user.Id, uniqueFileNamePath);
-                }
+                await _appUserServices.SetProfilePictureURL(user.Id, uniqueFileNamePath);
             }
-           
-
             await _signInManager.RefreshSignInAsync(user);
             StatusMessage = "Your profile has been updated";
             return RedirectToPage();

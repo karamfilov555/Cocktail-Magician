@@ -1,0 +1,58 @@
+﻿@model HeaderViewModel
+
+
+@if (User.IsInRole("Administrator"))
+{
+    <ul class="notifications">
+        <div id="bellNot" class="buttonNot">
+            <a asp-area="Notifications" asp-controller="Notifications" asp-action="Index">
+
+                @if (@Model.NotificationsCount > 0)
+                {
+                    <i id="" class="fa fa-bell fa-lg" style="color:gold;"></i>
+                    <span id="notificationsCount" class="button__badge">
+                        <font style="padding-right:1px">
+                            @Model.NotificationsCount
+                        </font>
+                    </span>
+                }
+                else
+                {
+                    <i class="fa fa-bell fa-lg" style="color:white;"></i>
+                }
+
+            </a>
+        </div>
+    </ul>
+}
+
+<ul class="smallSocials" style="padding-left:500px">
+    <li>
+        <img src="@Model.ImageURL" width="40" align="left" />
+    </li>
+
+    <li class="dropdown active">
+        <a class="btn twitter" asp-area="Identity" asp-page="/Account/Manage/Index"><font size="5">                  Hello @User.Identity.Name!</font></a>
+
+        <ul class="dropdown-menu" style="background-color:brown">
+            <li style="background-color:brown">
+                <form class="form-inline" asp-area="Identity" asp-page="/Account/Manage/Index">
+                    <button type="submit" class="progress-bar" style="border:0px"><font size="5">Notifications</font></button>
+                </form>
+            </li>
+            <li style="background-color:brown">
+                <form class="form-inline" method="get" asp-area="Identity" asp-page="/Account/Manage/Index">
+                    <button type="submit" class="progress-bar" style="border:0px"><font size="5">Settings</font></button>
+                </form>
+            </li>
+            <li style="background-color:brown">
+                <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                    <button type="submit" class="progress-bar" style="border:0px"><font size="5">Logout</font></button>
+                </form>
+            </li>
+        </ul>
+    </li>
+
+
+</ul>
+
