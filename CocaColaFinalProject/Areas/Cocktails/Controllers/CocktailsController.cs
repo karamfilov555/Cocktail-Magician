@@ -113,7 +113,7 @@ namespace CM.Web.Areas.Cocktails.Controllers
 
         [HttpGet]
         public async Task<IActionResult> ListCocktails(string sortOrder, int? currPage, string orderByModel)
-        {
+            {
             if (orderByModel == null)
             {
                 ViewData["CurrentSort"] = sortOrder; //care

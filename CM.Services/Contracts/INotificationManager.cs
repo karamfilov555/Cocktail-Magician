@@ -12,5 +12,6 @@ namespace CM.Services.Contracts
         string CocktailEditedSameNameDescription(string username, string oldCocktailName);
         string CocktailDeletedDescription(string username, string barName);
         string BarDeletedDescription(string username, string barName);
+        string QuickMessageDescription(string name, string mail, string msg);
     }
 }

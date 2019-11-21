@@ -1,7 +1,6 @@
-﻿
-$('#loadMore').on('s', function (event) {
-    event.preventDefault();
-    console.log($('#loadMore'))
+﻿$('#loadMore').on('click', function (e) {
+    e.preventDefault();
+    console.log('vleznah');
   
     const data = $(this).attr('data-sortOrder');
     const data2 = $(this).attr('data-currPage');
@@ -33,7 +32,7 @@ $('#loadMore').on('s', function (event) {
                 animation.remove();
                 $('#loadMore').attr('class', 'btn btn-default btn-sm')
             $(result).appendTo($('#tbody'));
-            }, 1000);
+            }, 600);
         }
     })
 });

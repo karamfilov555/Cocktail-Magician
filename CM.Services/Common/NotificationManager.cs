@@ -13,6 +13,8 @@ namespace CM.Services.Common
         private const string barAddedMsg = "New Bar notification: User: {0}, just added new Bar with name: \"{1}\"!";
         private const string cocktailDeletedMsg = "Deleted Cocktail notification: User: {0}, just delete a Cocktail with name: \"{1}\"!";
         private const string barDeletedMsg = "Deleted Bar notification: User: {0}, just delete a Bar with name: \"{1}\"!";
+        private const string quickMessage = "Quick Message: From: {0}, Descrption:" +
+            "\" {1} \", E-mail to replay: {2} ";
 
         public string CocktailAddedDescription(string username, string cocktailName)
             => string.Format(cocktailAddedMsg, username, cocktailName);
@@ -26,5 +28,7 @@ namespace CM.Services.Common
            => string.Format(cocktailDeletedMsg, username, barName);
         public string BarDeletedDescription(string username, string barName)
            => string.Format(barDeletedMsg, username, barName);
+        public string QuickMessageDescription(string name, string mail, string msg)
+            => string.Format(quickMessage, name, msg, mail);
     }
 }

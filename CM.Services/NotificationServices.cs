@@ -119,5 +119,12 @@ namespace CM.Services
             var notificationDescription = _notificationManager.BarDeletedDescription(username, entityName);
             await CreateNotificationAsync(notificationDescription, username);
         }
+
+        public async Task CreateNotificationAsync(string name, string email, string msg)
+        {
+            var notificationDescription = _notificationManager.QuickMessageDescription(name, email, msg);
+
+            await CreateNotificationAsync(notificationDescription, name);
+        }
     }
 }

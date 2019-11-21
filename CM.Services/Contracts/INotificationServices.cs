@@ -9,7 +9,6 @@ namespace CM.Services.Contracts
 {
     public interface INotificationServices
     {
-        //Task<NotificationDTO> CreateNotificationAsync(string description, string username);
         Task<NotificationDTO> SendNotificationToUserAsync(string description, string username);
         Task<ICollection<NotificationDTO>> GetNotificationsForUserAsync(string userId);
         Task<int> GetUnseenNotificationsCountForUserAsync(string userId);
@@ -19,5 +18,6 @@ namespace CM.Services.Contracts
         Task CocktailDeletedNotificationToAdminAsync(string id, string entityName);
         Task BarDeletedNotificationToAdminAsync(string id, string entityName);
         Task BarCreateNotificationToAdminAsync(string id, string entityName);
+        Task CreateNotificationAsync(string name, string email, string msg);
     }
 }

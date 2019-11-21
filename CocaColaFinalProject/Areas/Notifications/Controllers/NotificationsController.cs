@@ -58,5 +58,12 @@ namespace CM.Web.Areas.Notifications.Controllers
 
             return notificatonsCount;
         }
+        public async Task<IActionResult> SendQuickMessage(string name, string email, string message)
+        {
+            await _notificationServices.CreateNotificationAsync(name,email,message);
+            _toast.AddSuccessToastMessage("You successfully contact our support!");
+            return RedirectToAction("Index", "Home");
+        }
+
     }
 }
