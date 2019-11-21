@@ -183,7 +183,7 @@ namespace CM.Services
             var countriesDTO = await countries.Select(c => new CountryDTO
             { Id = c.Id,
                 Name = c.Name
-            }).OrderByDescending(c=>c.Name)
+            }).OrderBy(c=>c.Name)
             .ToListAsync();
             return countriesDTO;
         }

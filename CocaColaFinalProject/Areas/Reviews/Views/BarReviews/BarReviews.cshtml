@@ -4,7 +4,41 @@
 }
 
 <h1 class="hdr1">Reviews for @Model.BarName </h1>
+<center>
+    <h1 class="hdr4">Rating: </h1>
+    @if (@Model.Rating == 0)
+    {
+        <i>Not rated yet!</i>
+    }
+    else
+    {
+        if (@Model.Rating * 10 % 10 == 0)
+        {
+            for (int i = 0; i < @Model.Rating - 1; i++)
+            {
+                <font color="gold" size="5">
+                    <i class="fa fa-star" style="color:gold"></i>
+                </font>
+            }
+            <font color="gold">
+                <i class="fa fa-star" style="color:gold"><font size="5"> @Model.Rating</font></i>
+            </font>
+        }
+        else
+        {
 
+            for (int i = 0; i < @Model.Rating - 1; i++)
+            {
+                <font color="gold" size="5">
+                   <i class="fa fa-star" style="color:gold"></i>
+                </font>
+            }
+            <font color="gold">
+                <i class="fa fa-star-half" style="color:gold"> <font size="5"> @Model.Rating</font></i>
+            </font>
+        }
+    }
+</center>
 @{
     var list = Model.Reviews.Select(r => r.UserID).ToList();
     if (!list.Contains(@User.FindFirstValue(ClaimTypes.NameIdentifier)))
@@ -30,68 +64,59 @@
             <li>
                 @if (@Model.Reviews.Count == 0)
                 {
-                <h6 class="hdr3">No reviews yet</h6>
+                    <h6 class="hdr3">No reviews yet</h6>
                 }
                 @foreach (var review in @Model.Reviews)
-                {
-                    <div class="oneComment">
-                        <div class="media">
-                            <a class="pull-left roundedImg" href="#" style="background-image: url(&quot;./assets/images/content/testimonial-1.jpg&quot;);">
-                                <img class="media-object" src="./assets/images/content/testimonial-1.jpg" alt=" ">
-                            </a>
-                            <div class="media-body">
-                                @review.ReviewDate<br>
-                                @review.UserName
-                                @review.Rating
-                                @*<a href="javascript:void(0)" class="like-2" data-barReviewID="@review.Id" data-barId="@review.BarId" data-name="@review.BarName">
-                                        <i class="fa fa-heart fa-lg text-danger">
-                                        </i><span> @review.LikeCount</span>
-                                    </a>*@
-                                @if (!review.LikedByUsers.Contains(@User.FindFirstValue(ClaimTypes.NameIdentifier)))
-                                {
-                                    <form id="like-1" method="post" asp-area="Reviews" asp-controller="BarReviews" asp-action="LikeBarReview"
-                                          asp-route-barReviewID="@review.Id" asp-route-barId="@review.BarId" asp-route-name="@review.BarName"
-                                          data-barReviewID="@review.Id" data-barId="@review.BarId" data-name="@review.BarName">
-                                        <button type="submit"
-                                                class="like-2"
-                                                data-barReviewID="@review.Id" data-barId="@review.BarId">
-                                            <i class="fa fa-heart fa-lg text-danger"></i>
-                                            <span> @review.LikeCount</span>
-                                        </button>
-                                    </form>
-                                }
-                                else
-                                {
-                                    <form id="unlike-1" method="post" asp-area="Reviews" asp-controller="BarReviews" asp-action="RemoveLikeBarReview"
-                                          asp-route-barReviewID="@review.Id" asp-route-barId="@review.BarId" asp-route-name="@review.BarName"
-                                          data-barReviewID="@review.Id" data-barId="@review.BarId" >
-                                        <button type="submit"
-                                                class="unlike-2" data-barReviewID="@review.Id" data-barId="@review.BarId">
-                                            <i class="fa fa-heart fa-lg text-danger"></i>
-                                            <span>@review.LikeCount</span>
-                                        </button>
-                                    </form>
-                                }
-                                @*<button id="countID" type="submit"
-                                            title="Love it" class="btn-like btn-counter" data-count="@review.LikeCount">
-                                        <span>&#x2764;</span>
-                                    </button>*@
-                                @*<form method="post" asp-area="Reviews" asp-controller="BarReviews" asp-action="RemoveLikeBarReview"
-                                          asp-route-barReviewID="@review.Id" asp-route-barId="@review.BarId" asp-route-name="@review.BarName">
+                {<center>
+                        <div class="col-md-10 blog-main" style="padding-left:260px">
+                            <div class="blog-post format-quote">
+                                <div class="blog_thumbnail">
+                                    <a href="7b_single-blog.html" class="box_text">
+                                        <span class="ribbon_icon"><i class="fa fa-quote-left"></i></span>
+                                        <blockquote class="inner">
+                                            <p>
+                                                "@review.Description"
+                                                <br>
+                                                <font style="color:gold">Grade: @review.Rating</font>
 
-                                        <a href="javascript:void(0)" class="unlike"><i class="fa fa-heart-o fa-lg"></i><span>(@review.LikeCount)l</span></a>
-                                    </form>
-
-                                    }*@
-
-                                <a href="#" class="comment-reply-link pull-right">Reply</a>
+                                            </p>
+                                            <span class="author">- The Coca-Cola Company, Cocktail Magician™, 2019 -</span>
+                                        </blockquote>
+                                    </a>
+                                </div>
+                                <div class="meta_box">
+                                    <span class="meta_date">@review.ReviewDate</span>
+                                    @*<span class="meta_comments"><a href="#"><em>21</em> <span>Comments</span></a></span>*@
+                                    <span class="meta_author"><a href="#">Publisher: @review.UserName</a></span>
+                                    @if (!review.LikedByUsers.Contains(@User.FindFirstValue(ClaimTypes.NameIdentifier)))
+                                    {
+                                        <form id="like-1" method="post" asp-area="Reviews" asp-controller="BarReviews" asp-action="LikeBarReview"
+                                              asp-route-barReviewID="@review.Id" asp-route-barId="@review.BarId" asp-route-name="@review.BarName"
+                                              data-barReviewID="@review.Id" data-barId="@review.BarId" data-name="@review.BarName">
+                                            <button type="submit"
+                                                    class="like-2"
+                                                    data-barReviewID="@review.Id" data-barId="@review.BarId">
+                                                <i class="fa fa-heart fa-lg text-danger"></i>
+                                                <span> @review.LikeCount</span>
+                                            </button>
+                                        </form>
+                                    }
+                                    else
+                                    {
+                                        <form id="unlike-1" method="post" asp-area="Reviews" asp-controller="BarReviews" asp-action="RemoveLikeBarReview"
+                                              asp-route-barReviewID="@review.Id" asp-route-barId="@review.BarId" asp-route-name="@review.BarName"
+                                              data-barReviewID="@review.Id" data-barId="@review.BarId">
+                                            <button type="submit"
+                                                    class="unlike-2" data-barReviewID="@review.Id" data-barId="@review.BarId">
+                                                <i class="fa fa-heart fa-lg text-danger"></i>
+                                                <span>@review.LikeCount</span>
+                                            </button>
+                                        </form>
+                                    }
+                                </div>
                             </div>
                         </div>
-
-                        <p>
-                            @review.Description
-                        </p>
-                    </div>
+                    </center>
                 }
         </ul>
     </div>

@@ -31,7 +31,7 @@ namespace CM.Web.Areas.Reviews.Controllers
 
         [HttpGet]
         [Authorize(Roles = "Manager, Administrator, Member")]
-        public async Task<IActionResult> BarReviews(string id, string name)
+        public async Task<IActionResult> BarReviews(string id, string name, decimal rating )
         {
             List<BarReviewDTO> allReviewsDTOs = await _reviewServices.GetAllReviewsForBar(id);
             var allReviewsVM = allReviewsDTOs.Select(r => r.MapReviewDTOToVM()).ToList();
@@ -39,6 +39,7 @@ namespace CM.Web.Areas.Reviews.Controllers
             barReviewVM.Reviews = allReviewsVM;
             barReviewVM.BarId = id;
             barReviewVM.BarName = name;
+            barReviewVM.Rating = rating;
             return View(barReviewVM);
 
         }
