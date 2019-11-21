@@ -58,6 +58,7 @@ namespace CM.Web.Areas.Notifications.Controllers
 
             return notificatonsCount;
         }
+        [HttpPost]
         public async Task<IActionResult> SendQuickMessage(string name, string email, string message)
         {
             await _notificationServices.CreateNotificationAsync(name,email,message);

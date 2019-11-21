@@ -146,7 +146,7 @@
                             <div class="form">
                              
 
-                                <form method="get">
+                                <form method="post" asp-area="Notifications" asp-controller="Notifications" asp-action="SendQuickMessage">
                                         <div class="col-md-2" >
                                             <input class="form-control" style="background-color:aliceblue" type="text" name="Name" placeholder="Name" value="@ViewData["Name"]" required>
                                         </div>
@@ -170,7 +170,7 @@
                                         <br/>
                                         <br/>
                                         <div class="col-md-3">
-                                            <button style="margin-top:-83px;margin-left:245px"class="btn btn-sm" asp-area="Notifications" asp-controller="Notifications" asp-action="SendQuickMessage">
+                                            <button style="margin-top:-83px;margin-left:245px"class="btn btn-sm" >
                                                 Alright, Submit
                                             </button>
                                         </div>

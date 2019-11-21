@@ -26,33 +26,61 @@
     </ul>
 }
 
-<ul class="smallSocials" style="padding-left:500px">
-    <li>
-        <img src="@Model.ImageURL" width="40" align="left" />
-    </li>
+<ul class="smallSocials2" style="padding-left:550px">
+    @*<li>
+        </li>*@
+    @if (@Model.ImageURL != null)
+    {
+        <img src="@Model.ImageURL" width="35" align="left" style="display:block; border-radius:30px; margin-right:-80px; margin-left:35px" />
+        <li2 class="dropdown active" style="padding-left:-100px; margin-right:-115px;">
+            <a class="btn3" style="padding-top:-10px;padding-bottom:-45px;background-color:none;border-color:none" asp-area="Identity" asp-page="/Account/Manage/Index"><font size="5">                  Hello @User.Identity.Name!</font></a>
 
-    <li class="dropdown active">
-        <a class="btn twitter" asp-area="Identity" asp-page="/Account/Manage/Index"><font size="5">                  Hello @User.Identity.Name!</font></a>
 
-        <ul class="dropdown-menu" style="background-color:brown">
-            <li style="background-color:brown">
-                <form class="form-inline" asp-area="Identity" asp-page="/Account/Manage/Index">
-                    <button type="submit" class="progress-bar" style="border:0px"><font size="5">Notifications</font></button>
-                </form>
-            </li>
-            <li style="background-color:brown">
-                <form class="form-inline" method="get" asp-area="Identity" asp-page="/Account/Manage/Index">
-                    <button type="submit" class="progress-bar" style="border:0px"><font size="5">Settings</font></button>
-                </form>
-            </li>
-            <li style="background-color:brown">
-                <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
-                    <button type="submit" class="progress-bar" style="border:0px"><font size="5">Logout</font></button>
-                </form>
-            </li>
-        </ul>
-    </li>
+            <ul class="dropdown-menu" style="background-color:brown;    margin-top: -5px;x">
+                <li style="background-color:brown">
+                    <form class="form-inline" asp-area="Identity" asp-page="/Account/Manage/Index">
+                        <button type="submit" class="progress-bar" style="border:0px"><font size="5">Notifications</font></button>
+                    </form>
+                </li>
+                <li style="background-color:brown">
+                    <form class="form-inline" method="get" asp-area="Identity" asp-page="/Account/Manage/Index">
+                        <button type="submit" class="progress-bar" style="border:0px"><font size="5">Settings</font></button>
+                    </form>
+                </li>
+                <li style="background-color:brown">
+                    <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                        <button type="submit" class="progress-bar" style="border:0px"><font size="5">Logout</font></button>
+                    </form>
+                </li>
+            </ul>
+        </li2>
 
+    }
+    else
+    {
+        <li2 class="dropdown active" style="padding-left:-100px; margin-right:-115px;">
+            <a class="btn3" style="padding-top:-10px;padding-bottom:-45px;background-color:none;border-color:none" asp-area="Identity" asp-page="/Account/Manage/Index"><font size="5">                  Hello @User.Identity.Name!</font></a>
+
+
+            <ul class="dropdown-menu" style="background-color:brown;    margin-top: -5px;">
+                <li style="background-color:brown">
+                    <form class="form-inline" asp-area="Identity" asp-page="/Account/Manage/Index">
+                        <button type="submit" class="progress-bar" style="border:0px"><font size="5">Notifications</font></button>
+                    </form>
+                </li>
+                <li style="background-color:brown">
+                    <form class="form-inline" method="get" asp-area="Identity" asp-page="/Account/Manage/Index">
+                        <button type="submit" class="progress-bar" style="border:0px"><font size="5">Settings</font></button>
+                    </form>
+                </li>
+                <li style="background-color:brown">
+                    <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                        <button type="submit" class="progress-bar" style="border:0px"><font size="5">Logout</font></button>
+                    </form>
+                </li>
+            </ul>
+        </li2>
+    }
 
 </ul>
 
