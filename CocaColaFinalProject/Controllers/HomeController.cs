@@ -18,9 +18,9 @@ namespace CocaColaFinalProject.Controllers
         private readonly INotificationServices _notificationServices;
 
 
-        public HomeController(ICocktailServices cocktailServices, 
-                              IBarServices barServices, 
-                              IIngredientServices ingredientServices, 
+        public HomeController(ICocktailServices cocktailServices,
+                              IBarServices barServices,
+                              IIngredientServices ingredientServices,
                               IAppUserServices appUserServices, INotificationServices notificationServices)
         {
             _cocktailServices = cocktailServices;
@@ -31,11 +31,7 @@ namespace CocaColaFinalProject.Controllers
         }
         public async Task<IActionResult> Index()
         {
-            var userID = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            ViewData["IMG"] = await _appUserServices.GetProfilePictureURL(userID);
-            ViewData["Notifications"] = await _notificationServices.GetUnseenNotificationsCountForUserAsync(userID);
-
-            var cocktailDtos =  await _cocktailServices.GetCocktailsForHomePage();
+            var cocktailDtos = await _cocktailServices.GetCocktailsForHomePage();
             var cocktailsVM = cocktailDtos.Select(c => c.MapToCocktailViewModel()).ToList();
             var barDTOs = await _barServices.GetHomePageBars();
             var barsVM = barDTOs.Select(b => b.MapToHomePageBarVM()).ToList();
@@ -44,14 +40,6 @@ namespace CocaColaFinalProject.Controllers
             var homePageVM = new HomePageViewModel(barsVM, cocktailsVM, ingredientPicsForHp);
             return View(homePageVM);
         }
-
-        //public async Task<IActionResult> LoggedUserHeader()
-        //{
-        //    var userID = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-        //    var pictureURL = await _appUserServices.GetProfilePictureURL(userID);
-        //    var notificationsCount = await _notificationServices.GetUnseenNotificationsCountForUserAsync(userID);
-        //    return PartialView(new LoggedUserHeaderViewModel {ImageURL=pictureURL, NotificationsCount= notificationsCount });
-        //}
 
         public IActionResult Privacy()
         {

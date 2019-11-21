@@ -95,8 +95,6 @@ namespace CM.Services
             user.ValidateIfNull();
             bar.ValidateIfNull();
             var barReview = barReviewDTO.MapDTOToReview();
-            barReview.UserId = user.Id;
-            barReview.ReviewDate = DateTime.Now.Date;
             if (bar.Reviews.Select(r => r.UserId).ToList().Any(id => id == user.Id))
             {
                 throw new InvalidOperationException("You have already reviewed this bar!");

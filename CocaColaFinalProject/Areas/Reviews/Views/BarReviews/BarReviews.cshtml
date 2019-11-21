@@ -1,5 +1,4 @@
 ﻿@model AllBarReviewsViewModel
-@*@inject CM.Services.Contracts.IReviewServices service*@
 @{
     ViewData["Title"] = "BarReviews";
 }
@@ -29,6 +28,10 @@
     <div class="col-md-8 col-md-offset-2">
         <ul class="commentList list-unstyled">
             <li>
+                @if (@Model.Reviews.Count == 0)
+                {
+                <h6 class="hdr3">No reviews yet</h6>
+                }
                 @foreach (var review in @Model.Reviews)
                 {
                     <div class="oneComment">
@@ -37,7 +40,7 @@
                                 <img class="media-object" src="./assets/images/content/testimonial-1.jpg" alt=" ">
                             </a>
                             <div class="media-body">
-                                @review.ReviewDate.Date<br>
+                                @review.ReviewDate<br>
                                 @review.UserName
                                 @review.Rating
                                 @*<a href="javascript:void(0)" class="like-2" data-barReviewID="@review.Id" data-barId="@review.BarId" data-name="@review.BarName">

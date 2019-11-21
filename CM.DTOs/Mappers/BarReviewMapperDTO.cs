@@ -18,6 +18,7 @@ namespace CM.DTOs.Mappers
             newReviewDTO.BarName = review.Bar.Name;
             newReviewDTO.UserID = review.UserId;
             newReviewDTO.Rating = review.Rating;
+            newReviewDTO.ReviewDate = review.ReviewDate;
             newReviewDTO.LikeCount = review.BarReviewLikes.Count;
             newReviewDTO.LikedByUsers = review.BarReviewLikes.Select(b => b.AppUserID).ToList();
             return newReviewDTO;
@@ -29,6 +30,8 @@ namespace CM.DTOs.Mappers
             newReview.BarId = reviewDTO.BarId;
             newReview.Description = reviewDTO.Description;
             newReview.Rating = reviewDTO.Rating;
+            newReview.UserId = reviewDTO.UserID;
+            newReview.ReviewDate = DateTime.Now;
             return newReview;
         }
 
