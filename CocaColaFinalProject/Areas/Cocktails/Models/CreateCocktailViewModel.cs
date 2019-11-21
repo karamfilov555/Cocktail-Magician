@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using CM.Web.Infrastructure.Attributes;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -26,7 +27,8 @@ namespace CM.Web.Areas.Cocktails.Models
 
         public string Image { get; set; }
         public string Recipe { get; set; }
-
+        [MaxImageSize(50000)]
+        [AllowedImageFormat(new string[] { ".jpg", ".png", "jpeg" })]
         public IFormFile CocktailImage { set; get; }
         [BindProperty]
         public List<CocktailComponentViewModel> Ingredients { get; set; }

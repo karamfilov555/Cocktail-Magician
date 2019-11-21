@@ -1,4 +1,5 @@
 ﻿using CM.Models;
+using CM.Web.Infrastructure.Attributes;
 using CM.Web.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -31,13 +32,13 @@ namespace CM.Web.Areas.Bars.Models
         [Required(ErrorMessage = "Website is required!")]
         [Url]
         public string Website { get; set; }
+        [MaxImageSize(50000)]
+        [AllowedImageFormat(new string[] { ".jpg", ".png", "jpeg" })]
         public IFormFile BarImage { set; get; }
         public string BarImageURL { set; get; }
         public List<SelectListItem> AllCocktails { get; set; } = new List<SelectListItem>();
         public List<SelectListItem> AllCountries { get; set; } = new List<SelectListItem>();
         [Required(ErrorMessage = "You must specify cocktails for the bar!")]
         public List<string> AllCocktailsIDs { get; set; } = new List<string>();
-
-
     }
 }

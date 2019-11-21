@@ -91,46 +91,26 @@ namespace CM.Web.Areas.Cocktails.Controllers
         [Authorize(Roles = "Administrator, Manager")]
         public async Task<IActionResult> Create(CreateCocktailViewModel cocktailVm)
         {
+            var ingr = await _ingredientServices.GetAllIngredientsNames();
             if (ModelState.IsValid)
             {
+                //TODO -refactor!
                 // validation if there is no Picture!
                 var imageSizeInKb = cocktailVm.CocktailImage.Length / 1024;
                 var type = cocktailVm.CocktailImage.ContentType;
-                if (type != "image/jpeg" && type != "image/jpg" && type != "image/png")
-                {
-                    _toast.AddErrorToastMessage($"Allowed picture formats: \".jpg\", \".jpeg\" and \".png\"!");
-                    var ingr = await _ingredientServices.GetAllIngredientsNames();
-                    cocktailVm.IngredientsNames.Add(new SelectListItem("Choose an igredient", ""));
-                    cocktailVm.IngredientsNames.AddRange(ingr.Select(i => new SelectListItem(i, i)));
-                    return View(cocktailVm);
-                }
-                if (imageSizeInKb > 100)
-                {
-                    _toast.AddErrorToastMessage($"The picture size is too big! Maximum size: 100 kb");
-                    var ingr = await _ingredientServices.GetAllIngredientsNames();
-                    cocktailVm.IngredientsNames.Add(new SelectListItem("Choose an igredient", ""));
-                    cocktailVm.IngredientsNames.AddRange(ingr.Select(i => new SelectListItem(i, i)));
-                    return View(cocktailVm);
-                }
                 var cocktailDto = cocktailVm.MapToCocktailDTO();
                 await _cocktailServices.AddCocktail(cocktailDto);
-
                 //notification to admin
                 string id = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
                 await _notificationServices.CocktailCreateNotificationToAdminAsync(id, cocktailDto.Name);
-
                 _toast.AddSuccessToastMessage($"You successfully added cocktail {cocktailDto.Name}!");
                 return RedirectToAction("ListCocktails");
             }
-            else
-            {
-                var ingr = await _ingredientServices.GetAllIngredientsNames();
-                cocktailVm.IngredientsNames.Add(new SelectListItem("Choose an igredient", ""));
-                cocktailVm.IngredientsNames.AddRange(ingr.Select(i => new SelectListItem(i, i)));
-                //cocktailVm.Ingredients.AddRange(ingr.Select(i => new SelectListItem(i.Name, i.Id)));
-                return View(cocktailVm);
-            }
+            cocktailVm.IngredientsNames.Add(new SelectListItem("Choose an igredient", ""));
+            cocktailVm.IngredientsNames.AddRange(ingr.Select(i => new SelectListItem(i, i)));
+            return View(cocktailVm);
         }
+
         [HttpGet]
         public async Task<IActionResult> ListCocktails(string sortOrder, int? currPage, string orderByModel)
         {
@@ -195,7 +175,7 @@ namespace CM.Web.Areas.Cocktails.Controllers
         {
             var cocktail = await _cocktailServices.FindCocktailById(Id);
             var reviewVm = cocktail.MapToCocktailReviewViewModel();
-            reviewVm.Ingredients = cocktail.Ingredients.Select(i=>i.MapToCocktailComponentVM()).ToList();
+            reviewVm.Ingredients = cocktail.Ingredients.Select(i => i.MapToCocktailComponentVM()).ToList();
             string userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
 
             var canUserReview = await _reviewServices.CheckIfUserCanReview(userId, cocktail);
@@ -280,6 +260,7 @@ namespace CM.Web.Areas.Cocktails.Controllers
         [Authorize(Roles = "Manager, Administrator")]
         public async Task<IActionResult> Edit(string id)
         {
+            //TODO refactor
             if (id == null)
             {
                 return NotFound();

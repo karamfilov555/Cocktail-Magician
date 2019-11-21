@@ -24,9 +24,9 @@ namespace CM.Web.Areas.Bars.Controllers
         private readonly IToastNotification _toast;
         private readonly INotificationServices _notificationServices;
 
-        public BarsController(IBarServices barServices, 
+        public BarsController(IBarServices barServices,
                               ICocktailServices cocktailServices,
-                              IReviewServices reviewServices, 
+                              IReviewServices reviewServices,
                               IToastNotification toast,
                               INotificationServices notificationServices)
         {
@@ -103,18 +103,13 @@ namespace CM.Web.Areas.Bars.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (barVM.BarImage==null||ImageIsValid(barVM.BarImage))
-                {
-                    var barDTO = barVM.MapBarVMToDTO();
-                    var barName = await _barServices.AddBarAsync(barDTO);
-
-                    //notification for admin
-                    string id = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-                    await _notificationServices.BarCreateNotificationToAdminAsync(id, barName);
-
-                    _toast.AddSuccessToastMessage($"You successfully added \"{barName}\" bar!");
-                    return RedirectToAction(nameof(Index));
-                }
+                var barDTO = barVM.MapBarVMToDTO();
+                var barName = await _barServices.AddBarAsync(barDTO);
+                //notification for admin
+                string id = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+                await _notificationServices.BarCreateNotificationToAdminAsync(id, barName);
+                _toast.AddSuccessToastMessage($"You successfully added \"{barName}\" bar!");
+                return RedirectToAction(nameof(Index));
             }
             var allCocktails = await _cocktailServices.GetAllCocktails();
             var allCountries = await _barServices.GetAllCountries();
@@ -125,23 +120,23 @@ namespace CM.Web.Areas.Bars.Controllers
             return View(barVM);
         }
 
-        private bool ImageIsValid(IFormFile barImage)
-        {
-            var imageSizeInKb = barImage.Length / 1024;
-            var type = barImage.ContentType;
+        //private bool ImageIsValid(IFormFile barImage)
+        //{
+        //    var imageSizeInKb = barImage.Length / 1024;
+        //    var type = barImage.ContentType;
 
-            if (type != "image/jpeg" && type != "image/jpg" && type != "image/png")
-            {
-                _toast.AddErrorToastMessage($"Allowed picture formats: \".jpg\", \".jpeg\" and \".png\"!");
-                return false;
-            }
-            else if (imageSizeInKb > 100)
-            {
-                _toast.AddErrorToastMessage($"The picture size is too big! Maximum size: 100 kb");
-                return false;
-            }
-            return true;
-        }
+        //    if (type != "image/jpeg" && type != "image/jpg" && type != "image/png")
+        //    {
+        //        _toast.AddErrorToastMessage($"Allowed picture formats: \".jpg\", \".jpeg\" and \".png\"!");
+        //        return false;
+        //    }
+        //    else if (imageSizeInKb > 100)
+        //    {
+        //        _toast.AddErrorToastMessage($"The picture size is too big! Maximum size: 100 kb");
+        //        return false;
+        //    }
+        //    return true;
+        //}
 
         // GET: Bars/Bars/Edit/5
         [Authorize(Roles = "Manager, Administrator")]
@@ -161,7 +156,7 @@ namespace CM.Web.Areas.Bars.Controllers
             createBarVM.AllCountries = allCountries
                 .Select(c => new SelectListItem(c.Name, c.Id)).ToList();
             return View(createBarVM);
-            
+
         }
 
         // POST: Bars/Bars/Edit/5
@@ -172,13 +167,10 @@ namespace CM.Web.Areas.Bars.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (createBarVM.BarImage == null||ImageIsValid(createBarVM.BarImage))
-                {
-                    var barDTO = createBarVM.MapBarVMToDTO();
-                    var barName = await _barServices.Update(barDTO);
-                    _toast.AddSuccessToastMessage($"You successfully edited \"{barName}\" bar!");
-                    return RedirectToAction(nameof(Index));
-                }
+                var barDTO = createBarVM.MapBarVMToDTO();
+                var barName = await _barServices.Update(barDTO);
+                _toast.AddSuccessToastMessage($"You successfully edited \"{barName}\" bar!");
+                return RedirectToAction(nameof(Index));
             }
             var allCountries = await _barServices.GetAllCountries();
             var allCocktails = await _cocktailServices.GetAllCocktails();
@@ -207,7 +199,7 @@ namespace CM.Web.Areas.Bars.Controllers
             var barName = await _barServices.Delete(id);
 
             string userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            await _notificationServices.BarDeletedNotificationToAdminAsync(userId,barName);
+            await _notificationServices.BarDeletedNotificationToAdminAsync(userId, barName);
 
             _toast.AddSuccessToastMessage($"You successfully deleted \"{barName}\" bar!");
             return RedirectToAction(nameof(Index));
