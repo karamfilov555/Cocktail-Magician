@@ -35,22 +35,19 @@ namespace CM.Services
         }
 
         public async Task<ICollection<CocktailDto>> GetCocktailsForHomePage()
-        {
-            // include ingredients ... posle ... da se vzima po rating 
-            var cocktails = await _context.Cocktails
-                                            .Where(c => c.Id == "13" || c.Id == "14" 
-                                            || c.Id == "1" || c.Id == "9" || c.Id == "11")
+
+                           => await _context.Cocktails
                                             .Include(c => c.CocktailComponents)
                                             .ThenInclude(c => c.Ingredient)
                                             .Include(c => c.BarCocktails)
                                             .ThenInclude(c => c.Bar)
+                                            .Where(c => c.DateDeleted == null)
+                                            .OrderByDescending(c=>c.Rating)
+                                            .Take(5)
+                                            .Select(c=>c.MapToCocktailDto())
                                             .ToListAsync()
                                             .ConfigureAwait(false);
-            //map to dto before pass to fe
-            var cocktailDtos = cocktails.Select(c => c.MapToCocktailDto()).ToList();
-
-            return cocktailDtos;
-        }
+          
         public async Task<CocktailDto> FindCocktailById(string id)
         {
 

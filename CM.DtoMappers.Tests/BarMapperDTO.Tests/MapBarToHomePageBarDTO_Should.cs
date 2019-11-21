@@ -41,7 +41,7 @@ namespace CM.DtoMappers.Tests.BarMapperDTO.Tests
             Assert.IsInstanceOfType(result, typeof(HomePageBarDTO));
         }
         [TestMethod]
-        public void Throw_ArgumentNullEx_WhenAddressNotIncluded()
+        public void Throw_Exeption_WhenAddressNotIncluded()
         {
             var bar = new Bar
             {
@@ -53,7 +53,24 @@ namespace CM.DtoMappers.Tests.BarMapperDTO.Tests
                 BarCocktails = new List<BarCocktail>()
             };
 
-            Assert.ThrowsException<NullReferenceException>(() => bar.MapBarToHomePageBarDTO());
+            Assert.ThrowsException<Exception>(() => bar.MapBarToHomePageBarDTO());
+        }
+        [TestMethod]
+        public void Throw_CorrectExMsg_WhenAddressNotIncluded()
+        {
+            var bar = new Bar
+            {
+                Id = barId,
+                Name = barName,
+                Image = "www.abv.bg",
+                Website = "www.abv.bg",
+                Reviews = new List<BarReview>(),
+                BarCocktails = new List<BarCocktail>()
+            };
+
+            var exeption = Assert.ThrowsException<Exception>(
+                () => bar.MapBarToHomePageBarDTO());
+            Assert.AreEqual("Address cannot be null", exeption.Message);
         }
         [TestMethod]
         public void Correctly_ReturnCollection_OfBarHomePageDtoModels()

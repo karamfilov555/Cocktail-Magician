@@ -21,13 +21,20 @@ namespace CM.DTOs.Mappers
             return newBarDTO;
         }
 
-        public static HomePageBarDTO MapBarToHomePageBarDTO(this Bar bar) 
+        public static HomePageBarDTO MapBarToHomePageBarDTO(this Bar bar) //tested
         {
             var newBarDTO = new HomePageBarDTO();
             newBarDTO.Id = bar.Id;
             newBarDTO.Name = bar.Name;
             newBarDTO.ImageUrl = bar.Image;
-            newBarDTO.City = bar.Address.City;
+            try
+            {
+                newBarDTO.City = bar.Address.City; //check if throw if adress not included
+            }
+            catch (Exception)
+            {
+                throw new Exception("Address cannot be null");
+            }
             return newBarDTO;
         }
 

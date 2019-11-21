@@ -3,13 +3,12 @@
     "Id": "1",
     "Image": "http://cocktail.itsplanet.eu/img/cocktail/2017_1.jpg",
     "Name": "Americano",
-    "Rating": 3.5
+    "Rating": 9
   },
   {
     "Id": "2",
     "Image": "http://cocktail.itsplanet.eu/img/cocktail/2017_2.jpg",
-    "Name": "Angel Face",
-    "Rating": 5
+    "Name": "Angel Face"
   },
   {
     "Id": "3",
@@ -44,7 +43,8 @@
   {
     "Id": "9",
     "Image": "http://cocktail.itsplanet.eu/img/cocktail/2017_8.jpg",
-    "Name": "Bramble"
+    "Name": "Bramble",
+    "Rating": 8
   },
   {
     "Id": "10",
@@ -54,7 +54,8 @@
   {
     "Id": "11",
     "Image": "http://cocktail.itsplanet.eu/img/cocktail/2017_86.jpg",
-    "Name": "Caipirinha"
+    "Name": "Caipirinha",
+    "Rating":7 
   },
   {
     "Id": "12",
@@ -64,11 +65,13 @@
   {
     "Id": "13",
     "Image": "http://cocktail.itsplanet.eu/img/cocktail/2017_401.jpg",
-    "Name": "Caipiroska Strawberry"
+    "Name": "Caipiroska Strawberry",
+    "Rating":  10
   },
   {
     "Id": "14",
     "Image": "http://cocktail.itsplanet.eu/img/cocktail/2017_11.jpg",
-    "Name": "Campari Orange"
+    "Name": "Campari Orange",
+    "Rating": 9.5
   }
 ]

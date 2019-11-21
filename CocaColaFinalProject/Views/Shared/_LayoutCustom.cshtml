@@ -109,56 +109,80 @@
             <div class="row">
                 <div class="col-md-3">
 
-                    <h4>Contact</h4>
+                    <h4 style="padding-left:30px">Contact</h4>
 
                     <p>
-                        Atlantic Avenue 1234,<br><br>
-                        New York, NY<br><br>
-                        123 - 456 - 7891<br><br>
-                        <a href="mailto:hello@burgerlover.com">hello@burgerlover.com</a>
-                    </p>
-                    <hr>
-                    <h4>Hours</h4>
-
-                    <p>
-                        Monday - Friday<br>
-                        11:00 am - 11:00 pm
+                        <img src="~/assets/images/content/jitLogoFinal.png">
                         <br><br>
-                        Saturday &amp; Sunday<br>
-                        10:45 am - 5:00 pm
+                        Telerik Academy,<br><br>
+                        Sofia, Bulgaria<br><br>
+                        @*0877 - 35 - 36 - 88<br><br>
+                        0877 - 11 - 22 - 33<br><br>*@
+                        <a href="">yuliya.gencheva@gmail.com</a>
                         <br><br>
-                        Saturday &amp; Sunday<br>
-                        10:45 am - 5:00 pm
+                        <a href="">karamfilov555@gmail.com</a>
                     </p>
-
+                    
                 </div>
                 <div class="col-md-6">
                     <partial name="_LogoPartial">
 
-                        <div class="googleMap" data-location="Marine Ave. New York, NY" data-text="We are here!"></div>
-
+                        @*<div class="googleMap" data-location="Marine Ave. New York, NY" data-text="We are here!"></div>*@
+                        <div style="padding-top:145px;margin-bottom:-50px;padding-bottom:28px">
                         <ul class="bigSocials">
                             <li class="fb"><a href="#"><img src="/assets/images/social-fb.png" alt="Facebook"></a></li>
                             <li class="tw"><a href="#"><img src="/assets/images/social-tw.png" alt="Twitter"></a></li>
                             <li class="gg"><a href="#"><img src="/assets/images/social-gg.png" alt="Google+"></a></li>
                             <li class="rss"><a href="#"><img src="/assets/images/social-rss.png" alt="RSS"></a></li>
                         </ul>
-
-                        <p class="copyright">© Copyright 2014 <a href="#">TemplateRockers</a></p>
+                        <p class="copyright">© Copyright 2019 JiT Team <a href="https://www.telerikacademy.com"> Telerik Academy</a></p>
+                            </div>
 
 
                 </div>
-                <div class="col-md-3">
-                    <h4>Latest Tweets</h4>
+                    <h4><font style="padding-left:33px">Quick Message Form</font></h4>
 
-                    <div class="tweets">
-                        <div style="display:none">here will be displayed live tweets, configuration is placed in /twitter/config.php</div>
-                    </div>
-                </div>
+                        <div class="col-md-12">
+                            <div class="form">
+                             
+
+                                <form method="get">
+                                        <div class="col-md-2" >
+                                            <input class="form-control" style="background-color:aliceblue" type="text" name="Name" placeholder="Name" value="@ViewData["Name"]" required>
+                                        </div>
+                                        <br/>
+                                        <br/>
+                                        <br/>
+                                        <div class="col-md-2">
+                                            <input class="form-control" style="background-color:aliceblue;margin-left: 153px;
+    margin-top: -72px;" type="email" name="Email" placeholder="Email" value="@ViewData["Email"]" required>
+                                        </div>
+                                        <br/>
+                                        <br/>
+                                        <br/>
+                                        <div class="col-md-4">
+                                            <textarea rows="5"
+                                                      style="background-color:aliceblue;margin-left:484px;
+    margin-top: -200px;"class="form-control" placeholder="Message" name="Message" value="@ViewData["Message"]"></textarea>
+
+                                        </div>
+                                        <br/>
+                                        <br/>
+                                        <br/>
+                                        <div class="col-md-3">
+                                            <button style="margin-top:-83px;margin-left:245px"class="btn btn-sm" asp-controller="Contact"
+                                                    asp-action="SendQuickMessage">
+                                                Alright, Submit
+                                            </button>
+                                        </div>
+                                </form>
+                            </div>
+                        </div>
+
             </div>
 
         </div>
-        <a href="#" id="toTop"></a>
+        <a href="#" id="toTop" ></a>
     </footer>
 
     <script src="/assets/js/jquery.min.js"></script>

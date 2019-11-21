@@ -50,8 +50,12 @@ namespace CM.Services
         }
         public async Task<List<String>> GetImagesForHpAsync()
         {
-            var ingredientImgsForHp = await _context.Ingredients.Where(i =>  i.Id == "7" 
-            || i.Id == "9" || i.Id == "13" || i.Id == "15" || i.Id == "17").Select(i=>i.ImageUrl).ToListAsync();
+            var ingredientImgsForHp = await _context.Ingredients
+                                                    .Where(i =>  i.Id == "10" 
+                                                     || i.Id == "13" || i.Id == "14" 
+                                                     || i.Id == "15" || i.Id == "9")
+                                                    .Select(i=>i.ImageUrl)
+                                                    .ToListAsync();
             return ingredientImgsForHp;
         }
     }
