@@ -13,14 +13,23 @@
     <thead>
         <tr>
             <th>
-                Name
+                <h5>
+                    Name
+                </h5>
             </th>
             <th>
-                Brand
+                <h5>
+                    Brand
+                </h5>
             </th>
 
             <th>
-                Country
+                <h5>
+                    Country
+                </h5>
+
+            </th>
+            <th>
             </th>
             <th>
 
@@ -28,23 +37,38 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @item.Name
-            </td>
-            <td>
-                @item.Brand
-            </td>
-            <td>
-                @item.Country
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td style="padding-right:200px">
+                    <h5>
+                        @item.Name
+                    </h5>
+                </td>
+                <td style="padding-right:200px">
+                    <h5 >
+                        @item.Brand
+                    </h5>
+                </td>
+                <td style="padding-right:200px">
+                    <h5 >
+                        @item.Country
+                    </h5>
+                </td>
+                <td>
+                </td>
+                <td >
+                    @if (this.User.IsInRole("Administrator") || this.User.IsInRole("Manager"))
+                    {
+                        <p style="padding-right:-400px">
+                            <a class="btn btn-default btn-sm" asp-area="Cocktails" asp-controller="Cocktails" asp-action="Edit" asp-route-id="@item.Id"><font style="color:gold"><i class="fa fa-magic"></i> Edit Ingeredient</font></a>
+                        </p>
+                        <p>
+                            <a class="btn btn-default btn-sm" asp-area="Cocktails" asp-controller="Cocktails" asp-action="Delete" asp-route-id="@item.Id"><font style="color:gold"><i class="fa fa-trash-o"></i> Delete Ingeredient</font></a>
+                        </p>
+                    }
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

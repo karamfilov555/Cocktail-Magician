@@ -4,12 +4,25 @@
     ViewData["Title"] = "Details";
     Layout = "~/Views/Shared/_LayoutCustom.cshtml";
 }
-<center><h1>@Model.Name details</h1></center>
+    <head>
+        @*<link rel="stylesheet" href="~/bootstrap/dist/css/bootstrap.css" />*@
+        <link rel="stylesheet" href="~/kendo-ui/styles/kendo.common-material.min.css" />
+        <link rel="stylesheet" href="~/kendo-ui/styles/kendo.material.min.css" />
+
+        <script src="~/jquery/dist/jquery.js"></script>
+        <script src="~/bootstrap/dist/js/bootstrap.bundle.js"></script>
+        @*Kendo Start Here:*@
+        <script src="~/kendo-ui/js/kendo.all.min.js"></script>
+        <script src="~/kendo-ui/js/kendo.aspnetmvc.min.js"></script>
+        @* css styling *@
+        @* jquery *@
+    </head>
+@*<center><h1>@Model.Name details</h1></center>*@
 <table class="table">
     <thead>
         <tr>
             <th><h5>Cocktail's Picture</h5></th>
-            <th><h5>Cocktail's Details</h5></th>
+            <th><h5  style="margin-left:27px">Cocktail's Details</h5></th>
             <th><h5>Cocktail's Ingredients</h5></th>
             <th></th>
         </tr>
@@ -18,8 +31,23 @@
         <tr>
             <td><img src="@Model.Image" height="250" width="250" style="border-radius:25px; padding-top:5px; padding-bottom:5px"></td>
             <td>
-                <h5>Name: @Model.Name</h5>
-                <h5>Rating: @Model.Rating</h5>
+                <h5  style="margin-left:27px">Name: @Model.Name</h5>
+                @if (Model.Rating == null)
+                {
+                    <h5 style="margin-left:27px">
+                        Not Rated Yet!
+                    </h5>
+                }
+                else
+                {
+                    <kendo-rating name="readonlyRating"
+                                  style="margin-left: 15px;
+    padding-bottom: 20px;"
+                                  min="1" max="10"
+                                  value="@Model.Rating"
+                                  readonly="true" enabled="false">
+                    </kendo-rating>
+                }
             </td>
             <td>
                 @foreach (var item in Model.CocktailComponents)

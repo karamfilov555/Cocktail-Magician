@@ -39,12 +39,13 @@
                     <td><h5 style="padding-left:30px;"> @cocktail.Name</h5></td>
 
                     <td>
-                        @if (cocktail.Rating == 0)
+                        @if (cocktail.Rating == null)
                         {
                             <i>Not rated yet!</i>
                         }
                         else
                         {
+
                             if (cocktail.Rating * 10 % 10 == 0)
                             {
                                 for (int i = 0; i < cocktail.Rating - 1; i++)
