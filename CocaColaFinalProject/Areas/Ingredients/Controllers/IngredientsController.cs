@@ -19,13 +19,51 @@ namespace CM.Web.Areas.Ingredients.Controllers
             _ingredientServices = ingredientServices;
             _toast = toast;
         }
-
-        // GET: Ingredients/Ingredients
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int? currPage)
         {
-            var ingredientsDto = await _ingredientServices.GetAllIngredients();
-            var ingredientsVm = ingredientsDto.Select(x => x.MapToViewModel());
-            return View(ingredientsVm);
+            currPage = currPage ?? 1;
+
+            var tenIngredientsDtos = await _ingredientServices
+                                    .GetTenIngredientsAsync((int)currPage);
+
+            var totalPages = await _ingredientServices
+                                    .GetPageCountForIngredientsAsync(10);
+
+            var tenIngredientsVm = tenIngredientsDtos
+                                    .Select(c => c.MapToViewModel()).ToList();
+
+            var litingViewModel = new IngredientsListViewModel()
+            {
+                TenIngredientsList = tenIngredientsVm,
+                CurrPage = (int)currPage,
+                TotalPages = totalPages,
+                MoreToLoad = true
+            };
+
+            if (tenIngredientsDtos.Count == 0)
+            {
+                _toast.AddInfoToastMessage("There are no more cocktails!");
+                litingViewModel.MoreToLoad = false;
+            }
+            //if (totalPages > currPage)
+            //{
+            //    litingViewModel.NextPage = currPage + 1;
+            //}
+
+            //if (currPage > 1)
+            //{
+            //    litingViewModel.PrevPage = currPage - 1;
+            //}
+            // To add timeSpan and animation ! 
+            if (currPage == 1)
+            {
+                return View(litingViewModel);
+            }
+
+            return PartialView("_LoadMorePartial", litingViewModel);
+            //var ingredientsDto = await _ingredientServices.GetAllIngredients();
+            //var ingredientsVm = ingredientsDto.Select(x => x.MapToViewModel());
+            //return View(ingredientsVm);
         }
 
         // GET: Ingredients/Ingredients/Details/5

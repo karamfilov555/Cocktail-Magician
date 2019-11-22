@@ -13,7 +13,9 @@ namespace CM.Services.Contracts
         Task<string> GetIngredientNameById(string id);
         Task<ICollection<String>> GetAllIngredientsNames();
         Task<List<String>> GetImagesForHpAsync();
-        Task<IList<IngredientDTO>> GetAllIngredients();
+        Task<IList<IngredientDTO>> GetTenIngredientsAsync(int currPage);
         Task<string> GetIngredientIdByName(string name);
+        Task<int> GetPageCountForIngredientsAsync(int ingredientsPerPage);
+        Task<IList<IngredientDTO>> GetAllIngredients();
     }
 }

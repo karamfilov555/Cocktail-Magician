@@ -25,6 +25,29 @@ namespace CM.Services
                                   .Select(i => i.MapToDtoModel())
                                   .ToListAsync();
         }
+        public async Task<IList<IngredientDTO>> GetTenIngredientsAsync(int currPage)
+        {
+            return await _context.Ingredients
+                                   .Where(c => c.DateDeleted == null)
+                                   .OrderByDescending(c => c.Name)
+                                   .Skip((currPage - 1) * 10)
+                                   .Take(10)
+                                   .Select(i => i.MapToDtoModel())
+                                   .ToListAsync()
+                                   .ConfigureAwait(false);
+        }
+
+        public async Task<int> GetPageCountForIngredientsAsync(int ingredientsPerPage)
+        {
+            var allIngredientsCount = await _context
+                                       .Cocktails
+                                       .Where(c => c.DateDeleted == null)
+                                       .CountAsync();
+
+            int pageCount = (allIngredientsCount - 1) / ingredientsPerPage + 1;
+
+            return pageCount;
+        }
         public async Task AddIngredient(IngredientDTO ingredientDto)
         {
             var ingredientCtx = ingredientDto.MapToCtxModel();
