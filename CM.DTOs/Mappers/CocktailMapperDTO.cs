@@ -16,7 +16,7 @@ namespace CM.DTOs.Mappers
             cocktailDto.Rating = cocktail.Rating;
             cocktailDto.Image = cocktail.Image;
             cocktailDto.Ingredients = cocktail.CocktailComponents
-                            .Select(c=>c.MapToCocktailDto()).ToList();
+                            .Select(c => c.MapToCocktailDto()).ToList();
             cocktailDto.CocktailReviews = cocktail.Reviews; //mapToDto
             cocktailDto.DateDeleted = cocktail.DateDeleted;
             cocktailDto.BarCocktails = cocktail.BarCocktails.ToList(); // map to 
@@ -40,7 +40,8 @@ namespace CM.DTOs.Mappers
         public static Cocktail MapToEditModel(this CocktailDto cocktailDto)
         {
             var cocktailModel = new Cocktail();
-            cocktailModel.CocktailComponents = cocktailDto.Ingredients.Select(c => new CocktailComponent() {Name = c.Ingredient , Quantity = c.Quantity, Unit = c.Unit}).ToList();
+            //TODO BUG!!!
+            cocktailModel.CocktailComponents = cocktailDto.Ingredients.Select(c => new CocktailComponent() { Name = c.Ingredient, Quantity = c.Quantity, Unit = c.Unit }).ToList();
             // Care !!! --> vse oshte nqma Id!
             cocktailModel.Name = cocktailDto.Name;
             cocktailModel.Id = cocktailDto.Id;
@@ -64,6 +65,22 @@ namespace CM.DTOs.Mappers
             component.Id = cocktailDto.Id;
             return component;
 
+        }
+
+
+        public static CocktailSearchResultDTO MapCocktailToCocktailSearchResult(this Cocktail cocktail)
+        {
+            var searchResultCocktail = new CocktailSearchResultDTO();
+            searchResultCocktail.Id = cocktail.Id;
+            searchResultCocktail.Name = cocktail.Name;
+            searchResultCocktail.Rating = cocktail.Rating;
+            searchResultCocktail.Image = cocktail.Image;
+            //component.Ingredient= cocktailDto.Ingredient;
+            var names = cocktail.CocktailComponents
+                .Select(cc => cc.Ingredient.Name).ToList();
+            searchResultCocktail.Ingredients = String.Join(", ", names);
+            searchResultCocktail.Id = cocktail.Id;
+            return searchResultCocktail;
         }
     }
 }

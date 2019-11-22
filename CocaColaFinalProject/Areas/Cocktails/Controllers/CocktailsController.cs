@@ -79,11 +79,11 @@ namespace CM.Web.Areas.Cocktails.Controllers
             var createCocktailVM = new CreateCocktailViewModel();
             createCocktailVM.IngredientsNames.Add(new SelectListItem("Choose an igredient", ""));
             createCocktailVM.IngredientsNames.AddRange(ingr.Select(i => new SelectListItem(i, i)));
-            createCocktailVM.Ingredients = new List<CocktailComponentViewModel>();
-            for (int i = 0; i < 10; i++)
-            {
-                createCocktailVM.Ingredients.Add(new CocktailComponentViewModel());
-            }
+            //createCocktailVM.Ingredients = new List<CocktailComponentViewModel>();
+            //for (int i = 0; i < 10; i++)
+            //{
+            //    createCocktailVM.Ingredients.Add(new CocktailComponentViewModel());
+            //}
             return View(createCocktailVM);
         }
 

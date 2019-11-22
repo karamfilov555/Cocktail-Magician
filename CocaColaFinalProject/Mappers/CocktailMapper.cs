@@ -3,6 +3,7 @@ using System.Linq;
 using CM.DTOs;
 using CM.Models;
 using CM.Web.Areas.Cocktails.Models;
+using CM.Web.Areas.Search.Models;
 
 namespace CM.Web.Mappers
 {
@@ -81,6 +82,17 @@ namespace CM.Web.Mappers
             cocktailVm.LikedByUsers = cocktailDto.LikedByUsers;
             return cocktailVm;
         }
-      
+
+        public static CocktailSearchRestultViewModel MapCocktailSearchDTOToVM(this CocktailSearchResultDTO cocktail)
+        {
+            var newCocktailVM = new CocktailSearchRestultViewModel();
+            newCocktailVM.Id = cocktail.Id;
+            newCocktailVM.Name = cocktail.Name;
+            newCocktailVM.Image = cocktail.Image;
+            newCocktailVM.Ingredients = cocktail.Ingredients;
+            newCocktailVM.Rating = cocktail.Rating;
+            return newCocktailVM;
+        }
+
     }
 }

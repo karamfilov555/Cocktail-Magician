@@ -9,8 +9,8 @@ namespace CM.Web.Areas.Search.Models
 {
     public class SearchViewModel
     {
-        public ICollection<BarViewModel> Bars { get; set; }
-        public ICollection<CocktailViewModel> Cocktails { get; set; }
+        public ICollection<BarSearchResultViewModel> Bars { get; set; }
+        public ICollection<CocktailSearchRestultViewModel> Cocktails { get; set; }
         public string SearchCriteria { get; set; }
     }
 }

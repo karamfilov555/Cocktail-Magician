@@ -4695,6 +4695,12 @@ body.preloader #ct_preloader {
     background-position: 50% 50%;
     background-color: transparent;
 }
+h3.tab-link {
+    height: 100%;
+    margin-bottom: 0;
+    padding-bottom: 25px;
+    cursor: pointer;
+}
 /*.quickMsgForm {
     
 footer .form h3

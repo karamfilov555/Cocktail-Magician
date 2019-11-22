@@ -67,6 +67,16 @@ namespace CM.DTOs.Mappers
             newBar.DateDeleted = bar.DateDeleted;
             return newBar;
         }
+        public static BarSearchResultDTO MapBarToSearchDTO(this Bar bar)
+        {
+            var searchBarDTO = new BarSearchResultDTO();
+            searchBarDTO.Id = bar.Id;
+            searchBarDTO.Name = bar.Name;
+            searchBarDTO.Image = bar.Image;
+            searchBarDTO.BarRating = bar.BarRating;
+            searchBarDTO.Address = bar.Address.Country.Name+", "+bar.Address.City+", "+bar.Address.Details;
+            return searchBarDTO;
+        }
 
         public static Bar EditBarDTOToBar(this BarDTO barDTO, Bar bar)
         {

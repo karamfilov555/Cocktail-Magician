@@ -1,5 +1,6 @@
 ﻿using CM.DTOs;
 using CM.Web.Areas.Bars.Models;
+using CM.Web.Areas.Search.Models;
 using CM.Web.Models;
 using System;
 using System.Collections.Generic;
@@ -69,6 +70,17 @@ namespace CM.Web.Mappers
                .ToList();
 
             return newBarDTO;
+        }
+
+        public static BarSearchResultViewModel MapSearchBarVMToDTO(this BarSearchResultDTO bar)
+        {
+            var newBarVM = new BarSearchResultViewModel();
+            newBarVM.Id = bar.Id;
+            newBarVM.Name = bar.Name;
+            newBarVM.Image = bar.Image;
+            newBarVM.Address = bar.Address;
+            newBarVM.BarRating = bar.BarRating;
+            return newBarVM;
         }
     }
 }

@@ -38,15 +38,15 @@
                             </tr>
                             <tr class="tableRow">
                                 <td>
-                                    <select id="selectmenu" asp-for="@Model.Ingredients[0].Ingredient"
+                                    <select id="selectmenu" name="Ingredients[0].Ingredient"
                                             class="select-editable form-control" asp-items="@Model.IngredientsNames"
                                             input="text" placeholder="Choose Ingredients..."></select>
                                 </td>
                                 <td>
-                                    <input asp-for="@Model.Ingredients[0].Quantity" class="form-control" />
+                                    <input name="Ingredients[0].Quantity" type="number" class="form-control" />
                                 </td>
                                 <td>
-                                    <select class="form-control" asp-for="@Model.Ingredients[0].Unit" asp-items="Html.GetEnumSelectList<Unit>()">
+                                    <select class="form-control" name="Ingredients[0].Ingredient" asp-items="Html.GetEnumSelectList<Unit>()">
                                         <option hidden disabled selected value="">Choose Unit Type:</option>
                                     </select>
                                 </td>
