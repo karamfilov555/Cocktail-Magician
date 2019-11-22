@@ -1,12 +1,13 @@
 ﻿using CM.DTOs;
 using CM.Models;
+using CM.Web.Areas.Cocktails.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace CM.Web.Areas.Cocktails.Models
+namespace CM.Web.Areas.Reviews.Models
 {
     public class CocktailReviewViewModel
     {

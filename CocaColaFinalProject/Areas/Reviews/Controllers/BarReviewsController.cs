@@ -1,9 +1,7 @@
 ﻿using CM.DTOs;
 using CM.Services.Contracts;
-using CM.Web.Areas.Bars.Models;
 using CM.Web.Areas.Reviews.Models;
 using CM.Web.Mappers;
-using CM.Web.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;

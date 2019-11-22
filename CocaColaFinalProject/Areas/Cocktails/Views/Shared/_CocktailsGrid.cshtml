@@ -87,9 +87,12 @@
                     <td style="padding-top:10px">
                         @if (this.User.IsInRole("Member") || this.User.IsInRole("Manager") || this.User.IsInRole("Administrator"))
                         {
-                            <p>
-                                <a class="btn btn-default btn-sm" asp-area="Cocktails" asp-controller="Cocktails" asp-action="RateCocktail" asp-route-id="@cocktail.Id"><font style="color:gold"><i class="fa fa-star"></i> Rate Cocktail</font></a>
-                            </p>
+                        <p>
+                            @*<a class="btn btn-default btn-sm" asp-area="Reviews" asp-controller="CocktailReviews" asp-action="RateCocktail" asp-route-Id="@cocktail.Id">
+                                <font style="color:gold"><i class="fa fa-star">Rate Cocktail</i></font>
+                            </a>*@
+                            <a class="btn btn-default btn-sm" asp-area="Reviews" asp-controller="CocktailReviews" asp-action="RateCocktail" asp-route-id="@cocktail.Id"><font style="color:gold"><i class="fa fa-star"></i> Rate Cocktail</font></a>
+                        </p>
 
                         }
                         @if (this.User.IsInRole("Administrator") || this.User.IsInRole("Manager"))

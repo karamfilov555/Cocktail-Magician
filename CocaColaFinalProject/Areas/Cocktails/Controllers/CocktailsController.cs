@@ -169,38 +169,7 @@ namespace CM.Web.Areas.Cocktails.Controllers
             //return View(allCocktailsVms.ToList());
         }
 
-        [HttpGet]
-        [Authorize]
-        public async Task<IActionResult> RateCocktail(string Id)
-        {
-            var cocktail = await _cocktailServices.FindCocktailById(Id);
-            var reviewVm = cocktail.MapToCocktailReviewViewModel();
-            reviewVm.Ingredients = cocktail.Ingredients.Select(i => i.MapToCocktailComponentVM()).ToList();
-            string userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-
-            var canUserReview = await _reviewServices.CheckIfUserCanReview(userId, cocktail);
-            var cocktailReviews = await _reviewServices.GetReviewsForCocktial(cocktail.Id);
-
-            var cocktailReviewsVm = cocktailReviews.Select(r => r.MapToViewModel()).ToList();
-
-            reviewVm.CanReview = !canUserReview;
-            reviewVm.Reviews = cocktailReviewsVm;
-
-            return View(reviewVm);
-        }
-        [HttpPost]
-        [Authorize]
-        public async Task<IActionResult> RateCocktail(CocktailReviewViewModel cocktailVm)
-        {
-            //validations
-            var cocktailDto = cocktailVm.MapToCocktailDto();
-            string userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var cocktailName = await _cocktailServices.GetCocktailNameById(cocktailDto.Id);
-
-            await _reviewServices.CreateCocktailReview(userId, cocktailDto);
-            _toast.AddSuccessToastMessage($"You successfully rate \"{cocktailName}\" cocktail");
-            return RedirectToAction("ListCocktails", "Cocktails");
-        }
+       
         [HttpGet]
         [Authorize(Roles = "Administrator, Manager")]
         public async Task<IActionResult> Delete(string Id)

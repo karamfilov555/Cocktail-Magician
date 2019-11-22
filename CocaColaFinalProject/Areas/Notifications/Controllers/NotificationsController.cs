@@ -1,7 +1,5 @@
-﻿using CM.Models;
-using CM.Services.Contracts;
+﻿using CM.Services.Contracts;
 using CM.Web.Mappers;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using NToastNotify;
 using System.Linq;

@@ -2,6 +2,7 @@
 using System.Linq;
 using CM.DTOs;
 using CM.Models;
+using CM.Web.Areas.Reviews.Models;
 using CM.Web.Areas.Cocktails.Models;
 using CM.Web.Areas.Search.Models;
 
