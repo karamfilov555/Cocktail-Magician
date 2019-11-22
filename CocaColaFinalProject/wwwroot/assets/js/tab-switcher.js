@@ -8,8 +8,10 @@
 const toggleTabs = function (tabs, clickedTab) {
     for (tab of tabs) {
         tab.style.color = 'white';
+        tab.style.textDecoration = 'none';
     }
     clickedTab.style.color = 'gold';
+    clickedTab.style.textDecoration = 'underline';
 }
 
 document.getElementById('tab-switcher').addEventListener('click', function (e) {
