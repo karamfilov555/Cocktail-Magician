@@ -23,7 +23,7 @@ namespace CM.Web.Areas.Bars.Models
         public string City { get; set; }
         public string Country { get; set; }
         public string Details { get; set; }
-        public decimal Rating { get; set; }
+        public double? Rating { get; set; }
         public string Website { get; set; }
         public string ImageURL { get; set; }
         public List<BarReviewViewModel> Reviews { get; set; } = new List<BarReviewViewModel>();

@@ -28,7 +28,7 @@ namespace CM.Web.Areas.Cocktails.Models
         public string Image { get; set; }
         [Display(Name = "Cocktail's Rating")]
         [Range(0,10, ErrorMessage = "Cocktail's rating should be between 0 and 10!")]
-        public decimal Rating { get; set; }
+        public double? Rating { get; set; }
         [MaxImageSize(500000)]
         [AllowedImageFormat(new string[] { ".jpg", ".png", "jpeg" })]
         public IFormFile CocktailImage { set; get; }

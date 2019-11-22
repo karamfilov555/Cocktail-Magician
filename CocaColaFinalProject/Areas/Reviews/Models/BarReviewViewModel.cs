@@ -13,7 +13,7 @@ namespace CM.Web.Areas.Reviews.Models
         public String Description { get; set; }
         public int LikeCount { get; set; }
         public List<string> LikedByUsers { get; set; }
-        public decimal Rating { get; set; }
+        public double? Rating { get; set; }
         public string UserName { get; set; }
         public string UserID { get; set; }
 

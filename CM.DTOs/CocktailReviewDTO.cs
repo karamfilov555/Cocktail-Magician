@@ -9,7 +9,7 @@ namespace CM.DTOs
         public String Id { get; set; }
         public String BarId { get; set; }
         public String Description { get; set; }
-        public decimal Rating { get; set; }
+        public double? Rating { get; set; }
         public string UserName { get; set; }
         public string UserID { get; set; }
         public string CocktailId { get; set; }

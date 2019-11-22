@@ -24,7 +24,7 @@ namespace CM.DTOs
 
         public string Image { get; set; }
         [Display(Name = "Cocktail's Rating")]
-        public decimal Rating { get; set; }
+        public double? Rating { get; set; }
         [Display(Name = "Type your Review Here")]
         public string Description { get; set; }
 

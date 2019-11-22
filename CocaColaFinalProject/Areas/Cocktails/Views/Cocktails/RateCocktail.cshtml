@@ -4,6 +4,19 @@
     Layout = "~/Views/Shared/_LayoutCustom.cshtml";
 }
 
+    <head>
+        @*<link rel="stylesheet" href="~/bootstrap/dist/css/bootstrap.css" />*@
+        <link rel="stylesheet" href="~/kendo-ui/styles/kendo.common-material.min.css" />
+        <link rel="stylesheet" href="~/kendo-ui/styles/kendo.material.min.css" />
+
+        <script src="~/jquery/dist/jquery.js"></script>
+        <script src="~/bootstrap/dist/js/bootstrap.bundle.js"></script>
+        @*Kendo Start Here:*@
+        <script src="~/kendo-ui/js/kendo.all.min.js"></script>
+        <script src="~/kendo-ui/js/kendo.aspnetmvc.min.js"></script>
+        @* css styling *@
+        @* jquery *@
+    </head>
 
 
 <center><h1 class="hdr6">Rate Cocktail "@Model.Name" </h1></center>
@@ -45,35 +58,50 @@
                 @if (Model.CanReview)
                 {
                     <dt class="col-sm-2">
-                        <h3 class="hdr3">Your grade</h3>
+                        <h3 class="hdr3" style="margin-top:7px"><font style="color:gold">Your grade</h3>
                     </dt>
                     <dd class="col-sm-10 text-danger">
                         <div class="form-group">
                             <b>
-                                <select asp-for="@Model.Rating" class=" alert-success form-check">
-                                    <option value="1">1</option>
-                                    <option value="2">2</option>
-                                    <option value="3">3</option>
-                                    <option value="4">4</option>
-                                    <option value="5">5</option>
-                                    <option value="6">6</option>
-                                    <option value="7">7</option>
-                                    <option value="8">8</option>
-                                    <option value="9">9</option>
-                                    <option value="10">10</option>
-                                </select>
+                                <kendo-rating style="color:gold" name="rating"
+                                              min="1" max="10"
+                                              value="@Model.Rating">
+                                </kendo-rating>
+                               
+                                @*<select asp-for="@Model.Rating" class=" alert-success form-check">
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
+                            <option value="9">9</option>
+                            <option value="10">10</option>
+                        </select>*@
                             </b>
                         </div>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <textarea asp-for="Description" class="form-control input-sm" rows="5" cols="50" placeholder="Write your review here..." style="padding-right:10px"> </textarea>
-                                <br>
+                    <dt class="col-sm-2">
+                        <h3 class="hdr3" style="margin-top:7px"><font style="color:gold">Current Rating</h3>
+                    </dt>
+                    <kendo-rating name="readonlyRating"
+                                  style="margin-left: 15px;
+    padding-bottom: 20px;"
+                                  min="1" max="10"
+                                  value="@Model.Rating"
+                                  readonly="true" enabled="false">
+                    </kendo-rating>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <textarea asp-for="Description" class="form-control input-sm" rows="5" cols="50" placeholder="Write your review here..." style="padding-right:10px"> </textarea>
+                            <br>
 
-                                <button class="btn btn-default" type="submit">Submit</button>
-
-                            </div>
+                            <button class="btn btn-default" type="submit">Submit</button>
 
                         </div>
+
+                    </div>
                     </dd>
 
                 }
@@ -93,7 +121,7 @@
 
 @if (Model.Reviews.Count == 0)
 {
-<h3 class="hdr3"> There are no comments for this cocktail yet! </h3>
+    <h3 class="hdr3"> There are no comments for this cocktail yet! </h3>
 }
 else
 {
@@ -122,24 +150,24 @@ else
                         @*<span class="meta_comments"><a href="#"><em>21</em> <span>Comments</span></a></span>*@
                         <span class="meta_author"><a href="#">Publisher: @item.UserName</a></span>
                         @*@if (!review.LikedByUsers.Contains(@User.FindFirstValue(ClaimTypes.NameIdentifier)))
-                                {
-                                    <form method="post" asp-area="Reviews" asp-controller="BarReviews" asp-action="LikeBarReview"
-                                          asp-route-barReviewID="@review.Id" asp-route-barId="@review.BarId" asp-route-name="@review.BarName">
-                                        <button type="submit"
-                                                title="Love it" class="btn-like btn-counter" data-count="@review.LikeCount">
-                                            <span>&#x2764;</span>
-                                        </button>
-                                    </form>
-                                }
-                                else
-                                {
-                                <form method="post" asp-area="Reviews" asp-controller="BarReviews" asp-action="RemoveLikeBarReview"
+                            {
+                                <form method="post" asp-area="Reviews" asp-controller="BarReviews" asp-action="LikeBarReview"
                                       asp-route-barReviewID="@review.Id" asp-route-barId="@review.BarId" asp-route-name="@review.BarName">
                                     <button type="submit"
                                             title="Love it" class="btn-like btn-counter" data-count="@review.LikeCount">
                                         <span>&#x2764;</span>
                                     </button>
-                                </form>*@
+                                </form>
+                            }
+                            else
+                            {
+                            <form method="post" asp-area="Reviews" asp-controller="BarReviews" asp-action="RemoveLikeBarReview"
+                                  asp-route-barReviewID="@review.Id" asp-route-barId="@review.BarId" asp-route-name="@review.BarName">
+                                <button type="submit"
+                                        title="Love it" class="btn-like btn-counter" data-count="@review.LikeCount">
+                                    <span>&#x2764;</span>
+                                </button>
+                            </form>*@
                     </div>
                 </div>
             </div>

@@ -10,7 +10,7 @@ namespace CM.DTOs
     {
         public string Id { get; set; }
         public string Name { get; set; }
-        public decimal Rating { get; set; }
+        public double? Rating { get; set; }
         public String ImageUrl { get; set; }
         public IFormFile BarImage { set; get; }
         public string CountryId { get; set; }

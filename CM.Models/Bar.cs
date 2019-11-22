@@ -23,7 +23,7 @@ namespace CM.Models
         public Address Address { get; set; }
         public ICollection<BarCocktail> BarCocktails { get; set; }
         public ICollection<BarReview> Reviews { get; set; }
-        public decimal BarRating { get; set; }
+        public double? BarRating { get; set; }
         public DateTime? DateDeleted { get; set; }
     }
 }

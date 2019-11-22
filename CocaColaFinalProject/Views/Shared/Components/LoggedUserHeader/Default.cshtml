@@ -29,7 +29,7 @@
 <ul class="smallSocials2" style="padding-left:550px">
     @*<li>
         </li>*@
-    @if (@Model.ImageURL != null)
+    @if (!String.IsNullOrEmpty(Model.ImageURL))
     {
         <img src="@Model.ImageURL" width="35" align="left" style="display:block; border-radius:30px; margin-right:-80px; margin-left:35px" />
         <li2 class="dropdown active" style="padding-left:-100px; margin-right:-115px;">
@@ -58,7 +58,7 @@
     }
     else
     {
-        <li2 class="dropdown active" style="padding-left:-100px; margin-right:-115px;">
+        <li class="dropdown active" style="padding-left:-100px; margin-right:-115px;">
             <a class="btn3" style="padding-top:-10px;padding-bottom:-45px;background-color:none;border-color:none" asp-area="Identity" asp-page="/Account/Manage/Index"><font size="5">                  Hello @User.Identity.Name!</font></a>
 
 
@@ -79,7 +79,7 @@
                     </form>
                 </li>
             </ul>
-        </li2>
+        </li>
     }
 
 </ul>

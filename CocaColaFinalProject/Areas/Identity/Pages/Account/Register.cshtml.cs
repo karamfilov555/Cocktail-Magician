@@ -92,7 +92,7 @@ namespace CM.Web.Areas.Identity.Pages.Account
                 }
                 else
                 {
-                    uniqueFileNamePath = "/images/hat.jpg";
+                    uniqueFileNamePath = "/assets/images/hat.jpg";
                 }
                 var user = new AppUser { UserName = Input.Username, Email = Input.Email, ImageURL = uniqueFileNamePath };
                 var result = await _userManager.CreateAsync(user, Input.Password);

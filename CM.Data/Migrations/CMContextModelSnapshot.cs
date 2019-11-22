@@ -127,7 +127,7 @@ namespace CM.Data.Migrations
                     b.Property<string>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<decimal>("BarRating");
+                    b.Property<double?>("BarRating");
 
                     b.Property<DateTime?>("DateDeleted");
 
@@ -167,7 +167,8 @@ namespace CM.Data.Migrations
 
                     b.Property<string>("Description");
 
-                    b.Property<decimal>("Rating")
+                    b.Property<decimal?>("Rating")
+                        .HasConversion(new ValueConverter<decimal, decimal>(v => default(decimal), v => default(decimal), new ConverterMappingHints(precision: 38, scale: 17)))
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<DateTime>("ReviewDate");
@@ -215,7 +216,7 @@ namespace CM.Data.Migrations
                     b.Property<string>("Name")
                         .IsRequired();
 
-                    b.Property<decimal>("Rating");
+                    b.Property<double?>("Rating");
 
                     b.Property<string>("Recepie");
 
@@ -273,7 +274,8 @@ namespace CM.Data.Migrations
 
                     b.Property<string>("Description");
 
-                    b.Property<decimal>("Rating")
+                    b.Property<decimal?>("Rating")
+                        .HasConversion(new ValueConverter<decimal, decimal>(v => default(decimal), v => default(decimal), new ConverterMappingHints(precision: 38, scale: 17)))
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<DateTime>("ReviewDate");

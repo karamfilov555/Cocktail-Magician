@@ -80,7 +80,7 @@ namespace CM.DtoMappers.Tests.BarMapperDTO.Tests
                 Name = barName,
                 Website = "www.abv.bg",
                 Image = "www.abv.bg",
-                BarRating = 3.3M,
+                BarRating = 3.3,
                 BarCocktails = assosiativeList,
                 DateDeleted = DateTime.Now
             };

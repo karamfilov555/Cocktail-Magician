@@ -3,6 +3,9 @@
 }
 @model HomePageViewModel
 
+    <head>
+        <script src="/assets/js/jquery.min.js"></script>
+    </head>
 
 <div class="bg-1 section" id="events">
     <div class="inner" data-image="./assets/images/content/ccback5.jpg" data-topspace="1" style="background-image: url(' ./assets/images/content/ccback5.jpg'); padding-top: 1px;">
@@ -26,23 +29,25 @@
                                     <li class="flex-active-slide" style="width: 100%; float: left; margin-right: -100%; position: relative; opacity: 1; display: block;">
                                         <div class="descArea">
                                             @*<h4>Our daily Specials</h4>
-                                        <hr>
-                                        <h5>Burger Lover Special with Twist Fries &amp; Coke</h5>
+                                                <hr>
+                                                <h5>Burger Lover Special with Twist Fries &amp; Coke</h5>
 
-                                        <p>
-                                            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                                            tempor incididunt
-                                        </p>
-                                        <span class="price"><em>$</em>8<span>99</span></span>*@
+                                                <p>
+                                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                                                    tempor incididunt
+                                                </p>
+                                                <span class="price"><em>$</em>8<span>99</span></span>*@
                                             <h5 style="color:gold;"><i>@cocktail.Name</i></h5>
                                             <a asp-area="Cocktails" asp-controller="Cocktails" asp-action="Details" asp-route-id="@cocktail.Id">
                                                 <img src="@cocktail.Image" style="border-radius:30px; max-width:80%; max-height:80%;">
                                             </a>
                                         </div>
 
-                                        <div class="roundedImg" data-size="320" style="background-image: url(&quot;@Model.IngredientsImgsForHP[counter] &quot;); width: 320px; height: 320px;">
-                                            <img class="media-object" src="./assets/images/content/photo-3.jpg" alt=" " draggable="false">
-                                        </div>
+                                        <a asp-area="Ingredients" asp-controller="Ingredients" asp-action="Index">
+                                            <div class="roundedImg" data-size="320" style="background-image: url(&quot;@Model.IngredientsImgsForHP[counter] &quot;); width: 320px; height: 320px;">
+                                                <img class="media-object" src="./assets/images/content/photo-3.jpg" alt=" " draggable="false">
+                                            </div>
+                                        </a>
                                         @{
                                             counter++;
                                         }
@@ -63,91 +68,94 @@
                         </div>
                         <p class="bigger">
                             Cocktail Magician allows creation of recipes for innovative, exotic, awesome <a asp-area="Cocktails" asp-controller="Cocktails" asp-action="ListCocktails"><font style="color:gold">Cocktails</font></a> and follows their distribution and success in amazing <a asp-area="Bars" asp-controller="Bars" asp-action="Index">
-    <font style="color:gold">
-        Bars.
-    </font></a>
-    <br>
-    We Cocktail Magicians only use the best <a asp-area="Ingredients" asp-controller="Ingredients" asp-action="Index">
-    <font style="color:gold">
-        Ingredients</font></a> from all around the world!<br><br>
-        Please consider yourself. It's Magic!<br>
-        JiT™ Team<br>
-</p>
+                                <font style="color:gold">
+                                    Bars.
+                                </font>
+                            </a>
+                            <br>
+                            We Cocktail Magicians only use the best <a asp-area="Ingredients" asp-controller="Ingredients" asp-action="Index">
+                                <font style="color:gold">
+                                    Ingredients
+                                </font>
+                            </a> from all around the world!<br><br>
+                            Please consider yourself. It's Magic!<br>
+                            JiT™ Team<br>
+                        </p>
 
                     </div>
                 </div>
-                </div>
-
-                <div class="container">
-
-
-                    <br/>
-
-                    <h3 class="hdr4">Top Rated Bars</h3>
-                </div>
-            </div>
-            <div class="flexFull type2 flexslider text-center" style="padding-top: 1px">
-
-                <div class="flex-viewport" style="overflow: hidden; position: relative;">
-                    <ul class="slides" style="width: 900%; margin-left: -1349px;">
-                        @foreach (var bar in Model.Bars)
-                        {
-                            <li class="clone" aria-hidden="true" style="width: 1349px; float: left; display: block; height:400px">
-                                <div class="container">
-                                    <a asp-area="Bars" asp-controller="Bars" asp-action="Details" asp-route-id="@bar.Id">
-                                        <img src="@bar.ImageUrl" style="max-width:80%; border-radius:30px" draggable="false">
-                                    </a>
-                                    <br />
-                                    <br />
-                                    <div class="hdr2" style="padding-bottom:0%"> @bar.Name </div>
-                                    <div class="hdr5">@bar.City</div>
-                                </div>
-                            </li>
-                        }
-
-                    </ul>
-                </div><ul class="flex-direction-nav"><li><a class="flex-prev" href="#">Previous</a></li><li><a class="flex-next" href="#">Next</a></li></ul>
             </div>
 
-            <br /><br>
+            <div class="container">
 
 
+                <br />
 
-
-            <!-- *********************** -->
-            <!-- ** FULL WIDTH SLIDER ** -->
-            @*</div>
-        <div class="flexFull type2 flexslider text-center" id="location">
+                <h3 class="hdr4">Top Rated Bars</h3>
+            </div>
+        </div>
+        <div class="flexFull type2 flexslider text-center" style="padding-top: 1px">
 
             <div class="flex-viewport" style="overflow: hidden; position: relative;">
-                <ul class="slides" style="width: 800%; margin-left: -1349px;">
-                    @foreach (var cocktail in Model.Cocktails)
+                <ul class="slides" style="width: 900%; margin-left: -1349px;">
+                    @foreach (var bar in Model.Bars)
                     {
-                        <li class="clone" aria-hidden="true" style="width: 1349px; float: left; display: block; height:350px">
-
-                            <a asp-area="Cocktails" asp-controller="Cocktails" asp-action="Details" asp-route-id="@cocktail.Id">
-                                <img src="@cocktail.Image" height="250" width="250">
-                            </a>
-                            <h3>@cocktail.Name</h3>
+                        <li class="clone" aria-hidden="true" style="width: 1349px; float: left; display: block; height:400px">
+                            <div class="container">
+                                <a asp-area="Bars" asp-controller="Bars" asp-action="Details" asp-route-id="@bar.Id">
+                                    <img src="@bar.ImageUrl" style="max-width:80%; border-radius:30px" draggable="false">
+                                </a>
+                                <br />
+                                <br />
+                                <div class="hdr2" style="padding-bottom:0%"> @bar.Name </div>
+                                <div class="hdr5">@bar.City</div>
+                            </div>
                         </li>
-
                     }
-                    <li style="width: 1349px; float: left; display: block;" class="flex-active-slide">
-                        <img src="./assets/images/content/sliderfull-1.jpg" alt=" " draggable="false">
-                    </li>
-                    <li style="width: 1349px; float: left; display: block;" class="">
-                        <img src="./assets/images/content/sliderfull-1.jpg" alt=" " draggable="false">
-                    </li>
-                    <li style="width: 1349px; float: left; display: block;" class="clone" aria-hidden="true">
-                        <img src="./assets/images/content/sliderfull-1.jpg" alt=" " draggable="false">
-                    </li>
+
                 </ul>
             </div><ul class="flex-direction-nav"><li><a class="flex-prev" href="#">Previous</a></li><li><a class="flex-next" href="#">Next</a></li></ul>
-        </div>*@
+        </div>
 
-            @*<div class="container">*@
-            <!-- / flexslider -->
-       
+        <br /><br>
+
+
+
+
+        <!-- *********************** -->
+        <!-- ** FULL WIDTH SLIDER ** -->
+        @*</div>
+            <div class="flexFull type2 flexslider text-center" id="location">
+
+                <div class="flex-viewport" style="overflow: hidden; position: relative;">
+                    <ul class="slides" style="width: 800%; margin-left: -1349px;">
+                        @foreach (var cocktail in Model.Cocktails)
+                        {
+                            <li class="clone" aria-hidden="true" style="width: 1349px; float: left; display: block; height:350px">
+
+                                <a asp-area="Cocktails" asp-controller="Cocktails" asp-action="Details" asp-route-id="@cocktail.Id">
+                                    <img src="@cocktail.Image" height="250" width="250">
+                                </a>
+                                <h3>@cocktail.Name</h3>
+                            </li>
+
+                        }
+                        <li style="width: 1349px; float: left; display: block;" class="flex-active-slide">
+                            <img src="./assets/images/content/sliderfull-1.jpg" alt=" " draggable="false">
+                        </li>
+                        <li style="width: 1349px; float: left; display: block;" class="">
+                            <img src="./assets/images/content/sliderfull-1.jpg" alt=" " draggable="false">
+                        </li>
+                        <li style="width: 1349px; float: left; display: block;" class="clone" aria-hidden="true">
+                            <img src="./assets/images/content/sliderfull-1.jpg" alt=" " draggable="false">
+                        </li>
+                    </ul>
+                </div><ul class="flex-direction-nav"><li><a class="flex-prev" href="#">Previous</a></li><li><a class="flex-next" href="#">Next</a></li></ul>
+            </div>*@
+
+        @*<div class="container">*@
+        <!-- / flexslider -->
+
     </div>
 </div>
 
