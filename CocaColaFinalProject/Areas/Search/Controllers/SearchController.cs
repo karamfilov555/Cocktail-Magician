@@ -36,7 +36,7 @@ namespace CM.Web.Areas.Search.Controllers
             searchVM.Bars = barResults.Select(b => b.MapSearchBarVMToDTO()).ToList();
             searchVM.Cocktails = cocktailResults.Select(c => c.MapCocktailSearchDTOToVM()).ToList();
             searchVM.SearchCriteria = searchString;
-            return PartialView("_SearchResultsPartial", searchVM);
+            return View(searchVM);
         }
 
 
