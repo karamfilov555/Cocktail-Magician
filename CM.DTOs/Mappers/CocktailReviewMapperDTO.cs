@@ -16,6 +16,7 @@ namespace CM.DTOs.Mappers
             newReviewDTO.Description = review.Description;
             newReviewDTO.UserName = review.User.UserName;
             newReviewDTO.UserID = review.UserId;
+            newReviewDTO.ReviewDate = review.ReviewDate;
             newReviewDTO.Rating = review.Rating;
             newReviewDTO.LikeCount = review.CocktailReviewLikes.Count;
             newReviewDTO.LikedByUsers = review.CocktailReviewLikes.Select(b => b.AppUserID).ToList();

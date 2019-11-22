@@ -48,6 +48,7 @@ namespace CM.Web.Mappers
             reviewVm.Rating = reviewDTO.Rating;
             reviewVm.UserName = reviewDTO.UserName;
             reviewVm.UserId = reviewDTO.UserID;
+            reviewVm.ReviewDate = reviewDTO.ReviewDate;
             return reviewVm;
         }
 

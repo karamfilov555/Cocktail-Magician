@@ -1,4 +1,4 @@
-﻿@model CocktailReviewViewModel
+﻿@model ListReviewViewModel
 @{
     ViewData["Title"] = "RateCocktail";
     Layout = "~/Views/Shared/_LayoutCustom.cshtml";
@@ -82,19 +82,6 @@
                                               min="1" max="10"
                                               value="@Model.Rating">
                                 </kendo-rating>
-
-                                @*<select asp-for="@Model.Rating" class=" alert-success form-check">
-                                        <option value="1">1</option>
-                                        <option value="2">2</option>
-                                        <option value="3">3</option>
-                                        <option value="4">4</option>
-                                        <option value="5">5</option>
-                                        <option value="6">6</option>
-                                        <option value="7">7</option>
-                                        <option value="8">8</option>
-                                        <option value="9">9</option>
-                                        <option value="10">10</option>
-                                    </select>*@
                             </b>
                         </div>
                     <dt class="col-sm-2">
@@ -116,7 +103,7 @@
                 }
                 else
                 {
-                    <dt><h3 class="hdr3"> You've already rated this cocktail ! </h3></dt>
+                    <dt><h3 class="hdr3" style="color:gold"> You've already rated this cocktail ! </h3></dt>
                 }
             </dl>
         </tbody>
@@ -138,15 +125,15 @@
 }
 <center><h1 class="hdr6" style="">Comments for "@Model.Name" </h1></center>
 
-@if (Model.Reviews.Count == 0)
+@if (Model.TotalReviewsForCocktail == 0)
 {
     <h3 class="hdr3"> There are no comments for this cocktail yet! </h3>
 }
 else
 {
-    foreach (var item in Model.Reviews)
+        <center id="putCommentsHere">
+    @foreach (var item in Model.ReviewsPerPageForCocktail)
     {
-        <center>
             <div class="col-md-10 blog-main" style="padding-left:260px">
                 <div class="blog-post format-quote">
                     <h3 class="blog_title"><a href="7b_single-blog.html">A quote post</a></h3>
@@ -165,7 +152,7 @@ else
                         </a>
                     </div>
                     <div class="meta_box">
-                        <span class="meta_date">@item.Name</span>
+                        <span class="meta_date">@item.ReviewDate.ToShortDateString()</span>
                         @*<span class="meta_comments"><a href="#"><em>21</em> <span>Comments</span></a></span>*@
                         <span class="meta_author"><a href="#">Publisher: @item.UserName</a></span>
                         @*@if (!review.LikedByUsers.Contains(@User.FindFirstValue(ClaimTypes.NameIdentifier)))
@@ -190,14 +177,20 @@ else
                     </div>
                 </div>
             </div>
-        </center>
     }
+        </center>
 }
-@*Comments goes here ... :*@
 
-<center>
-    <p style="padding-left:10px; padding-top:260px">
-        <a asp-action="ListCocktails" class="btn btn-danger">Load More Comments</a>
-        <a asp-action="ListCocktails" class="btn btn-success">Back to List</a>
-    </p>
-</center>
+@if (Model.TotalReviewsForCocktail != 0)
+{
+    <center>
+<p id="animationLoading" style="padding-bottom:200px">
+
+</p>
+        <p style="padding-left:10px; padding-top:260px">
+            <a id="loadComments" asp-action="ListCocktails" data-currPage="@Model.CurrPage" data-Id="@Model.Id" class="btn btn-danger">Load More Comments</a>
+            <a asp-action="ListCocktails" class="btn btn-success">Back to List</a>
+        </p>
+    </center>
+}
+<script src="~/assets/js/cocktailsComments.js"></script>

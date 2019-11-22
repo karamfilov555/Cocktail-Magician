@@ -42,49 +42,16 @@ namespace CM.Web.Areas.Ingredients.Controllers
 
             if (tenIngredientsDtos.Count == 0)
             {
-                _toast.AddInfoToastMessage("There are no more cocktails!");
+                _toast.AddInfoToastMessage("There are no more ingredients!");
                 litingViewModel.MoreToLoad = false;
             }
-            //if (totalPages > currPage)
-            //{
-            //    litingViewModel.NextPage = currPage + 1;
-            //}
-
-            //if (currPage > 1)
-            //{
-            //    litingViewModel.PrevPage = currPage - 1;
-            //}
-            // To add timeSpan and animation ! 
             if (currPage == 1)
             {
                 return View(litingViewModel);
             }
 
             return PartialView("_LoadMorePartial", litingViewModel);
-            //var ingredientsDto = await _ingredientServices.GetAllIngredients();
-            //var ingredientsVm = ingredientsDto.Select(x => x.MapToViewModel());
-            //return View(ingredientsVm);
         }
-
-        // GET: Ingredients/Ingredients/Details/5
-        //public async Task<IActionResult> Details(string id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    var ingredient = await _context.Ingredients
-        //        .FirstOrDefaultAsync(m => m.Id == id);
-        //    if (ingredient == null)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    return View(ingredient);
-        //}
-
-
 
         [HttpGet]
         public IActionResult Create()

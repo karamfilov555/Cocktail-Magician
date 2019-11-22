@@ -16,17 +16,13 @@ namespace CM.Services
     public class ReviewServices : IReviewServices
     {
         private readonly CMContext _context;
-        private readonly ICocktailServices _cocktailServices;
-        private readonly IAppUserServices _userServices;
+        
 
-        public ReviewServices(CMContext context,
-                              ICocktailServices cocktailServices,
-                              IAppUserServices userServices)
+        public ReviewServices(CMContext context
+                              )
         {
-            // this dependencies can be removed ... till now
             _context = context;
-            _cocktailServices = cocktailServices;
-            _userServices = userServices;
+           
         }
 
         public async Task<bool> CheckIfUserCanReview(string userId, CocktailDto cocktailDto)
@@ -65,9 +61,35 @@ namespace CM.Services
                                     .Include(r => r.CocktailReviewLikes)
                                     .Include(r => r.Cocktail)
                                     .Select(r => r.MapReviewToDTO())
+                                    .OrderByDescending(r=>r.ReviewDate)
                                     .ToListAsync();
 
+        public async Task<ICollection<CocktailReviewDTO>> GetTwoReviewsAsync(string cocktailId, int currPage)
+        => await _context.CocktailReviews
+                          .Where(r => r.CocktailId == cocktailId
+                           && r.DateDeleted == null)
+                          .OrderByDescending(r => r.ReviewDate)
+                          .Skip((currPage - 1)*2)
+                          .Take(2)
+                          .Include(r => r.User)
+                          .Include(r => r.CocktailReviewLikes)
+                          .Include(r => r.Cocktail)
+                          .Select(r => r.MapReviewToDTO())
+                          .ToListAsync()
+                          .ConfigureAwait(false);
 
+
+        public async Task<int> GetPageCountForCocktailReviewsAsync(int reviewsPerPage,string Id)
+        {
+            var allReviewsPerCocktailCount = await _context
+                                       .CocktailReviews
+                                       .Where(c => c.DateDeleted == null && c.Id == Id)
+                                       .CountAsync();
+
+            int pageCount = (allReviewsPerCocktailCount - 1) / reviewsPerPage + 1;
+
+            return pageCount;
+        }
 
 
 
@@ -143,6 +165,14 @@ namespace CM.Services
             _context.BarReviewLikes.Remove(like);
             await _context.SaveChangesAsync();
             return await _context.BarReviewLikes.Where(r => r.BarReviewID == barReviewID).CountAsync();
+        }
+
+        public async Task<int> GetTotalReviewsCountForCocktailAsync(string Id)
+        {
+                         return   await _context
+                                       .CocktailReviews
+                                       .Where(c => c.DateDeleted == null && c.CocktailId == Id)
+                                       .CountAsync();
         }
     }
 }

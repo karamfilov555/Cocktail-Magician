@@ -55,6 +55,7 @@ namespace CM.Services
             var cocktail = await _context.Cocktails
                                             .Include(c => c.Reviews)
                                             .ThenInclude(c => c.User)
+                                            .ThenInclude(c => c.CocktailReviews)
                                             .Include(c => c.CocktailComponents)
                                             .ThenInclude(c => c.Ingredient)
                                             .Include(c => c.BarCocktails)

@@ -78,6 +78,7 @@ namespace CM.Web.Mappers
             cocktailVm.Rating = cocktailDto.Rating;
             cocktailVm.Description = cocktailDto.Description;
             cocktailVm.Image = cocktailDto.Image;
+            cocktailVm.ReviewDate = cocktailDto.ReviewDate;
             //cocktailVm.Ingredients = cocktailDto.Ingredients;
             cocktailVm.LikeCount = cocktailDto.LikeCount;
             cocktailVm.LikedByUsers = cocktailDto.LikedByUsers;

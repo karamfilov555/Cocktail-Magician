@@ -32,22 +32,55 @@ namespace CM.Web.Areas.Reviews.Controllers
 
         [HttpGet]
         [Authorize]
-        public async Task<IActionResult> RateCocktail(string Id)
+        public async Task<IActionResult> RateCocktail(string Id , int? currPage)
         {
-            var cocktail = await _cocktailServices.FindCocktailById(Id);
-            var reviewVm = cocktail.MapToCocktailReviewViewModel();
-            reviewVm.Ingredients = cocktail.Ingredients.Select(i => i.MapToCocktailComponentVM()).ToList();
+            var cocktailDto = await _cocktailServices.FindCocktailById(Id);
+            var reviewVm = cocktailDto.MapToCocktailReviewViewModel();
+            reviewVm.Ingredients = cocktailDto.Ingredients.Select(i => i.MapToCocktailComponentVM()).ToList();
             string userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-            var canUserReview = await _reviewServices.CheckIfUserCanReview(userId, cocktail);
-            var cocktailReviews = await _reviewServices.GetReviewsForCocktial(cocktail.Id);
 
-            var cocktailReviewsVm = cocktailReviews.Select(r => r.MapToViewModel()).ToList();
+            currPage = currPage ?? 1;
+
+            var twoDtoReviews = await _reviewServices
+                                    .GetTwoReviewsAsync(cocktailDto.Id,(int)currPage);
+
+            var canUserReview = await _reviewServices.CheckIfUserCanReview(userId, cocktailDto);
+            var cocktailReviewsVm = twoDtoReviews.Select(r => r.MapToViewModel()).ToList();
 
             reviewVm.CanReview = !canUserReview;
-            reviewVm.Reviews = cocktailReviewsVm;
+            //reviewVm.Reviews = cocktailReviewsVm;
 
-            return View(reviewVm);
+            var totalPages = await _reviewServices
+                                    .GetPageCountForCocktailReviewsAsync(2, cocktailDto.Id);
+
+            var litingReviewViewModel = new ListReviewViewModel()
+            {
+                Id = reviewVm.Id,
+                Name = reviewVm.Name,
+                Description = reviewVm.Description,
+                Ingredients = reviewVm.Ingredients.ToList(),
+                Image = reviewVm.Image,
+                CanReview = !canUserReview,
+                ReviewsPerPageForCocktail = cocktailReviewsVm,
+                CurrPage = (int)currPage,
+                TotalPages = totalPages,
+                MoreToLoad = true,
+                TotalReviewsForCocktail = await _reviewServices
+                                    .GetTotalReviewsCountForCocktailAsync(cocktailDto.Id)
+            };
+
+            if (twoDtoReviews.Count == 0 && litingReviewViewModel.TotalReviewsForCocktail != 0)
+            {
+                _toast.AddInfoToastMessage("There are no more reviews for this cocktail!");
+                litingReviewViewModel.MoreToLoad = false;
+            }
+            if (currPage == 1)
+            {
+                return View(litingReviewViewModel);
+            }
+
+            return PartialView("_LoadMoreReviewsPartial", litingReviewViewModel);
         }
         [HttpPost]
         [Authorize]

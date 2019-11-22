@@ -1,0 +1,50 @@
+﻿@model ListReviewViewModel
+  
+@foreach (var item in Model.ReviewsPerPageForCocktail)
+    {
+<center>
+    <div class="col-md-10 blog-main" style="padding-left:260px">
+        <div class="blog-post format-quote">
+            <h3 class="blog_title"><a href="7b_single-blog.html">A quote post</a></h3>
+            <div class="blog_thumbnail">
+                <a href="7b_single-blog.html" class="box_text">
+                    <span class="ribbon_icon"><i class="fa fa-quote-left"></i></span>
+                    <blockquote class="inner">
+                        <p>
+                            "@item.Description"
+                            <br>
+                            <font style="color:gold">Grade: @item.Rating</font>
+
+                        </p>
+                        <span class="author">- The Coca-Cola Company, Cocktail Magician™, 2019 -</span>
+                    </blockquote>
+                </a>
+            </div>
+            <div class="meta_box">
+                <span class="meta_date">@item.ReviewDate.ToShortDateString()</span>
+                @*<span class="meta_comments"><a href="#"><em>21</em> <span>Comments</span></a></span>*@
+                <span class="meta_author"><a href="#">Publisher: @item.UserName</a></span>
+                @*@if (!review.LikedByUsers.Contains(@User.FindFirstValue(ClaimTypes.NameIdentifier)))
+                    {
+                        <form method="post" asp-area="Reviews" asp-controller="BarReviews" asp-action="LikeBarReview"
+                              asp-route-barReviewID="@review.Id" asp-route-barId="@review.BarId" asp-route-name="@review.BarName">
+                            <button type="submit"
+                                    title="Love it" class="btn-like btn-counter" data-count="@review.LikeCount">
+                                <span>&#x2764;</span>
+                            </button>
+                        </form>
+                    }
+                    else
+                    {
+                    <form method="post" asp-area="Reviews" asp-controller="BarReviews" asp-action="RemoveLikeBarReview"
+                          asp-route-barReviewID="@review.Id" asp-route-barId="@review.BarId" asp-route-name="@review.BarName">
+                        <button type="submit"
+                                title="Love it" class="btn-like btn-counter" data-count="@review.LikeCount">
+                            <span>&#x2764;</span>
+                        </button>
+                    </form>*@
+            </div>
+        </div>
+    </div>
+</center>
+    }

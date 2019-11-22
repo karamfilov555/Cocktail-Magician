@@ -20,6 +20,7 @@ namespace CM.Web.Areas.Reviews.Models
         public string Name { get; set; }
         public string BarId { get; set; }
         public string UserId { get; set; }
+        public DateTime ReviewDate { get; set; }
         public string UserName { get; set; }
         [Url]
         [Display(Name = "Image")]
