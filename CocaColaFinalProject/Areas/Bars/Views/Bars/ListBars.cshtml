@@ -2,48 +2,47 @@
 @{
     ViewData["Title"] = "Index";
 }
-<meta charset="utf-8">
-<meta name="description" content=" ">
-<meta name="author" content=" ">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1, shrink-to-fit=no">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-<link rel="stylesheet" type="text/css" href="./assets/js/customscroll/jquery.mCustomScrollbar.css">
-<link rel="stylesheet" type="text/css" href="./assets/js/flexslider/css/flexslider.css">
-<link rel="stylesheet" type="text/css" href="./assets/js/prettyPhoto/css/prettyPhoto.css">
-<link rel="stylesheet" type="text/css" href="./assets/js/bxslider/jquery.bxslider.css">
-<link rel="stylesheet" type="text/css" href="./assets/css/font-awesome.css">
+    @*<head>
+        <meta charset="utf-8">
+        <meta name="description" content=" ">
+        <meta name="author" content=" ">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1, shrink-to-fit=no">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-<link rel="stylesheet" type="text/css" href="./assets/css/bootstrap.css">
-<link rel="stylesheet" type="text/css" href="./assets/css/style.css">
-<script src="./assets/js/modernizr.custom.81779.js"></script>
+        <link rel="stylesheet" type="text/css" href="./assets/js/customscroll/jquery.mCustomScrollbar.css">
+        <link rel="stylesheet" type="text/css" href="./assets/js/flexslider/css/flexslider.css">
+        <link rel="stylesheet" type="text/css" href="./assets/js/prettyPhoto/css/prettyPhoto.css">
+        <link rel="stylesheet" type="text/css" href="./assets/js/bxslider/jquery.bxslider.css">
+        <link rel="stylesheet" type="text/css" href="./assets/css/font-awesome.css">
 
+        <link rel="stylesheet" type="text/css" href="./assets/css/bootstrap.css">
+        <link rel="stylesheet" type="text/css" href="./assets/css/style.css">
+        <script src="./assets/js/modernizr.custom.81779.js"></script>
+        <script src="~/jquery/dist/jquery.js"></script>
+        <script src="~/bootstrap/dist/js/bootstrap.bundle.js"></script>
+    </head>*@
 <h3 class="hdr4">All Bars</h3>
 <div>
     <table class="table">
         <thead>
             <tr>
-
                 <th><h5>Bar's Picture</h5></th>
-
                 <th>
                     <h5>
-                        <a asp-action="Index" asp-route-sortOrder="@Model.NameSortParm"> &uarr;&darr; Name</a>
+                        <a asp-action="ListBars" asp-route-sortOrder="@Model.NameSortParm"> &uarr;&darr; Name</a>
                     </h5>
                 </th>
                 <th>
                     <h5>
-                        <a asp-action="Index" asp-route-sortOrder="@Model.RatingSortParm"> &uarr;&darr; Rating</a>
+                        <a asp-action="ListBars" asp-route-sortOrder="@Model.RatingSortParm"> &uarr;&darr; Rating</a>
                     </h5>
                 </th>
                 <th width="7%"><h5>Website</h5></th>
                 <th></th>
-
-
-
             </tr>
         </thead>
-        <tbody>
+        <tbody id="tbodyBars">
             @foreach (var bar in Model.AllBars)
             {
                 <tr>
@@ -92,9 +91,6 @@
                             }
                         }
                     </td>
-                    @*<td>
-                            @bar.Country
-                        </td>*@
                     <td>
 
                         <a href="@bar.Website">@bar.Website</a>
@@ -104,7 +100,8 @@
                         <p>
                             <a class="btn btn-default btn-sm" asp-area="Reviews" asp-controller="BarReviews" asp-action="BarReviews"
                                asp-route-id="@bar.Id" asp-route-name="@bar.Name" asp-route-rating="@bar.Rating">
-                                <font style="color:gold"><i class="fa fa-star"></i>
+                                <font style="color:gold">
+                                    <i class="fa fa-star"></i>
                                     Reviews
                                 </font>
                             </a>
@@ -113,7 +110,8 @@
                         {
                             <p>
                                 <a class="btn btn-default btn-sm" asp-area="Bars" asp-action="Details" asp-route-id="@bar.Id">
-                                    <font style="color:gold"><i class="fa fa-search-plus"></i>
+                                    <font style="color:gold">
+                                        <i class="fa fa-search-plus"></i>
                                         Details
                                     </font>
                                 </a>
@@ -123,14 +121,16 @@
                         {
                             <p>
                                 <a class="btn btn-default btn-sm" asp-area="Bars" asp-action="Edit" asp-route-id="@bar.Id">
-                                    <font style="color:gold"><i class="fa fa-magic"></i>
+                                    <font style="color:gold">
+                                        <i class="fa fa-magic"></i>
                                         Edit
                                     </font>
                                 </a>
                             </p>
                             <p>
                                 <a class="btn btn-default btn-sm" asp-area="Bars" asp-controller="Bars" asp-action="Delete" asp-route-id="@bar.Id">
-                                    <font style="color:gold"> <i class="fa fa-trash-o"></i>
+                                    <font style="color:gold">
+                                        <i class="fa fa-trash-o"></i>
                                         Delete
                                     </font>
                                 </a>
@@ -143,5 +143,56 @@
     </table>
 </div>
 
-<partial name="_BarPaginationPartial" model="@Model">
+<center style="padding-bottom:20px">
+    @if (Model.AllBars.Count == 0)
+    {
+        <div class="card-body">
+            <br/>
+            <h3>No more bars to show!</h3>
+        </div>
+    }
+    else
+    {
+        @if (@Model.AllBars.HasNextPage == false)
+        {
+            <a class="btn btn-default btn-sm disabled"><h5 style="margin-bottom:-5px">Load more bars <i class="fa fa-arrow-circle-o-down"></i></h5></a>
+        }
+        else
+        {
+            <a id="loadMoreBars" asp-area="Bars" asp-controller="Bars" asp-action="ListBars" class="btn btn-default btn-sm" asp-route-sortOrder="@Model.CurrentSortOrder" asp-route-pageNumber="@Model.AllBars.PageIndex+1"
+               data-sortOrder="@Model.CurrentSortOrder" data-pageIndex="@(Model.AllBars.PageIndex)"><h5 style="margin-bottom:-5px; color:gold">Load more bars <i class="fa fa-plus-circle"></i></h5></a>
+        }
+    }
+</center>
 
+@*<partial name="_BarPaginationPartial" model="@Model">*@
+
+<script src="/assets/js/jquery.min.js"></script>
+<script src="/assets/bootstrap/js/bootstrap.min.js"></script>
+
+
+<script src="/assets/js/cocktailsPagination.js"></script>
+
+
+<script src="/assets/js/customscroll/jquery.mCustomScrollbar.concat.min.js"></script>
+<script src="/assets/js/flexslider/jquery.easing.1.3.min.js"></script>
+<script src="/assets/js/flexslider/jquery.flexslider-min.js"></script>
+<script src="/assets/js/prettyPhoto/js/jquery.prettyPhoto.js"></script>
+<script src="/assets/js/bxslider/jquery.bxslider.min.js"></script>
+<script src="/assets/twitter/js/jquery.tweet.js"></script>
+<script src="/assets/js/jquery.hoverdir.js"></script>
+<script src="/assets/js/jquery.arctext.js"></script>
+<script src="/assets/js/jquery.placeholder.js"></script>
+<script src="/assets/js/jquery.sticky.js"></script>
+
+<script src="/assets/form/js/form.js"></script>
+<script src="/assets/js/main.js"></script>
+<script src="/assets/js/less.min.js"></script>
+<script src="~/assets/js/addRowInCreateCocktails.js"></script>
+<script src="~/assets/js/removeRowInCreateCocktail.js"></script>
+<script src="/assets/js/like.js"></script>
+
+<script src="/assets/js/NotificationSeen.js"></script>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.10/js/select2.min.js"></script>

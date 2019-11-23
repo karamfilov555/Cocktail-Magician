@@ -1,11 +1,109 @@
 ﻿@model ListBarsViewModel
 
 
-@{
+@*@{
     var prevDisabled = !Model.AllBars.HasPreviousPage ? "disabled" : "";
     var nextDisabled = !Model.AllBars.HasNextPage ? "disabled" : "";
+}*@
+
+@foreach (var bar in Model.AllBars)
+{
+    <tr>
+        <td>
+            <a asp-area="Bars" asp-controller="Bars" asp-action="Details" asp-route-id="@bar.Id">
+                <img src="@bar.ImageURL"
+                     width="450"
+                     style="border-radius:25px; padding-top:5px; padding-bottom:5px" alt="Bar picture" />
+
+            </a>
+        </td>
+        <td>
+            <h5>@bar.Name</h5>
+        </td>
+        <td>
+            @if (@bar.Rating == null)
+            {
+                <i>Not rated yet!</i>
+            }
+            else
+            {
+                if (bar.Rating * 10 % 10 == 0)
+                {
+                    for (int i = 0; i < bar.Rating - 1; i++)
+                    {
+                        <font color="gold">
+                            <i class="fa fa-star" style="color:gold"></i>
+                        </font>
+                    }
+                    <font color="gold">
+                        <i class="fa fa-star" style="color:gold"><font size="2"> @bar.Rating</font></i>
+                    </font>
+                }
+                else
+                {
+
+                    for (int i = 0; i < bar.Rating - 1; i++)
+                    {
+                        <font color="gold">
+                            <i class="fa fa-star" style="color:gold"></i>
+                        </font>
+                    }
+                    <font color="gold">
+                        <i class="fa fa-star-half" style="color:gold"> <font size="2"> @bar.Rating</font></i>
+                    </font>
+                }
+            }
+        </td>
+        <td>
+
+            <a href="@bar.Website">@bar.Website</a>
+
+        </td>
+        <td>
+            <p>
+                <a class="btn btn-default btn-sm" asp-area="Reviews" asp-controller="BarReviews" asp-action="BarReviews"
+                   asp-route-id="@bar.Id" asp-route-name="@bar.Name" asp-route-rating="@bar.Rating">
+                    <font style="color:gold">
+                        <i class="fa fa-star"></i>
+                        Reviews
+                    </font>
+                </a>
+            </p>
+            @if (this.User.IsInRole("Member") || this.User.IsInRole("Manager") || this.User.IsInRole("Administrator"))
+            {
+                <p>
+                    <a class="btn btn-default btn-sm" asp-area="Bars" asp-action="Details" asp-route-id="@bar.Id">
+                        <font style="color:gold">
+                            <i class="fa fa-search-plus"></i>
+                            Details
+                        </font>
+                    </a>
+                </p>
+            }
+            @if (this.User.IsInRole("Administrator") || this.User.IsInRole("Manager"))
+            {
+                <p>
+                    <a class="btn btn-default btn-sm" asp-area="Bars" asp-action="Edit" asp-route-id="@bar.Id">
+                        <font style="color:gold">
+                            <i class="fa fa-magic"></i>
+                            Edit
+                        </font>
+                    </a>
+                </p>
+                <p>
+                    <a class="btn btn-default btn-sm" asp-area="Bars" asp-controller="Bars" asp-action="Delete" asp-route-id="@bar.Id">
+                        <font style="color:gold">
+                            <i class="fa fa-trash-o"></i>
+                            Delete
+                        </font>
+                    </a>
+                </p>
+            }
+        </td>
+    </tr>
 }
-<center>
+
+@*<center>
     <a asp-action="Index" asp-area="Bars" asp-controller="Bars"
        asp-route-sortOrder="@Model.CurrentSortOrder"
        asp-route-pageNumber="@(Model.AllBars.PageIndex -1)"
@@ -37,4 +135,4 @@
        class="btn btn-default btn-sm @nextDisabled">
         <h5 style="margin-bottom:-5px">Next Page <i class="fa fa-arrow-circle-o-right"></i></h5>
     </a>
-</center>
+</center>*@

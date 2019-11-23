@@ -58,15 +58,18 @@ namespace CM.Web.Areas.Bars.Controllers
         }
 
         // GET:
-        [Route("bars/list")]
-        public async Task<IActionResult> Index(string sortOrder, string currentFilter,
-            int? pageNumber)
+        public async Task<IActionResult> ListBars(string sortOrder, int? pageNumber)
         {
             var listVM = new ListBarsViewModel();
             listVM.CurrentSortOrder = sortOrder;
             listVM.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
             listVM.RatingSortParm = sortOrder == "Rating" ? "rating_asc" : "Rating";
             var bars = await _barServices.GetAllBars(pageNumber, sortOrder);
+            if (bars.Count == 0)
+            {
+                _toast.AddInfoToastMessage("There are no more cocktails!");
+                //here i have to stop the request... return smthg..
+            }
             var pagList = new PaginatedList<BarViewModel>()
             {
                 PageIndex = bars.PageIndex,
@@ -77,7 +80,11 @@ namespace CM.Web.Areas.Bars.Controllers
                 pagList.Add(item.MapBarToVM());
             }
             listVM.AllBars = pagList;
+            if (bars.PageIndex==1)
+            {
             return View(listVM);
+            }
+            return PartialView("_BarPaginationPartial", listVM);
         }
         // GET: Bars/Bars/Create
         [HttpGet]
@@ -108,7 +115,7 @@ namespace CM.Web.Areas.Bars.Controllers
                 string id = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
                 await _notificationServices.BarCreateNotificationToAdminAsync(id, barName);
                 _toast.AddSuccessToastMessage($"You successfully added \"{barName}\" bar!");
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(ListBars));
             }
             var allCocktails = await _cocktailServices.GetAllCocktails();
             var allCountries = await _barServices.GetAllCountries();
@@ -169,7 +176,7 @@ namespace CM.Web.Areas.Bars.Controllers
                 var barDTO = createBarVM.MapBarVMToDTO();
                 var barName = await _barServices.Update(barDTO);
                 _toast.AddSuccessToastMessage($"You successfully edited \"{barName}\" bar!");
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(ListBars));
             }
             var allCountries = await _barServices.GetAllCountries();
             var allCocktails = await _cocktailServices.GetAllCocktails();
@@ -201,7 +208,7 @@ namespace CM.Web.Areas.Bars.Controllers
             await _notificationServices.BarDeletedNotificationToAdminAsync(userId, barName);
 
             _toast.AddSuccessToastMessage($"You successfully deleted \"{barName}\" bar!");
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(ListBars));
         }
     }
 }

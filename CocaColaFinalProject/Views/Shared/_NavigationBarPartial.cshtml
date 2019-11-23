@@ -4,9 +4,9 @@
 @inject UserManager<AppUser> UserManager
 
 <li class="dropdown">
-    <a asp-area="Bars" asp-controller="Bars" asp-action="Index" class="dropdown-toggle">Bars</a>
+    <a asp-area="Bars" asp-controller="Bars" asp-action="ListBars" class="dropdown-toggle">Bars</a>
     <ul class="dropdown-menu">
-        <li><a asp-area="Bars" asp-controller="Bars" asp-action="Index">Bars List</a></li>
+        <li><a asp-area="Bars" asp-controller="Bars" asp-action="ListBars">Bars List</a></li>
         @if (User.IsInRole("Administrator") || User.IsInRole("Manager"))
         {
             <li><a asp-area="Bars" asp-controller="Bars" asp-action="Create">Add new bar</a></li>
