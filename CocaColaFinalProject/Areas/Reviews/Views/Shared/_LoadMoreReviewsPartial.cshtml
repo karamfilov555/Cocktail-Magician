@@ -7,7 +7,7 @@
         <div class="blog-post format-quote">
             <h3 class="blog_title"><a href="7b_single-blog.html">A quote post</a></h3>
             <div class="blog_thumbnail">
-                <a href="7b_single-blog.html" class="box_text">
+                <a href="" class="box_text">
                     <span class="ribbon_icon"><i class="fa fa-quote-left"></i></span>
                     <blockquote class="inner">
                         <p>
@@ -24,25 +24,30 @@
                 <span class="meta_date">@item.ReviewDate.ToShortDateString()</span>
                 @*<span class="meta_comments"><a href="#"><em>21</em> <span>Comments</span></a></span>*@
                 <span class="meta_author"><a href="#">Publisher: @item.UserName</a></span>
-                @*@if (!review.LikedByUsers.Contains(@User.FindFirstValue(ClaimTypes.NameIdentifier)))
-                    {
-                        <form method="post" asp-area="Reviews" asp-controller="BarReviews" asp-action="LikeBarReview"
-                              asp-route-barReviewID="@review.Id" asp-route-barId="@review.BarId" asp-route-name="@review.BarName">
-                            <button type="submit"
-                                    title="Love it" class="btn-like btn-counter" data-count="@review.LikeCount">
-                                <span>&#x2764;</span>
-                            </button>
-                        </form>
-                    }
-                    else
-                    {
-                    <form method="post" asp-area="Reviews" asp-controller="BarReviews" asp-action="RemoveLikeBarReview"
-                          asp-route-barReviewID="@review.Id" asp-route-barId="@review.BarId" asp-route-name="@review.BarName">
+                @if (!item.LikedByUsers.Contains(@User.FindFirstValue(ClaimTypes.NameIdentifier)))
+                {
+                    <form id="like-1" method="post" asp-area="Reviews" asp-controller="CocktailReviews" asp-action="LikeCocktailReview"
+                          data-cocktailReviewID="@item.Id" data-cocktailId="@item.CocktailID">
                         <button type="submit"
-                                title="Love it" class="btn-like btn-counter" data-count="@review.LikeCount">
-                            <span>&#x2764;</span>
+                                class="reviewLike-2"
+                                data-cocktailReviewID="@item.Id" data-cocktailId="@item.CocktailID">
+                            <i class="fa fa-heart fa-lg text-danger"></i>
+                            <span> @item.LikeCount</span>
                         </button>
-                    </form>*@
+                    </form>
+                }
+                else
+                {
+                    <form id="unlike-1" method="post" asp-area="Reviews" asp-controller="CocktailReviews" asp-action="RemoveCocktailReview"
+                          data-cocktailReviewID="@item.Id" data-cocktailId="@item.CocktailID">
+                        <button type="submit"
+                                class="reviewUnlike-2" data-cocktailReviewID="@item.Id" data-cocktailId="@item.CocktailID">
+                            <i class="fa fa-heart fa-lg text-danger"></i>
+                            <span>@item.LikeCount</span>
+                        </button>
+                    </form>
+                }
+
             </div>
         </div>
     </div>
