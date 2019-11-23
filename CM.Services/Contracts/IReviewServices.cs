@@ -18,8 +18,10 @@ namespace CM.Services.Contracts
         Task<ICollection<CocktailReviewDTO>> GetReviewsForCocktail(string cocktailId);
         Task<int> LikeCocktailReview(string cocktailReviewID, string userId);
         Task<int> RemoveCocktailReviewLike(string cocktailReviewID, string userId);
+        Task<ICollection<CocktailReviewDTO>> GetTwoReviewsAsync(string cocktailId, int currPage);
 
-        
+
+
         Task<int> GetPageCountForCocktailReviewsAsync(int reviewsPerPage, string Id);
         Task<int> GetTotalReviewsCountForCocktailAsync(string Id);
 

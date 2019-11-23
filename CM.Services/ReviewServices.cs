@@ -18,8 +18,7 @@ namespace CM.Services
         private readonly CMContext _context;
         
 
-        public ReviewServices(CMContext context
-                              )
+        public ReviewServices(CMContext context)
         {
             _context = context;
            
@@ -206,6 +205,7 @@ namespace CM.Services
                                        .Where(c => c.DateDeleted == null && c.CocktailId == Id)
                                        .CountAsync();
         }
+
     }
 }
 

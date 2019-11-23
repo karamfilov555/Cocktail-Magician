@@ -58,6 +58,7 @@ namespace CM.Web.Areas.Reviews.Controllers
             var litingReviewViewModel = new ListReviewViewModel()
             {
                 Id = reviewVm.Id,
+                Rating = reviewVm.Rating,
                 Name = reviewVm.Name,
                 Description = reviewVm.Description,
                 Ingredients = reviewVm.Ingredients.ToList(),
@@ -71,7 +72,7 @@ namespace CM.Web.Areas.Reviews.Controllers
                                     .GetTotalReviewsCountForCocktailAsync(cocktailDto.Id)
             };
 
-            if (twoDtoReviews.Count == 0 && litingReviewViewModel.TotalReviewsForCocktail != 0)
+            if (twoDtoReviews.Count() == 0 && litingReviewViewModel.TotalReviewsForCocktail != 0)
             {
                 _toast.AddInfoToastMessage("There are no more reviews for this cocktail!");
                 litingReviewViewModel.MoreToLoad = false;

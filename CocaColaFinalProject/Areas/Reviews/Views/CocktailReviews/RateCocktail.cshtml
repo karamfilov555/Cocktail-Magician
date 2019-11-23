@@ -142,9 +142,9 @@ else
                             <span class="ribbon_icon"><i class="fa fa-quote-left"></i></span>
                             <blockquote class="inner">
                                 <p>
-                                    "@review.Description"
+                                    "@item.Description"
                                     <br>
-                                    <font style="color:gold">Grade: @review.Rating</font>
+                                    <font style="color:gold">Grade: @item.Rating</font>
 
                                 </p>
                                 <span class="author">- The Coca-Cola Company, Cocktail Magician™, 2019 -</span>
@@ -154,27 +154,27 @@ else
                     <div class="meta_box">
                         <span class="meta_date">@item.ReviewDate.ToShortDateString()</span>
                         @*<span class="meta_comments"><a href="#"><em>21</em> <span>Comments</span></a></span>*@
-                        <span class="meta_author"><a href="#">Publisher: @review.UserName</a></span>
-                        @if (!review.LikedByUsers.Contains(@User.FindFirstValue(ClaimTypes.NameIdentifier)))
+                        <span class="meta_author"><a href="#">Publisher: @item.UserName</a></span>
+                        @if (!item.LikedByUsers.Contains(@User.FindFirstValue(ClaimTypes.NameIdentifier)))
                         {
                             <form id="like-1" method="post" asp-area="Reviews" asp-controller="CocktailReviews" asp-action="LikeCocktailReview"
-                                  data-cocktailReviewID="@review.Id" data-cocktailId="@review.CocktailID">
+                                  data-cocktailReviewID="@item.Id" data-cocktailId="@item.CocktailID">
                                 <button type="submit"
                                         class="reviewLike-2"
-                                        data-cocktailReviewID="@review.Id" data-cocktailId="@review.CocktailID">
+                                        data-cocktailReviewID="@item.Id" data-cocktailId="@item.CocktailID">
                                     <i class="fa fa-heart fa-lg text-danger"></i>
-                                    <span> @review.LikeCount</span>
+                                    <span> @item.LikeCount</span>
                                 </button>
                             </form>
                         }
                         else
                         {
                             <form id="unlike-1" method="post" asp-area="Reviews" asp-controller="CocktailReviews" asp-action="RemoveCocktailReview"
-                                  data-cocktailReviewID="@review.Id" data-cocktailId="@review.CocktailID">
+                                  data-cocktailReviewID="@item.Id" data-cocktailId="@item.CocktailID">
                                 <button type="submit"
-                                        class="reviewUnlike-2" data-cocktailReviewID="@review.Id" data-cocktailId="@review.CocktailID">
+                                        class="reviewUnlike-2" data-cocktailReviewID="@item.Id" data-cocktailId="@item.CocktailID">
                                     <i class="fa fa-heart fa-lg text-danger"></i>
-                                    <span>@review.LikeCount</span>
+                                    <span>@item.LikeCount</span>
                                 </button>
                             </form>
                         }

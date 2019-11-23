@@ -30,7 +30,7 @@ namespace CM.Web.Areas.Reviews.Models
         public double? Rating { get; set; }
         [Display(Name = "Type your Review Here")]
         public string Description { get; set; }
-        public DateTime ReviewDate { get; set; }
+        
         public int LikeCount { get; set; }
         public List<string> LikedByUsers { get; set; }
         public ICollection<CocktailComponentViewModel> Ingredients { get; set; } 
