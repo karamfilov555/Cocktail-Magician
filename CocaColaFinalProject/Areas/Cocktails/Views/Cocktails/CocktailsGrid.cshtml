@@ -3,9 +3,7 @@
     ViewData["Title"] = "ListCocktails";
     Layout = "~/Views/Shared/_LayoutCustom.cshtml";
 }
-<head>
 
-</head>
 <div id="cocktailsTable">
     <table class="table">
         <thead>
@@ -39,7 +37,7 @@
                     <td><h5 style="padding-left:30px;"> @cocktail.Name</h5></td>
 
                     <td>
-                        @if (cocktail.Rating == 0||cocktail.Rating == null)
+                        @if (cocktail.Rating == null)
                         {
                             <i>Not rated yet!</i>
                         }
@@ -55,7 +53,8 @@
                                     </font>
                                 }
                                 <font color="gold">
-                                    <i class="fa fa-star" style="color:gold"><font size="2"> @cocktail.Rating</font></i>
+                                    <i class="fa fa-star" style="color:gold">
+                                    <font size="2"> @cocktail.Rating</font></i>
                                 </font>
                             }
                             else
@@ -68,11 +67,12 @@
                                     </font>
                                 }
                                 <font color="gold">
-                                    <i class="fa fa-star-half" style="color:gold"> <font size="2"> @cocktail.Rating</font></i>
+                                    <i class="fa fa-star-half" style="color:gold"> 
+                                    <font size="2"> @cocktail.Rating</font></i>
                                 </font>
-                                @*<span class="quntity">
-                                    @Html.DisplayFor(modelItem => item.Rating)</span>*@
                             }
+
+
                         }
 
                     </td>
@@ -87,12 +87,9 @@
                     <td style="padding-top:10px">
                         @if (this.User.IsInRole("Member") || this.User.IsInRole("Manager") || this.User.IsInRole("Administrator"))
                         {
-                        <p>
-                            @*<a class="btn btn-default btn-sm" asp-area="Reviews" asp-controller="CocktailReviews" asp-action="RateCocktail" asp-route-Id="@cocktail.Id">
-                                <font style="color:gold"><i class="fa fa-star">Rate Cocktail</i></font>
-                            </a>*@
-                            <a class="btn btn-default btn-sm" asp-area="Reviews" asp-controller="CocktailReviews" asp-action="RateCocktail" asp-route-id="@cocktail.Id"><font style="color:gold"><i class="fa fa-star"></i> Rate Cocktail</font></a>
-                        </p>
+                            <p>
+                                <a class="btn btn-default btn-sm" asp-area="Reviews" asp-controller="CocktailReviews" asp-action="RateCocktail" asp-route-id="@cocktail.Id"><font style="color:gold"><i class="fa fa-star"></i> Rate Cocktail</font></a>
+                            </p>
 
                         }
                         @if (this.User.IsInRole("Administrator") || this.User.IsInRole("Manager"))
@@ -125,59 +122,14 @@
     }
     else
     {
-        @*@if (Model.PrevPage == null)
-            {
-                <a class="btn btn-default btn-sm disabled"><h5 style="margin-bottom:-5px"> <i class="fa fa-arrow-circle-o-left"></i> Previous Page</h5></a>
-            }
-            else
-            {
-                <a asp-area="Cocktails" asp-controller="Cocktails" asp-action="ListCocktails" class="btn btn-default btn-sm" asp-route-orderByModel="@Model.SortOrder" asp-route-currPage="@Model.PrevPage"><h5 style="margin-bottom:-5px"> <i class="fa fa-arrow-circle-o-left"></i> Previous Page</h5></a>
-                <a asp-area="Cocktails" asp-controller="Cocktails" asp-action="ListCocktails" class="btn btn-default btn-sm" asp-route-orderByModel="@Model.SortOrder" asp-route-currPage="@Model.PrevPage"><h5 style="margin-bottom:-5px">@Model.PrevPage</h5></a>
-            }
-
-            <button style="background-color:cornsilk" class="btn btn-default btn-sm disabled"><h5 style="margin-bottom:-5px; color:gold">@Model.CurrPage</h5></button>*@
-
         @if (Model.MoreToLoad == false)
         {
             <a class="btn btn-default btn-sm disabled"><h5 style="margin-bottom:-5px">Load more cocktails <i class="fa fa-arrow-circle-o-down"></i></h5></a>
         }
         else
         {
-            @*<a asp-area="Cocktails" asp-controller="Cocktails" asp-action="ListCocktails" class="btn btn-default btn-sm " asp-route-orderByModel="@Model.SortOrder" asp-route-currPage="@Model.NextPage"><h5 style="margin-bottom:-5px">@Model.NextPage</h5></a>*@
-
-            @*string sortOrder, int? currPage, string orderByModel*@
             <a id="loadMore" asp-area="Cocktails" asp-controller="Cocktails" asp-action="LoadMoreCocktails" class="btn btn-default btn-sm" asp-route-orderByModel="@Model.SortOrder" asp-route-currPage="@Model.NextPage" data-sortOrder="@Model.SortOrder" data-currPage="@Model.CurrPage" data-orderByModel="@Model.SortOrder"><h5 style="margin-bottom:-5px; color:gold">Load more cocktails <i class="fa fa-plus-circle"></i></h5></a>
         }
     }
 </center>
-
-@*<script src="~/assets/js/cocktailsPagination.js"></script>*@
-@*<script src="/assets/js/jquery.min.js"></script>
-<script src="/assets/bootstrap/js/bootstrap.min.js"></script>*@
-
-
 <script src="/assets/js/cocktailsPagination.js"></script>
-
-
-@*<script src="/assets/js/customscroll/jquery.mCustomScrollbar.concat.min.js"></script>
-<script src="/assets/js/flexslider/jquery.easing.1.3.min.js"></script>
-<script src="/assets/js/flexslider/jquery.flexslider-min.js"></script>
-<script src="/assets/js/prettyPhoto/js/jquery.prettyPhoto.js"></script>
-<script src="/assets/js/bxslider/jquery.bxslider.min.js"></script>
-<script src="/assets/twitter/js/jquery.tweet.js"></script>
-<script src="/assets/js/jquery.hoverdir.js"></script>
-<script src="/assets/js/jquery.arctext.js"></script>
-<script src="/assets/js/jquery.placeholder.js"></script>
-<script src="/assets/js/jquery.sticky.js"></script>
-
-<script src="/assets/form/js/form.js"></script>
-<script src="/assets/js/main.js"></script>
-<script src="/assets/js/less.min.js"></script>
-<script src="~/assets/js/addRowInCreateCocktails.js"></script>
-<script src="~/assets/js/removeRowInCreateCocktail.js"></script>
-<script src="/assets/js/like.js"></script>
-
-<script src="/assets/js/NotificationSeen.js"></script>
-
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.10/js/select2.min.js"></script>*@

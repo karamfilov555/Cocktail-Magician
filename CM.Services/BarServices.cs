@@ -4,6 +4,7 @@ using CM.DTOs.Mappers;
 using CM.Models;
 using CM.Services.Common;
 using CM.Services.Contracts;
+using CM.Services.CustomExeptions;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -24,7 +25,7 @@ namespace CM.Services
            _fileUploadService = fileUploadService;
         }
 
-        public async Task<ICollection<HomePageBarDTO>> GetHomePageBars()
+        public async Task<ICollection<HomePageBarDTO>> GetHomePageBars() //tested
         {
             var bars = await _context.Bars
                 .Include(b=>b.Address)
@@ -34,11 +35,14 @@ namespace CM.Services
                 .Select(b=>b.MapBarToHomePageBarDTO())
                 .ToListAsync()
                 .ConfigureAwait(false);
+            
             return bars;
         }
 
-        public async Task<BarDTO> GetBarByID(string id)
+        public async Task<BarDTO> GetBarByID(string id) // tested with ex
         {
+            id.ValidateIfNull(ExeptionMessages.IdNull);
+
             var bar = await _context.Bars
                 .Where(b => b.Id == id)
                 .Include(b=>b.Address)
@@ -47,7 +51,9 @@ namespace CM.Services
                 .ThenInclude(b => b.Cocktail)
                 .FirstOrDefaultAsync()
                 .ConfigureAwait(false);
-            bar.ValidateIfNull();
+
+            bar.ValidateIfNull(ExeptionMessages.BarNull);
+
             var barDTO = bar.MapBarToDTO();
             barDTO.CountryId = bar.Address.Country.Id;
             barDTO.Country = bar.Address.Country.Name;
@@ -59,11 +65,13 @@ namespace CM.Services
 
         public async Task<PaginatedList<BarDTO>> GetAllBars(int? pageNumber, string sortOrder)
         {
-            int pageSize =2;
+            int pageSize = 2;
+
             IQueryable<Bar> bars = _context.Bars
                 .Where(b => b.DateDeleted == null)
                 .Include(b => b.BarCocktails)
                 .ThenInclude(b => b.Cocktail);
+
             switch (sortOrder)
             {
                 case "name_desc":
@@ -85,6 +93,8 @@ namespace CM.Services
         }
         private async Task<Bar> GetBar(string id)
         {
+            id.ValidateIfNull(ExeptionMessages.IdNull);
+
             var bar = await _context.Bars
                 .Where(b => b.Id == id && b.DateDeleted == null)
                 .Include(b => b.Address)
@@ -93,7 +103,9 @@ namespace CM.Services
                 .ThenInclude(b => b.Cocktail)
                 .FirstOrDefaultAsync()
                 .ConfigureAwait(false);
-            bar.ValidateIfNull();
+
+            bar.ValidateIfNull(ExeptionMessages.BarNull);
+
             return bar;
         }
 

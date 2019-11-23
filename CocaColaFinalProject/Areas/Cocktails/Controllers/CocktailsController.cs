@@ -162,7 +162,7 @@ namespace CM.Web.Areas.Cocktails.Controllers
             // To add timeSpan and animation ! 
             if (currPage == 1)
             {
-                return PartialView("_CocktailsGrid", litingViewModel);
+                return View("CocktailsGrid", litingViewModel);
             }
 
             return PartialView("_LoadMorePartial", litingViewModel);

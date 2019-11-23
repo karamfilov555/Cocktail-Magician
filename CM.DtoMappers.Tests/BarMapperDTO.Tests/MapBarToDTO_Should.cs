@@ -37,7 +37,7 @@ namespace CM.DtoMappers.Tests.BarMapperDTO.Tests
         public void AssignCorrectValues_OfCtxModel()
         {
 
-            var ingredient = new Ingredient { Id = "1", Name = "ChubriKa" };
+            var ingredient = new Ingredient { Id = "1", Name = "ChernoPiperrChe" };
             var ingredient2 = new Ingredient { Id = "2", Name = "ingredient" };
 
             var cocktail = 

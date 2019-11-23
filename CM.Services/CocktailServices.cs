@@ -7,7 +7,6 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace CM.Services
@@ -99,7 +98,6 @@ namespace CM.Services
             cocktail.Recepie = await _recipeServices.ExtractRecipe(cocktail);
             await _context.SaveChangesAsync();
         }
-        // to be deleted !  !
         public async Task<ICollection<CocktailDto>> GetAllCocktails()
         {
             var allCocktailsModels = await _context.Cocktails
@@ -219,7 +217,7 @@ namespace CM.Services
         public async Task<string> GetCocktailRecepie(string id)
         {
             var cocktail = await _context.Cocktails
-                .Include(c => c.CocktailComponents)
+                            .Include(c => c.CocktailComponents)
                             .ThenInclude(c => c.Ingredient)
                             .FirstOrDefaultAsync(c => c.Id == id);
 
@@ -250,10 +248,11 @@ namespace CM.Services
             var cocktail = cocktailDto.MapToEditModel();
             cocktail.Rating = cocktailToEdit.Rating;
             var newCocktailComponents = new List<CocktailComponent>();
+
             foreach (var component in cocktail.CocktailComponents)
             {
                 var ingridientId = await _ingredientServices
-                                            .GetIngredientIdByName(component.Name);
+                                         .GetIngredientIdByName(component.Name);
 
                 newCocktailComponents.Add(
                     new CocktailComponent
@@ -262,13 +261,6 @@ namespace CM.Services
                         IngredientId = ingridientId
                     });
             }
-            //var recipeSB = new StringBuilder();
-            //foreach (var component in cocktail.CocktailComponents)
-            //{
-            //    recipeSB.AppendLine(component.Name + " " + component.Quantity + " " + component.Unit);
-            //}
-            //recipeSB.AppendLine(cocktail.Recepie);
-            //var cocktail = cocktailDto.MapToCocktailModel();
             cocktail.Recepie = await _recipeServices.ExtractRecipe(cocktail);
             cocktail.CocktailComponents = newCocktailComponents;
 
@@ -278,7 +270,6 @@ namespace CM.Services
             await _context.SaveChangesAsync();
             return cocktailToEdit.Name;
         }
-
     }
 }
 

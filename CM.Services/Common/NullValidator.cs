@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CM.Services.CustomExeptions;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -15,7 +16,7 @@ namespace CM.Services.Common
 
             if (value == null)
             {
-                throw new ArgumentNullException(string.Empty, msg);
+                throw new MagicExeption(msg);
             }
         }
 

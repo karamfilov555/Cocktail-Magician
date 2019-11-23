@@ -31,7 +31,7 @@ namespace CM.DTOs.Mappers
             cocktailModel.Id = cocktailDto.Id;
             cocktailModel.Rating = cocktailDto.Rating;
             cocktailModel.Image = cocktailDto.Image;
-            //cocktailModel.Recepie = cocktailDto.Recepie;
+            cocktailModel.Recepie = cocktailDto.Recipe;
             //cocktailModel.CocktailComponents = new List<CocktailComponent>();
             //cocktailModel.CocktailIngredients = cocktailDto.CocktailIngredients;
             cocktailModel.Reviews = cocktailDto.CocktailReviews;
