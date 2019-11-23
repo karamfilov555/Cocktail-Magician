@@ -2,7 +2,16 @@
 @{
     ViewData["Title"] = "_LeaveReviewPartial";
 }
+<head>
+    <link rel="stylesheet" href="~/kendo-ui/styles/kendo.common-material.min.css" />
+    <link rel="stylesheet" href="~/kendo-ui/styles/kendo.material.min.css" />
 
+    <script src="~/jquery/dist/jquery.js"></script>
+    <script src="~/bootstrap/dist/js/bootstrap.bundle.js"></script>
+    @*Kendo Start Here:*@
+    <script src="~/kendo-ui/js/kendo.all.min.js"></script>
+    <script src="~/kendo-ui/js/kendo.aspnetmvc.min.js"></script>
+</head>
 
 <h3 class="hdr6 align-content-center">Leave a comment:</h3>
 <div class="row">
@@ -21,19 +30,10 @@
             </div>*@
         <div class="form-group">
             <label class="label-sm">Rating</label>
-            <select asp-for="@Model.Rating" class="form-control">
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-                <option value="6">6</option>
-                <option value="7">7</option>
-                <option value="8">8</option>
-                <option value="9">9</option>
-                <option value="10">10</option>
-            </select>
-            <span asp-validation-for="Rating" class="text-danger"></span>
+            <kendo-rating style="color:gold" name="rating"
+                          min="1" max="10"
+                          value="@Model.Rating">
+            </kendo-rating>
         </div>
         <div class="form-group">
             <label class="label-sm">Description</label>
