@@ -11,7 +11,6 @@ namespace CM.Models
         }
         public string BarId { get; set; }
         public Bar Bar { get; set; }
-
         public ICollection<BarReviewLike> BarReviewLikes { get; set; }
     }
 }   

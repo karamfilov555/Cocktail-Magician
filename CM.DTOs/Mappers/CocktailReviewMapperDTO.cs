@@ -12,7 +12,7 @@ namespace CM.DTOs.Mappers
         {
             var newReviewDTO = new CocktailReviewDTO();
             newReviewDTO.Id = review.Id;
-            newReviewDTO.BarId = review.CocktailId; //todo
+            newReviewDTO.CocktailID = review.CocktailId;
             newReviewDTO.Description = review.Description;
             newReviewDTO.UserName = review.User.UserName;
             newReviewDTO.UserID = review.UserId;

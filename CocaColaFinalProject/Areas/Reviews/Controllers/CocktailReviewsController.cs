@@ -8,6 +8,7 @@ using CM.Web.Areas.Reviews.Models;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using System;
 
 namespace CM.Web.Areas.Reviews.Controllers
 {
@@ -94,6 +95,41 @@ namespace CM.Web.Areas.Reviews.Controllers
             await _reviewServices.CreateCocktailReview(userId, cocktailDto);
             _toast.AddSuccessToastMessage($"You successfully rated \"{cocktailName}\" cocktail");
             return RedirectToAction("ListCocktails", "Cocktails", new { area = "Cocktails" });
+        }
+
+        //TODO bez redirect pri greshka
+        [HttpPost]
+        [Authorize(Roles = "Manager, Administrator, Member")]
+        public async Task<int> LikeCocktailReview(string cocktailReviewID, string cocktailId)
+        {
+            try
+            {
+                int count = await _reviewServices.LikeCocktailReview(cocktailReviewID, User.FindFirstValue(ClaimTypes.NameIdentifier));
+
+                return count;
+
+            }
+            catch (Exception ex)
+            {
+
+                throw new InvalidOperationException(ex.Message);
+            }
+        }
+
+        //TODO bez rediredt pri greshka
+        [HttpPost]
+        [Authorize(Roles = "Manager, Administrator, Member")]
+        public async Task<int> RemoveLikeCocktailReview(string cocktailReviewID, string cocktailId)
+        {
+            try
+            {
+                int count = await _reviewServices.RemoveCocktailReviewLike(cocktailReviewID, User.FindFirstValue(ClaimTypes.NameIdentifier));
+                return count;
+            }
+            catch (Exception ex)
+            {
+                throw new InvalidOperationException(ex.Message);
+            }
         }
     }
 }

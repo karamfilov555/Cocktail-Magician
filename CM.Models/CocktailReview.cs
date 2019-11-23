@@ -12,7 +12,6 @@ namespace CM.Models
         {
 
         }
-        
         public string CocktailId { get; set; }
         public Cocktail Cocktail { get; set; }
         public ICollection<CocktailReviewLike> CocktailReviewLikes { get; set; }

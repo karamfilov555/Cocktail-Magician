@@ -16,9 +16,6 @@ namespace CM.Web.Areas.Reviews.Models
         public double? Rating { get; set; }
         public string UserName { get; set; }
         public string UserID { get; set; }
-
-
-
         public DateTime ReviewDate { get; set; }
         public BarReviewViewModel()
         {

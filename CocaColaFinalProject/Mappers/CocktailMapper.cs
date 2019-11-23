@@ -74,6 +74,7 @@ namespace CM.Web.Mappers
         {
             var cocktailVm = new CocktailReviewViewModel();
             cocktailVm.Id = cocktailDto.Id;
+            cocktailVm.CocktailID = cocktailDto.CocktailId;
             cocktailVm.Name = cocktailDto.Name;
             cocktailVm.Rating = cocktailDto.Rating;
             cocktailVm.Description = cocktailDto.Description;

@@ -18,7 +18,7 @@ namespace CM.Web.Areas.Reviews.Models
         [Display(Name = "Cocktail's Name")]
         [Required, RegularExpression("[A-Za-z ]+", ErrorMessage = "Cocktail's name should only contain latin letters!")]
         public string Name { get; set; }
-        public string BarId { get; set; }
+        public string CocktailID { get; set; }
         public string UserId { get; set; }
         public DateTime ReviewDate { get; set; }
         public string UserName { get; set; }
@@ -30,11 +30,11 @@ namespace CM.Web.Areas.Reviews.Models
         public double? Rating { get; set; }
         [Display(Name = "Type your Review Here")]
         public string Description { get; set; }
-
+        public DateTime ReviewDate { get; set; }
         public int LikeCount { get; set; }
         public List<string> LikedByUsers { get; set; }
         public ICollection<CocktailComponentViewModel> Ingredients { get; set; } 
-            = new List<CocktailComponentViewModel>(); //make view model
+            = new List<CocktailComponentViewModel>(); 
         public bool CanReview { get; set; }
         public List<CocktailReviewViewModel> Reviews { get; set; }
             = new List<CocktailReviewViewModel>();

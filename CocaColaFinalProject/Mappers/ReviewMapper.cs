@@ -41,12 +41,14 @@ namespace CM.Web.Mappers
         public static CocktailReviewViewModel MapToViewModel(this CocktailReviewDTO reviewDTO)
         {
             var reviewVm = new CocktailReviewViewModel();
-            reviewVm.BarId = reviewDTO.BarId;
+            reviewVm.Id= reviewDTO.Id;
+            reviewVm.CocktailID = reviewDTO.CocktailID;
             reviewVm.Description = reviewDTO.Description;
             reviewVm.LikeCount = reviewDTO.LikeCount;
             reviewVm.LikedByUsers = reviewDTO.LikedByUsers;
             reviewVm.Rating = reviewDTO.Rating;
             reviewVm.UserName = reviewDTO.UserName;
+            reviewVm.ReviewDate = reviewDTO.ReviewDate;
             reviewVm.UserId = reviewDTO.UserID;
             reviewVm.ReviewDate = reviewDTO.ReviewDate;
             return reviewVm;

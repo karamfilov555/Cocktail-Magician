@@ -54,7 +54,7 @@ namespace CM.Services
             cocktail.Rating = avg;
             await _context.SaveChangesAsync();
         }
-        public async Task<ICollection<CocktailReviewDTO>> GetReviewsForCocktial(string cocktailId)
+        public async Task<ICollection<CocktailReviewDTO>> GetReviewsForCocktail(string cocktailId)
         =>            await _context.CocktailReviews
                                     .Where(r => r.CocktailId == cocktailId)
                                     .Include(r => r.User)
@@ -166,6 +166,38 @@ namespace CM.Services
             await _context.SaveChangesAsync();
             return await _context.BarReviewLikes.Where(r => r.BarReviewID == barReviewID).CountAsync();
         }
+
+        public async Task<int> LikeCocktailReview(string cocktailReviewID, string userId)
+        {
+            if (await _context.CocktailReviewLikes.AnyAsync(l => l.AppUserID == userId && l.CocktailReviewID == cocktailReviewID))
+            {
+                throw new InvalidOperationException("You have already liked this review!");
+            }
+            var like = new CocktailReviewLike()
+            {
+                AppUserID = userId,
+                CocktailReviewID = cocktailReviewID,
+                Date = DateTime.Now.Date
+            };
+            _context.CocktailReviewLikes.Add(like);
+            await _context.SaveChangesAsync();
+            int count = await _context.CocktailReviewLikes
+                .Where(r => r.CocktailReviewID == cocktailReviewID).CountAsync();
+            return count;
+        }
+
+        public async Task<int> RemoveCocktailReviewLike(string cocktailReviewID, string userId)
+        {
+            var like = await _context.CocktailReviewLikes.FirstOrDefaultAsync(l => l.AppUserID == userId && l.CocktailReviewID == cocktailReviewID);
+            if (like == null)
+            {
+                throw new InvalidOperationException("You have not liked this review!");
+            }
+            _context.CocktailReviewLikes.Remove(like);
+            await _context.SaveChangesAsync();
+            return await _context.CocktailReviewLikes.Where(r => r.CocktailReviewID == cocktailReviewID).CountAsync();
+        }
+
 
         public async Task<int> GetTotalReviewsCountForCocktailAsync(string Id)
         {
