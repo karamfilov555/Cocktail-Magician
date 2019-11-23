@@ -20,7 +20,7 @@ namespace CM.Web.Mappers
             newBarVM.Country = bar.Country;
             newBarVM.Details = bar.Details;
             newBarVM.ImageURL = bar.ImageUrl;
-            newBarVM.Rating = bar.Rating;
+            newBarVM.Rating =(double)Math.Round((decimal)(bar.Rating ?? 0), 2);
             newBarVM.Website = bar.Website;
             newBarVM.Cocktails = bar.Cocktails.Select(c=>c.MapToCocktailViewModel()).ToList();
 
@@ -79,7 +79,7 @@ namespace CM.Web.Mappers
             newBarVM.Name = bar.Name;
             newBarVM.Image = bar.Image;
             newBarVM.Address = bar.Address;
-            newBarVM.BarRating = bar.BarRating;
+            newBarVM.BarRating = (double)Math.Round((decimal)(bar.BarRating ?? 0), 2); 
             return newBarVM;
         }
     }

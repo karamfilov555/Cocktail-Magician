@@ -50,7 +50,7 @@ namespace CM.Web.Areas.Reviews.Controllers
             barReviewVM.Reviews = allReviewsVM;
             barReviewVM.BarId = id;
             barReviewVM.BarName = name;
-            barReviewVM.Rating = rating;
+            barReviewVM.Rating = (double)Math.Round((decimal)(rating ?? 0), 2);
             return View(barReviewVM);
         }
 
@@ -60,7 +60,7 @@ namespace CM.Web.Areas.Reviews.Controllers
         public async Task<IActionResult> CreateBarReview(BarReviewViewModel barVM)
         {
             var barReviewDTO = barVM.MapVMToReviewDTO();
-            var newRating= await _reviewServices.CreateBarReview(barReviewDTO);
+            var newRating= (double)Math.Round((decimal)(await _reviewServices.CreateBarReview(barReviewDTO)??0), 2);
 
             return RedirectToAction("BarReviews", "BarReviews", new { id = barVM.BarId, name = barVM.BarName, rating=newRating});
         }

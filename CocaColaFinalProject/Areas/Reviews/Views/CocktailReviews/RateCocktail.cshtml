@@ -37,7 +37,7 @@
                 <td><img src="@Model.Image" height="250" width="250" style="border-radius:20px"></td>
                 <td>
                     <h5 style="margin-left:27px">Name: @Model.Name</h5>
-                    @if (Model.Rating == null)
+                    @if (@Model.Rating == 0||Model.Rating == null)
                     {
                         <h5 style="margin-left:27px">
                             Not Rated Yet!

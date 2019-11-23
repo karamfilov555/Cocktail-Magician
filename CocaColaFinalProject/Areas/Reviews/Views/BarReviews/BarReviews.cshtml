@@ -20,7 +20,7 @@
 
 <center>
     <h1 class="hdr4">Rating: </h1>
-    @if (@Model.Rating == null)
+    @if (@Model.Rating == 0||@Model.Rating == null)
     {
         <h3><i>Not rated yet!</i></h3>
     }

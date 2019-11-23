@@ -58,7 +58,7 @@ namespace CM.Web.Areas.Reviews.Controllers
             var litingReviewViewModel = new ListReviewViewModel()
             {
                 Id = reviewVm.Id,
-                Rating = reviewVm.Rating,
+                Rating = (double)Math.Round((decimal)(reviewVm.Rating??0), 2),
                 Name = reviewVm.Name,
                 Description = reviewVm.Description,
                 Ingredients = reviewVm.Ingredients.ToList(),
