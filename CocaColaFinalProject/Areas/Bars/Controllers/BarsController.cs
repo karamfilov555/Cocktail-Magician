@@ -52,8 +52,8 @@ namespace CM.Web.Areas.Bars.Controllers
                 return NotFound();
             }
             var barVM = barDTO.MapBarToVM();
-            var reviews = await _reviewServices.GetAllReviewsForBar(id);
-            barVM.Reviews = reviews.Select(r => r.MapReviewDTOToVM()).ToList();
+            //var reviews = await _reviewServices.GetAllReviewsForBar(id);
+            //barVM.Reviews = reviews.Select(r => r.MapReviewDTOToVM()).ToList();
             return View(barVM);
         }
 

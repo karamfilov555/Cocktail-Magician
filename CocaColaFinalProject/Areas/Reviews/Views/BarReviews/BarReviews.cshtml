@@ -4,6 +4,8 @@
 }
 
 <h1 class="hdr1">Reviews for @Model.BarName </h1>
+
+
 <center>
     <h1 class="hdr4">Rating: </h1>
     @if (@Model.Rating == null)
@@ -14,7 +16,7 @@
     {
         if (@Model.Rating * 10 % 10 == 0)
         {
-            for (int i = 0; i < @Model.Rating ; i++)
+            for (int i = 0; i < @Model.Rating; i++)
             {
                 <font color="gold" size="5">
                     <i class="fa fa-star" style="color:gold"></i>
@@ -30,7 +32,7 @@
             for (int i = 0; i < @Model.Rating - 1; i++)
             {
                 <font color="gold" size="5">
-                   <i class="fa fa-star" style="color:gold"></i>
+                    <i class="fa fa-star" style="color:gold"></i>
                 </font>
             }
             <font color="gold">
@@ -40,8 +42,7 @@
     }
 </center>
 @{
-    var list = Model.Reviews.Select(r => r.UserID).ToList();
-    if (!list.Contains(@User.FindFirstValue(ClaimTypes.NameIdentifier)))
+    if (!@Model.ReviewedByUsers.Contains(@User.FindFirstValue(ClaimTypes.NameIdentifier)))
     {
         var reviewVM = new BarReviewViewModel();
         reviewVM.BarId = Model.BarId;
@@ -60,14 +61,15 @@
 <div class="row">
     <h3 class="hdr4">All Comments:</h3>
     <div class="col-md-8 col-md-offset-2">
-        <ul class="commentList list-unstyled">
+        <ul id="putMoreReviewsHere" class="commentList list-unstyled">
             <li>
                 @if (@Model.Reviews.Count == 0)
                 {
                     <h6 class="hdr3">No reviews yet</h6>
                 }
                 @foreach (var review in @Model.Reviews)
-                {<center>
+                {
+                    <center>
                         <div class="col-md-10 blog-main" style="padding-left:260px">
                             <div class="blog-post format-quote">
                                 <div class="blog_thumbnail">
@@ -116,9 +118,17 @@
                                 </div>
                             </div>
                         </div>
+
+
                     </center>
                 }
         </ul>
+        <center>
+            <a id="loadMoreBarComments" asp-area="Reviews" asp-controller="BarReviews" asp-action="BarReviews" class="btn btn-default btn-sm"
+               data-id="@Model.BarId" data-name="@Model.BarName" data-rating="@Model.Rating" data-pageNumber="0">
+                <h5 style="margin-bottom:-5px; color:gold">Load more comments <i class="fa fa-plus-circle"></i></h5>
+            </a>
+        </center>
     </div>
 </div>
 
@@ -128,7 +138,7 @@
 
 <script src="/assets/js/jquery.min.js"></script>
 <script src="/assets/bootstrap/js/bootstrap.min.js"></script>
-
+<script src="/assets/js/cocktailsPagination.js"></script>
 <script src="/assets/js/customscroll/jquery.mCustomScrollbar.concat.min.js"></script>
 <script src="/assets/js/flexslider/jquery.easing.1.3.min.js"></script>
 <script src="/assets/js/flexslider/jquery.flexslider-min.js"></script>
@@ -139,10 +149,12 @@
 <script src="/assets/js/jquery.arctext.js"></script>
 <script src="/assets/js/jquery.placeholder.js"></script>
 <script src="/assets/js/jquery.sticky.js"></script>
-
 <script src="/assets/form/js/form.js"></script>
 <script src="/assets/js/main.js"></script>
 <script src="/assets/js/less.min.js"></script>
-
-<script src="/assets/js/like.js"></script>
+<script src="~/assets/js/addRowInCreateCocktails.js"></script>
+<script src="~/assets/js/removeRowInCreateCocktail.js"></script>
+@*<script src="/assets/js/like.js"></script>*@
+<script src="/assets/js/NotificationSeen.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.10/js/select2.min.js"></script>
 

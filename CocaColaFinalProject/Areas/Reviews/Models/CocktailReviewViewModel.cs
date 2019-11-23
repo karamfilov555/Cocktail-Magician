@@ -36,7 +36,7 @@ namespace CM.Web.Areas.Reviews.Models
         public ICollection<CocktailComponentViewModel> Ingredients { get; set; } 
             = new List<CocktailComponentViewModel>(); 
         public bool CanReview { get; set; }
-        public List<CocktailReviewViewModel> Reviews { get; set; }
-            = new List<CocktailReviewViewModel>();
+        //public List<CocktailReviewViewModel> Reviews { get; set; }
+        //    = new List<CocktailReviewViewModel>();
     }
 }

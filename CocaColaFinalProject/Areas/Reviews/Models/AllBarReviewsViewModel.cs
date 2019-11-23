@@ -9,8 +9,9 @@ namespace CM.Web.Areas.Reviews.Models
     {
         public string BarId;
         public string BarName;
-        public decimal Rating;
+        public double? Rating;
         public List<BarReviewViewModel> Reviews;
+        public List<string> ReviewedByUsers { get; set; }
 
         public AllBarReviewsViewModel()
         {

@@ -4,6 +4,7 @@ using CM.Web.Areas.Reviews.Models;
 using CM.Web.Mappers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using NToastNotify;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,38 +19,50 @@ namespace CM.Web.Areas.Reviews.Controllers
         //private readonly ICocktailServices _cocktailServices;
         private readonly IBarServices _barServices;
         private readonly IReviewServices _reviewServices;
+        private readonly IToastNotification _toast;
 
         public BarReviewsController(IBarServices barServices,
-             IReviewServices reviewServices)
+             IReviewServices reviewServices, IToastNotification toast)
         {
             _barServices = barServices;
             _reviewServices = reviewServices;
+            _toast = toast;
         }
 
 
         [HttpGet]
         [Authorize(Roles = "Manager, Administrator, Member")]
-        public async Task<IActionResult> BarReviews(string id, string name, decimal rating )
+        public async Task<IActionResult> BarReviews(string id, string name, double? rating, int? pageNumber )
         {
-            List<BarReviewDTO> allReviewsDTOs = await _reviewServices.GetAllReviewsForBar(id);
+            List<BarReviewDTO> allReviewsDTOs = await _reviewServices.GetAllReviewsForBar(id, pageNumber);
             var allReviewsVM = allReviewsDTOs.Select(r => r.MapReviewDTOToVM()).ToList();
+            if (allReviewsVM.Count == 0&&pageNumber!=null)
+            {
+                _toast.AddInfoToastMessage("There are no more comments!");
+                //here i have to stop the request... return smthg..
+            }
+            if (pageNumber!=null)
+            {
+                return PartialView("_LoadMoreBarReviewsPartial", allReviewsVM);
+            }
             var barReviewVM = new AllBarReviewsViewModel();
+            barReviewVM.ReviewedByUsers = await _reviewServices.GetUsersWhoReviewedBar(id);
             barReviewVM.Reviews = allReviewsVM;
             barReviewVM.BarId = id;
             barReviewVM.BarName = name;
             barReviewVM.Rating = rating;
             return View(barReviewVM);
-
         }
+
 
         [HttpPost]
         [Authorize(Roles = "Manager, Administrator, Member")]
         public async Task<IActionResult> CreateBarReview(BarReviewViewModel barVM)
         {
             var barReviewDTO = barVM.MapVMToReviewDTO();
-            await _reviewServices.CreateBarReview(barReviewDTO);
+            var newRating= await _reviewServices.CreateBarReview(barReviewDTO);
 
-            return RedirectToAction("BarReviews", "BarReviews", new { id = barVM.BarId, name = barVM.BarName });
+            return RedirectToAction("BarReviews", "BarReviews", new { id = barVM.BarId, name = barVM.BarName, rating=newRating});
         }
 
         //TODO bez rediredt pri greshka

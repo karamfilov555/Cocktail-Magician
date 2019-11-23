@@ -16,12 +16,12 @@ namespace CM.Services
     public class ReviewServices : IReviewServices
     {
         private readonly CMContext _context;
-        
+
 
         public ReviewServices(CMContext context)
         {
             _context = context;
-           
+
         }
 
         public async Task<bool> CheckIfUserCanReview(string userId, CocktailDto cocktailDto)
@@ -54,13 +54,13 @@ namespace CM.Services
             await _context.SaveChangesAsync();
         }
         public async Task<ICollection<CocktailReviewDTO>> GetReviewsForCocktail(string cocktailId)
-        =>            await _context.CocktailReviews
+        => await _context.CocktailReviews
                                     .Where(r => r.CocktailId == cocktailId)
                                     .Include(r => r.User)
                                     .Include(r => r.CocktailReviewLikes)
                                     .Include(r => r.Cocktail)
                                     .Select(r => r.MapReviewToDTO())
-                                    .OrderByDescending(r=>r.ReviewDate)
+                                    .OrderByDescending(r => r.ReviewDate)
                                     .ToListAsync();
 
         public async Task<ICollection<CocktailReviewDTO>> GetTwoReviewsAsync(string cocktailId, int currPage)
@@ -68,7 +68,7 @@ namespace CM.Services
                           .Where(r => r.CocktailId == cocktailId
                            && r.DateDeleted == null)
                           .OrderByDescending(r => r.ReviewDate)
-                          .Skip((currPage - 1)*2)
+                          .Skip((currPage - 1) * 2)
                           .Take(2)
                           .Include(r => r.User)
                           .Include(r => r.CocktailReviewLikes)
@@ -78,7 +78,7 @@ namespace CM.Services
                           .ConfigureAwait(false);
 
 
-        public async Task<int> GetPageCountForCocktailReviewsAsync(int reviewsPerPage,string Id)
+        public async Task<int> GetPageCountForCocktailReviewsAsync(int reviewsPerPage, string Id)
         {
             var allReviewsPerCocktailCount = await _context
                                        .CocktailReviews
@@ -92,19 +92,50 @@ namespace CM.Services
 
 
 
-        public async Task<List<BarReviewDTO>> GetAllReviewsForBar(string id)
+        public async Task<List<BarReviewDTO>> GetAllReviewsForBar(string id, int? pageNumber)
         {
-            var reviews = await _context
-                .BarReviews
-                .Include(r => r.User)
-                .Include(r=>r.BarReviewLikes)
-                .Include(r=>r.Bar)
-                .Where(r => r.BarId == id).ToListAsync();
+            var currentPage = pageNumber ?? 0;
+            var reviewsPerPage = 2;
+            List<BarReview> reviews = new List<BarReview>();
+            if (currentPage == 0)
+            {
+                reviews = await _context
+                                .BarReviews
+                                .Include(r => r.User)
+                                .Include(r => r.BarReviewLikes)
+                                .Include(r => r.Bar)
+                                .Where(r => r.BarId == id)
+                                .OrderByDescending(r => r.ReviewDate)
+                                .Skip(0)
+                                .Take(reviewsPerPage)
+                                .ToListAsync();
+            }
+            else
+            {
+                reviews = await _context
+                     .BarReviews
+                     .Include(r => r.User)
+                     .Include(r => r.BarReviewLikes)
+                     .Include(r => r.Bar)
+                     .Where(r => r.BarId == id)
+                     .OrderByDescending(r=>r.ReviewDate)
+                     .Skip((currentPage-1) * reviewsPerPage)
+                     .Take(reviewsPerPage)
+                     .ToListAsync();
+            }
             var reviewDTOs = reviews.Select(r => r.BarMapReviewToDTO()).ToList();
+                       
             return reviewDTOs;
         }
 
-        public async Task CreateBarReview(BarReviewDTO barReviewDTO)
+        public async Task<List<string>>GetUsersWhoReviewedBar(string barID)
+        {
+            return await _context.BarReviews.Where(br => br.BarId == barID)
+                .Select(br=>br.UserId)
+                .ToListAsync();
+        }
+
+        public async Task<double?> CreateBarReview(BarReviewDTO barReviewDTO)
         {
             //validations
             var user = await _context.Users
@@ -123,6 +154,7 @@ namespace CM.Services
             _context.BarReviews.Add(barReview);
             await _context.SaveChangesAsync().ConfigureAwait(false);
             await this.SetAverrageRatingForBar(barReviewDTO.BarId);
+            return bar.BarRating;
         }
         private async Task SetAverrageRatingForBar(string barId)
         {
@@ -156,8 +188,8 @@ namespace CM.Services
 
         public async Task<int> RemoveBarReviewLike(string barReviewID, string userId)
         {
-            var like =await _context.BarReviewLikes.FirstOrDefaultAsync(l => l.AppUserID == userId && l.BarReviewID == barReviewID);
-            if (like==null)
+            var like = await _context.BarReviewLikes.FirstOrDefaultAsync(l => l.AppUserID == userId && l.BarReviewID == barReviewID);
+            if (like == null)
             {
                 throw new InvalidOperationException("You have not liked this review!");
             }
@@ -200,10 +232,10 @@ namespace CM.Services
 
         public async Task<int> GetTotalReviewsCountForCocktailAsync(string Id)
         {
-                         return   await _context
-                                       .CocktailReviews
-                                       .Where(c => c.DateDeleted == null && c.CocktailId == Id)
-                                       .CountAsync();
+            return await _context
+                          .CocktailReviews
+                          .Where(c => c.DateDeleted == null && c.CocktailId == Id)
+                          .CountAsync();
         }
 
     }
