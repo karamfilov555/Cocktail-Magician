@@ -15,6 +15,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\CM.DTOs\CM.DTOs.csproj" />
+    <ProjectReference Include="..\CM.Services.Tests\CM.Services.Tests.csproj" />
   </ItemGroup>
 
 </Project>

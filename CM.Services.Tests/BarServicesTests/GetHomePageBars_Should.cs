@@ -541,10 +541,8 @@ namespace CM.Services.Tests.BarServicesTests
             {
                 var sut = new BarServices(assertContext, fileService.Object);
 
-                //var result = await sut.GetHomePageBars(); // tuk trow-va , dolu ne?!
-                Assert.ThrowsException<Exception>(
-                    async () => await sut.GetHomePageBars()
-                    );
+               var result = await Assert.ThrowsExceptionAsync<Exception>(
+                    async () => await sut.GetHomePageBars());
             }
         }
 

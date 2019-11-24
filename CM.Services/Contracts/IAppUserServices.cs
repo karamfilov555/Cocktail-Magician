@@ -16,5 +16,7 @@ namespace CM.Services.Contracts
         Task<string> GetProfilePictureURL(string id);
         Task<AppUserDTO> GetUserDToByID(string id);
         Task SetProfilePictureURL(string userId, string url);
+        Task<AppUser> GetUserByID(string id);
+        Task<string> GetRole(AppUser user);
     }
 }
