@@ -12,7 +12,7 @@ namespace CM.Web.Areas.Ingredients.Models
         public string Name { get; set; }
         public string Brand { get; set; }
         public string Country { get; set; }
-        public ICollection<CocktailComponentViewModel> CocktailComponentsVm { get; set; }
+        public ICollection<CocktailComponentViewModel> CocktailComponentsVm { get; set; } = new List<CocktailComponentViewModel>();
         public DateTime? DateDeleted { get; set; }
     }
 }

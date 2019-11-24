@@ -10,5 +10,7 @@ namespace CM.DTOs
         public string Name { get; set; }
         public string Brand { get; set; }
         public string Country { get; set; }
+        public ICollection<CocktailComponentDTO> CocktailComponentsDTO { get; set; } = new List<CocktailComponentDTO>();
+
     }
 }

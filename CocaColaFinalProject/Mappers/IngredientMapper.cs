@@ -26,6 +26,7 @@ namespace CM.Web.Mappers
             ingredientVm.Name = ingredientDto.Name;
             ingredientVm.Brand = ingredientDto.Brand;
             ingredientVm.Country = ingredientDto.Country;
+            ingredientVm.CocktailComponentsVm = ingredientDto.CocktailComponentsDTO.Select(cc=>cc.MapToCocktailComponentVM()).ToList();
 
             return ingredientVm;
         }

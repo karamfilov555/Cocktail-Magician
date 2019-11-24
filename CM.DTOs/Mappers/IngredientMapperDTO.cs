@@ -1,6 +1,7 @@
 ﻿using CM.Models;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace CM.DTOs.Mappers
@@ -24,6 +25,10 @@ namespace CM.DTOs.Mappers
             ingredientDto.Name = ingredient.Name;
             ingredientDto.Country = ingredient.Country;
             ingredientDto.Brand = ingredient.Brand;
+
+            ingredientDto.CocktailComponentsDTO = ingredient.CocktailComponents
+                .Select(cc => cc.MapToCocktailDto())
+                .ToList();
 
             return ingredientDto;
         }

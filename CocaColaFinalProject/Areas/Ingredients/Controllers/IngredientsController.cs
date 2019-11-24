@@ -5,6 +5,8 @@ using CM.Services.Contracts;
 using CM.Web.Mappers;
 using NToastNotify;
 using System.Linq;
+using System;
+using Microsoft.AspNetCore.Authorization;
 
 namespace CM.Web.Areas.Ingredients.Controllers
 {
@@ -19,6 +21,7 @@ namespace CM.Web.Areas.Ingredients.Controllers
             _ingredientServices = ingredientServices;
             _toast = toast;
         }
+        [Authorize(Roles = "Manager, Administrator")]
         public async Task<IActionResult> Index(int? currPage)
         {
             currPage = currPage ?? 1;
@@ -54,6 +57,7 @@ namespace CM.Web.Areas.Ingredients.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Manager, Administrator")]
         public IActionResult Create()
         {
             var ingredientVm = new IngredientViewModel();
@@ -62,6 +66,7 @@ namespace CM.Web.Areas.Ingredients.Controllers
         
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Manager, Administrator")]
         public async Task<IActionResult> Create(IngredientViewModel ingredientVm)
         {
             if (ModelState.IsValid)
@@ -77,89 +82,76 @@ namespace CM.Web.Areas.Ingredients.Controllers
             return View(ingredientVm);
         }
 
-        //// GET: Ingredients/Ingredients/Edit/5
-        //public async Task<IActionResult> Edit(string id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return NotFound();
-        //    }
+        // GET: Ingredients/Ingredients/Edit/5
+        [Authorize(Roles = "Manager, Administrator")]
+        public async Task<IActionResult> Edit(string id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
 
-        //    var ingredient = await _context.Ingredients.FindAsync(id);
-        //    if (ingredient == null)
-        //    {
-        //        return NotFound();
-        //    }
-        //    return View(ingredient);
-        //}
+            var ingredient = await _ingredientServices.GetIngredientById(id);
+            var ingredientVM = ingredient.MapToViewModel();
+            return View(ingredientVM);
+        }
 
-        //// POST: Ingredients/Ingredients/Edit/5
-        //// To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        //// more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> Edit(string id, [Bind("Id,Name,DateDeleted")] Ingredient ingredient)
-        //{
-        //    if (id != ingredient.Id)
-        //    {
-        //        return NotFound();
-        //    }
+        // POST: Ingredients/Ingredients/Edit/5
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Manager, Administrator")]
+        public async Task<IActionResult> Edit(IngredientViewModel ingredientVM)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    var name =await _ingredientServices.EditIngredienAsync(ingredientVM.MapToDto());
+                    _toast.AddErrorToastMessage($"Ingredient {name} was updated!");
+                }
+                catch (Exception ex)
+                {
+                    return StatusCode(500);
+                }
+            }
+            return RedirectToAction(nameof(Index));
+        }
 
-        //    if (ModelState.IsValid)
-        //    {
-        //        try
-        //        {
-        //            _context.Update(ingredient);
-        //            await _context.SaveChangesAsync();
-        //        }
-        //        catch (DbUpdateConcurrencyException)
-        //        {
-        //            if (!IngredientExists(ingredient.Id))
-        //            {
-        //                return NotFound();
-        //            }
-        //            else
-        //            {
-        //                throw;
-        //            }
-        //        }
-        //        return RedirectToAction(nameof(Index));
-        //    }
-        //    return View(ingredient);
-        //}
+        // GET: Ingredients/Ingredients/Delete/5
+        [HttpGet]
+        [Authorize(Roles = "Manager, Administrator")]
+        public async Task<IActionResult> Delete(string id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            var ingredient = await _ingredientServices.GetIngredientById(id);
+            var ingredientVM = ingredient.MapToViewModel();
+            return View(ingredientVM);
+        }
 
-        //// GET: Ingredients/Ingredients/Delete/5
-        //public async Task<IActionResult> Delete(string id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    var ingredient = await _context.Ingredients
-        //        .FirstOrDefaultAsync(m => m.Id == id);
-        //    if (ingredient == null)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    return View(ingredient);
-        //}
-
-        //// POST: Ingredients/Ingredients/Delete/5
-        //[HttpPost, ActionName("Delete")]
-        //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> DeleteConfirmed(string id)
-        //{
-        //    var ingredient = await _context.Ingredients.FindAsync(id);
-        //    _context.Ingredients.Remove(ingredient);
-        //    await _context.SaveChangesAsync();
-        //    return RedirectToAction(nameof(Index));
-        //}
-
-        //private bool IngredientExists(string id)
-        //{
-        //    return _context.Ingredients.Any(e => e.Id == id);
-        //}
+        // POST: Ingredients/Ingredients/Delete/5
+        [HttpPost]
+        [Authorize(Roles = "Manager, Administrator")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(string id)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    var name = await _ingredientServices.DeleteIngredientAsync(id);
+                    _toast.AddErrorToastMessage($"Ingredient {name} was updated!");
+                }
+                catch (Exception ex)
+                {
+                    return StatusCode(500);
+                }
+            }
+            return RedirectToAction(nameof(Index));
+        }
     }
 }

@@ -83,7 +83,7 @@ namespace CM.Services
 
             foreach (var cocktailComponenetDTO in cocktailDto.Ingredients)
             {
-                var ingridientId = await _ingredientServices.GetIngredientIdByName(cocktailComponenetDTO.Ingredient);
+                var ingridientId = await _ingredientServices.GetIngredientIdByNameAsync(cocktailComponenetDTO.Ingredient);
 
                 _context.CocktailComponent.Add(
                     new CocktailComponent
@@ -252,7 +252,7 @@ namespace CM.Services
             foreach (var component in cocktail.CocktailComponents)
             {
                 var ingridientId = await _ingredientServices
-                                         .GetIngredientIdByName(component.Name);
+                                         .GetIngredientIdByNameAsync(component.Name);
 
                 newCocktailComponents.Add(
                     new CocktailComponent

@@ -3,15 +3,16 @@
 @{
     ViewData["Title"] = "Index";
 }
+    <br />
+<h1 class="hdr1">Ingredients List</h1>
 
-<h1 class="hdr3">Ingredients List</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
 <table class="table">
     <thead>
         <tr>
+            <th width="10%">
+
+            </th>
             <th>
                 <h5>
                     Name
@@ -27,11 +28,11 @@
                 <h5>
                     Country
                 </h5>
+            </th>
+            <th >
 
             </th>
-            <th>
-            </th>
-            <th>
+            <th width="10%">
 
             </th>
         </tr>
@@ -39,35 +40,38 @@
     <tbody id="tbodyInredients">
         @foreach (var item in Model.TenIngredientsList)
         {
-            <tr>
-                <td style="padding-right:200px">
-                    <h5>
-                        @item.Name
-                    </h5>
-                </td>
-                <td style="padding-right:200px">
-                    <h5>
-                        @item.Brand
-                    </h5>
-                </td>
-                <td style="padding-right:200px">
-                    <h5>
-                        @item.Country
-                    </h5>
-                </td>
-                <td></td>
-                <td>
-                    @if (this.User.IsInRole("Administrator") || this.User.IsInRole("Manager"))
-                    {
-                        <p style="padding-right:-400px">
-                            <a class="btn btn-default btn-sm" asp-area="Cocktails" asp-controller="Cocktails" asp-action="Edit" asp-route-id="@item.Id"><font style="color:gold"><i class="fa fa-magic"></i> Edit Ingeredient</font></a>
-                        </p>
-                        <p>
-                            <a class="btn btn-default btn-sm" asp-area="Cocktails" asp-controller="Cocktails" asp-action="Delete" asp-route-id="@item.Id"><font style="color:gold"><i class="fa fa-trash-o"></i> Delete Ingeredient</font></a>
-                        </p>
-                    }
-                </td>
-            </tr>
+        <tr>
+            <td></td>
+            <td style="padding-right:200px">
+                <h5>
+                    @item.Name
+                </h5>
+            </td>
+            <td style="padding-right:200px">
+                <h5>
+                    @item.Brand
+                </h5>
+            </td>
+            <td style="padding-right:200px">
+                <h5>
+                    @item.Country
+                </h5>
+            </td>
+            <td>
+
+                <p style="padding-right:-400px">
+                    <a class="btn btn-default btn-sm" asp-area="Ingredients" asp-controller="Ingredients" asp-action="Edit" asp-route-id="@item.Id"><font style="color:gold"><i class="fa fa-magic"></i> Edit Ingeredient</font></a>
+                </p>
+                @if (@item.CocktailComponentsVm.Count==0)
+                {
+                    <p>
+                        <a class="btn btn-default btn-sm" asp-area="Ingredients" asp-controller="Ingredients" asp-action="Delete" asp-route-id="@item.Id"><font style="color:gold"><i class="fa fa-trash-o"></i> Delete Ingeredient</font></a>
+                    </p>
+                }
+
+            </td>
+            <td></td>
+        </tr>
         }
     </tbody>
 </table>
