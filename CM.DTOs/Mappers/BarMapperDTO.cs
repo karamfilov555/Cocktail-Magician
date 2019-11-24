@@ -84,7 +84,7 @@ namespace CM.DTOs.Mappers
             {
                 bar.Name = barDTO.Name;
             }
-            if (barDTO.BarImage!=null)
+            if (barDTO.ImageUrl!=null)
             {
                 bar.Image = barDTO.ImageUrl;
             }

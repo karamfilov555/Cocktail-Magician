@@ -8,6 +8,9 @@ namespace CM.Services.CustomExeptions
     {
         public const string IdNull = "ID cannot be null!";
         public const string BarNull = "Bar cannot be null!";
-        
+        public const string CocktailNull = "Cocktail cannot be null!";
+        public const string BarDtoNull = "BarDto cannot be null!";
+        public const string ContextNull = "CMContext cannot be null!";
+        public const string IFileUploadServiceNull = "IFileUploadServiceNull cannot be null!";
     }
 }

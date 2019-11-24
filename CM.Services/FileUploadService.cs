@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace CM.Services
 {
@@ -41,6 +42,17 @@ namespace CM.Services
                       + "_"
                       + Guid.NewGuid().ToString().Substring(0, 4)
                       + Path.GetExtension(fileName);
+        }
+
+        public string SetUniqueImagePath(IFormFile uploadedImage)
+        {
+            string uniqueFileNamePath;
+            if (uploadedImage != null)
+                uniqueFileNamePath = UploadFile(uploadedImage);
+            else
+                uniqueFileNamePath = "/images/defaultBarImage.jpg";
+
+            return uniqueFileNamePath;
         }
     }
 }

@@ -19,23 +19,25 @@ namespace CM.Services
         private readonly CMContext _context;
         private readonly IFileUploadService _fileUploadService;
 
-        public BarServices(CMContext context, IFileUploadService fileUploadService)
+        public BarServices(CMContext context, IFileUploadService fileUploadService)//tested
         {
-            _context = context;
-           _fileUploadService = fileUploadService;
+            _context = context
+                         ?? throw new MagicExeption(ExeptionMessages.ContextNull);
+            _fileUploadService = fileUploadService
+                         ?? throw new MagicExeption(ExeptionMessages.IFileUploadServiceNull);
         }
 
         public async Task<ICollection<HomePageBarDTO>> GetHomePageBars() //tested
         {
             var bars = await _context.Bars
-                .Include(b=>b.Address)
+                .Include(b => b.Address)
                 .Where(b => b.DateDeleted == null)
-                .OrderByDescending(b=>b.BarRating)
+                .OrderByDescending(b => b.BarRating)
                 .Take(5)
-                .Select(b=>b.MapBarToHomePageBarDTO())
+                .Select(b => b.MapBarToHomePageBarDTO())
                 .ToListAsync()
                 .ConfigureAwait(false);
-            
+
             return bars;
         }
 
@@ -45,8 +47,8 @@ namespace CM.Services
 
             var bar = await _context.Bars
                 .Where(b => b.Id == id)
-                .Include(b=>b.Address)
-                .ThenInclude(a=>a.Country)
+                .Include(b => b.Address)
+                .ThenInclude(a => a.Country)
                 .Include(b => b.BarCocktails)
                 .ThenInclude(b => b.Cocktail)
                 .FirstOrDefaultAsync()
@@ -64,6 +66,7 @@ namespace CM.Services
 
 
         public async Task<PaginatedList<BarDTO>> GetAllBars(int? pageNumber, string sortOrder)
+        // tested
         {
             int pageSize = 2;
 
@@ -91,14 +94,14 @@ namespace CM.Services
             var currentPage = await PaginatedList<BarDTO>.CreateAsync(barDTOs, pageNumber ?? 1, pageSize);
             return currentPage;
         }
-        private async Task<Bar> GetBar(string id)
+        public async Task<Bar> GetBar(string id) // tested
         {
             id.ValidateIfNull(ExeptionMessages.IdNull);
 
             var bar = await _context.Bars
                 .Where(b => b.Id == id && b.DateDeleted == null)
                 .Include(b => b.Address)
-                .ThenInclude(a=>a.Country)
+                .ThenInclude(a => a.Country)
                 .Include(b => b.BarCocktails)
                 .ThenInclude(b => b.Cocktail)
                 .FirstOrDefaultAsync()
@@ -109,93 +112,90 @@ namespace CM.Services
             return bar;
         }
 
-        public async Task<string> AddBarAsync(BarDTO barDTO)
+        public async Task<string> AddBarAsync(BarDTO barDTO) //tested
         {
-            string uniqueFileNamePath;
-            if (barDTO.ImageUrl!=null)
-            {
-            uniqueFileNamePath = _fileUploadService.UploadFile(barDTO.BarImage);
+            barDTO.ValidateIfNull(ExeptionMessages.BarDtoNull);
+            barDTO.ImageUrl =  _fileUploadService.SetUniqueImagePath(barDTO.BarImage);
 
-            }
-            else
-            {
-                uniqueFileNamePath= "/images/defaultBarImage.jpg";
-            }
-            barDTO.ImageUrl = uniqueFileNamePath;
-            var newBar = barDTO.MapBarDTOToBar();
-            var newAddress = barDTO.MapBarDTOToAddress();
+            var newBar = barDTO.MapBarDTOToBar();                  // to be tested in MapperTests
+            var newAddress = barDTO.MapBarDTOToAddress();          // to be tested in MapperTests
             newBar.Address = newAddress;
             await _context.Bars.AddAsync(newBar).ConfigureAwait(false);
             await _context.SaveChangesAsync();
             var coctailsInBar = barDTO.Cocktails.Select(c => c.MapToCocktailModel()).ToList();
+
             foreach (var cocktail in coctailsInBar)
             {
-                AddCocktailToBar(cocktail, newBar);
+                await AddCocktailToBar(cocktail, newBar);
             }
+
             await _context.SaveChangesAsync();
             return newBar.Name;
         }
 
-        public void AddCocktailToBar(Cocktail cocktail, Bar bar)
+        public async Task AddCocktailToBar(Cocktail cocktail, Bar bar) //tested
         {
-            if (!bar.BarCocktails.Any(bc=>bc.CocktailId==cocktail.Id))
+            cocktail.ValidateIfNull(ExeptionMessages.CocktailNull);
+            bar.ValidateIfNull(ExeptionMessages.BarNull);
+            if (!bar.BarCocktails.Any(bc => bc.CocktailId == cocktail.Id))
             {
-            bar.BarCocktails.Add(new BarCocktail() { BarId = bar.Id, CocktailId = cocktail.Id });
+                bar.BarCocktails.Add(new BarCocktail() { BarId = bar.Id, CocktailId = cocktail.Id });
             }
         }
-        public async Task<string> Delete(string id)
+        public async Task<string> Delete(string id) //tested
         {
+            id.ValidateIfNull(ExeptionMessages.IdNull);
             var barToDelete = await this.GetBar(id);
+            barToDelete.ValidateIfNull(ExeptionMessages.BarNull);
             barToDelete.DateDeleted = DateTime.Now.Date;
             await _context.SaveChangesAsync();
             return barToDelete.Name;
         }
 
-        public async Task<string> Update(BarDTO barDto)
+        public async Task<string> Update(BarDTO barDto) //tested
         {
+            barDto.ValidateIfNull(ExeptionMessages.BarDtoNull);
             var barToEdit = await this.GetBar(barDto.Id);
-            if (barDto.BarImage != null)
-            {
-                var uniqueFileNamePath = _fileUploadService.UploadFile(barDto.BarImage);
-                barDto.ImageUrl = uniqueFileNamePath;
-            }
+            barToEdit.ValidateIfNull(ExeptionMessages.BarNull);
+
+            barDto.ImageUrl = _fileUploadService.SetUniqueImagePath(barDto.BarImage);
+
             barToEdit = barDto.EditBarDTOToBar(barToEdit);
             var coctailsInBar = barDto.Cocktails.Select(c => c.MapToCocktailModel()).ToList();
             foreach (var cocktail in coctailsInBar)
             {
-               AddCocktailToBar(cocktail, barToEdit);
+                await AddCocktailToBar(cocktail, barToEdit);
             }
-            //_context.Entry(barToEdit).CurrentValues.SetValues(barToEdit);
-            //_context.RemoveRange(barToEdit.BarCocktails);
-            //_context.AddRange(barToEdit.BarCocktails);
+
             await _context.SaveChangesAsync();
             return barToEdit.Name;
         }
         //care
-        public async Task<ICollection<BarDTO>> GetAllBarsByName(string searchCriteria)
+        public async Task<ICollection<BarDTO>> GetAllBarsByName(string searchCriteria)//tested
         {
             var bars = await _context.Bars
                 .Include(b => b.Address)
-                .ThenInclude(a=>a.Country)
+                .ThenInclude(a => a.Country)
                 .Include(b => b.BarCocktails)
                 .ThenInclude(b => b.Cocktail)
                 .Where(b => b.Name.Contains(searchCriteria,
                  StringComparison.OrdinalIgnoreCase)
-                 && b.DateDeleted==null)
+                 && b.DateDeleted == null)
                 .ToListAsync()
                 .ConfigureAwait(false);
-                                                  //Change the method;s name ?
+            //Change the method;s name ?
             var allBarsDtos = bars.Select(b => b.MapBarToDTOWithFullAdress()).ToList();
             return allBarsDtos;
         }
 
-        public async Task<ICollection<CountryDTO>> GetAllCountries()
+        public async Task<ICollection<CountryDTO>> GetAllCountries()//tested
         {
             var countries = _context.Countries;
             var countriesDTO = await countries.Select(c => new CountryDTO
-            { Id = c.Id,
+            {
+                Id = c.Id,
                 Name = c.Name
-            }).OrderBy(c=>c.Name)
+            }).OrderBy(c => c.Name)
             .ToListAsync();
             return countriesDTO;
         }

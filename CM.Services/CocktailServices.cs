@@ -3,6 +3,7 @@ using CM.DTOs;
 using CM.DTOs.Mappers;
 using CM.Models;
 using CM.Services.Contracts;
+using CM.Services.CustomExeptions;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -24,7 +25,7 @@ namespace CM.Services
                                 IRecipeServices recipeServices)
         {
             _context = context
-                ?? throw new ArgumentNullException(nameof(context));
+                ?? throw new MagicExeption(ExeptionMessages.ContextNull);
             _fileUploadService = fileUploadService
                 ?? throw new ArgumentNullException(nameof(fileUploadService));
             _ingredientServices = ingredientServices

@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using CM.DTOs;
+using CM.Models;
 using CM.Services.Common;
 
 namespace CM.Services.Contracts
@@ -15,6 +16,5 @@ namespace CM.Services.Contracts
         Task<string> Update(BarDTO barDTO);
         Task<ICollection<BarDTO>> GetAllBarsByName(string searchCriteria);
         Task<ICollection<CountryDTO>> GetAllCountries();
-
     }
 }
