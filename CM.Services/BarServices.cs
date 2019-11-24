@@ -180,7 +180,7 @@ namespace CM.Services
                 .ThenInclude(b => b.Cocktail)
                 .Where(b => b.Name.Contains(searchCriteria,
                  StringComparison.OrdinalIgnoreCase)
-                 && b.DateDeleted == null)
+                 && b.DateDeleted == null) 
                 .ToListAsync()
                 .ConfigureAwait(false);
             //Change the method;s name ?
