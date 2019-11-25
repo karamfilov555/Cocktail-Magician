@@ -9,7 +9,7 @@ namespace CM.Services
         public StreamWriterServices()
         {
         }
-        public async Task WriteToFile(string recepie, string cocktailId)
+        public void WriteToFile(string recepie, string cocktailId)
         {
             // CARE THIS PATH WONT WORK on othr pc!!!!!!!!!!
             string docPath = "wwwroot/assets/recepies";

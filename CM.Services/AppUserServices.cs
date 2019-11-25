@@ -70,7 +70,6 @@ namespace CM.Services
         {
             if (id == null)
                 return "annonymous";
-
             var user = await _context.Users.FindAsync(id);
             user.ValidateIfNull(ExeptionMessages.AppUserNull);
             return user.UserName;

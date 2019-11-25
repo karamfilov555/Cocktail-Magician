@@ -7,6 +7,6 @@ namespace CM.Services.Contracts
 {
     public interface IStreamWriterServices
     {
-        Task WriteToFile(string recepie, string cocktailId);
+        void WriteToFile(string recepie, string cocktailId);
     }
 }
