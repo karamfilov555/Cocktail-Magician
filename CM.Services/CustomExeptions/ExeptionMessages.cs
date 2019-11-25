@@ -18,5 +18,7 @@ namespace CM.Services.CustomExeptions
         public const string RoleNull = "AppRole cannot be null!";
         public const string UserRoleNull = "UserRole cannot be null!";
         public const string UserNameNull = "UserName cannot be null!";
+        public const string IngredientDtoNull = "IngredientDto cannot be null!";
+        public const string IngredientNull = "Ingredient cannot be null!";
     }
 }
