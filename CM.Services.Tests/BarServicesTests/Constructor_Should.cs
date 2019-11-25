@@ -45,7 +45,7 @@ namespace CM.Services.Tests.BarServicesTests
 
             var ex = Assert.ThrowsException<MagicExeption>(
                () => new BarServices(new CMContext(options), null));
-            Assert.AreEqual("IFileUploadServiceNull cannot be null!", ex.Message);
+            Assert.AreEqual("IFileUploadService cannot be null!", ex.Message);
         }
         [TestMethod]
         public async Task MakeInstance_OfTypeBarService_IfValidValuesPassed()

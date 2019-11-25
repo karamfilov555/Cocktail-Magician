@@ -2,6 +2,7 @@
 using CM.DTOs;
 using CM.DTOs.Mappers;
 using CM.Models;
+using CM.Services.Common;
 using CM.Services.Contracts;
 using CM.Services.CustomExeptions;
 using Microsoft.EntityFrameworkCore;
@@ -27,13 +28,14 @@ namespace CM.Services
             _context = context
                 ?? throw new MagicExeption(ExeptionMessages.ContextNull);
             _fileUploadService = fileUploadService
-                ?? throw new ArgumentNullException(nameof(fileUploadService));
+                ?? throw new MagicExeption(ExeptionMessages.IFileUploadServiceNull);
             _ingredientServices = ingredientServices
-                ?? throw new ArgumentNullException(nameof(ingredientServices));
+                ?? throw new MagicExeption(ExeptionMessages.IIngredientServiceNull);
             _recipeServices = recipeServices
-                ?? throw new ArgumentNullException(nameof(recipeServices));
+                ?? throw new MagicExeption(ExeptionMessages.IRecipeServiceNull);
+          
         }
-
+        //Tested
         public async Task<ICollection<CocktailDto>> GetCocktailsForHomePage()
 
                            => await _context.Cocktails
@@ -47,11 +49,10 @@ namespace CM.Services
                                             .Select(c=>c.MapToCocktailDto())
                                             .ToListAsync()
                                             .ConfigureAwait(false);
-          
+        //Fully Tested  
         public async Task<CocktailDto> FindCocktailById(string id)
         {
-
-            // INCLUDE !!
+            id.ValidateIfNull("Id cannot be null!");
             var cocktail = await _context.Cocktails
                                             .Include(c => c.Reviews)
                                             .ThenInclude(c => c.User)
@@ -65,19 +66,43 @@ namespace CM.Services
                                             .FirstOrDefaultAsync(c => c.Id == id
                                              && c.DateDeleted == null)
                                             .ConfigureAwait(false);
+            cocktail.ValidateIfNull("Cocktail doesn't exist in DB!");
             var cocktailDto = cocktail.MapToCocktailDto();
-
             return cocktailDto;
         }
+        //Tested
+        public async Task<ICollection<CocktailDto>> GetAllCocktails()
+        {
+            var allCocktailsModels = await _context.Cocktails
+                                                .Include(c => c.Reviews)
+                                                .ThenInclude(c => c.User)
+                                                .Include(c => c.CocktailComponents)
+                                                .ThenInclude(c => c.Ingredient)
+                                                .Include(c => c.BarCocktails)
+                                                .ThenInclude(c => c.Bar)
+                                                .Where(c => c.DateDeleted == null)
+                                                .ToListAsync();
 
+            var allCocktailsDto = allCocktailsModels.Select(c => c.MapToCocktailDto()).ToList();
+            return allCocktailsDto;
+        }
+        //Tested
+        public async Task<string> GetCocktailNameById(string id)
+        {
+            id.ValidateIfNull("ID cannot be null!");
+            var cocktail = await _context.Cocktails.FirstOrDefaultAsync(c => c.Id == id&&c.DateDeleted==null);
+            cocktail.ValidateIfNull("Cocktail doesn't exist in DB!");
+            return cocktail.Name;
+        }
+        //Tested
         public async Task AddCocktail(CocktailDto cocktailDto)
         {
-            if (cocktailDto == null)
+            cocktailDto.ValidateIfNull("Model is not valid!");
+            if (cocktailDto.CocktailImage!=null)
             {
-                // check , some validaitons
-            }
             var uniqueFileNamePath = _fileUploadService.UploadFile(cocktailDto.CocktailImage);
             cocktailDto.Image = uniqueFileNamePath;
+            }
             var cocktail = cocktailDto.MapToCocktailModel();
             _context.Cocktails.Add(cocktail);
             await _context.SaveChangesAsync();
@@ -99,37 +124,16 @@ namespace CM.Services
             cocktail.Recepie = await _recipeServices.ExtractRecipe(cocktail);
             await _context.SaveChangesAsync();
         }
-        public async Task<ICollection<CocktailDto>> GetAllCocktails()
-        {
-            var allCocktailsModels = await _context.Cocktails
-                                                .Include(c => c.Reviews)
-                                                .ThenInclude(c => c.User)
-                                                .Include(c => c.CocktailComponents)
-                                                .ThenInclude(c => c.Ingredient)
-                                                .Include(c => c.BarCocktails)
-                                                .ThenInclude(c => c.Bar)
-                                                .Where(c => c.DateDeleted == null)
-                                                .ToListAsync();
-
-            var allCocktailsDto = allCocktailsModels.Select(c => c.MapToCocktailDto()).ToList();
-            return allCocktailsDto;
-        }
-
+        //Tested
         public async Task<string> DeleteCocktial(string id)
         {
-            var cocktailModel = await _context.Cocktails
-                                            .FirstAsync(c => c.Id == id);
+            id.ValidateIfNull("ID cannot be null!");
+            var cocktailModel = await this.GetCocktail(id);
             cocktailModel.DateDeleted = DateTime.Now;
             await _context.SaveChangesAsync();
             return cocktailModel.Name;
         }
-        public async Task<string> GetCocktailNameById(string id)
-        {
-
-            var cocktail = await _context.Cocktails.FirstAsync(c => c.Id == id);
-            return cocktail.Name;
-        }
-
+        //Tested
         public async Task<IList<CocktailDto>> GetFiveSortedCocktailsAsync(string sortOrder, int currPage = 1)
         {
             var sortedCocktails = _context.Cocktails
@@ -174,6 +178,7 @@ namespace CM.Services
                                                     .ToList();
             return fiveSortedCocktailsDtos;
         }
+        //Tested
         public async Task<int> GetPageCountForCocktials(int cocktailsPerPage)
         {
             var allCocktailsCount = await _context
@@ -184,43 +189,29 @@ namespace CM.Services
             int pageCount = (allCocktailsCount - 1) / cocktailsPerPage + 1;
 
             return pageCount;
-        }
+        }   
 
-        public async Task<ICollection<CocktailDto>> GetAllCocktailsByName(string searchCriteria)
-        {
-            var cocktails = await _context.Cocktails
-                            .Include(c => c.Reviews)
-                            .ThenInclude(c => c.User)
-                            .Include(c => c.CocktailComponents)
-                            .ThenInclude(c => c.Ingredient)
-                            .Include(c => c.BarCocktails)
-                            .ThenInclude(c => c.Bar)
-                            .ThenInclude(b => b.Address)
-                            .ThenInclude(a => a.Country)
-                            .Where(c => c.Name.Contains(searchCriteria,
-                             StringComparison.OrdinalIgnoreCase)
-                             && c.DateDeleted == null)
-                            .ToListAsync();
-            var cocktailsDtos = cocktails.Select(c => c.MapToCocktailDto()).ToList();
-            return cocktailsDtos;
-        }
+        //Tested
         public async Task<bool> CheckIfCocktailExist(string id)
-        => await _context.Cocktails
-                         .AnyAsync(c => c.Id == id);
-
+        {
+            id.ValidateIfNull("ID cannot be null!");
+            return await _context.Cocktails
+                            .AnyAsync(c => c.Id == id);
+        }
+        //Tested
         public async Task<string> GetCocktailIdByName(string cocktailName)
         {
+            cocktailName.ValidateIfNull("Name cannot be null!");
             var cocktail = await _context.Cocktails
-                                         .FirstOrDefaultAsync(c => c.Name == cocktailName);
+                                         .FirstOrDefaultAsync(c => c.Name == cocktailName&&c.DateDeleted==null);
+            cocktail.ValidateIfNull("Cocktail doesn't exist in DB!");
             return cocktail.Id;
         }
-
-        public async Task<string> GetCocktailRecepie(string id)
+        //Tested
+        public async Task<string> GetCocktailRecipe(string id)
         {
-            var cocktail = await _context.Cocktails
-                            .Include(c => c.CocktailComponents)
-                            .ThenInclude(c => c.Ingredient)
-                            .FirstOrDefaultAsync(c => c.Id == id);
+            id.ValidateIfNull("ID cannot be null!");
+            var cocktail = await this.GetCocktail(id);
 
             // za seed neshtata recepti...
             if (cocktail.Recepie == null)
@@ -229,24 +220,37 @@ namespace CM.Services
             }
             return cocktail.Recepie;
         }
-        private async Task<Cocktail> GetCocktail(string id)
+        //Tested
+        public async Task<Cocktail> GetCocktail(string id)
         {
+            id.ValidateIfNull("ID cannot be null!");
             var cocktail = await _context.Cocktails
                 .Where(b => b.Id == id && b.DateDeleted == null)
-                .Include(b => b.BarCocktails)
-                .ThenInclude(b => b.Cocktail)
+                //.Include(b => b.BarCocktails)
+                //.ThenInclude(b => b.Cocktail)
                 .Include(b => b.CocktailComponents)
+                .ThenInclude(cc=>cc.Ingredient)
                 .FirstOrDefaultAsync()
                 .ConfigureAwait(false);
-
+            cocktail.ValidateIfNull("Cocktail doesn't exist in DB!");
             return cocktail;
         }
+        //Tested
         public async Task<string> Update(CocktailDto cocktailDto)
         {
+            cocktailDto.ValidateIfNull("Model is invalid!");
             var cocktailToEdit = await GetCocktail(cocktailDto.Id);
-            var uniqueFileNamePath = _fileUploadService.UploadFile(cocktailDto.CocktailImage);
-            cocktailDto.Image = uniqueFileNamePath;
+            
             var cocktail = cocktailDto.MapToEditModel();
+            if (cocktailDto.CocktailImage!=null)
+            {
+            var uniqueFileNamePath = _fileUploadService.UploadFile(cocktailDto.CocktailImage);
+            cocktail.Image = uniqueFileNamePath;
+            }
+            else
+            {
+                cocktail.Image = cocktailToEdit.Image;
+            }
             cocktail.Rating = cocktailToEdit.Rating;
             var newCocktailComponents = new List<CocktailComponent>();
 
@@ -254,7 +258,14 @@ namespace CM.Services
             {
                 var ingridientId = await _ingredientServices
                                          .GetIngredientIdByNameAsync(component.Name);
-
+                
+                if (ingridientId==null)
+                {
+                    var newIngr = new Ingredient() { Name = component.Name };
+                    _context.Add(newIngr);
+                    await _context.SaveChangesAsync();
+                    ingridientId = newIngr.Id;
+                }
                 newCocktailComponents.Add(
                     new CocktailComponent
                     {
@@ -262,15 +273,35 @@ namespace CM.Services
                         IngredientId = ingridientId
                     });
             }
-            cocktail.Recepie = await _recipeServices.ExtractRecipe(cocktail);
             cocktail.CocktailComponents = newCocktailComponents;
 
             _context.Entry(cocktailToEdit).CurrentValues.SetValues(cocktail);
             _context.RemoveRange(cocktailToEdit.CocktailComponents);
             _context.AddRange(cocktail.CocktailComponents);
             await _context.SaveChangesAsync();
+            cocktail.Recepie = await _recipeServices.ExtractRecipe(cocktailToEdit);
+            await _context.SaveChangesAsync();
             return cocktailToEdit.Name;
         }
     }
 }
 
+
+        //public async Task<ICollection<CocktailDto>> GetAllCocktailsByName(string searchCriteria)
+        //{
+        //    var cocktails = await _context.Cocktails
+        //                    .Include(c => c.Reviews)
+        //                    .ThenInclude(c => c.User)
+        //                    .Include(c => c.CocktailComponents)
+        //                    .ThenInclude(c => c.Ingredient)
+        //                    .Include(c => c.BarCocktails)
+        //                    .ThenInclude(c => c.Bar)
+        //                    .ThenInclude(b => b.Address)
+        //                    .ThenInclude(a => a.Country)
+        //                    .Where(c => c.Name.Contains(searchCriteria,
+        //                     StringComparison.OrdinalIgnoreCase)
+        //                     && c.DateDeleted == null)
+        //                    .ToListAsync();
+        //    var cocktailsDtos = cocktails.Select(c => c.MapToCocktailDto()).ToList();
+        //    return cocktailsDtos;
+        //}

@@ -211,7 +211,7 @@ namespace CM.Web.Areas.Cocktails.Controllers
             //validations
 
             var cocktailName = await _cocktailServices.GetCocktailNameById(Id);
-            var cocktailRecepie = await _cocktailServices.GetCocktailRecepie(Id);
+            var cocktailRecepie = await _cocktailServices.GetCocktailRecipe(Id);
             try
             {
                 var content = new System.IO.MemoryStream(Encoding.UTF8.GetBytes(cocktailRecepie));

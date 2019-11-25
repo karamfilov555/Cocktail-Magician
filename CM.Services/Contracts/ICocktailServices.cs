@@ -17,10 +17,12 @@ namespace CM.Services.Contracts
         Task<string> GetCocktailNameById(string id);
         Task<IList<CocktailDto>> GetFiveSortedCocktailsAsync(string sortOrder,int currPage = 1);
         Task<int> GetPageCountForCocktials(int cocktailsPerPage);
-        Task<ICollection<CocktailDto>> GetAllCocktailsByName(string searchCriteria);
         Task<bool> CheckIfCocktailExist(string id);
         Task<string> GetCocktailIdByName(string cocktailName);
-        Task<string> GetCocktailRecepie(string id);
+        Task<string> GetCocktailRecipe(string id);
         Task<string> Update(CocktailDto cocktailDto);
+        Task<Cocktail> GetCocktail(string id);
     }
 }
+
+        //Task<ICollection<CocktailDto>> GetAllCocktailsByName(string searchCriteria);

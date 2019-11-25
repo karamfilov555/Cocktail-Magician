@@ -144,7 +144,7 @@ namespace CM.Web.Areas.Ingredients.Controllers
                 try
                 {
                     var name = await _ingredientServices.DeleteIngredientAsync(id);
-                    _toast.AddErrorToastMessage($"Ingredient {name} was updated!");
+                    _toast.AddInfoToastMessage($"Ingredient {name} was deleted!");
                 }
                 catch (Exception ex)
                 {

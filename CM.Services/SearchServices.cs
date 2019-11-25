@@ -26,13 +26,13 @@ namespace CM.Services
             _cocktailService = cocktailService;
         }
 
-        public async Task<SearchResultDTO> GetResultsFromSearch(string searchString)
-        {
-            var searchDto = new SearchResultDTO();
-            searchDto.Bars = await _barService.GetAllBarsByName(searchString);
-            searchDto.Cocktails = await _cocktailService.GetAllCocktailsByName(searchString);
-            return searchDto;
-        }
+        //public async Task<SearchResultDTO> GetResultsFromSearch(string searchString)
+        //{
+        //    var searchDto = new SearchResultDTO();
+        //    searchDto.Bars = await _barService.GetAllBarsByName(searchString);
+        //    searchDto.Cocktails = await _cocktailService.GetAllCocktailsByName(searchString);
+        //    return searchDto;
+        //}
 
         public async Task<List<BarSearchResultDTO>> GetResultsFromBars(string searchString)
         {

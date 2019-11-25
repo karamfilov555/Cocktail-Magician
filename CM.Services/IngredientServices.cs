@@ -99,7 +99,8 @@ namespace CM.Services
 
         public async Task<IngredientDTO> GetIngredientById(string id)
         {
-            var ingredient = await _context.Ingredients.FirstOrDefaultAsync(i => i.Id == id && i.DateDeleted == null);
+            var ingredient = await _context.Ingredients
+                .Include(i=>i.CocktailComponents).FirstOrDefaultAsync(i => i.Id == id && i.DateDeleted == null);
             ingredient.ValidateIfNull("This ingredient doesn't exist!");
             return ingredient.MapToDtoModel();
         }
