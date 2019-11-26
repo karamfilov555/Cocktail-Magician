@@ -1,6 +1,6 @@
 ﻿using CM.Data;
 using CM.Models;
-using CM.Services.CustomExeptions;
+using CM.Services.CustomExceptions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Threading.Tasks;
 
@@ -35,7 +35,7 @@ namespace CM.Services.Tests.IngredientServicesTests
             {
                 var sut = new IngredientServices(assertContext);
 
-                var ex = await Assert.ThrowsExceptionAsync<MagicExeption>(
+                var ex = await Assert.ThrowsExceptionAsync<MagicException>(
                     async () => await sut.GetIngredientIdByNameAsync("Name"));
             }
         }
@@ -48,7 +48,7 @@ namespace CM.Services.Tests.IngredientServicesTests
             {
                 var sut = new IngredientServices(assertContext);
 
-                var ex = await Assert.ThrowsExceptionAsync<MagicExeption>(
+                var ex = await Assert.ThrowsExceptionAsync<MagicException>(
                     async () => await sut.GetIngredientIdByNameAsync("Name"));
                 Assert.AreEqual("Ingredient cannot be null!", ex.Message);
             }

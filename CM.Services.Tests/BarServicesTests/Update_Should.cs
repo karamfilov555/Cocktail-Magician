@@ -1,7 +1,7 @@
 ﻿using CM.Data;
 using CM.DTOs;
 using CM.Models;
-using CM.Services.CustomExeptions;
+using CM.Services.CustomExceptions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
@@ -58,7 +58,7 @@ namespace CM.Services.Tests.BarServicesTests
             using (var assertContext = new CMContext(options))
             {
                 var sut = new BarServices(assertContext, fileService.Object);
-                var ex = await Assert.ThrowsExceptionAsync<MagicExeption>(
+                var ex = await Assert.ThrowsExceptionAsync<MagicException>(
                     async () => await sut.Update(null));
             }
         }
@@ -72,7 +72,7 @@ namespace CM.Services.Tests.BarServicesTests
             using (var assertContext = new CMContext(options))
             {
                 var sut = new BarServices(assertContext, fileService.Object);
-                var ex = await Assert.ThrowsExceptionAsync<MagicExeption>(
+                var ex = await Assert.ThrowsExceptionAsync<MagicException>(
                     async () => await sut.Update(null));
                 Assert.AreEqual("BarDto cannot be null!", ex.Message);
             }
@@ -87,7 +87,7 @@ namespace CM.Services.Tests.BarServicesTests
             using (var assertContext = new CMContext(options))
             {
                 var sut = new BarServices(assertContext, fileService.Object);
-                var ex = await Assert.ThrowsExceptionAsync<MagicExeption>(
+                var ex = await Assert.ThrowsExceptionAsync<MagicException>(
                     async () => await sut.Update(barDto));
             }
         }
@@ -101,7 +101,7 @@ namespace CM.Services.Tests.BarServicesTests
             using (var assertContext = new CMContext(options))
             {
                 var sut = new BarServices(assertContext, fileService.Object);
-                var ex = await Assert.ThrowsExceptionAsync<MagicExeption>(
+                var ex = await Assert.ThrowsExceptionAsync<MagicException>(
                     async () => await sut.Update(barDto));
                 Assert.AreEqual("Bar cannot be null!", ex.Message);
             }

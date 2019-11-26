@@ -1,6 +1,6 @@
 ﻿using CM.Data;
 using CM.Services.Contracts;
-using CM.Services.CustomExeptions;
+using CM.Services.CustomExceptions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using System;
@@ -29,7 +29,7 @@ namespace CM.Services.Tests.CocktailServiceTests
         [TestMethod]
         public void ThrowMagicExeptionIfNullValue_DbContextPassed()
         {
-            Assert.ThrowsException<MagicExeption>(
+            Assert.ThrowsException<MagicException>(
                () => new CocktailServices(null, _fileUploadService.Object,
                     _ingredientServices.Object, _recipeServices.Object));
         }
@@ -37,7 +37,7 @@ namespace CM.Services.Tests.CocktailServiceTests
         [TestMethod]
         public void ThrowCorrectMessageIfNullValue_DbContextPassed()
         {
-            var ex= Assert.ThrowsException<MagicExeption>(
+            var ex= Assert.ThrowsException<MagicException>(
                () => new CocktailServices(null, _fileUploadService.Object,
                     _ingredientServices.Object, _recipeServices.Object));
             Assert.AreEqual("CMContext cannot be null!", ex.Message);
@@ -48,7 +48,7 @@ namespace CM.Services.Tests.CocktailServiceTests
         {
             var options = TestUtils.GetOptions(nameof(ThrowMagicExeptionIfNullValue_IFileUploadServicePassed));
 
-            Assert.ThrowsException<MagicExeption>(
+            Assert.ThrowsException<MagicException>(
                () => new CocktailServices(new CMContext(options), null,
                     _ingredientServices.Object, _recipeServices.Object));
 
@@ -59,7 +59,7 @@ namespace CM.Services.Tests.CocktailServiceTests
         {
             var options = TestUtils.GetOptions(nameof(ThrowCorrectMessageIfNullValue_IFileUploadServicePassed));
 
-           var ex= Assert.ThrowsException<MagicExeption>(
+           var ex= Assert.ThrowsException<MagicException>(
                () => new CocktailServices(new CMContext(options), null,
                     _ingredientServices.Object, _recipeServices.Object));
             Assert.AreEqual("IFileUploadService cannot be null!", ex.Message);
@@ -70,7 +70,7 @@ namespace CM.Services.Tests.CocktailServiceTests
         {
             var options = TestUtils.GetOptions(nameof(ThrowMagicExeptionIfNullValue_IFileUploadServicePassed));
 
-            Assert.ThrowsException<MagicExeption>(
+            Assert.ThrowsException<MagicException>(
                () => new CocktailServices(new CMContext(options), _fileUploadService.Object,
                     null, _recipeServices.Object));
 
@@ -81,7 +81,7 @@ namespace CM.Services.Tests.CocktailServiceTests
         {
             var options = TestUtils.GetOptions(nameof(ThrowCorrectMessageIfNullValue_IIngredientServicePassed));
 
-            var ex=Assert.ThrowsException<MagicExeption>(
+            var ex=Assert.ThrowsException<MagicException>(
                () => new CocktailServices(new CMContext(options), _fileUploadService.Object,
                     null, _recipeServices.Object));
             Assert.AreEqual("IIngredientService cannot be null!", ex.Message);
@@ -93,7 +93,7 @@ namespace CM.Services.Tests.CocktailServiceTests
         {
             var options = TestUtils.GetOptions(nameof(ThrowMagicExeptionIfNullValue_IRecipeServicePassed));
 
-            Assert.ThrowsException<MagicExeption>(
+            Assert.ThrowsException<MagicException>(
                () => new CocktailServices(new CMContext(options), _fileUploadService.Object,
                     _ingredientServices.Object, null));
 
@@ -104,7 +104,7 @@ namespace CM.Services.Tests.CocktailServiceTests
         {
             var options = TestUtils.GetOptions(nameof(ThrowCorrectMessageIfNullValue_IRecipeServicePassed));
 
-            var ex=Assert.ThrowsException<MagicExeption>(
+            var ex=Assert.ThrowsException<MagicException>(
                () => new CocktailServices(new CMContext(options), _fileUploadService.Object,
                     _ingredientServices.Object, null));
             Assert.AreEqual("IRecipeService cannot be null!", ex.Message);

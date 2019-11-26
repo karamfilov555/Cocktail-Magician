@@ -9,7 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using CM.DTOs.Mappers;
-using CM.Services.CustomExeptions;
+using CM.Services.CustomExceptions;
 using CM.Services.Common;
 
 namespace CM.Services
@@ -25,15 +25,15 @@ namespace CM.Services
                                    INotificationManager notificationManager)
         {
             _context = context
-                         ?? throw new MagicExeption(ExeptionMessages.ContextNull);
-            _userService = userService ?? throw new MagicExeption(ExeptionMessages.IAppUserServiceNull);
-            _notificationManager = notificationManager ?? throw new MagicExeption(ExeptionMessages.INotificationManagerNull);
+                         ?? throw new MagicException(ExceptionMessages.ContextNull);
+            _userService = userService ?? throw new MagicException(ExceptionMessages.IAppUserServiceNull);
+            _notificationManager = notificationManager ?? throw new MagicException(ExceptionMessages.INotificationManagerNull);
         }
         //Tested
         public async Task<NotificationDTO> CreateNotificationAsync(string description, string username)
         {
-            description.ValidateIfNull(ExeptionMessages.DescriptionNull);
-            username.ValidateIfNull(ExeptionMessages.UserNameNull);
+            description.ValidateIfNull(ExceptionMessages.DescriptionNull);
+            username.ValidateIfNull(ExceptionMessages.UserNameNull);
             //notifications for admin
             var admin = await _userService.GetAdmin().ConfigureAwait(false);
 
@@ -52,7 +52,7 @@ namespace CM.Services
         //Tested
         public async Task<ICollection<NotificationDTO>> GetNotificationsForUserAsync(string userId)
         {
-            userId.ValidateIfNull(ExeptionMessages.IdNull);
+            userId.ValidateIfNull(ExceptionMessages.IdNull);
             var notification = await _context.Notifications
                                              .Where(n => n.UserId == userId)
                                              .ToListAsync().ConfigureAwait(false);
@@ -61,7 +61,7 @@ namespace CM.Services
         //Tested
         public async Task<int> GetUnseenNotificationsCountForUserAsync(string userId)
         {
-            userId.ValidateIfNull(ExeptionMessages.IdNull);
+            userId.ValidateIfNull(ExceptionMessages.IdNull);
             var notificationsCount = await _context.Notifications
                                                    .Where(n => n.IsSeen == false && n.UserId == userId)
                                                    .CountAsync().ConfigureAwait(false);
@@ -70,10 +70,10 @@ namespace CM.Services
         //Tested
         public async Task<NotificationDTO> MarkAsSeenAsync(string notificationId)
         {
-            notificationId.ValidateIfNull(ExeptionMessages.NotificationIdNull);
+            notificationId.ValidateIfNull(ExceptionMessages.NotificationIdNull);
             var notificationToSee = await _context.Notifications
                                                    .FirstOrDefaultAsync(n => n.Id == notificationId).ConfigureAwait(false);
-            notificationToSee.ValidateIfNull(ExeptionMessages.NotificationNull);
+            notificationToSee.ValidateIfNull(ExceptionMessages.NotificationNull);
             notificationToSee.IsSeen = true;
             await _context.SaveChangesAsync().ConfigureAwait(false);
 
@@ -82,7 +82,7 @@ namespace CM.Services
         //Tested
         public async Task BarCreateNotificationToAdminAsync(string id, string entityName)
         {
-            entityName.ValidateIfNull(ExeptionMessages.BarNameNull);
+            entityName.ValidateIfNull(ExceptionMessages.BarNameNull);
             var username = await _userService.GetUsernameById(id);
             var notificationDescription = _notificationManager.BarAddedDescription(username, entityName);
             var notification = await CreateNotificationAsync(notificationDescription, username);
@@ -90,7 +90,7 @@ namespace CM.Services
         //Tested
         public async Task CocktailCreateNotificationToAdminAsync(string id, string entityName)
         {
-            entityName.ValidateIfNull(ExeptionMessages.CocktailNameNull);
+            entityName.ValidateIfNull(ExceptionMessages.CocktailNameNull);
             var username = await _userService.GetUsernameById(id);
             var notificationDescription = _notificationManager.CocktailAddedDescription(username, entityName);
             var notification = await CreateNotificationAsync(notificationDescription, username);
@@ -98,8 +98,8 @@ namespace CM.Services
         //Tested
         public async Task CocktailEditNotificationToAdminAsync(string id, string entityName, string newName)
         {
-            entityName.ValidateIfNull(ExeptionMessages.CocktailNameNull);
-            newName.ValidateIfNull(ExeptionMessages.CocktailNameNull);
+            entityName.ValidateIfNull(ExceptionMessages.CocktailNameNull);
+            newName.ValidateIfNull(ExceptionMessages.CocktailNameNull);
             var username = await _userService.GetUsernameById(id);
             string notificationDescription;
 
@@ -113,7 +113,7 @@ namespace CM.Services
         //Tested
         public async Task CocktailDeletedNotificationToAdminAsync(string id, string entityName)
         {
-            entityName.ValidateIfNull(ExeptionMessages.CocktailNameNull);
+            entityName.ValidateIfNull(ExceptionMessages.CocktailNameNull);
             var username = await _userService.GetUsernameById(id);
             var notificationDescription = _notificationManager.CocktailDeletedDescription(username, entityName);
 
@@ -121,7 +121,7 @@ namespace CM.Services
         }
         public async Task BarDeletedNotificationToAdminAsync(string id, string entityName)
         {
-            entityName.ValidateIfNull(ExeptionMessages.BarNameNull);
+            entityName.ValidateIfNull(ExceptionMessages.BarNameNull);
             var username = await _userService.GetUsernameById(id);
             var notificationDescription = _notificationManager.BarDeletedDescription(username, entityName);
             await CreateNotificationAsync(notificationDescription, username);

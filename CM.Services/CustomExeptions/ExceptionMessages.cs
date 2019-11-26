@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace CM.Services.CustomExeptions
+namespace CM.Services.CustomExceptions
 {
-    public static class ExeptionMessages
+    public static class ExceptionMessages
     {
         public const string IdNull = "ID cannot be null!";
         public const string BarNull = "Bar cannot be null!";

@@ -1,7 +1,7 @@
 ﻿using CM.Data;
 using CM.DTOs;
 using CM.Models;
-using CM.Services.CustomExeptions;
+using CM.Services.CustomExceptions;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
@@ -105,7 +105,7 @@ namespace CM.Services.Tests.AppUserServicesTests
 
                     var sut = new AppUserServices(assertContext, userManagerMocked.Object);
 
-                    var result = Assert.ThrowsExceptionAsync<MagicExeption>
+                    var result = Assert.ThrowsExceptionAsync<MagicException>
                         (async () => await sut.GetUserDToByID(null));
                 }
             }
@@ -138,7 +138,7 @@ namespace CM.Services.Tests.AppUserServicesTests
 
                     var sut = new AppUserServices(assertContext, userManagerMocked.Object);
 
-                    var result = await Assert.ThrowsExceptionAsync<MagicExeption>
+                    var result = await Assert.ThrowsExceptionAsync<MagicException>
                         (async () => await sut.GetUserDToByID(null));
                     Assert.AreEqual("ID cannot be null!", result.Message);
                 }
@@ -172,7 +172,7 @@ namespace CM.Services.Tests.AppUserServicesTests
 
                     var sut = new AppUserServices(assertContext, userManagerMocked.Object);
 
-                    var result = await Assert.ThrowsExceptionAsync<MagicExeption>
+                    var result = await Assert.ThrowsExceptionAsync<MagicException>
                         (async () => await sut.GetUserDToByID("dasda"));
                 }
             }
@@ -205,7 +205,7 @@ namespace CM.Services.Tests.AppUserServicesTests
 
                     var sut = new AppUserServices(assertContext, userManagerMocked.Object);
 
-                    var result = await Assert.ThrowsExceptionAsync<MagicExeption>
+                    var result = await Assert.ThrowsExceptionAsync<MagicException>
                         (async () => await sut.GetUserByID("dasda"));
                     Assert.AreEqual("AppUser cannot be null!", result.Message);
                 }

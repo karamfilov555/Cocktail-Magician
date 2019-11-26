@@ -2,7 +2,7 @@
 using CM.DTOs;
 using CM.Models;
 using CM.Services.Contracts;
-using CM.Services.CustomExeptions;
+using CM.Services.CustomExceptions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
@@ -37,7 +37,7 @@ namespace CM.Services.Tests.CocktailServiceTests
             {
                 var sut = new CocktailServices(assertContext, _fileUploadService.Object,
                     _ingredientServices.Object, _recipeServices.Object);
-                var ex = await Assert.ThrowsExceptionAsync<MagicExeption>(
+                var ex = await Assert.ThrowsExceptionAsync<MagicException>(
                   async () => await sut.Update(null)
                   );
             }
@@ -52,7 +52,7 @@ namespace CM.Services.Tests.CocktailServiceTests
             {
                 var sut = new CocktailServices(assertContext, _fileUploadService.Object,
                     _ingredientServices.Object, _recipeServices.Object);
-                var ex = await Assert.ThrowsExceptionAsync<MagicExeption>(
+                var ex = await Assert.ThrowsExceptionAsync<MagicException>(
                   async () => await sut.Update(null)
                   );
                 Assert.AreEqual("Model is invalid!", ex.Message);
@@ -173,13 +173,13 @@ namespace CM.Services.Tests.CocktailServiceTests
         }
 
         [TestMethod]
-        public async Task AddAllDependentEntities_WhenValidModelIsPassed()
+        public async Task AddAllDependentEntities_WhenValidModelIsPassed_OnUpdate()
         {
             var cocktailName = "Mojito";
             var image = new Mock<IFormFile>().Object;
             var recipe = "111";
             var cocktailDtoId = "15";
-            var options = TestUtils.GetOptions(nameof(AddAllDependentEntities_WhenValidModelIsPassed));
+            var options = TestUtils.GetOptions(nameof(AddAllDependentEntities_WhenValidModelIsPassed_OnUpdate));
             var cocktailDTO = new CocktailDto()
             {
                 Id = cocktailDtoId,

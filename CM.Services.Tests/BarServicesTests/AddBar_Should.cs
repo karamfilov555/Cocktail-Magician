@@ -3,7 +3,7 @@ using CM.DTOs;
 using CM.DTOs.Mappers;
 using CM.Models;
 using CM.Services.Contracts;
-using CM.Services.CustomExeptions;
+using CM.Services.CustomExceptions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
@@ -75,7 +75,7 @@ namespace CM.Services.Tests.BarServicesTests
             using (var assertContext = new CMContext(options))
             {
                 var sut = new BarServices(assertContext, fileService.Object);
-                var ex = await Assert.ThrowsExceptionAsync<MagicExeption>(
+                var ex = await Assert.ThrowsExceptionAsync<MagicException>(
                     async () => await sut.AddBarAsync(null));
             }
         }
@@ -89,7 +89,7 @@ namespace CM.Services.Tests.BarServicesTests
             using (var assertContext = new CMContext(options))
             {
                 var sut = new BarServices(assertContext, fileService.Object);
-                var ex = await Assert.ThrowsExceptionAsync<MagicExeption>(
+                var ex = await Assert.ThrowsExceptionAsync<MagicException>(
                     async () => await sut.AddBarAsync(null));
                 Assert.AreEqual("BarDto cannot be null!", ex.Message);
             }

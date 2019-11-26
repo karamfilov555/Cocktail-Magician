@@ -1,6 +1,6 @@
 ﻿using CM.Data;
 using CM.Services.Contracts;
-using CM.Services.CustomExeptions;
+using CM.Services.CustomExceptions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using System;
@@ -23,7 +23,7 @@ namespace CM.Services.Tests.NotificationServiceTests
         [TestMethod]
         public void ThrowMagicExeptionIfNullValueInConstr_DbContextPassed()
         {
-            Assert.ThrowsException<MagicExeption>(
+            Assert.ThrowsException<MagicException>(
                () => new NotificationServices(null, _userServices.Object,
                    _iNotificationManager.Object)); 
         }
@@ -31,10 +31,10 @@ namespace CM.Services.Tests.NotificationServiceTests
         [TestMethod]
         public void ThrowCorrectMessageIfNullValueInConstr_DbContextPassed()
         {
-            var ex = Assert.ThrowsException<MagicExeption>(
+            var ex = Assert.ThrowsException<MagicException>(
                () => new NotificationServices(null, _userServices.Object,
                    _iNotificationManager.Object));
-            Assert.AreEqual(ExeptionMessages.ContextNull, ex.Message);
+            Assert.AreEqual(ExceptionMessages.ContextNull, ex.Message);
         }
 
         [TestMethod]
@@ -42,7 +42,7 @@ namespace CM.Services.Tests.NotificationServiceTests
         {
             var options = TestUtils.GetOptions(nameof(ThrowMagicExeptionIfNullValueInConstr_IAppUserServices));
 
-            Assert.ThrowsException<MagicExeption>(
+            Assert.ThrowsException<MagicException>(
               () => new NotificationServices(new CMContext(options), null,
                   _iNotificationManager.Object));
 
@@ -53,10 +53,10 @@ namespace CM.Services.Tests.NotificationServiceTests
         {
             var options = TestUtils.GetOptions(nameof(ThrowCorrectMessageValueInConstr_IAppUserServices));
 
-            var ex = Assert.ThrowsException<MagicExeption>(
+            var ex = Assert.ThrowsException<MagicException>(
               () => new NotificationServices(new CMContext(options), null,
                   _iNotificationManager.Object));
-            Assert.AreEqual(ExeptionMessages.IAppUserServiceNull, ex.Message);
+            Assert.AreEqual(ExceptionMessages.IAppUserServiceNull, ex.Message);
         }
 
         [TestMethod]
@@ -64,7 +64,7 @@ namespace CM.Services.Tests.NotificationServiceTests
         {
             var options = TestUtils.GetOptions(nameof(ThrowMagicExeptionIfNullValueInConstr_INotificationManager));
 
-            Assert.ThrowsException<MagicExeption>(
+            Assert.ThrowsException<MagicException>(
               () => new NotificationServices(new CMContext(options), _userServices.Object,
                   null));
 
@@ -75,10 +75,10 @@ namespace CM.Services.Tests.NotificationServiceTests
         {
             var options = TestUtils.GetOptions(nameof(ThrowCorrectMessageValueInConstr_INotificationManager));
 
-            var ex = Assert.ThrowsException<MagicExeption>(
+            var ex = Assert.ThrowsException<MagicException>(
               () => new NotificationServices(new CMContext(options), _userServices.Object,
                   null));
-            Assert.AreEqual(ExeptionMessages.INotificationManagerNull, ex.Message);
+            Assert.AreEqual(ExceptionMessages.INotificationManagerNull, ex.Message);
         }
     }
 }

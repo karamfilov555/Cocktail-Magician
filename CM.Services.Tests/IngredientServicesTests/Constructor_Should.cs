@@ -1,5 +1,5 @@
 ﻿using CM.Data;
-using CM.Services.CustomExeptions;
+using CM.Services.CustomExceptions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using System;
@@ -25,13 +25,13 @@ namespace CM.Services.Tests.IngredientServicesTests
         [TestMethod]
         public async Task ThrowMagicExeption_IfNullValue_DbContextPassed()
         {
-            Assert.ThrowsException<MagicExeption>
+            Assert.ThrowsException<MagicException>
                 ( () => new IngredientServices(null));
         }
         [TestMethod]
         public async Task ThrowCorrectMagicExeption_IfNullValue_DbContextPassed()
         {
-            var ex = Assert.ThrowsException<MagicExeption>
+            var ex = Assert.ThrowsException<MagicException>
                 (() => new IngredientServices(null));
             Assert.AreEqual("CMContext cannot be null!", ex.Message);
         }

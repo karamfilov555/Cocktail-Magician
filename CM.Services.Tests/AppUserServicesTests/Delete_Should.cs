@@ -1,7 +1,7 @@
 ﻿using CM.Data;
 using CM.DTOs;
 using CM.Models;
-using CM.Services.CustomExeptions;
+using CM.Services.CustomExceptions;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
@@ -63,7 +63,7 @@ namespace CM.Services.Tests.AppUserServicesTests
             using (var assertContext = new CMContext(options))
             {
                 var sut = new AppUserServices(assertContext, userManagerMocked.Object);
-                var ex = await Assert.ThrowsExceptionAsync<MagicExeption>
+                var ex = await Assert.ThrowsExceptionAsync<MagicException>
                     (async () => await sut.Delete(null));
             }
         }
@@ -80,7 +80,7 @@ namespace CM.Services.Tests.AppUserServicesTests
             using (var assertContext = new CMContext(options))
             {
                 var sut = new AppUserServices(assertContext, userManagerMocked.Object);
-                var ex = await Assert.ThrowsExceptionAsync<MagicExeption>
+                var ex = await Assert.ThrowsExceptionAsync<MagicException>
                     (async () => await sut.Delete("dasda"));
                 Assert.AreEqual("AppUser cannot be null!", ex.Message);
             }
@@ -98,7 +98,7 @@ namespace CM.Services.Tests.AppUserServicesTests
             using (var assertContext = new CMContext(options))
             {
                 var sut = new AppUserServices(assertContext, userManagerMocked.Object);
-                var ex = await Assert.ThrowsExceptionAsync<MagicExeption>
+                var ex = await Assert.ThrowsExceptionAsync<MagicException>
                     (async () => await sut.Delete("dasdads"));
             }
         }
@@ -115,7 +115,7 @@ namespace CM.Services.Tests.AppUserServicesTests
             using (var assertContext = new CMContext(options))
             {
                 var sut = new AppUserServices(assertContext, userManagerMocked.Object);
-                var ex = await Assert.ThrowsExceptionAsync<MagicExeption>
+                var ex = await Assert.ThrowsExceptionAsync<MagicException>
                     (async () => await sut.Delete(null));
                 Assert.AreEqual("ID cannot be null!", ex.Message);
             }

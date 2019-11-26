@@ -2,7 +2,7 @@
 using CM.DTOs;
 using CM.Models;
 using CM.Services.Contracts;
-using CM.Services.CustomExeptions;
+using CM.Services.CustomExceptions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
@@ -56,7 +56,7 @@ namespace CM.Services.Tests.CocktailServiceTests
             var cocktailName = "Mojito";
             var image = new Mock<IFormFile>().Object;
             var recipe = "111";
-            var options = TestUtils.GetOptions(nameof(AddCorrectCocktailToDB_WhenValidModelIsPassed));
+            var options = TestUtils.GetOptions(nameof(AddAllDependentEntities_WhenValidModelIsPassed));
             var cocktailDTO = new CocktailDto()
             {
                 Name = cocktailName,
@@ -132,13 +132,13 @@ namespace CM.Services.Tests.CocktailServiceTests
                     _ingredientServices.Object, _recipeServices.Object);
                 await sut.AddCocktail(cocktailDTO);
                 _fileUploadService.Verify(n => n.UploadFile(image), Times.Once());
-            }
+            } 
         }
 
         [TestMethod]
         public async Task CallExtractRecipeMethod_WithCorrectParameters()
         {
-            var options = TestUtils.GetOptions(nameof(CallUploadFileMethod_WithCorrectParameters));
+            var options = TestUtils.GetOptions(nameof(CallExtractRecipeMethod_WithCorrectParameters));
             var cocktailName = "Mojito";
             var recipe = "111";
             var image = new Mock<IFormFile>().Object;
@@ -150,7 +150,8 @@ namespace CM.Services.Tests.CocktailServiceTests
                 var sut = new CocktailServices(assertContext, _fileUploadService.Object,
                     _ingredientServices.Object, _recipeServices.Object);
                 await sut.AddCocktail(cocktailDTO);
-                _recipeServices.Verify(n => n.ExtractRecipe(assertContext.Cocktails.First()), Times.Once());
+                var cocktail = assertContext.Cocktails.First();
+                _recipeServices.Verify(n => n.ExtractRecipe(cocktail), Times.Once());
             }
         }
 

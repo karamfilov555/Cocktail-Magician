@@ -2,7 +2,7 @@
 using CM.DTOs;
 using CM.Models;
 using CM.Services.Contracts;
-using CM.Services.CustomExeptions;
+using CM.Services.CustomExceptions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using System;
@@ -110,7 +110,7 @@ namespace CM.Services.Tests.NotificationServiceTests
             {
                 var sut = new NotificationServices(assertContext, _userServices.Object,
                    _iNotificationManager.Object);
-                var ex = await Assert.ThrowsExceptionAsync<MagicExeption>(
+                var ex = await Assert.ThrowsExceptionAsync<MagicException>(
                   async () => await sut.GetNotificationsForUserAsync(null));
             }
         }
@@ -124,9 +124,9 @@ namespace CM.Services.Tests.NotificationServiceTests
             {
                 var sut = new NotificationServices(assertContext, _userServices.Object,
                    _iNotificationManager.Object);
-                var ex = await Assert.ThrowsExceptionAsync<MagicExeption>(
+                var ex = await Assert.ThrowsExceptionAsync<MagicException>(
                   async () => await sut.GetNotificationsForUserAsync(null));
-                Assert.AreEqual(ExeptionMessages.IdNull, ex.Message);
+                Assert.AreEqual(ExceptionMessages.IdNull, ex.Message);
             }
         }
     }

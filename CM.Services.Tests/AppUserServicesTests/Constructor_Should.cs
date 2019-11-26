@@ -1,6 +1,6 @@
 ﻿using CM.Data;
 using CM.Models;
-using CM.Services.CustomExeptions;
+using CM.Services.CustomExceptions;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
@@ -18,7 +18,7 @@ namespace CM.Services.Tests.AppUserServicesTests
         public async Task ThrowMagicExeption_IfNullValue_DbContext_Passed()
         {
             var fileService = new Mock<IFileUploadService>();
-            Assert.ThrowsException<MagicExeption>(
+            Assert.ThrowsException<MagicException>(
                () => new AppUserServices(null, null));
 
         }
@@ -26,7 +26,7 @@ namespace CM.Services.Tests.AppUserServicesTests
         public async Task ThrowCorrectMagicExeption_IfNullValue_DbContext_Passed()
         {
             var fileService = new Mock<IFileUploadService>();
-            var ex = Assert.ThrowsException<MagicExeption>(
+            var ex = Assert.ThrowsException<MagicException>(
                () => new AppUserServices(null, null));
             Assert.AreEqual("CMContext cannot be null!", ex.Message);
         }
@@ -35,7 +35,7 @@ namespace CM.Services.Tests.AppUserServicesTests
         {
             var options = TestUtils.GetOptions(nameof(ThrowMagicExeption_IfNullValue_UserManager_Passed));
 
-            Assert.ThrowsException<MagicExeption>(
+            Assert.ThrowsException<MagicException>(
                () => new AppUserServices(new CMContext(options), null));
 
         }
@@ -45,7 +45,7 @@ namespace CM.Services.Tests.AppUserServicesTests
            
             var options = TestUtils.GetOptions(nameof(ThrowMagicCorrectExeption_IfNullValue_UserManager_Passed));
 
-            var ex = Assert.ThrowsException<MagicExeption>(
+            var ex = Assert.ThrowsException<MagicException>(
                () => new AppUserServices(new CMContext(options), null));
             Assert.AreEqual("UserManager cannot be null!", ex.Message);
         }

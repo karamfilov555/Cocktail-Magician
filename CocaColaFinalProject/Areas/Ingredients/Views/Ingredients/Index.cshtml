@@ -6,94 +6,102 @@
     <br />
 <h1 class="hdr1">Ingredients List</h1>
 
+<div class="bg-1 section" id="events" style="margin-top:-18px">
+    <div class="inner" data-image="/assets/images/content/ccback12.jpg" data-topspace="1" style="background-image: url('/assets/images/content/ccback12.jpg'); padding-top: 1px;">
+        <div class="inner" data-topspace="1" data-bottomspace="1" style="background-image: none; ">
+            <h3 class="hdr4">All Ingredients</h3>
+            <div style="background-color:rgba(16, 6, 6, 0.80)">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th width="10%">
 
-<table class="table">
-    <thead>
-        <tr>
-            <th width="10%">
+                            </th>
+                            <th>
+                                <h5>
+                                    Name
+                                </h5>
+                            </th>
+                            <th>
+                                <h5>
+                                    Brand
+                                </h5>
+                            </th>
 
-            </th>
-            <th>
-                <h5>
-                    Name
-                </h5>
-            </th>
-            <th>
-                <h5>
-                    Brand
-                </h5>
-            </th>
+                            <th>
+                                <h5>
+                                    Country
+                                </h5>
+                            </th>
+                            <th>
 
-            <th>
-                <h5>
-                    Country
-                </h5>
-            </th>
-            <th >
+                            </th>
+                            <th width="10%">
 
-            </th>
-            <th width="10%">
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody id="tbodyInredients">
+                        @foreach (var item in Model.TenIngredientsList)
+                        {
+                            <tr>
+                                <td></td>
+                                <td style="padding-right:200px">
+                                    <h5>
+                                        @item.Name
+                                    </h5>
+                                </td>
+                                <td style="padding-right:200px">
+                                    <h5>
+                                        @item.Brand
+                                    </h5>
+                                </td>
+                                <td style="padding-right:200px">
+                                    <h5>
+                                        @item.Country
+                                    </h5>
+                                </td>
+                                <td>
 
-            </th>
-        </tr>
-    </thead>
-    <tbody id="tbodyInredients">
-        @foreach (var item in Model.TenIngredientsList)
-        {
-        <tr>
-            <td></td>
-            <td style="padding-right:200px">
-                <h5>
-                    @item.Name
-                </h5>
-            </td>
-            <td style="padding-right:200px">
-                <h5>
-                    @item.Brand
-                </h5>
-            </td>
-            <td style="padding-right:200px">
-                <h5>
-                    @item.Country
-                </h5>
-            </td>
-            <td>
+                                    <p style="padding-right:-400px">
+                                        <a class="btn btn-default btn-sm" asp-area="Ingredients" asp-controller="Ingredients" asp-action="Edit" asp-route-id="@item.Id"><font style="color:gold"><i class="fa fa-magic"></i> Edit Ingeredient</font></a>
+                                    </p>
+                                    @if (@item.CocktailComponentsVm.Count == 0)
+                                    {
+                                        <p>
+                                            <a class="btn btn-default btn-sm" asp-area="Ingredients" asp-controller="Ingredients" asp-action="Delete" asp-route-id="@item.Id"><font style="color:gold"><i class="fa fa-trash-o"></i> Delete Ingeredient</font></a>
+                                        </p>
+                                    }
 
-                <p style="padding-right:-400px">
-                    <a class="btn btn-default btn-sm" asp-area="Ingredients" asp-controller="Ingredients" asp-action="Edit" asp-route-id="@item.Id"><font style="color:gold"><i class="fa fa-magic"></i> Edit Ingeredient</font></a>
-                </p>
-                @if (@item.CocktailComponentsVm.Count==0)
-                {
-                    <p>
-                        <a class="btn btn-default btn-sm" asp-area="Ingredients" asp-controller="Ingredients" asp-action="Delete" asp-route-id="@item.Id"><font style="color:gold"><i class="fa fa-trash-o"></i> Delete Ingeredient</font></a>
-                    </p>
-                }
+                                </td>
+                                <td></td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+                <center style="padding-bottom:20px">
+                    @if (Model.TenIngredientsList.Count == 0)
+                    {
+                        <div class="card-body">
+                            <h3>This is all the Cocktails in the app yet!</h3>
+                        </div>
+                    }
+                    else
+                    {
 
-            </td>
-            <td></td>
-        </tr>
-        }
-    </tbody>
-</table>
-<center style="padding-bottom:20px">
-    @if (Model.TenIngredientsList.Count == 0)
-    {
-        <div class="card-body">
-            <h3>This is all the Cocktails in the app yet!</h3>
-        </div>
-    }
-    else
-    {
-
-        @if (Model.MoreToLoad == false)
-        {
-            <a class="btn btn-default btn-sm disabled"><h5 style="margin-bottom:-5px">Load more cocktails <i class="fa fa-arrow-circle-o-down"></i></h5></a>
-        }
-        else
-        {
-            <a id="loadMoreIngredients" asp-area="Ingredients" asp-controller="Ingredients" asp-action="Index" class="btn btn-default btn-sm" data-currPage="@Model.CurrPage"><h5 style="margin-bottom:-5px; color:gold">Load more cocktails <i class="fa fa-plus-circle"></i></h5></a>
-        }
-    }
-</center>
-<script src="~/assets/js/jquery.min.js"></script>
-<script src="~/assets/js/ingredientsPagination.js"></script>
+                        @if (Model.MoreToLoad == false)
+                        {
+                            <a class="btn btn-default btn-sm disabled"><h5 style="margin-bottom:-5px">Load more cocktails <i class="fa fa-arrow-circle-o-down"></i></h5></a>
+                        }
+                        else
+                        {
+                            <a id="loadMoreIngredients" asp-area="Ingredients" asp-controller="Ingredients" asp-action="Index" class="btn btn-default btn-sm" data-currPage="@Model.CurrPage"><h5 style="margin-bottom:-5px; color:gold">Load more cocktails <i class="fa fa-plus-circle"></i></h5></a>
+                        }
+                    }
+                </center>
+                </div>
+                </div>
+                </div>
+                </div>
+                <script src="~/assets/js/jquery.min.js"></script>
+                <script src="~/assets/js/ingredientsPagination.js"></script>

@@ -4,7 +4,7 @@ using CM.DTOs.Mappers;
 using CM.Models;
 using CM.Services.Common;
 using CM.Services.Contracts;
-using CM.Services.CustomExeptions;
+using CM.Services.CustomExceptions;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -22,9 +22,9 @@ namespace CM.Services
         public BarServices(CMContext context, IFileUploadService fileUploadService)//tested
         {
             _context = context
-                         ?? throw new MagicExeption(ExeptionMessages.ContextNull);
+                         ?? throw new MagicException(ExceptionMessages.ContextNull);
             _fileUploadService = fileUploadService
-                         ?? throw new MagicExeption(ExeptionMessages.IFileUploadServiceNull);
+                         ?? throw new MagicException(ExceptionMessages.IFileUploadServiceNull);
         }
 
         public async Task<ICollection<HomePageBarDTO>> GetHomePageBars() //tested
@@ -43,7 +43,7 @@ namespace CM.Services
 
         public async Task<BarDTO> GetBarByID(string id) // tested with ex
         {
-            id.ValidateIfNull(ExeptionMessages.IdNull);
+            id.ValidateIfNull(ExceptionMessages.IdNull);
 
             var bar = await _context.Bars
                 .Where(b => b.Id == id)
@@ -54,7 +54,7 @@ namespace CM.Services
                 .FirstOrDefaultAsync()
                 .ConfigureAwait(false);
 
-            bar.ValidateIfNull(ExeptionMessages.BarNull);
+            bar.ValidateIfNull(ExceptionMessages.BarNull);
 
             var barDTO = bar.MapBarToDTO();
             barDTO.CountryId = bar.Address.Country.Id;
@@ -96,7 +96,7 @@ namespace CM.Services
         }
         public async Task<Bar> GetBar(string id) // tested
         {
-            id.ValidateIfNull(ExeptionMessages.IdNull);
+            id.ValidateIfNull(ExceptionMessages.IdNull);
 
             var bar = await _context.Bars
                 .Where(b => b.Id == id && b.DateDeleted == null)
@@ -107,14 +107,14 @@ namespace CM.Services
                 .FirstOrDefaultAsync()
                 .ConfigureAwait(false);
 
-            bar.ValidateIfNull(ExeptionMessages.BarNull);
+            bar.ValidateIfNull(ExceptionMessages.BarNull);
 
             return bar;
         }
 
         public async Task<string> AddBarAsync(BarDTO barDTO) //tested
         {
-            barDTO.ValidateIfNull(ExeptionMessages.BarDtoNull);
+            barDTO.ValidateIfNull(ExceptionMessages.BarDtoNull);
             barDTO.ImageUrl =  _fileUploadService.SetUniqueImagePath(barDTO.BarImage);
 
             var newBar = barDTO.MapBarDTOToBar();                  // to be tested in MapperTests
@@ -135,8 +135,8 @@ namespace CM.Services
 
         public async Task AddCocktailToBar(Cocktail cocktail, Bar bar) //tested
         {
-            cocktail.ValidateIfNull(ExeptionMessages.CocktailNull);
-            bar.ValidateIfNull(ExeptionMessages.BarNull);
+            cocktail.ValidateIfNull(ExceptionMessages.CocktailNull);
+            bar.ValidateIfNull(ExceptionMessages.BarNull);
             if (!bar.BarCocktails.Any(bc => bc.CocktailId == cocktail.Id))
             {
                 bar.BarCocktails.Add(new BarCocktail() { BarId = bar.Id, CocktailId = cocktail.Id });
@@ -144,9 +144,9 @@ namespace CM.Services
         }
         public async Task<string> Delete(string id) //tested
         {
-            id.ValidateIfNull(ExeptionMessages.IdNull);
+            id.ValidateIfNull(ExceptionMessages.IdNull);
             var barToDelete = await this.GetBar(id);
-            barToDelete.ValidateIfNull(ExeptionMessages.BarNull);
+            barToDelete.ValidateIfNull(ExceptionMessages.BarNull);
             barToDelete.DateDeleted = DateTime.Now.Date;
             await _context.SaveChangesAsync();
             return barToDelete.Name;
@@ -154,9 +154,9 @@ namespace CM.Services
 
         public async Task<string> Update(BarDTO barDto) //tested
         {
-            barDto.ValidateIfNull(ExeptionMessages.BarDtoNull);
+            barDto.ValidateIfNull(ExceptionMessages.BarDtoNull);
             var barToEdit = await this.GetBar(barDto.Id);
-            barToEdit.ValidateIfNull(ExeptionMessages.BarNull);
+            barToEdit.ValidateIfNull(ExceptionMessages.BarNull);
 
             barDto.ImageUrl = _fileUploadService.SetUniqueImagePath(barDto.BarImage);
 

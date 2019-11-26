@@ -135,6 +135,11 @@ namespace CM.Services
                 .ToListAsync();
         }
 
+        /// <summary>
+        /// Ot tuk nadolu si ti :)
+        /// </summary>
+        /// <param name="barReviewDTO"></param>
+        /// <returns></returns>
         public async Task<double?> CreateBarReview(BarReviewDTO barReviewDTO)
         {
             //validations

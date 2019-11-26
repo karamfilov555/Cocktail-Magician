@@ -1,7 +1,7 @@
 ﻿using CM.Data;
 using CM.Models;
 using CM.Services.Contracts;
-using CM.Services.CustomExeptions;
+using CM.Services.CustomExceptions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using System.Linq;
@@ -23,7 +23,7 @@ namespace CM.Services.Tests.BarServicesTests
             {
                 var sut = new BarServices(assertContext, fileService.Object);
 
-                var ex = await Assert.ThrowsExceptionAsync<MagicExeption>(
+                var ex = await Assert.ThrowsExceptionAsync<MagicException>(
                    async () => await sut.Delete(null));
 
             }
@@ -39,7 +39,7 @@ namespace CM.Services.Tests.BarServicesTests
             {
                 var sut = new BarServices(assertContext, fileService.Object);
 
-                var ex = await Assert.ThrowsExceptionAsync<MagicExeption>(
+                var ex = await Assert.ThrowsExceptionAsync<MagicException>(
                    async () => await sut.Delete(null));
                 Assert.AreEqual("ID cannot be null!", ex.Message);
             }
@@ -55,7 +55,7 @@ namespace CM.Services.Tests.BarServicesTests
             {
                 var sut = new BarServices(assertContext, fileService.Object);
 
-                var ex = await Assert.ThrowsExceptionAsync<MagicExeption>(
+                var ex = await Assert.ThrowsExceptionAsync<MagicException>(
                    async () => await sut.Delete("dddd"));
                
             }
@@ -71,7 +71,7 @@ namespace CM.Services.Tests.BarServicesTests
             {
                 var sut = new BarServices(assertContext, fileService.Object);
 
-                var ex = await Assert.ThrowsExceptionAsync<MagicExeption>(
+                var ex = await Assert.ThrowsExceptionAsync<MagicException>(
                    async () => await sut.Delete("dddd"));
                 Assert.AreEqual("Bar cannot be null!", ex.Message);
             }

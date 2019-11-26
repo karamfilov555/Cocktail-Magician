@@ -1,7 +1,7 @@
 ﻿using CM.Data;
 using CM.DTOs;
 using CM.Models;
-using CM.Services.CustomExeptions;
+using CM.Services.CustomExceptions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using System;
@@ -44,7 +44,7 @@ namespace CM.Services.Tests.IngredientServicesTests
             {
                 var sut = new IngredientServices(assertContext);
 
-                var ex = await Assert.ThrowsExceptionAsync<MagicExeption>(
+                var ex = await Assert.ThrowsExceptionAsync<MagicException>(
                     async () => await sut.AddIngredient(null));
             }
         }
@@ -58,7 +58,7 @@ namespace CM.Services.Tests.IngredientServicesTests
             {
                 var sut = new IngredientServices(assertContext);
 
-                var ex = await Assert.ThrowsExceptionAsync<MagicExeption>(
+                var ex = await Assert.ThrowsExceptionAsync<MagicException>(
                     async () => await sut.AddIngredient(null));
 
                 Assert.AreEqual("IngredientDto cannot be null!", ex.Message);

@@ -1,7 +1,7 @@
 ﻿using CM.Data;
 using CM.Models;
 using CM.Services.Contracts;
-using CM.Services.CustomExeptions;
+using CM.Services.CustomExceptions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using System;
@@ -59,7 +59,7 @@ namespace CM.Services.Tests.CocktailServiceTests
             {
                 var sut = new CocktailServices(assertContext, _fileUploadService.Object,
                     _ingredientServices.Object, _recipeServices.Object);
-                var ex = await Assert.ThrowsExceptionAsync<MagicExeption>(
+                var ex = await Assert.ThrowsExceptionAsync<MagicException>(
                   async () => await sut.GetCocktailIdByName(cocktailName));
             }
         }
@@ -74,7 +74,7 @@ namespace CM.Services.Tests.CocktailServiceTests
             {
                 var sut = new CocktailServices(assertContext, _fileUploadService.Object,
                     _ingredientServices.Object, _recipeServices.Object);
-                var ex = await Assert.ThrowsExceptionAsync<MagicExeption>(
+                var ex = await Assert.ThrowsExceptionAsync<MagicException>(
                   async () => await sut.GetCocktailIdByName(cocktailName));
                 Assert.AreEqual("Cocktail doesn't exist in DB!", ex.Message);
             }
@@ -89,7 +89,7 @@ namespace CM.Services.Tests.CocktailServiceTests
             {
                 var sut = new CocktailServices(assertContext, _fileUploadService.Object,
                     _ingredientServices.Object, _recipeServices.Object);
-                var ex = await Assert.ThrowsExceptionAsync<MagicExeption>(
+                var ex = await Assert.ThrowsExceptionAsync<MagicException>(
                   async () => await sut.GetCocktailIdByName(null)
                   );
             }
@@ -104,7 +104,7 @@ namespace CM.Services.Tests.CocktailServiceTests
             {
                 var sut = new CocktailServices(assertContext, _fileUploadService.Object,
                     _ingredientServices.Object, _recipeServices.Object);
-                var ex = await Assert.ThrowsExceptionAsync<MagicExeption>(
+                var ex = await Assert.ThrowsExceptionAsync<MagicException>(
                   async () => await sut.GetCocktailIdByName(null)
                   );
                 Assert.AreEqual("Name cannot be null!", ex.Message);
@@ -128,7 +128,7 @@ namespace CM.Services.Tests.CocktailServiceTests
             {
                 var sut = new CocktailServices(assertContext, _fileUploadService.Object,
                     _ingredientServices.Object, _recipeServices.Object);
-                var ex = await Assert.ThrowsExceptionAsync<MagicExeption>(
+                var ex = await Assert.ThrowsExceptionAsync<MagicException>(
                   async () => await sut.GetCocktailIdByName(cocktailName));
             }
         }
@@ -150,7 +150,7 @@ namespace CM.Services.Tests.CocktailServiceTests
             {
                 var sut = new CocktailServices(assertContext, _fileUploadService.Object,
                     _ingredientServices.Object, _recipeServices.Object);
-                var ex = await Assert.ThrowsExceptionAsync<MagicExeption>(
+                var ex = await Assert.ThrowsExceptionAsync<MagicException>(
                   async () => await sut.GetCocktailIdByName(cocktailName));
                 Assert.AreEqual("Cocktail doesn't exist in DB!", ex.Message);
             }

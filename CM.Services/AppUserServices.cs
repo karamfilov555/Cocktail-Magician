@@ -4,7 +4,7 @@ using CM.DTOs.Mappers;
 using CM.Models;
 using CM.Services.Common;
 using CM.Services.Contracts;
-using CM.Services.CustomExeptions;
+using CM.Services.CustomExceptions;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -24,32 +24,32 @@ namespace CM.Services
         public AppUserServices(CMContext context, UserManager<AppUser> userManager)//tested
         {
             _context = context
-                            ?? throw new MagicExeption(ExeptionMessages.ContextNull);
+                            ?? throw new MagicException(ExceptionMessages.ContextNull);
             _userManager = userManager
-                            ?? throw new MagicExeption(ExeptionMessages.UserManagerNull);
+                            ?? throw new MagicException(ExceptionMessages.UserManagerNull);
         }
         public async Task<AppUser> GetUserByID(string id) //tested
         {
-            id.ValidateIfNull(ExeptionMessages.IdNull);
+            id.ValidateIfNull(ExceptionMessages.IdNull);
             var user = await _context.Users.FindAsync(id);
-            user.ValidateIfNull(ExeptionMessages.AppUserNull);
+            user.ValidateIfNull(ExceptionMessages.AppUserNull);
             return user;
         }
 
         public async Task<AppUserDTO> GetUserDToByID(string id)//tested
         {
-            id.ValidateIfNull(ExeptionMessages.IdNull);
+            id.ValidateIfNull(ExceptionMessages.IdNull);
             var user = await this.GetUserByID(id);
-            user.ValidateIfNull(ExeptionMessages.AppUserNull);
+            user.ValidateIfNull(ExceptionMessages.AppUserNull);
             var userDTO = user.MapToAppUserDTO();
-            user.ValidateIfNull(ExeptionMessages.AppUserDtoNull);
+            user.ValidateIfNull(ExceptionMessages.AppUserDtoNull);
             userDTO.Role = await this.GetRole(user);
             return userDTO;
         }
 
         public async Task<string> GetProfilePictureURL(string id) // tested
         {
-            id.ValidateIfNull(ExeptionMessages.IdNull);
+            id.ValidateIfNull(ExceptionMessages.IdNull);
             var pictureURL = await _context.Users.Where(u => u.Id == id)
                 .Select(u => u.ImageURL)
                 .FirstOrDefaultAsync();
@@ -58,10 +58,10 @@ namespace CM.Services
 
         public async Task SetProfilePictureURL(string userId, string url) //tested
         {
-            userId.ValidateIfNull(ExeptionMessages.IdNull);
+            userId.ValidateIfNull(ExceptionMessages.IdNull);
             var user = await _context.Users.Where(u => u.Id == userId && u.DateDeleted == null)
                 .FirstOrDefaultAsync();
-            user.ValidateIfNull(ExeptionMessages.AppUserNull);
+            user.ValidateIfNull(ExceptionMessages.AppUserNull);
             user.ImageURL = url;
             await _context.SaveChangesAsync();
 
@@ -71,7 +71,7 @@ namespace CM.Services
             if (id == null)
                 return "annonymous";
             var user = await _context.Users.FindAsync(id);
-            user.ValidateIfNull(ExeptionMessages.AppUserNull);
+            user.ValidateIfNull(ExceptionMessages.AppUserNull);
             return user.UserName;
         }
 
@@ -96,7 +96,7 @@ namespace CM.Services
 
         public async Task<string> GetRole(AppUser user) //tested
         {
-            user.ValidateIfNull(ExeptionMessages.AppUserNull);
+            user.ValidateIfNull(ExceptionMessages.AppUserNull);
             var roles = await _userManager.GetRolesAsync(user).ConfigureAwait(false);
             string role;
             if (roles.Count == 0)
@@ -112,9 +112,9 @@ namespace CM.Services
 
         public async Task ConvertToManager(string id) //tested
         {
-            id.ValidateIfNull(ExeptionMessages.IdNull);
+            id.ValidateIfNull(ExceptionMessages.IdNull);
             var user = await this.GetUserByID(id);
-            user.ValidateIfNull(ExeptionMessages.AppUserNull);
+            user.ValidateIfNull(ExceptionMessages.AppUserNull);
             var roles = await _userManager.GetRolesAsync(user);
 
             await _userManager.RemoveFromRolesAsync(user, roles);
@@ -129,9 +129,9 @@ namespace CM.Services
 
         public async Task Delete(string id)//tested
         {
-            id.ValidateIfNull(ExeptionMessages.IdNull);
+            id.ValidateIfNull(ExceptionMessages.IdNull);
             var user = await this.GetUserByID(id);
-            user.ValidateIfNull(ExeptionMessages.AppUserNull);
+            user.ValidateIfNull(ExceptionMessages.AppUserNull);
             user.DateDeleted = DateTime.Now.Date;
             await _context.SaveChangesAsync();
         }
@@ -139,19 +139,19 @@ namespace CM.Services
         public async Task<AppUser> GetAdmin()
         {
             var adminRole = await _context.Roles.FirstOrDefaultAsync(role => role.Name.ToLower() == "administrator").ConfigureAwait(false);
-            adminRole.ValidateIfNull(ExeptionMessages.RoleNull);
+            adminRole.ValidateIfNull(ExceptionMessages.RoleNull);
             var adminId = await _context.UserRoles.FirstOrDefaultAsync(role => role.RoleId == adminRole.Id).ConfigureAwait(false);
-            adminId.ValidateIfNull(ExeptionMessages.UserRoleNull);
+            adminId.ValidateIfNull(ExceptionMessages.UserRoleNull);
             var admin = await GetUserByID(adminId.UserId).ConfigureAwait(false);
-            admin.ValidateIfNull(ExeptionMessages.AppUserNull);
+            admin.ValidateIfNull(ExceptionMessages.AppUserNull);
             return admin;
         }
         public async Task<AppUser> GetUserByUsernameAsync(string username)
         {
-            username.ValidateIfNull(ExeptionMessages.UserNameNull);
+            username.ValidateIfNull(ExceptionMessages.UserNameNull);
             var user = await _context.Users
                 .FirstOrDefaultAsync(m => m.UserName == username).ConfigureAwait(false);
-            user.ValidateIfNull(ExeptionMessages.AppUserNull);
+            user.ValidateIfNull(ExceptionMessages.AppUserNull);
             return user;
         }
 

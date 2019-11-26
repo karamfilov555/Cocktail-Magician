@@ -2,7 +2,7 @@
 using CM.DTOs;
 using CM.Models;
 using CM.Services.Contracts;
-using CM.Services.CustomExeptions;
+using CM.Services.CustomExceptions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using System;
@@ -33,7 +33,7 @@ namespace CM.Services.Tests.NotificationServiceTests
             {
                 var sut = new NotificationServices(assertContext, _userServices.Object,
                    _iNotificationManager.Object);
-                var ex = await Assert.ThrowsExceptionAsync<MagicExeption>(
+                var ex = await Assert.ThrowsExceptionAsync<MagicException>(
                   async () => await sut.MarkAsSeenAsync(null));
             }
         }
@@ -47,9 +47,9 @@ namespace CM.Services.Tests.NotificationServiceTests
             {
                 var sut = new NotificationServices(assertContext, _userServices.Object,
                    _iNotificationManager.Object);
-                var ex = await Assert.ThrowsExceptionAsync<MagicExeption>(
+                var ex = await Assert.ThrowsExceptionAsync<MagicException>(
                   async () => await sut.MarkAsSeenAsync(null));
-                Assert.AreEqual(ExeptionMessages.NotificationIdNull, ex.Message);
+                Assert.AreEqual(ExceptionMessages.NotificationIdNull, ex.Message);
             }
         }
 
@@ -62,7 +62,7 @@ namespace CM.Services.Tests.NotificationServiceTests
             {
                 var sut = new NotificationServices(assertContext, _userServices.Object,
                    _iNotificationManager.Object);
-                var ex = await Assert.ThrowsExceptionAsync<MagicExeption>(
+                var ex = await Assert.ThrowsExceptionAsync<MagicException>(
                   async () => await sut.MarkAsSeenAsync("15"));
             }
         }
@@ -76,9 +76,9 @@ namespace CM.Services.Tests.NotificationServiceTests
             {
                 var sut = new NotificationServices(assertContext, _userServices.Object,
                    _iNotificationManager.Object);
-                var ex = await Assert.ThrowsExceptionAsync<MagicExeption>(
+                var ex = await Assert.ThrowsExceptionAsync<MagicException>(
                   async () => await sut.MarkAsSeenAsync("15"));
-                Assert.AreEqual(ExeptionMessages.NotificationNull, ex.Message);
+                Assert.AreEqual(ExceptionMessages.NotificationNull, ex.Message);
             }
         }
 

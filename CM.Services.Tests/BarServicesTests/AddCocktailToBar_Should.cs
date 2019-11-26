@@ -1,7 +1,7 @@
 ﻿using CM.Data;
 using CM.DTOs;
 using CM.Models;
-using CM.Services.CustomExeptions;
+using CM.Services.CustomExceptions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
@@ -27,7 +27,7 @@ namespace CM.Services.Tests.BarServicesTests
             {
                 var sut = new BarServices(assertContext, fileService.Object);
                 
-                var ex = await Assert.ThrowsExceptionAsync<MagicExeption>(
+                var ex = await Assert.ThrowsExceptionAsync<MagicException>(
                    async () => await sut.AddCocktailToBar(null, null)
                     );
             }
@@ -43,7 +43,7 @@ namespace CM.Services.Tests.BarServicesTests
             {
                 var sut = new BarServices(assertContext, fileService.Object);
 
-                var ex = await  Assert.ThrowsExceptionAsync<MagicExeption>(
+                var ex = await  Assert.ThrowsExceptionAsync<MagicException>(
                    async  () => await sut.AddCocktailToBar(null, null));
 
                 Assert.AreEqual("Cocktail cannot be null!", ex.Message);
@@ -61,7 +61,7 @@ namespace CM.Services.Tests.BarServicesTests
             {
                 var sut = new BarServices(assertContext, fileService.Object);
 
-                var ex = await Assert.ThrowsExceptionAsync<MagicExeption>(
+                var ex = await Assert.ThrowsExceptionAsync<MagicException>(
                   async () => await sut.AddCocktailToBar(null, null));
 
             }
@@ -77,7 +77,7 @@ namespace CM.Services.Tests.BarServicesTests
             {
                 var sut = new BarServices(assertContext, fileService.Object);
 
-                var ex = await Assert.ThrowsExceptionAsync<MagicExeption>(
+                var ex = await Assert.ThrowsExceptionAsync<MagicException>(
                     async () => await sut.AddCocktailToBar(new Cocktail { Id ="1",Name="cocktail"}, null));
                 Assert.AreEqual("Bar cannot be null!", ex.Message);
             }

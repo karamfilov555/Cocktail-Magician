@@ -1,7 +1,7 @@
 ﻿using CM.Data;
 using CM.Models;
 using CM.Services.Contracts;
-using CM.Services.CustomExeptions;
+using CM.Services.CustomExceptions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using System;
@@ -96,7 +96,7 @@ namespace CM.Services.Tests.NotificationServiceTests
             {
                 var sut = new NotificationServices(assertContext, _userServices.Object,
                    _iNotificationManager.Object);
-                var ex = await Assert.ThrowsExceptionAsync<MagicExeption>(
+                var ex = await Assert.ThrowsExceptionAsync<MagicException>(
                   async () => await sut.CreateNewMessageAsync(null, "email", "msg"));
             }
         }
@@ -110,7 +110,7 @@ namespace CM.Services.Tests.NotificationServiceTests
             {
                 var sut = new NotificationServices(assertContext, _userServices.Object,
                    _iNotificationManager.Object);
-                var ex = await Assert.ThrowsExceptionAsync<MagicExeption>(
+                var ex = await Assert.ThrowsExceptionAsync<MagicException>(
                   async () => await sut.CreateNewMessageAsync(null, "email", "msg"));
                 Assert.AreEqual("Name cannot be null", ex.Message);
             }
@@ -125,7 +125,7 @@ namespace CM.Services.Tests.NotificationServiceTests
             {
                 var sut = new NotificationServices(assertContext, _userServices.Object,
                    _iNotificationManager.Object);
-                var ex = await Assert.ThrowsExceptionAsync<MagicExeption>(
+                var ex = await Assert.ThrowsExceptionAsync<MagicException>(
                   async () => await sut.CreateNewMessageAsync("name", null, "msg"));
             }
         }
@@ -139,7 +139,7 @@ namespace CM.Services.Tests.NotificationServiceTests
             {
                 var sut = new NotificationServices(assertContext, _userServices.Object,
                    _iNotificationManager.Object);
-                var ex = await Assert.ThrowsExceptionAsync<MagicExeption>(
+                var ex = await Assert.ThrowsExceptionAsync<MagicException>(
                   async () => await sut.CreateNewMessageAsync("name", null, "msg"));
                 Assert.AreEqual("Email cannot be null", ex.Message);
             }
@@ -154,7 +154,7 @@ namespace CM.Services.Tests.NotificationServiceTests
             {
                 var sut = new NotificationServices(assertContext, _userServices.Object,
                    _iNotificationManager.Object);
-                var ex = await Assert.ThrowsExceptionAsync<MagicExeption>(
+                var ex = await Assert.ThrowsExceptionAsync<MagicException>(
                   async () => await sut.CreateNewMessageAsync("name", "email", null));
             }
         }
@@ -168,7 +168,7 @@ namespace CM.Services.Tests.NotificationServiceTests
             {
                 var sut = new NotificationServices(assertContext, _userServices.Object,
                    _iNotificationManager.Object);
-                var ex = await Assert.ThrowsExceptionAsync<MagicExeption>(
+                var ex = await Assert.ThrowsExceptionAsync<MagicException>(
                   async () => await sut.CreateNewMessageAsync("name", "email", null));
                 Assert.AreEqual("Message cannot be null", ex.Message);
             }

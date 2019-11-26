@@ -2,7 +2,7 @@
 using CM.DTOs;
 using CM.Models;
 using CM.Services.Contracts;
-using CM.Services.CustomExeptions;
+using CM.Services.CustomExceptions;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
@@ -116,7 +116,7 @@ namespace CM.Services.Tests.NotificationServiceTests
             {
                 var sut = new NotificationServices(assertContext, _userServices.Object,
                    _iNotificationManager.Object);
-                var ex = await Assert.ThrowsExceptionAsync<MagicExeption>(
+                var ex = await Assert.ThrowsExceptionAsync<MagicException>(
                   async () => await sut.CreateNotificationAsync(null, "5"));
             }
         }
@@ -130,9 +130,9 @@ namespace CM.Services.Tests.NotificationServiceTests
             {
                 var sut = new NotificationServices(assertContext, _userServices.Object,
                    _iNotificationManager.Object);
-                var ex = await Assert.ThrowsExceptionAsync<MagicExeption>(
+                var ex = await Assert.ThrowsExceptionAsync<MagicException>(
                   async () => await sut.CreateNotificationAsync(null, "5"));
-                Assert.AreEqual(ExeptionMessages.DescriptionNull, ex.Message);
+                Assert.AreEqual(ExceptionMessages.DescriptionNull, ex.Message);
             }
         }
 
@@ -145,7 +145,7 @@ namespace CM.Services.Tests.NotificationServiceTests
             {
                 var sut = new NotificationServices(assertContext, _userServices.Object,
                    _iNotificationManager.Object);
-                var ex = await Assert.ThrowsExceptionAsync<MagicExeption>(
+                var ex = await Assert.ThrowsExceptionAsync<MagicException>(
                   async () => await sut.CreateNotificationAsync("23", null));
             }
         }
@@ -159,9 +159,9 @@ namespace CM.Services.Tests.NotificationServiceTests
             {
                 var sut = new NotificationServices(assertContext, _userServices.Object,
                    _iNotificationManager.Object);
-                var ex = await Assert.ThrowsExceptionAsync<MagicExeption>(
+                var ex = await Assert.ThrowsExceptionAsync<MagicException>(
                   async () => await sut.CreateNotificationAsync("23", null));
-                Assert.AreEqual(ExeptionMessages.UserNameNull, ex.Message);
+                Assert.AreEqual(ExceptionMessages.UserNameNull, ex.Message);
             }
         }
     }

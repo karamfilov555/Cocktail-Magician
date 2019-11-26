@@ -44,7 +44,7 @@
                                         </div>
 
                                         <a asp-area="Ingredients" asp-controller="Ingredients" asp-action="Index">
-                                            <div class="roundedImg" data-size="320" style="background-image: url(&quot;@Model.IngredientsImgsForHP[counter] &quot;); width: 320px; height: 320px;">
+                                            <div class="roundedImg" data-size="320" style="background-image: url(&quot;@Model.IngredientsImgsForHP.ToList()[counter] &quot;); width: 320px; height: 320px;">
                                                 <img class="media-object" src="./assets/images/content/photo-3.jpg" alt=" " draggable="false">
                                             </div>
                                         </a>

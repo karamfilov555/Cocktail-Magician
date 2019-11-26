@@ -1,6 +1,6 @@
 ﻿using CM.Data;
 using CM.Models;
-using CM.Services.CustomExeptions;
+using CM.Services.CustomExceptions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
@@ -77,7 +77,7 @@ namespace CM.Services.Tests.AppUserServicesTests
                     });
                 await assertContext.SaveChangesAsync();
                 var sut = new AppUserServices(assertContext, userManagerMocked.Object);
-                var ex = await Assert.ThrowsExceptionAsync<MagicExeption>
+                var ex = await Assert.ThrowsExceptionAsync<MagicException>
                     (async () => await sut.GetAdmin());
                 Assert.AreEqual("AppUser cannot be null!",ex.Message);
             }
@@ -105,7 +105,7 @@ namespace CM.Services.Tests.AppUserServicesTests
                     });
                 await assertContext.SaveChangesAsync();
                 var sut = new AppUserServices(assertContext, userManagerMocked.Object);
-                var ex = await Assert.ThrowsExceptionAsync<MagicExeption>
+                var ex = await Assert.ThrowsExceptionAsync<MagicException>
                     (async () => await sut.GetAdmin());
             }
         }
@@ -127,7 +127,7 @@ namespace CM.Services.Tests.AppUserServicesTests
                 assertContext.Roles.Add(role);
                 await assertContext.SaveChangesAsync();
                 var sut = new AppUserServices(assertContext, userManagerMocked.Object);
-                var ex = await Assert.ThrowsExceptionAsync<MagicExeption>
+                var ex = await Assert.ThrowsExceptionAsync<MagicException>
                     (async () => await sut.GetAdmin());
             }
         }
@@ -147,7 +147,7 @@ namespace CM.Services.Tests.AppUserServicesTests
                 assertContext.Roles.Add(role);
                 await assertContext.SaveChangesAsync();
                 var sut = new AppUserServices(assertContext, userManagerMocked.Object);
-                var ex = await Assert.ThrowsExceptionAsync<MagicExeption>
+                var ex = await Assert.ThrowsExceptionAsync<MagicException>
                     (async () => await sut.GetAdmin());
                 Assert.AreEqual("UserRole cannot be null!", ex.Message);
             }
@@ -166,7 +166,7 @@ namespace CM.Services.Tests.AppUserServicesTests
             using (var assertContext = new CMContext(options))
             {
                 var sut = new AppUserServices(assertContext, userManagerMocked.Object);
-                var ex = await Assert.ThrowsExceptionAsync<MagicExeption>
+                var ex = await Assert.ThrowsExceptionAsync<MagicException>
                     (async () => await sut.GetAdmin());
             }
         }
@@ -183,7 +183,7 @@ namespace CM.Services.Tests.AppUserServicesTests
             using (var assertContext = new CMContext(options))
             {
                 var sut = new AppUserServices(assertContext, userManagerMocked.Object);
-                var ex = await Assert.ThrowsExceptionAsync<MagicExeption>
+                var ex = await Assert.ThrowsExceptionAsync<MagicException>
                     (async () => await sut.GetAdmin());
                 Assert.AreEqual("AppRole cannot be null!", ex.Message);
             }

@@ -3,7 +3,7 @@ using CM.DTOs;
 using CM.DTOs.Mappers;
 using CM.Services.Common;
 using CM.Services.Contracts;
-using CM.Services.CustomExeptions;
+using CM.Services.CustomExceptions;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -18,7 +18,7 @@ namespace CM.Services
         public IngredientServices(CMContext context)//tested
         {
             _context = context 
-                         ?? throw new MagicExeption(ExeptionMessages.ContextNull);
+                         ?? throw new MagicException(ExceptionMessages.ContextNull);
         }
         public async Task<IList<IngredientDTO>> GetAllIngredients()//tested
         {
@@ -54,65 +54,67 @@ namespace CM.Services
         }
         public async Task AddIngredient(IngredientDTO ingredientDto) //tested
         {
-            ingredientDto.ValidateIfNull(ExeptionMessages.IngredientDtoNull);
+            ingredientDto.ValidateIfNull(ExceptionMessages.IngredientDtoNull);
             var ingredientCtx = ingredientDto.MapToCtxModel();
-            ingredientCtx.ValidateIfNull(ExeptionMessages.IngredientNull);
+            ingredientCtx.ValidateIfNull(ExceptionMessages.IngredientNull);
             _context.Add(ingredientCtx);
             await _context.SaveChangesAsync();
         }
         public async Task<string> GetIngredientNameById(string id) //tested
         {
-            id.ValidateIfNull(ExeptionMessages.IdNull);
+            id.ValidateIfNull(ExceptionMessages.IdNull);
             var ingredient = await _context.Ingredients.FirstOrDefaultAsync(i => i.Id == id);
-            ingredient.ValidateIfNull(ExeptionMessages.IngredientNull);
+            ingredient.ValidateIfNull(ExceptionMessages.IngredientNull);
             return ingredient.Name;
         }
         public async Task<string> GetIngredientIdByNameAsync(string name) // tested
         {
             var ingredient = await _context.Ingredients.FirstOrDefaultAsync(i => i.Name == name);
-            ingredient.ValidateIfNull(ExeptionMessages.IngredientNull);
+            ingredient.ValidateIfNull(ExceptionMessages.IngredientNull);
             return ingredient.Id;
         }
 
         public async Task<string> EditIngredienAsync(IngredientDTO ingredientDto) //tested -1
         {
-            ingredientDto.ValidateIfNull(ExeptionMessages.IngredientDtoNull);
+            ingredientDto.ValidateIfNull(ExceptionMessages.IngredientDtoNull);
             var ingredient = ingredientDto.MapToCtxModel();
-            ingredient.ValidateIfNull(ExeptionMessages.IngredientNull);
+            ingredient.ValidateIfNull(ExceptionMessages.IngredientNull);
             _context.Update(ingredient);
             await _context.SaveChangesAsync();
             return ingredient.Name;
         }
 
-        public async Task<string> DeleteIngredientAsync(string id)
+        public async Task<string> DeleteIngredientAsync(string id) // tested
         {
+            id.ValidateIfNull(ExceptionMessages.IdNull);
             var ingredient =await _context.Ingredients.FirstOrDefaultAsync(i => i.Id == id && i.DateDeleted == null);
-            ingredient.ValidateIfNull("This ingredient doesn't exist!");
+            ingredient.ValidateIfNull(ExceptionMessages.IngredientNull);
             if (_context.CocktailComponent.Select(cc => cc.Ingredient.Id).Contains(id))
             {
-                throw new MagicExeption("You cannot delete this ingredient");
+                throw new MagicException("You cannot delete this ingredient");
             }
             _context.Remove(ingredient);
             await _context.SaveChangesAsync();
             return ingredient.Name;
         }
 
-        public async Task<IngredientDTO> GetIngredientById(string id)
+        public async Task<IngredientDTO> GetIngredientById(string id) //tested
         {
+            id.ValidateIfNull(ExceptionMessages.IdNull);
             var ingredient = await _context.Ingredients
                 .Include(i=>i.CocktailComponents).FirstOrDefaultAsync(i => i.Id == id && i.DateDeleted == null);
-            ingredient.ValidateIfNull("This ingredient doesn't exist!");
+            ingredient.ValidateIfNull(ExceptionMessages.IngredientNull);
             return ingredient.MapToDtoModel();
         }
 
-        public async Task<ICollection<String>> GetAllIngredientsNames()
+        public async Task<ICollection<String>> GetAllIngredientsNames() //tested
         {
             var ingredients = await _context.Ingredients
                 .Where(i => i.DateDeleted == null)
                 .Select(i => i.Name).ToListAsync();
             return ingredients;
         }
-        public async Task<List<String>> GetImagesForHpAsync()
+        public async Task<ICollection<String>> GetImagesForHpAsync()
         {
             var ingredientImgsForHp = await _context.Ingredients
                                                     .Where(i => i.Id == "10"

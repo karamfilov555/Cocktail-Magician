@@ -1,6 +1,6 @@
 ﻿using CM.Data;
 using CM.Models;
-using CM.Services.CustomExeptions;
+using CM.Services.CustomExceptions;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
@@ -118,7 +118,7 @@ namespace CM.Services.Tests.AppUserServicesTests
             {
                 var sut = new AppUserServices(assertContext, userManagerMocked.Object);
 
-                var ex = await  Assert.ThrowsExceptionAsync<MagicExeption>(
+                var ex = await  Assert.ThrowsExceptionAsync<MagicException>(
                     async()=> await sut.GetRole(null));
             }
         }
@@ -136,7 +136,7 @@ namespace CM.Services.Tests.AppUserServicesTests
             {
                 var sut = new AppUserServices(assertContext, userManagerMocked.Object);
 
-                var ex = await Assert.ThrowsExceptionAsync<MagicExeption>(
+                var ex = await Assert.ThrowsExceptionAsync<MagicException>(
                     async () => await sut.GetRole(null));
                 Assert.AreEqual("AppUser cannot be null!", ex.Message);
             }

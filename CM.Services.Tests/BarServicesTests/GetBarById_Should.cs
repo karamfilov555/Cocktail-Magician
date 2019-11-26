@@ -1,7 +1,7 @@
 ﻿using CM.Data;
 using CM.DTOs;
 using CM.Models;
-using CM.Services.CustomExeptions;
+using CM.Services.CustomExceptions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using System;
@@ -228,7 +228,7 @@ namespace CM.Services.Tests.BarServicesTests
             {
                 var sut = new BarServices(assertContext, fileService.Object);
 
-               var ex =  await Assert.ThrowsExceptionAsync<MagicExeption>(
+               var ex =  await Assert.ThrowsExceptionAsync<MagicException>(
                    async ()=> await sut.GetBarByID(null)
                    );
             }
@@ -282,7 +282,7 @@ namespace CM.Services.Tests.BarServicesTests
             {
                 var sut = new BarServices(assertContext, fileService.Object);
 
-                var ex = await Assert.ThrowsExceptionAsync<MagicExeption>(
+                var ex = await Assert.ThrowsExceptionAsync<MagicException>(
                     async () => await sut.GetBarByID(null)
                     );
                 Assert.AreEqual("ID cannot be null!", ex.Message);

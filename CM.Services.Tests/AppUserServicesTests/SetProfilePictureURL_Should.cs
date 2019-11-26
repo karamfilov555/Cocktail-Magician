@@ -1,6 +1,6 @@
 ﻿using CM.Data;
 using CM.Models;
-using CM.Services.CustomExeptions;
+using CM.Services.CustomExceptions;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
@@ -79,7 +79,7 @@ namespace CM.Services.Tests.AppUserServicesTests
             {
                 var sut = new AppUserServices(assertContext, userManagerMocked.Object);
 
-                var result = await Assert.ThrowsExceptionAsync<MagicExeption>(
+                var result = await Assert.ThrowsExceptionAsync<MagicException>(
                     async () => await sut.SetProfilePictureURL("1", "url"));
             }
         }
@@ -114,7 +114,7 @@ namespace CM.Services.Tests.AppUserServicesTests
             {
                 var sut = new AppUserServices(assertContext, userManagerMocked.Object);
 
-                var result = await Assert.ThrowsExceptionAsync<MagicExeption>(
+                var result = await Assert.ThrowsExceptionAsync<MagicException>(
                     async () => await sut.SetProfilePictureURL("1", "url"));
 
                 Assert.AreEqual("AppUser cannot be null!", result.Message);
@@ -136,7 +136,7 @@ namespace CM.Services.Tests.AppUserServicesTests
             {
                 var sut = new AppUserServices(assertContext, userManagerMocked.Object);
 
-                var result = await Assert.ThrowsExceptionAsync<MagicExeption>(
+                var result = await Assert.ThrowsExceptionAsync<MagicException>(
                     async () => await sut.SetProfilePictureURL(null,"url"));
             }
         }
@@ -154,7 +154,7 @@ namespace CM.Services.Tests.AppUserServicesTests
             {
                 var sut = new AppUserServices(assertContext, userManagerMocked.Object);
 
-                var result = await Assert.ThrowsExceptionAsync<MagicExeption>(
+                var result = await Assert.ThrowsExceptionAsync<MagicException>(
                     async () => await sut.SetProfilePictureURL(null, "url"));
 
                 Assert.AreEqual("ID cannot be null!", result.Message);
@@ -175,7 +175,7 @@ namespace CM.Services.Tests.AppUserServicesTests
             {
                 var sut = new AppUserServices(assertContext, userManagerMocked.Object);
 
-                var result = await Assert.ThrowsExceptionAsync<MagicExeption>(
+                var result = await Assert.ThrowsExceptionAsync<MagicException>(
                     async () => await sut.SetProfilePictureURL("asdadad", "url"));
 
                 Assert.AreEqual("AppUser cannot be null!", result.Message);
@@ -195,7 +195,7 @@ namespace CM.Services.Tests.AppUserServicesTests
             {
                 var sut = new AppUserServices(assertContext, userManagerMocked.Object);
 
-                var result = await Assert.ThrowsExceptionAsync<MagicExeption>(
+                var result = await Assert.ThrowsExceptionAsync<MagicException>(
                     async () => await sut.SetProfilePictureURL("asdadad", "url"));
             }
         }
