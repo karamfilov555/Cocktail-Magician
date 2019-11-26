@@ -8,9 +8,19 @@
 
   <ItemGroup>
     <Compile Remove="Areas\Bars\Data\**" />
+    <Compile Remove="Areas\Ingredients\Data\**" />
+    <Compile Remove="Areas\Notifications\Data\**" />
     <Content Remove="Areas\Bars\Data\**" />
+    <Content Remove="Areas\Ingredients\Data\**" />
+    <Content Remove="Areas\Notifications\Data\**" />
     <EmbeddedResource Remove="Areas\Bars\Data\**" />
+    <EmbeddedResource Remove="Areas\Ingredients\Data\**" />
+    <EmbeddedResource Remove="Areas\Notifications\Data\**" />
     <None Remove="Areas\Bars\Data\**" />
+    <None Remove="Areas\Ingredients\Data\**" />
+    <None Remove="Areas\Notifications\Data\**" />
+    <TypeScriptCompile Remove="Areas\Ingredients\Data\**" />
+    <TypeScriptCompile Remove="Areas\Notifications\Data\**" />
   </ItemGroup>
 
 
@@ -34,8 +44,6 @@
 
   <ItemGroup>
     <Folder Include="Areas\Cocktails\Data\" />
-    <Folder Include="Areas\Ingredients\Data\" />
-    <Folder Include="Areas\Notifications\Data\" />
     <Folder Include="Areas\Search\Views\Shared\" />
     <Folder Include="wwwroot\images\" />
   </ItemGroup>

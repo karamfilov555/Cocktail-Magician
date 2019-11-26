@@ -24,6 +24,8 @@ namespace CM.Web.Areas.Ingredients.Controllers
         [Authorize(Roles = "Manager, Administrator")]
         public async Task<IActionResult> Index(int? currPage)
         {
+            try
+            {
             currPage = currPage ?? 1;
 
             var tenIngredientsDtos = await _ingredientServices
@@ -54,14 +56,32 @@ namespace CM.Web.Areas.Ingredients.Controllers
             }
 
             return PartialView("_LoadMorePartial", litingViewModel);
+
+            }
+            catch (Exception ex)
+            {
+                _toast.AddErrorToastMessage(ex.Message);
+                ViewBag.ErrorTitle = "";
+                return View("Error");
+            }
         }
 
         [HttpGet]
         [Authorize(Roles = "Manager, Administrator")]
         public IActionResult Create()
         {
+            try
+            {
             var ingredientVm = new IngredientViewModel();
             return View(ingredientVm);
+
+            }
+            catch (Exception ex)
+            {
+                _toast.AddErrorToastMessage(ex.Message);
+                ViewBag.ErrorTitle = "";
+                return View("Error");
+            }
         }
         
         [HttpPost]
@@ -71,12 +91,21 @@ namespace CM.Web.Areas.Ingredients.Controllers
         {
             if (ModelState.IsValid)
             {
+                try
+                {
                 var ingredientDto = ingredientVm.MapToDto();
 
                 await _ingredientServices.AddIngredient(ingredientDto);
 
                 _toast.AddSuccessToastMessage($"You successfully added a new ingredient : {ingredientDto.Name} !");
                 return RedirectToAction(nameof(Index));
+                }
+                catch (Exception ex)
+                {
+                    _toast.AddErrorToastMessage(ex.Message);
+                    ViewBag.ErrorTitle = "";
+                    return View("Error");
+                }
             }
             _toast.AddErrorToastMessage($"Invalid Model state!");
             return View(ingredientVm);
@@ -86,14 +115,19 @@ namespace CM.Web.Areas.Ingredients.Controllers
         [Authorize(Roles = "Manager, Administrator")]
         public async Task<IActionResult> Edit(string id)
         {
-            if (id == null)
+            
+            try
             {
-                return NotFound();
-            }
-
             var ingredient = await _ingredientServices.GetIngredientById(id);
             var ingredientVM = ingredient.MapToViewModel();
             return View(ingredientVM);
+            }
+            catch (Exception ex)
+            {
+                _toast.AddErrorToastMessage(ex.Message);
+                ViewBag.ErrorTitle = "";
+                return View("Error");
+            }
         }
 
         // POST: Ingredients/Ingredients/Edit/5
@@ -113,7 +147,9 @@ namespace CM.Web.Areas.Ingredients.Controllers
                 }
                 catch (Exception ex)
                 {
-                    return StatusCode(500);
+                    _toast.AddErrorToastMessage(ex.Message);
+                    ViewBag.ErrorTitle = "";
+                    return View("Error");
                 }
             }
             return RedirectToAction(nameof(Index));
@@ -124,13 +160,19 @@ namespace CM.Web.Areas.Ingredients.Controllers
         [Authorize(Roles = "Manager, Administrator")]
         public async Task<IActionResult> Delete(string id)
         {
-            if (id == null)
+           
+            try
             {
-                return NotFound();
-            }
             var ingredient = await _ingredientServices.GetIngredientById(id);
             var ingredientVM = ingredient.MapToViewModel();
             return View(ingredientVM);
+
+            }
+            catch (Exception ex)
+            {
+                _toast.AddErrorToastMessage(ex.Message);
+                return StatusCode(500);
+            }
         }
 
         // POST: Ingredients/Ingredients/Delete/5
@@ -148,7 +190,9 @@ namespace CM.Web.Areas.Ingredients.Controllers
                 }
                 catch (Exception ex)
                 {
-                    return StatusCode(500);
+                    _toast.AddErrorToastMessage(ex.Message);
+                    ViewBag.ErrorTitle = "";
+                    return View("Error");
                 }
             }
             return RedirectToAction(nameof(Index));

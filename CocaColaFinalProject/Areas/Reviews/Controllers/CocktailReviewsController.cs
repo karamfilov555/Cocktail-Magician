@@ -1,5 +1,4 @@
 ﻿using CM.Services.Contracts;
-using CM.Web.Areas.Cocktails.Models;
 using CM.Web.Mappers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -19,8 +18,6 @@ namespace CM.Web.Areas.Reviews.Controllers
         private readonly IReviewServices _reviewServices;
         private readonly IToastNotification _toast;
 
-        //ID!!!! string id = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-
         public CocktailReviewsController(ICocktailServices cocktailServices,
                                    IReviewServices reviewServices,
                                    IToastNotification toast)
@@ -32,15 +29,15 @@ namespace CM.Web.Areas.Reviews.Controllers
         }
 
         [HttpGet]
-        [Authorize]
+        [Authorize(Roles = "Manager, Administrator, Member")]
         public async Task<IActionResult> RateCocktail(string Id , int? currPage)
         {
+            try
+            {
             var cocktailDto = await _cocktailServices.FindCocktailById(Id);
             var reviewVm = cocktailDto.MapToCocktailReviewViewModel();
             reviewVm.Ingredients = cocktailDto.Ingredients.Select(i => i.MapToCocktailComponentVM()).ToList();
             string userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-
-
             currPage = currPage ?? 1;
 
             var twoDtoReviews = await _reviewServices
@@ -83,12 +80,20 @@ namespace CM.Web.Areas.Reviews.Controllers
             }
 
             return PartialView("_LoadMoreReviewsPartial", litingReviewViewModel);
+            }
+            catch (Exception ex)
+            {
+                _toast.AddErrorToastMessage(ex.Message);
+                ViewBag.ErrorTitle = "";
+                return View("Error");
+            }
         }
         [HttpPost]
-        [Authorize]
+        [Authorize(Roles = "Manager, Administrator, Member")]
         public async Task<IActionResult> RateCocktail(CocktailReviewViewModel cocktailVm)
         {
-            //validations
+            try
+            {
             var cocktailDto = cocktailVm.MapToCocktailDto();
             string userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
             var cocktailName = await _cocktailServices.GetCocktailNameById(cocktailDto.Id);
@@ -96,9 +101,17 @@ namespace CM.Web.Areas.Reviews.Controllers
             await _reviewServices.CreateCocktailReview(userId, cocktailDto);
             _toast.AddSuccessToastMessage($"You successfully rated \"{cocktailName}\" cocktail");
             return RedirectToAction("ListCocktails", "Cocktails", new { area = "Cocktails" });
+
+            }
+            catch (Exception ex)
+            {
+                _toast.AddErrorToastMessage(ex.Message);
+                ViewBag.ErrorTitle = "";
+                return View("Error");
+            }
         }
 
-        //TODO bez redirect pri greshka
+        
         [HttpPost]
         [Authorize(Roles = "Manager, Administrator, Member")]
         public async Task<int> LikeCocktailReview(string cocktailReviewID, string cocktailId)
@@ -106,7 +119,6 @@ namespace CM.Web.Areas.Reviews.Controllers
             try
             {
                 int count = await _reviewServices.LikeCocktailReview(cocktailReviewID, User.FindFirstValue(ClaimTypes.NameIdentifier));
-
                 return count;
 
             }
@@ -117,7 +129,7 @@ namespace CM.Web.Areas.Reviews.Controllers
             }
         }
 
-        //TODO bez rediredt pri greshka
+        
         [HttpPost]
         [Authorize(Roles = "Manager, Administrator, Member")]
         public async Task<int> RemoveLikeCocktailReview(string cocktailReviewID, string cocktailId)

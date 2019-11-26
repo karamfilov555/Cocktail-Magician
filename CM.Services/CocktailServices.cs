@@ -274,7 +274,7 @@ namespace CM.Services
                     });
             }
             cocktail.CocktailComponents = newCocktailComponents;
-
+            cocktail.Recepie = await _recipeServices.ExtractRecipe(cocktail);
             _context.Entry(cocktailToEdit).CurrentValues.SetValues(cocktail);
             _context.RemoveRange(cocktailToEdit.CocktailComponents);
             _context.AddRange(cocktail.CocktailComponents);

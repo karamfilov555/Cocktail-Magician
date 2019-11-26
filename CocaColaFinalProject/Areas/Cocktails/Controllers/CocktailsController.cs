@@ -5,7 +5,6 @@ using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
-//using CM.Services;
 using CM.Services.Contracts;
 using CM.Web.Areas.Cocktails.Models;
 using CM.Web.Mappers;
@@ -20,71 +19,64 @@ namespace CM.Web.Areas.Cocktails.Controllers
     public class CocktailsController : Controller
     {
         private readonly ICocktailServices _cocktailServices;
-        private readonly IReviewServices _reviewServices;
         private readonly IIngredientServices _ingredientServices;
         private readonly IToastNotification _toast;
-        private readonly IStreamWriterServices _streamWriter;
         private readonly INotificationServices _notificationServices;
 
-        //ID!!!! string id = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
 
         public CocktailsController(ICocktailServices cocktailServices,
                                    IIngredientServices ingredientServices,
-                                   IReviewServices reviewServices,
                                    IToastNotification toast,
-                                   IStreamWriterServices streamWriter,
                                    INotificationServices notificationServices)
         {
             _cocktailServices = cocktailServices;
             _ingredientServices = ingredientServices;
-            _reviewServices = reviewServices;
             _toast = toast;
-            _streamWriter = streamWriter;
             _notificationServices = notificationServices;
         }
 
         [Route("cocktails/details/{id}")]
-
         public async Task<IActionResult> Details(string Id)
         {
-            if (Id == null)
+            try
             {
-                ViewBag.ErrorTitle = $"You are tring to see Details of a cocktail with Id = null";
-                ViewBag.ErrorMessage = $"Cocktail's Id cannot be null!";
+                var cocktail = await _cocktailServices.FindCocktailById(Id);
+                var vm = cocktail.MapToCocktailViewModel();
+                if (vm == null)
+                {
+                    _toast.AddErrorToastMessage($"You are tring to see Details of a cocktail with invalid model state");
+                    return StatusCode(404);
+                }
+                return View(vm);
+            }
+            catch (Exception ex)
+            {
+                _toast.AddErrorToastMessage(ex.Message);
+                ViewBag.ErrorTitle = "";
                 return View("Error");
             }
-
-            var cocktail = await _cocktailServices.FindCocktailById(Id);
-            if (cocktail == null)
-            {
-                ViewBag.ErrorTitle = $"You are tring to see Details of a cocktail with invalid model state";
-                return View("Error");
-            }
-
-            var vm = cocktail.MapToCocktailViewModel();
-
-            if (vm == null)
-            {
-                ViewBag.ErrorTitle = $"You are tring to see Details of a cocktail with invalid model state";
-                return View("Error");
-            }
-            return View(vm);
         }
+
+
         [HttpGet]
         [Authorize(Roles = "Administrator, Manager")]
         public async Task<IActionResult> Create()
         {
-            //review this block
-            var ingr = await _ingredientServices.GetAllIngredientsNames();
-            var createCocktailVM = new CreateCocktailViewModel();
-            createCocktailVM.IngredientsNames.Add(new SelectListItem("Choose an igredient", ""));
-            createCocktailVM.IngredientsNames.AddRange(ingr.Select(i => new SelectListItem(i, i)));
-            //createCocktailVM.Ingredients = new List<CocktailComponentViewModel>();
-            //for (int i = 0; i < 10; i++)
-            //{
-            //    createCocktailVM.Ingredients.Add(new CocktailComponentViewModel());
-            //}
-            return View(createCocktailVM);
+            try
+            {
+                //review this block
+                var ingr = await _ingredientServices.GetAllIngredientsNames();
+                var createCocktailVM = new CreateCocktailViewModel();
+                createCocktailVM.IngredientsNames.Add(new SelectListItem("Choose an igredient", ""));
+                createCocktailVM.IngredientsNames.AddRange(ingr.Select(i => new SelectListItem(i, i)));
+                return View(createCocktailVM);
+            }
+            catch (Exception ex)
+            {
+                _toast.AddErrorToastMessage(ex.Message);
+                ViewBag.ErrorTitle = "";
+                return View("Error");
+            }
         }
 
         [HttpPost]
@@ -96,15 +88,23 @@ namespace CM.Web.Areas.Cocktails.Controllers
             {
                 //TODO -refactor!
                 // validation if there is no Picture!
-                var imageSizeInKb = cocktailVm.CocktailImage.Length / 1024;
-                var type = cocktailVm.CocktailImage.ContentType;
-                var cocktailDto = cocktailVm.MapToCocktailDTO();
-                await _cocktailServices.AddCocktail(cocktailDto);
-                //notification to admin
-                string id = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-                await _notificationServices.CocktailCreateNotificationToAdminAsync(id, cocktailDto.Name);
-                _toast.AddSuccessToastMessage($"You successfully added cocktail {cocktailDto.Name}!");
-                return RedirectToAction("ListCocktails");
+                try
+                {
+                    var imageSizeInKb = cocktailVm.CocktailImage.Length / 1024;
+                    var type = cocktailVm.CocktailImage.ContentType;
+                    var cocktailDto = cocktailVm.MapToCocktailDTO();
+                    await _cocktailServices.AddCocktail(cocktailDto);
+                    string id = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+                    await _notificationServices.CocktailCreateNotificationToAdminAsync(id, cocktailDto.Name);
+                    _toast.AddSuccessToastMessage($"You successfully added cocktail {cocktailDto.Name}!");
+                    return RedirectToAction("ListCocktails");
+                }
+                catch (Exception ex)
+                {
+                    _toast.AddErrorToastMessage(ex.Message);
+                    ViewBag.ErrorTitle = "";
+                    return View("Error");
+                }
             }
             cocktailVm.IngredientsNames.Add(new SelectListItem("Choose an igredient", ""));
             cocktailVm.IngredientsNames.AddRange(ingr.Select(i => new SelectListItem(i, i)));
@@ -113,7 +113,7 @@ namespace CM.Web.Areas.Cocktails.Controllers
 
         [HttpGet]
         public async Task<IActionResult> ListCocktails(string sortOrder, int? currPage, string orderByModel)
-            {
+        {
             if (orderByModel == null)
             {
                 ViewData["CurrentSort"] = sortOrder; //care
@@ -125,130 +125,147 @@ namespace CM.Web.Areas.Cocktails.Controllers
                 sortOrder = orderByModel;
             }
             //there is some logic for the traditional page-numbers pagination (DONT remove it for now)
-            currPage = currPage ?? 1;
-
-            var fiveSortedCocktailsDtos = await _cocktailServices
-                                    .GetFiveSortedCocktailsAsync(sortOrder, (int)currPage);
-
-            var totalPages = await _cocktailServices
-                                    .GetPageCountForCocktials(5);
-
-            var fiveSortedCocktailsVm = fiveSortedCocktailsDtos
-                                    .Select(c => c.MapToCocktailViewModel()).ToList();
-
-            var litingViewModel = new CocktailsListingViewModel()
+            try
             {
-                FiveCocktailsList = fiveSortedCocktailsVm,
-                CurrPage = (int)currPage,
-                TotalPages = totalPages,
-                SortOrder = sortOrder,
-                MoreToLoad = true
-            };
-            if (fiveSortedCocktailsDtos.Count == 0)
-            {
-                _toast.AddInfoToastMessage("There are no more cocktails!");
-                litingViewModel.MoreToLoad = false;
-                //here i have to stop the request... return smthg..
+                currPage = currPage ?? 1;
+                var fiveSortedCocktailsDtos = await _cocktailServices
+                                        .GetFiveSortedCocktailsAsync(sortOrder, (int)currPage);
+                var totalPages = await _cocktailServices
+                                        .GetPageCountForCocktials(5);
+                var fiveSortedCocktailsVm = fiveSortedCocktailsDtos
+                                        .Select(c => c.MapToCocktailViewModel()).ToList();
+                var litingViewModel = new CocktailsListingViewModel()
+                {
+                    FiveCocktailsList = fiveSortedCocktailsVm,
+                    CurrPage = (int)currPage,
+                    TotalPages = totalPages,
+                    SortOrder = sortOrder,
+                    MoreToLoad = true
+                };
+                if (fiveSortedCocktailsDtos.Count == 0)
+                {
+                    _toast.AddInfoToastMessage("There are no more cocktails!");
+                    litingViewModel.MoreToLoad = false;
+                    //here i have to stop the request... return smthg..
+                }
+                if (totalPages > currPage)
+                {
+                    litingViewModel.NextPage = currPage + 1;
+                }
+
+                if (currPage > 1)
+                {
+                    litingViewModel.PrevPage = currPage - 1;
+                }
+                // To add timeSpan and animation ! 
+                if (currPage == 1)
+                {
+                    return View("CocktailsGrid", litingViewModel);
+                }
+                return PartialView("_LoadMorePartial", litingViewModel);
+                //return View(allCocktailsVms.ToList());
             }
-            if (totalPages > currPage)
+            catch (Exception ex)
             {
-                litingViewModel.NextPage = currPage + 1;
+                _toast.AddErrorToastMessage(ex.Message);
+                ViewBag.ErrorTitle = "";
+                return View("Error");
             }
-
-            if (currPage > 1)
-            {
-                litingViewModel.PrevPage = currPage - 1;
-            }
-            // To add timeSpan and animation ! 
-            if (currPage == 1)
-            {
-                return View("CocktailsGrid", litingViewModel);
-            }
-
-            return PartialView("_LoadMorePartial", litingViewModel);
-            //return View(allCocktailsVms.ToList());
         }
 
-       
         [HttpGet]
         [Authorize(Roles = "Administrator, Manager")]
         public async Task<IActionResult> Delete(string Id)
         {
-            var cocktail = await _cocktailServices.FindCocktailById(Id);
-            var cocktailVm = cocktail.MapToCocktailViewModel();
-            //validations
-
-            return View(cocktailVm);
+            try
+            {
+                var cocktail = await _cocktailServices.FindCocktailById(Id);
+                var cocktailVm = cocktail.MapToCocktailViewModel();
+                return View(cocktailVm);
+            }
+            catch (Exception ex)
+            {
+                _toast.AddErrorToastMessage(ex.Message);
+                ViewBag.ErrorTitle = "";
+                return View("Error");
+            }
         }
 
         [HttpPost]
         [Authorize(Roles = "Administrator, Manager")]
         public async Task<IActionResult> Delete(CocktailViewModel cocktailVm)
         {
-            var cocktailName = await _cocktailServices.DeleteCocktial(cocktailVm.Id);
+            try
+            {
+                var cocktailName = await _cocktailServices.DeleteCocktial(cocktailVm.Id);
+                var id = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+                await _notificationServices.CocktailDeletedNotificationToAdminAsync(id, cocktailName);
+                _toast.AddSuccessToastMessage($"You successfully delete \"{cocktailName}\" cocktail!");
+                return RedirectToAction("ListCocktails", "Cocktails");
 
-            var id = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            await _notificationServices.CocktailDeletedNotificationToAdminAsync(id, cocktailName);
-
-            _toast.AddSuccessToastMessage($"You successfully delete \"{cocktailName}\" cocktail!");
-            return RedirectToAction("ListCocktails", "Cocktails");
+            }
+            catch (Exception ex)
+            {
+                _toast.AddErrorToastMessage(ex.Message);
+                ViewBag.ErrorTitle = "";
+                return View("Error");
+            }
         }
 
+        [Authorize(Roles = "Manager, Administrator")]
         [HttpGet]
         public async Task<IActionResult> DownloadRecipe(string Id)
         {
-            if (Id == null)
-            {
-                _toast.AddErrorToastMessage("Cocktail's Id cannot be null!");
-                return RedirectToAction("ListCocktails", "Cocktails");
-            }
+            
             if (!await _cocktailServices.CheckIfCocktailExist(Id))
             {
                 _toast.AddErrorToastMessage($"Cocktail with Id: {Id} does not exist!");
                 return RedirectToAction("ListCocktails", "Cocktails");
             }
-            // if id doesnt exist....
-            //validations
-
-            var cocktailName = await _cocktailServices.GetCocktailNameById(Id);
-            var cocktailRecepie = await _cocktailServices.GetCocktailRecipe(Id);
             try
             {
+                var cocktailName = await _cocktailServices.GetCocktailNameById(Id);
+                var cocktailRecepie = await _cocktailServices.GetCocktailRecipe(Id);
                 var content = new System.IO.MemoryStream(Encoding.UTF8.GetBytes(cocktailRecepie));
                 var contentType = "APPLICATION/octet-stream";
                 var fileName = $"{cocktailName}.txt";
                 return File(content, contentType, fileName);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                _toast.AddInfoToastMessage("This cocktail's recepie is a secret!");
-                return RedirectToAction("ListCocktails", "Cocktails");
+                _toast.AddErrorToastMessage(ex.Message);
+                ViewBag.ErrorTitle = "";
+                return View("Error");
             }
         }
 
         [Authorize(Roles = "Manager, Administrator")]
         public async Task<IActionResult> Edit(string id)
         {
-            //TODO refactor
-            if (id == null)
+            
+            try
             {
-                return NotFound();
+                var allIngredients = await _ingredientServices.GetAllIngredients();
+                var cocktailDto = await _cocktailServices.FindCocktailById(id);
+                var cocktailVM = cocktailDto.MapToCocktailViewModel();
+                var ingr = await _ingredientServices.GetAllIngredientsNames();
+                cocktailVM.IngredientsNames.Add(new SelectListItem("Choose an igredient", ""));
+                cocktailVM.IngredientsNames.AddRange(ingr.Select(i => new SelectListItem(i, i)));
+                cocktailVM.Ingredients = new List<CocktailComponentViewModel>();
+                for (int i = 0; i < 10; i++)
+                {
+                    cocktailVM.Ingredients.Add(new CocktailComponentViewModel());
+                }
+                cocktailVM.AllIngredients = allIngredients.Select(i => new SelectListItem(i.Name, i.Id)).ToList();
+
+                return View(cocktailVM);
             }
-            var allIngredients = await _ingredientServices.GetAllIngredients();
-            var cocktailDto = await _cocktailServices.FindCocktailById(id);
-            var cocktailVM = cocktailDto.MapToCocktailViewModel();
-            var ingr = await _ingredientServices.GetAllIngredientsNames();
-            cocktailVM.IngredientsNames.Add(new SelectListItem("Choose an igredient", ""));
-            cocktailVM.IngredientsNames.AddRange(ingr.Select(i => new SelectListItem(i, i)));
-            cocktailVM.Ingredients = new List<CocktailComponentViewModel>();
-            for (int i = 0; i < 10; i++)
+            catch (Exception ex)
             {
-                cocktailVM.Ingredients.Add(new CocktailComponentViewModel());
+                _toast.AddErrorToastMessage(ex.Message);
+                ViewBag.ErrorTitle = "";
+                return View("Error");
             }
-
-            cocktailVM.AllIngredients = allIngredients.Select(i => new SelectListItem(i.Name, i.Id)).ToList();
-
-            return View(cocktailVM);
         }
         [HttpPost]
         [Authorize(Roles = "Manager, Administrator")]
@@ -257,22 +274,29 @@ namespace CM.Web.Areas.Cocktails.Controllers
         {
             if (ModelState.IsValid)
             {
-                //image check
-                var cocktailDto = cocktailVm.MapToCocktailDTO();
-                var oldName = await _cocktailServices.GetCocktailNameById(cocktailVm.Id);
-                var cocktailName = await _cocktailServices.Update(cocktailDto);
-                var id = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-                await _notificationServices.CocktailEditNotificationToAdminAsync(id, oldName, cocktailName);
+                try
+                {
+                    //image check
+                    var cocktailDto = cocktailVm.MapToCocktailDTO();
+                    var oldName = await _cocktailServices.GetCocktailNameById(cocktailVm.Id);
+                    var cocktailName = await _cocktailServices.Update(cocktailDto);
+                    var id = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+                    await _notificationServices.CocktailEditNotificationToAdminAsync(id, oldName, cocktailName);
+                    if (oldName != cocktailName)
+                        _toast.AddSuccessToastMessage
+                    ($"You successfully edited \"{oldName}\" cocktail - new name\"{cocktailName}\"!");
 
-                if (oldName != cocktailName)
-                    _toast.AddSuccessToastMessage
-                ($"You successfully edited \"{oldName}\" cocktail - new name\"{cocktailName}\"!");
-
-                else
-                    _toast.AddSuccessToastMessage
-                        ($"You successfully edited \"{cocktailName}\" cocktail!");
-
-                return RedirectToAction(nameof(ListCocktails));
+                    else
+                        _toast.AddSuccessToastMessage
+                            ($"You successfully edited \"{cocktailName}\" cocktail!");
+                    return RedirectToAction(nameof(ListCocktails));
+                }
+                catch (Exception ex)
+                {
+                    _toast.AddErrorToastMessage(ex.Message);
+                    ViewBag.ErrorTitle = "";
+                    return View("Error");
+                }
             }
             return View(cocktailVm);
         }

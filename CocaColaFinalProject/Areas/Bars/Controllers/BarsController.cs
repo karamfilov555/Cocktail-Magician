@@ -42,63 +42,79 @@ namespace CM.Web.Areas.Bars.Controllers
         //[Route("bars/details/{id}")]
         public async Task<IActionResult> Details(string id)
         {
-            if (id == null)
+            try
             {
-                return NotFound();
+                var barDTO = await _barServices.GetBarByID(id);
+                var barVM = barDTO.MapBarToVM();
+                return View(barVM);
             }
-            var barDTO = await _barServices.GetBarByID(id);
-            if (barDTO == null)
+            catch (Exception ex)
             {
-                return NotFound();
+                _toast.AddErrorToastMessage(ex.Message);
+                ViewBag.ErrorTitle = "";
+                return View("Error");
             }
-            var barVM = barDTO.MapBarToVM();
-            //var reviews = await _reviewServices.GetAllReviewsForBar(id);
-            //barVM.Reviews = reviews.Select(r => r.MapReviewDTOToVM()).ToList();
-            return View(barVM);
         }
 
         // GET:
         public async Task<IActionResult> ListBars(string sortOrder, int? pageNumber)
         {
-            var listVM = new ListBarsViewModel();
-            listVM.CurrentSortOrder = sortOrder;
-            listVM.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
-            listVM.RatingSortParm = sortOrder == "Rating" ? "rating_asc" : "Rating";
-            var bars = await _barServices.GetAllBars(pageNumber, sortOrder);
-            if (bars.Count == 0)
+            try
             {
-                _toast.AddInfoToastMessage("There are no more cocktails!");
-                //here i have to stop the request... return smthg..
+                var listVM = new ListBarsViewModel();
+                listVM.CurrentSortOrder = sortOrder;
+                listVM.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+                listVM.RatingSortParm = sortOrder == "Rating" ? "rating_asc" : "Rating";
+                var bars = await _barServices.GetAllBars(pageNumber, sortOrder);
+                if (bars.Count == 0)
+                {
+                    _toast.AddInfoToastMessage("There are no more cocktails!");
+                }
+                var pagList = new PaginatedList<BarViewModel>()
+                {
+                    PageIndex = bars.PageIndex,
+                    TotalPages = bars.TotalPages
+                };
+                foreach (var item in bars)
+                {
+                    pagList.Add(item.MapBarToVM());
+                }
+                listVM.AllBars = pagList;
+                if (bars.PageIndex == 1)
+                {
+                    return View(listVM);
+                }
+                return PartialView("_BarPaginationPartial", listVM);
             }
-            var pagList = new PaginatedList<BarViewModel>()
+            catch (Exception ex)
             {
-                PageIndex = bars.PageIndex,
-                TotalPages = bars.TotalPages
-            };
-            foreach (var item in bars)
-            {
-                pagList.Add(item.MapBarToVM());
+                _toast.AddErrorToastMessage(ex.Message);
+                ViewBag.ErrorTitle = "";
+                return View("Error");
             }
-            listVM.AllBars = pagList;
-            if (bars.PageIndex==1)
-            {
-            return View(listVM);
-            }
-            return PartialView("_BarPaginationPartial", listVM);
         }
         // GET: Bars/Bars/Create
         [HttpGet]
         [Authorize(Roles = "Manager, Administrator")]
         public async Task<IActionResult> Create()
         {
-            var allCocktails = await _cocktailServices.GetAllCocktails();
-            var allCountries = await _barServices.GetAllCountries();
-            var createBarVM = new CreateBarVM();
-            createBarVM.AllCocktails = allCocktails
-                .Select(c => new SelectListItem(c.Name, c.Id)).ToList();
-            createBarVM.AllCountries = allCountries
-                .Select(c => new SelectListItem(c.Name, c.Id)).ToList();
-            return View(createBarVM);
+            try
+            {
+                var allCocktails = await _cocktailServices.GetAllCocktails();
+                var allCountries = await _barServices.GetAllCountries();
+                var createBarVM = new CreateBarVM();
+                createBarVM.AllCocktails = allCocktails
+                    .Select(c => new SelectListItem(c.Name, c.Id)).ToList();
+                createBarVM.AllCountries = allCountries
+                    .Select(c => new SelectListItem(c.Name, c.Id)).ToList();
+                return View(createBarVM);
+            }
+            catch (Exception ex)
+            {
+                _toast.AddErrorToastMessage(ex.Message);
+                ViewBag.ErrorTitle = "";
+                return View("Error");
+            }
         }
 
         //POST: Bars/Bars/Create
@@ -109,13 +125,22 @@ namespace CM.Web.Areas.Bars.Controllers
         {
             if (ModelState.IsValid)
             {
-                var barDTO = barVM.MapBarVMToDTO();
-                var barName = await _barServices.AddBarAsync(barDTO);
-                //notification for admin
-                string id = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-                await _notificationServices.BarCreateNotificationToAdminAsync(id, barName);
-                _toast.AddSuccessToastMessage($"You successfully added \"{barName}\" bar!");
-                return RedirectToAction(nameof(ListBars));
+                try
+                {
+                    var barDTO = barVM.MapBarVMToDTO();
+                    var barName = await _barServices.AddBarAsync(barDTO);
+                    //notification for admin
+                    string id = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+                    await _notificationServices.BarCreateNotificationToAdminAsync(id, barName);
+                    _toast.AddSuccessToastMessage($"You successfully added \"{barName}\" bar!");
+                    return RedirectToAction(nameof(ListBars));
+                }
+                catch (Exception ex)
+                {
+                    _toast.AddErrorToastMessage(ex.Message);
+                    ViewBag.ErrorTitle = "";
+                    return View("Error");
+                }
             }
             var allCocktails = await _cocktailServices.GetAllCocktails();
             var allCountries = await _barServices.GetAllCountries();
@@ -126,43 +151,30 @@ namespace CM.Web.Areas.Bars.Controllers
             return View(barVM);
         }
 
-        //private bool ImageIsValid(IFormFile barImage)
-        //{
-        //    var imageSizeInKb = barImage.Length / 1024;
-        //    var type = barImage.ContentType;
-
-        //    if (type != "image/jpeg" && type != "image/jpg" && type != "image/png")
-        //    {
-        //        _toast.AddErrorToastMessage($"Allowed picture formats: \".jpg\", \".jpeg\" and \".png\"!");
-        //        return false;
-        //    }
-        //    else if (imageSizeInKb > 100)
-        //    {
-        //        _toast.AddErrorToastMessage($"The picture size is too big! Maximum size: 100 kb");
-        //        return false;
-        //    }
-        //    return true;
-        //}
-
         // GET: Bars/Bars/Edit/5
         [Authorize(Roles = "Manager, Administrator")]
         public async Task<IActionResult> Edit(string id)
         {
-            if (id == null)
+            
+            try
             {
-                return NotFound();
+                var bar = await _barServices.GetBarByID(id);
+                var allCocktails = await _cocktailServices.GetAllCocktails();
+                var allCountries = await _barServices.GetAllCountries();
+                var createBarVM = bar.MapBarToCreateBarVM();
+                createBarVM.AllCocktailsIDs = bar.Cocktails.Select(c => c.Id).ToList();
+                createBarVM.AllCocktails = allCocktails
+                    .Select(c => new SelectListItem(c.Name, c.Id)).ToList();
+                createBarVM.AllCountries = allCountries
+                    .Select(c => new SelectListItem(c.Name, c.Id)).ToList();
+                return View(createBarVM);
             }
-            var bar = await _barServices.GetBarByID(id);
-            var allCocktails = await _cocktailServices.GetAllCocktails();
-            var allCountries = await _barServices.GetAllCountries();
-            var createBarVM = bar.MapBarToCreateBarVM();
-            createBarVM.AllCocktailsIDs = bar.Cocktails.Select(c => c.Id).ToList();
-            createBarVM.AllCocktails = allCocktails
-                .Select(c => new SelectListItem(c.Name, c.Id)).ToList();
-            createBarVM.AllCountries = allCountries
-                .Select(c => new SelectListItem(c.Name, c.Id)).ToList();
-            return View(createBarVM);
-
+            catch (Exception ex)
+            {
+                _toast.AddErrorToastMessage(ex.Message);
+                ViewBag.ErrorTitle ="";
+                return View("Error");
+            }
         }
 
         // POST: Bars/Bars/Edit/5
@@ -173,10 +185,19 @@ namespace CM.Web.Areas.Bars.Controllers
         {
             if (ModelState.IsValid)
             {
-                var barDTO = createBarVM.MapBarVMToDTO();
-                var barName = await _barServices.Update(barDTO);
-                _toast.AddSuccessToastMessage($"You successfully edited \"{barName}\" bar!");
-                return RedirectToAction(nameof(ListBars));
+                try
+                {
+                    var barDTO = createBarVM.MapBarVMToDTO();
+                    var barName = await _barServices.Update(barDTO);
+                    _toast.AddSuccessToastMessage($"You successfully edited \"{barName}\" bar!");
+                    return RedirectToAction(nameof(ListBars));
+                }
+                catch (Exception ex)
+                {
+                    _toast.AddErrorToastMessage(ex.Message);
+                    ViewBag.ErrorTitle = "";
+                    return View("Error");
+                }
             }
             var allCountries = await _barServices.GetAllCountries();
             var allCocktails = await _cocktailServices.GetAllCocktails();
@@ -192,9 +213,22 @@ namespace CM.Web.Areas.Bars.Controllers
         [HttpGet]
         public async Task<IActionResult> Delete(string id)
         {
-            var barDTO = await _barServices.GetBarByID(id);
-            var barVM = barDTO.MapBarToVM();
-            return View(barVM);
+            if (id == null)
+            {
+                return NotFound();
+            }
+            try
+            {
+                var barDTO = await _barServices.GetBarByID(id);
+                var barVM = barDTO.MapBarToVM();
+                return View(barVM);
+            }
+            catch (Exception ex)
+            {
+                _toast.AddErrorToastMessage(ex.Message);
+                ViewBag.ErrorTitle = "";
+                return View("Error");
+            }
         }
 
         [Authorize(Roles = "Manager, Administrator")]
@@ -202,13 +236,20 @@ namespace CM.Web.Areas.Bars.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(string id)
         {
-            var barName = await _barServices.Delete(id);
-
-            string userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            await _notificationServices.BarDeletedNotificationToAdminAsync(userId, barName);
-
-            _toast.AddSuccessToastMessage($"You successfully deleted \"{barName}\" bar!");
-            return RedirectToAction(nameof(ListBars));
+            try
+            {
+                var barName = await _barServices.Delete(id);
+                string userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+                await _notificationServices.BarDeletedNotificationToAdminAsync(userId, barName);
+                _toast.AddSuccessToastMessage($"You successfully deleted \"{barName}\" bar!");
+                return RedirectToAction(nameof(ListBars));
+            }
+            catch (Exception ex)
+            {
+                _toast.AddErrorToastMessage(ex.Message);
+                ViewBag.ErrorTitle = "";
+                return View("Error");
+            }
         }
     }
 }

@@ -132,9 +132,14 @@ namespace CM.Services
             id.ValidateIfNull(ExceptionMessages.IdNull);
             var user = await this.GetUserByID(id);
             user.ValidateIfNull(ExceptionMessages.AppUserNull);
+            if (await _userManager.IsInRoleAsync(user, "Administrator"))
+            {
+                throw new MagicException("Admin cannot be deleted");
+            }
             user.DateDeleted = DateTime.Now.Date;
             await _context.SaveChangesAsync();
         }
+
 
         public async Task<AppUser> GetAdmin()
         {

@@ -34,6 +34,8 @@ namespace CM.Web.Areas.Reviews.Controllers
         [Authorize(Roles = "Manager, Administrator, Member")]
         public async Task<IActionResult> BarReviews(string id, string name, double? rating, int? pageNumber )
         {
+            try
+            {
             List<BarReviewDTO> allReviewsDTOs = await _reviewServices.GetAllReviewsForBar(id, pageNumber);
             var allReviewsVM = allReviewsDTOs.Select(r => r.MapReviewDTOToVM()).ToList();
             if (allReviewsVM.Count == 0&&pageNumber!=null)
@@ -52,6 +54,14 @@ namespace CM.Web.Areas.Reviews.Controllers
             barReviewVM.BarName = name;
             barReviewVM.Rating = (double)Math.Round((decimal)(rating ?? 0), 2);
             return View(barReviewVM);
+
+            }
+            catch (Exception ex)
+            {
+                _toast.AddErrorToastMessage(ex.Message);
+                ViewBag.ErrorTitle = "";
+                return View("Error");
+            }
         }
 
 
@@ -59,10 +69,20 @@ namespace CM.Web.Areas.Reviews.Controllers
         [Authorize(Roles = "Manager, Administrator, Member")]
         public async Task<IActionResult> CreateBarReview(BarReviewViewModel barVM)
         {
+            try
+            {
             var barReviewDTO = barVM.MapVMToReviewDTO();
             var newRating= (double)Math.Round((decimal)(await _reviewServices.CreateBarReview(barReviewDTO)??0), 2);
 
             return RedirectToAction("BarReviews", "BarReviews", new { id = barVM.BarId, name = barVM.BarName, rating=newRating});
+            }
+            catch (Exception ex)
+            {
+
+                _toast.AddErrorToastMessage(ex.Message);
+                ViewBag.ErrorTitle = "";
+                return View("Error");
+            }
         }
 
         //TODO bez rediredt pri greshka
@@ -79,7 +99,6 @@ namespace CM.Web.Areas.Reviews.Controllers
             }
             catch (Exception ex)
             {
-
                 throw new InvalidOperationException(ex.Message);
             }
         }
@@ -97,7 +116,6 @@ namespace CM.Web.Areas.Reviews.Controllers
             }
             catch (Exception ex)
             {
-
                 throw new InvalidOperationException(ex.Message);
             }
         }

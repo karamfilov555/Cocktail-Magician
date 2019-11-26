@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using CM.Services.Contracts;
 using CM.Web.Areas.Search.Models;
@@ -21,43 +20,32 @@ namespace CM.Web.Areas.Search.Controllers
             _toast = toast;
         }
 
-        
+
         public async Task<IActionResult> SearchResults(string searchString)
         {
             if (searchString == null)
             {
                 _toast.AddInfoToastMessage("Please enter search criteria!");
-                return RedirectToAction("Index","Home");
+                return RedirectToAction("Index", "Home");
             }
-            var barResults = await _searchServices.GetResultsFromBars(searchString);
-            var cocktailResults =await _searchServices.GetResultsFromCocktails(searchString);
-
-            var searchVM = new SearchViewModel();
-            searchVM.Bars = barResults.Select(b => b.MapSearchBarVMToDTO()).ToList();
-            searchVM.Cocktails = cocktailResults.Select(c => c.MapCocktailSearchDTOToVM()).ToList();
-            searchVM.SearchCriteria = searchString;
-            return View(searchVM);
-        }
-
-
-        public IActionResult BarResults(ICollection<BarSearchResultViewModel> barResults)
-        {
-            if (barResults is null)
+            try
             {
-                throw new System.ArgumentNullException(nameof(barResults));
+                var barResults = await _searchServices.GetResultsFromBars(searchString);
+                var cocktailResults = await _searchServices.GetResultsFromCocktails(searchString);
+
+                var searchVM = new SearchViewModel();
+                searchVM.Bars = barResults.Select(b => b.MapSearchBarVMToDTO()).ToList();
+                searchVM.Cocktails = cocktailResults.Select(c => c.MapCocktailSearchDTOToVM()).ToList();
+                searchVM.SearchCriteria = searchString;
+                return View(searchVM);
+
             }
-
-            return PartialView("_BarResults", barResults);
-        }
-
-        public IActionResult CocktailResults(ICollection<CocktailSearchRestultViewModel> cocktailResults)
-        {
-            if (cocktailResults is null)
+            catch (System.Exception ex)
             {
-                throw new System.ArgumentNullException(nameof(cocktailResults));
+                _toast.AddErrorToastMessage(ex.Message);
+                ViewBag.ErrorTitle = "";
+                return View("Error");
             }
-
-            return PartialView("_CocktailResults", cocktailResults);
         }
     }
 }
