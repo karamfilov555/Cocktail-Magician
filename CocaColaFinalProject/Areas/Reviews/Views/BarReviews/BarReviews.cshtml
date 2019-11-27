@@ -39,11 +39,19 @@
 @{
     if (!@Model.ReviewedByUsers.Contains(@User.FindFirstValue(ClaimTypes.NameIdentifier)))
     {
-        var reviewVM = new BarReviewViewModel();
-        reviewVM.BarId = Model.BarId;
-        reviewVM.BarName = Model.BarName;
+        //var reviewVM = new BarReviewViewModel();
+        //reviewVM.BarId = Model.BarId;
+        //reviewVM.BarName = Model.BarName;
 
-        <partial name="_CreateBarReviewPartial" model=reviewVM />
+        @*<partial name="_CreateBarReviewPartial" model=reviewVM />*@
+        <center>
+            <a class="btn btn-default btn-lg" style="margin-bottom:-5px; color:gold"
+               asp-action="CreateBarReview" asp-controller="BarReviews" asp-area="Reviews" asp-route-id="@Model.BarId" class="btn btn-default">Add Your Review</a>
+        </center>
+    }
+    else
+    {
+        <dt><h3 class="hdr3" style="color:gold"> You've already rated this cocktail ! </h3></dt>
     }
 }
 
@@ -66,21 +74,21 @@
                                 <div class="blog_thumbnail">
                                     <div class="box_text">
                                         <span class="ribbon_icon"><i class="fa fa-quote-left"></i></span>
-                                        
-                                            <blockquote class="inner">
-                                                <p class="text-body" style="width:400px; word-wrap:break-word; display:inline-block;" rows="5">
 
-                                                    "@review.Description"
+                                        <blockquote class="inner">
+                                            <p class="text-body" style="width:400px; word-wrap:break-word; display:inline-block;" rows="5">
 
-                                                </p>
-                                                <br>
-                                                <p>
-                                                    <font style="color:gold">Grade: @review.Rating</font>
+                                                "@review.Description"
 
-                                                </p>
-                                                <span class="author">- The Coca-Cola Company, Cocktail Magician™, 2019 -</span>
-                                            </blockquote>
-                                            
+                                            </p>
+                                            <br>
+                                            <p>
+                                                <font style="color:gold">Grade: @review.Rating</font>
+
+                                            </p>
+                                            <span class="author">- The Coca-Cola Company, Cocktail Magician™, 2019 -</span>
+                                        </blockquote>
+
                                     </div>
                                 </div>
                                 <div class="meta_box">
@@ -120,12 +128,15 @@
                     </center>
                 }
         </ul>
+        @if (@Model.Reviews.Count >2)
+        { 
         <center>
             <a id="loadMoreBarComments" asp-area="Reviews" asp-controller="BarReviews" asp-action="BarReviews" class="btn btn-default btn-sm"
                data-id="@Model.BarId" data-name="@Model.BarName" data-rating="@Model.Rating" data-pageNumber="0">
                 <h5 style="margin-bottom:-5px; color:gold">Load more comments <i class="fa fa-plus-circle"></i></h5>
             </a>
         </center>
+        }
     </div>
 </div>
 

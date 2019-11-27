@@ -16,7 +16,7 @@ namespace CM.Web.Areas.Reviews.Models
 
         //care B-52 ;)
         [Display(Name = "Cocktail's Name")]
-        [Required, RegularExpression("[A-Za-z ]+", ErrorMessage = "Cocktail's name should only contain latin letters!")]
+       
         public string Name { get; set; }
         public string CocktailID { get; set; }
         public string UserId { get; set; }
@@ -27,8 +27,12 @@ namespace CM.Web.Areas.Reviews.Models
 
         public string Image { get; set; }
         [Display(Name = "Cocktail's Rating")]
+        [Required(ErrorMessage = "Rating is required!")]
         public double? Rating { get; set; }
         [Display(Name = "Type your Review Here")]
+        [Required(ErrorMessage = "Description is required!")]
+        [MinLength(5, ErrorMessage = "Description be between 5 and 500 symbols"),
+            MaxLength(500, ErrorMessage = "Description must be between 5 and 500 symbols")]
         public string Description { get; set; }
         
         public int LikeCount { get; set; }

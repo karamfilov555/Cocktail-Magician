@@ -64,17 +64,17 @@ namespace CM.Web.Areas.Reviews.Controllers
             }
         }
 
-
-        [HttpPost]
+        [HttpGet]
         [Authorize(Roles = "Manager, Administrator, Member")]
-        public async Task<IActionResult> CreateBarReview(BarReviewViewModel barVM)
+        public async Task<IActionResult> CreateBarReview(string id)
         {
             try
             {
-            var barReviewDTO = barVM.MapVMToReviewDTO();
-            var newRating= (double)Math.Round((decimal)(await _reviewServices.CreateBarReview(barReviewDTO)??0), 2);
-                return RedirectToAction("ListBars", "Bars", new { area = "Bars" });
-            
+                var bar = await _barServices.GetBarByID(id);
+                var barReviewVM = new BarReviewViewModel();
+                barReviewVM.BarId = bar.Id;
+                barReviewVM.BarName = bar.Name;
+                return View(barReviewVM);
             }
             catch (Exception ex)
             {
@@ -84,6 +84,32 @@ namespace CM.Web.Areas.Reviews.Controllers
                 return View("Error");
             }
         }
+
+        [HttpPost]
+        [Authorize(Roles = "Manager, Administrator, Member")]
+        public async Task<IActionResult> CreateBarReview(BarReviewViewModel barVM)
+        {
+            if (ModelState.IsValid)
+            {
+            try
+            {
+                var barReviewDTO = barVM.MapVMToReviewDTO();
+                var newRating = (double)Math.Round((decimal)(await _reviewServices.CreateBarReview(barReviewDTO) ?? 0), 2);
+                    _toast.AddSuccessToastMessage($"Your review was submitted succesfully");
+                    return RedirectToAction("ListBars", "Bars", new { area = "Bars" });
+
+            }
+            catch (Exception ex)
+            {
+
+                _toast.AddErrorToastMessage(ex.Message);
+                ViewBag.ErrorTitle = "";
+                return View("Error");
+            }
+            }
+            return View(barVM);
+        }
+
 
         //TODO bez rediredt pri greshka
         [HttpPost]

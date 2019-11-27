@@ -21,6 +21,7 @@
 
 <center><h1 class="hdr6">Rate Cocktail "@Model.Name" </h1></center>
 <form asp-area="Reviews" asp-controller="CocktailReviews" asp-action="RateCocktail" method="post">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
     <table class="table">
         <thead>
             <tr>
@@ -37,7 +38,7 @@
                 <td><img src="@Model.Image" height="250" width="250" style="border-radius:20px"></td>
                 <td>
                     <h5 style="margin-left:27px">Name: @Model.Name</h5>
-                    @if (@Model.Rating == 0||Model.Rating == null)
+                    @if (@Model.Rating == 0 || Model.Rating == null)
                     {
                         <h5 style="margin-left:27px">
                             Not Rated Yet!
@@ -52,6 +53,7 @@
                                       value="@Model.Rating"
                                       readonly="true" enabled="false">
                         </kendo-rating>
+
                     }
 
                 </td>
@@ -82,6 +84,9 @@
                                               min="1" max="10"
                                               value="@Model.Rating">
                                 </kendo-rating>
+                                <p>
+                                    <span asp-validation-for="Rating" class="text-danger"></span>
+                                </p>
                             </b>
                         </div>
                     <dt class="col-sm-2">
@@ -92,7 +97,9 @@
                         <div class="col-md-6">
                             <textarea asp-for="Description" class="form-control input-sm" rows="5" cols="50" placeholder="Write your review here..." style="padding-right:10px"> </textarea>
                             <br>
-
+                            <p>
+                                <button class="btn btn-primary" type="submit">Submit</button>
+                            </p>
                             <button class="btn btn-default" type="submit">Submit</button>
 
                         </div>
