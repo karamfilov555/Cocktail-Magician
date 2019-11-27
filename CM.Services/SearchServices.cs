@@ -34,7 +34,7 @@ namespace CM.Services
         //    return searchDto;
         //}
 
-        public async Task<List<BarSearchResultDTO>> GetResultsFromBars(string searchString)
+        public async Task<ICollection<BarSearchResultDTO>> GetResultsFromBars(string searchString)
         {
             var namesResult = _context.Bars
                  .Include(b => b.Address)
@@ -56,7 +56,7 @@ namespace CM.Services
             return resultList;
         }
 
-        public async Task<List<CocktailSearchResultDTO>> GetResultsFromCocktails(string searchString)
+        public async Task<ICollection<CocktailSearchResultDTO>> GetResultsFromCocktails(string searchString)
         {
             var namesResult = _context.Cocktails
                  .Include(c => c.CocktailComponents)

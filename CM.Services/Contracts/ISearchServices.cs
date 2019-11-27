@@ -9,7 +9,7 @@ namespace CM.Services.Contracts
     public interface ISearchServices
     {
         //Task<SearchResultDTO> GetResultsFromSearch(string searchString);
-        Task<List<BarSearchResultDTO>> GetResultsFromBars(string searchString);
-        Task<List<CocktailSearchResultDTO>> GetResultsFromCocktails(string searchString);
+        Task<ICollection<BarSearchResultDTO>> GetResultsFromBars(string searchString);
+        Task<ICollection<CocktailSearchResultDTO>> GetResultsFromCocktails(string searchString);
     }
 }

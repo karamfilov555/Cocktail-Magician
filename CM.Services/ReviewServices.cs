@@ -4,6 +4,7 @@ using CM.DTOs.Mappers;
 using CM.Models;
 using CM.Services.Common;
 using CM.Services.Contracts;
+using CM.Services.CustomExceptions;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -20,8 +21,7 @@ namespace CM.Services
 
         public ReviewServices(CMContext context)
         {
-            _context = context;
-
+            _context = context ?? throw new MagicException(ExceptionMessages.ContextNull);
         }
 
         public async Task<bool> CheckIfUserCanReview(string userId, CocktailDto cocktailDto)
