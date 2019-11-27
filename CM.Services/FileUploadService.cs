@@ -44,13 +44,25 @@ namespace CM.Services
                       + Path.GetExtension(fileName);
         }
 
-        public string SetUniqueImagePath(IFormFile uploadedImage)
+        public string SetUniqueImagePathForBar(IFormFile uploadedImage)
         {
             string uniqueFileNamePath;
             if (uploadedImage != null)
                 uniqueFileNamePath = UploadFile(uploadedImage);
             else
                 uniqueFileNamePath = "/images/defaultBarImage.jpg";
+
+            return uniqueFileNamePath;
+        }
+
+
+        public string SetUniqueImagePathForCocktail(IFormFile uploadedImage)
+        {
+            string uniqueFileNamePath;
+            if (uploadedImage != null)
+                uniqueFileNamePath = UploadFile(uploadedImage);
+            else
+                uniqueFileNamePath = "/images/defaultImageCocktail.jpg";
 
             return uniqueFileNamePath;
         }

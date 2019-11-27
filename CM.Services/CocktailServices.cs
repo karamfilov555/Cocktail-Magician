@@ -98,11 +98,9 @@ namespace CM.Services
         public async Task AddCocktail(CocktailDto cocktailDto)
         {
             cocktailDto.ValidateIfNull("Model is not valid!");
-            if (cocktailDto.CocktailImage!=null)
-            {
-            var uniqueFileNamePath = _fileUploadService.UploadFile(cocktailDto.CocktailImage);
+            
+            var uniqueFileNamePath = _fileUploadService.SetUniqueImagePathForCocktail(cocktailDto.CocktailImage);
             cocktailDto.Image = uniqueFileNamePath;
-            }
             var cocktail = cocktailDto.MapToCocktailModel();
             _context.Cocktails.Add(cocktail);
             await _context.SaveChangesAsync();
@@ -242,15 +240,9 @@ namespace CM.Services
             var cocktailToEdit = await GetCocktail(cocktailDto.Id);
             
             var cocktail = cocktailDto.MapToEditModel();
-            if (cocktailDto.CocktailImage!=null)
-            {
-            var uniqueFileNamePath = _fileUploadService.UploadFile(cocktailDto.CocktailImage);
+            
+            var uniqueFileNamePath = _fileUploadService.SetUniqueImagePathForCocktail(cocktailDto.CocktailImage);
             cocktail.Image = uniqueFileNamePath;
-            }
-            else
-            {
-                cocktail.Image = cocktailToEdit.Image;
-            }
             cocktail.Rating = cocktailToEdit.Rating;
             var newCocktailComponents = new List<CocktailComponent>();
 

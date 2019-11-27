@@ -20,7 +20,7 @@
 
 <center>
     <h1 class="hdr4">Rating: </h1>
-    @if (@Model.Rating == 0||@Model.Rating == null)
+    @if (@Model.Rating == 0 || @Model.Rating == null)
     {
         <h3><i>Not rated yet!</i></h3>
     }
@@ -33,7 +33,7 @@
                       value="@Model.Rating"
                       readonly="true" enabled="false">
         </kendo-rating>
-    
+
     }
 </center>
 @{
@@ -64,18 +64,24 @@
                         <div class="col-md-10 blog-main" style="padding-left:260px">
                             <div class="blog-post format-quote">
                                 <div class="blog_thumbnail">
-                                    <a href="7b_single-blog.html" class="box_text">
+                                    <div class="box_text">
                                         <span class="ribbon_icon"><i class="fa fa-quote-left"></i></span>
-                                        <blockquote class="inner">
-                                            <p>
-                                                "@review.Description"
-                                                <br>
-                                                <font style="color:gold">Grade: @review.Rating</font>
+                                        
+                                            <blockquote class="inner">
+                                                <p class="text-body" style="width:400px; word-wrap:break-word; display:inline-block;" rows="5">
 
-                                            </p>
-                                            <span class="author">- The Coca-Cola Company, Cocktail Magician™, 2019 -</span>
-                                        </blockquote>
-                                    </a>
+                                                    "@review.Description"
+
+                                                </p>
+                                                <br>
+                                                <p>
+                                                    <font style="color:gold">Grade: @review.Rating</font>
+
+                                                </p>
+                                                <span class="author">- The Coca-Cola Company, Cocktail Magician™, 2019 -</span>
+                                            </blockquote>
+                                            
+                                    </div>
                                 </div>
                                 <div class="meta_box">
                                     <span class="meta_date">@review.ReviewDate</span>

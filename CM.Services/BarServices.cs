@@ -115,7 +115,7 @@ namespace CM.Services
         public async Task<string> AddBarAsync(BarDTO barDTO) //tested
         {
             barDTO.ValidateIfNull(ExceptionMessages.BarDtoNull);
-            barDTO.ImageUrl =  _fileUploadService.SetUniqueImagePath(barDTO.BarImage);
+            barDTO.ImageUrl =  _fileUploadService.SetUniqueImagePathForBar(barDTO.BarImage);
 
             var newBar = barDTO.MapBarDTOToBar();                  // to be tested in MapperTests
             var newAddress = barDTO.MapBarDTOToAddress();          // to be tested in MapperTests
@@ -158,7 +158,7 @@ namespace CM.Services
             var barToEdit = await this.GetBar(barDto.Id);
             barToEdit.ValidateIfNull(ExceptionMessages.BarNull);
 
-            barDto.ImageUrl = _fileUploadService.SetUniqueImagePath(barDto.BarImage);
+            barDto.ImageUrl = _fileUploadService.SetUniqueImagePathForBar(barDto.BarImage);
 
             barToEdit = barDto.EditBarDTOToBar(barToEdit);
             var coctailsInBar = barDto.Cocktails.Select(c => c.MapToCocktailModel()).ToList();

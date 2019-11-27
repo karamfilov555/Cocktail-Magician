@@ -73,8 +73,8 @@ namespace CM.Web.Areas.Reviews.Controllers
             {
             var barReviewDTO = barVM.MapVMToReviewDTO();
             var newRating= (double)Math.Round((decimal)(await _reviewServices.CreateBarReview(barReviewDTO)??0), 2);
-
-            return RedirectToAction("BarReviews", "BarReviews", new { id = barVM.BarId, name = barVM.BarName, rating=newRating});
+                return RedirectToAction("ListBars", "Bars", new { area = "Bars" });
+            
             }
             catch (Exception ex)
             {

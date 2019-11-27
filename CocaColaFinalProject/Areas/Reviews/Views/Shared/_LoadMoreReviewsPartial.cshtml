@@ -5,20 +5,26 @@
 <center>
     <div class="col-md-10 blog-main" style="padding-left:260px">
         <div class="blog-post format-quote">
-            <h3 class="blog_title"><a href="7b_single-blog.html">A quote post</a></h3>
+            
             <div class="blog_thumbnail">
-                <a href="" class="box_text">
+                <div class="box_text">
                     <span class="ribbon_icon"><i class="fa fa-quote-left"></i></span>
+
                     <blockquote class="inner">
-                        <p>
+                        <p class="text-body" style="width:400px; word-wrap:break-word; display:inline-block;" rows="5">
+
                             "@item.Description"
-                            <br>
+
+                        </p>
+                        <br>
+                        <p>
                             <font style="color:gold">Grade: @item.Rating</font>
 
                         </p>
                         <span class="author">- The Coca-Cola Company, Cocktail Magician™, 2019 -</span>
                     </blockquote>
-                </a>
+
+                </div>
             </div>
             <div class="meta_box">
                 <span class="meta_date">@item.ReviewDate.ToShortDateString()</span>

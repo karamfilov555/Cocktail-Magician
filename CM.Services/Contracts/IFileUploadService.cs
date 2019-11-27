@@ -6,6 +6,7 @@ namespace CM.Services
     public interface IFileUploadService
     {
         string UploadFile(IFormFile uploadedImage);
-        string SetUniqueImagePath(IFormFile uploadedImage);
+        string SetUniqueImagePathForBar(IFormFile uploadedImage);
+        string SetUniqueImagePathForCocktail(IFormFile uploadedImage);
     }
 }

@@ -90,8 +90,8 @@ namespace CM.Web.Areas.Cocktails.Controllers
                 // validation if there is no Picture!
                 try
                 {
-                    var imageSizeInKb = cocktailVm.CocktailImage.Length / 1024;
-                    var type = cocktailVm.CocktailImage.ContentType;
+                    //var imageSizeInKb = cocktailVm.CocktailImage.Length / 1024;
+                    //var type = cocktailVm.CocktailImage.ContentType;
                     var cocktailDto = cocktailVm.MapToCocktailDTO();
                     await _cocktailServices.AddCocktail(cocktailDto);
                     string id = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
