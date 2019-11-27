@@ -68,7 +68,7 @@ namespace CM.Services
         public async Task<PaginatedList<BarDTO>> GetAllBars(int? pageNumber, string sortOrder)
         // tested
         {
-            int pageSize = 2;
+            int pageSize = 3;
 
             IQueryable<Bar> bars = _context.Bars
                 .Where(b => b.DateDeleted == null)

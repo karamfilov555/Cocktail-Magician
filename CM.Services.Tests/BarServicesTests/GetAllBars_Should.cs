@@ -463,10 +463,10 @@ namespace CM.Services.Tests.BarServicesTests
         }
 
         [TestMethod]
-        public async Task Return_PaginatedList_WithTwoBars_PerPage()
+        public async Task Return_PaginatedList_WithThreeBars_PerPage()
         {
             var options = TestUtils.GetOptions
-                (nameof(Return_PaginatedList_WithTwoBars_PerPage));
+                (nameof(Return_PaginatedList_WithThreeBars_PerPage));
 
 
             var fileService = new Mock<IFileUploadService>();
@@ -559,6 +559,36 @@ namespace CM.Services.Tests.BarServicesTests
                        ,
                        BarRating = 3
                    });
+                //4
+                arrangeContext.Bars.Add(
+                  new Bar
+                  {
+                      Id = "4",
+                      Name = "Target",
+                      Image = "Snimka",
+                      Website = "abv.bg",
+                      Address = new Address
+                      {
+                          Id = "4",
+                          BarId = "4",
+                          Country = new Country
+                          {
+                              Id = "4",
+                              Name = "Bulgaria"
+                          }
+                      },
+
+                      BarCocktails = new List<BarCocktail>
+                       {
+                            new BarCocktail
+                            {
+                                BarId = "4",
+                                CocktailId = "1"
+                            }
+                       }
+                      ,
+                      BarRating = 3
+                  });
 
                 await arrangeContext.SaveChangesAsync();
             }
@@ -568,7 +598,7 @@ namespace CM.Services.Tests.BarServicesTests
 
                 var result = await sut.GetAllBars(null, null);
 
-                Assert.AreEqual(2,result.Count());
+                Assert.AreEqual(3,result.Count());
             }
         }
 
@@ -612,6 +642,35 @@ namespace CM.Services.Tests.BarServicesTests
                         },
                         BarRating = 1
                     });
+                arrangeContext.Bars.Add(
+                  new Bar
+                  {
+                      Id = "4",
+                      Name = "Target",
+                      Image = "Snimka",
+                      Website = "abv.bg",
+                      Address = new Address
+                      {
+                          Id = "4",
+                          BarId = "4",
+                          Country = new Country
+                          {
+                              Id = "3",
+                              Name = "Bulgaria"
+                          }
+                      },
+
+                      BarCocktails = new List<BarCocktail>
+                       {
+                            new BarCocktail
+                            {
+                                BarId = "4",
+                                CocktailId = "4"
+                            }
+                       }
+                      ,
+                      BarRating = 3
+                  });
                 await arrangeContext.SaveChangesAsync();
             }
             using (var assertContext = new CMContext(options))
@@ -620,7 +679,7 @@ namespace CM.Services.Tests.BarServicesTests
 
                 var result = await sut.GetAllBars(null, null);
 
-                Assert.AreEqual(1, result.Count());
+                Assert.AreEqual(2, result.Count());
             }
         }
 

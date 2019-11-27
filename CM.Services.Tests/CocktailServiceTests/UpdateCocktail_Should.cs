@@ -267,7 +267,7 @@ namespace CM.Services.Tests.CocktailServiceTests
                 });
                 await assertContext.SaveChangesAsync();
                 await sut.Update(cocktailDTO);
-                _fileUploadService.Verify(n => n.UploadFile(image), Times.Once());
+                _fileUploadService.Verify(n => n.SetUniqueImagePathForCocktail(image), Times.Once());
             }
         }
 

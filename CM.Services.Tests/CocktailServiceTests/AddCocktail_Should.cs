@@ -131,7 +131,7 @@ namespace CM.Services.Tests.CocktailServiceTests
                 var sut = new CocktailServices(assertContext, _fileUploadService.Object,
                     _ingredientServices.Object, _recipeServices.Object);
                 await sut.AddCocktail(cocktailDTO);
-                _fileUploadService.Verify(n => n.UploadFile(image), Times.Once());
+                _fileUploadService.Verify(n => n.SetUniqueImagePathForCocktail(image), Times.Once());
             } 
         }
 

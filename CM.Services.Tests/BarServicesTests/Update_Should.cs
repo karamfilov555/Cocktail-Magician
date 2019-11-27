@@ -113,7 +113,7 @@ namespace CM.Services.Tests.BarServicesTests
             var options = TestUtils.GetOptions(nameof(UpdateDefaultImage_WhenBarDtoImagePathIsNull));
 
             var fileService = new Mock<IFileUploadService>();
-            fileService.Setup(f => f.SetUniqueImagePath(null)).Returns("/images/defaultBarImage.jpg");
+            fileService.Setup(f => f.SetUniqueImagePathForBar(null)).Returns("/images/defaultBarImage.jpg");
             using (var assertContext = new CMContext(options))
             {
                 assertContext.Bars.Add(new Bar { Id = "1", Name = "BashBar", Website = "abv.bg", Address = new Address { City = "Sofia", Id = "1" } });
@@ -137,7 +137,7 @@ namespace CM.Services.Tests.BarServicesTests
             var options = TestUtils.GetOptions(nameof(Invoke_SetImageMethod_WhenBarDtoImageIsValid));
 
             var fileService = new Mock<IFileUploadService>();
-            fileService.Setup(f => f.SetUniqueImagePath(null));
+            fileService.Setup(f => f.SetUniqueImagePathForBar(null));
 
             using (var assertContext = new CMContext(options))
             {
@@ -155,7 +155,7 @@ namespace CM.Services.Tests.BarServicesTests
                         BarImage = new Mock<IFormFile>().Object,
                     };
                 await sut.Update(barDto);
-                fileService.Verify(x => x.SetUniqueImagePath(barDto.BarImage), Times.AtLeastOnce);
+                fileService.Verify(x => x.SetUniqueImagePathForBar(barDto.BarImage), Times.AtLeastOnce);
             }
         }
 
