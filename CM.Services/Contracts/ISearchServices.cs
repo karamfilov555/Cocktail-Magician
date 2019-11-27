@@ -11,5 +11,7 @@ namespace CM.Services.Contracts
         //Task<SearchResultDTO> GetResultsFromSearch(string searchString);
         Task<ICollection<BarSearchResultDTO>> GetResultsFromBars(string searchString);
         Task<ICollection<CocktailSearchResultDTO>> GetResultsFromCocktails(string searchString);
+        Task<ICollection<BarSearchResultDTO>> GetThreeBarResultsSortedByName(string searchString, int? currPage);
+        Task<ICollection<CocktailSearchResultDTO>> GetThreeResultsFromCocktails(string searchString, int? currPage);
     }
 }

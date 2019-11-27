@@ -70,7 +70,7 @@
                                 @*<th></th>*@
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody id="putBarResults">
                             @foreach (var bar in Model.Bars)
                             {
                                 <tr>
@@ -122,13 +122,9 @@
                                         }
                                     </td>
 
-
-
-                                    @*@if (this.User.IsInRole("Member") || this.User.IsInRole("Manager") || this.User.IsInRole("Administrator"))
-                                        {*@
                                     <td>
                                         <p>
-                                            <a class="btn btn-default btn-sm" asp-area="Bars" asp-action="Details" asp-route-id="@bar.Id">
+                                            <a class="btn btn-default btn-sm" asp-area="Bars" asp-controller="Bars" asp-action="Details" asp-route-id="@bar.Id">
                                                 <font style="color:gold">
                                                     <i class="fa fa-search-plus"></i>
                                                     Details
@@ -136,13 +132,22 @@
                                             </a>
                                         </p>
                                     </td>
-                                    @*}*@
 
                                 </tr>
                             }
                         </tbody>
                     </table>
+                    <center>
+                    </center>
                 }
+                <center>
+                    <a id="loadMoreBarResults" class="btn btn-default btn-sm"
+                       data-searchCriteria="@Model.SearchCriteria" data-pageIndex="1" data-entity="bars">
+                        <h5 style="margin-bottom:-5px; color:gold">Load more results <i class="fa fa-plus-circle"></i></h5>
+                    </a>
+                    <br />
+                </center>
+                <br />
             </div>
             <div id="cocktails" style="display: none; background-color:rgba(16, 6, 6, 0.80)" class="tab-container">
                 @if (@Model.Cocktails.Count == 0)
@@ -179,7 +184,7 @@
                                 <th></th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody id="putCocktailsHere">
                             @foreach (var cocktail in Model.Cocktails)
                             {
                                 <tr>
@@ -233,7 +238,7 @@
                                     <td>
 
                                         @*@if (this.User.IsInRole("Member") || this.User.IsInRole("Manager") || this.User.IsInRole("Administrator"))
-                                {*@
+                                            {*@
                                         <p>
                                             <a class="btn btn-default btn-sm" asp-area="Cocktails" asp-controller="Cocktails" asp-action="Details" asp-route-id="@cocktail.Id">
                                                 <font style="color:gold">
@@ -248,10 +253,25 @@
                                 </tr>
                             }
                         </tbody>
+
+
                     </table>
                 }
+                <center>
+                    <a id="loadMoreCocktailsResults" class="btn btn-default btn-sm"
+                       data-searchCriteria="@Model.SearchCriteria" data-pageIndex1="1" data-entity1="cocktails">
+                        <h5 style="margin-bottom:-5px; color:gold">Load more results <i class="fa fa-plus-circle"></i></h5>
+                    </a>
+                    <br />
+                </center>
+                <br />
             </div>
             @*<a id="loadMoreResults" asp-area="Search" asp-controller="Search" asp-action="SearchResults" data-pageIndex="0" data-searchCriteria="@Model.SearchCriteria" class="btn btn-default btn-sm"><h5 style="margin-bottom:-5px; color:gold">Load more cocktails <i class="fa fa-plus-circle"></i></h5></a>*@
         </div>
     </div>
 </div>
+
+
+<script src="/assets/bootstrap/js/bootstrap.min.js"></script>
+<script src="~/assets/js/searchBarsResultsPagination.js"></script>
+<script src="~/assets/js/searchResultsCocktails.js"></script>

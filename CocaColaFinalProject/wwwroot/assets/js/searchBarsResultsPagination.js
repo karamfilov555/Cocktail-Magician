@@ -1,9 +1,10 @@
-﻿$('#loadMoreResults').on('click', function (e) {
+﻿$('#loadMoreBarResults').on('click', function (e) {
     e.preventDefault();
     console.log('vleznah');
 
     const data = $(this).attr('data-searchCriteria');
     const data2 = $(this).attr('data-pageIndex');
+    const data3 = $(this).attr('data-entity');
     let currentPage = parseInt(data2) + 1;
     debugger;
 
@@ -21,18 +22,18 @@
     //console.log($('#pageCurrent')
     $.ajax({
         url: "https://localhost:44344/Search/Search/SearchResults",
-        data: { 'searchString':data,'pageNumber': currentPage },
+        data: { 'searchString': data, 'pageIndex': currentPage, 'entity': data3 },
         type: "get",
         cache: false,
         success: function (result) {
             console.log(result);
-            animation.insertBefore($('#loadMoreResults'));
-            $('#loadMoreResults').attr('class', 'btn btn-default btn-sm disabled');
+            animation.insertBefore($('#loadMoreBarResults'));
+            $('#loadMoreBarResults').attr('class', 'btn btn-default btn-sm disabled');
             setTimeout(function () {
                 animation.remove();
-                $('#loadMoreResults').attr('class', 'btn btn-default btn-sm');
-                console.log($('#tbodyResults'));
-                $(result).appendTo($('#tbodyResults'));
+                $('#loadMoreBarResults').attr('class', 'btn btn-default btn-sm');
+                //console.log($('#tbodyResults'));
+                $(result).appendTo($('#putBarResults'));
             }, 600);
         }
     })

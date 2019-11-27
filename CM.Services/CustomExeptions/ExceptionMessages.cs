@@ -15,6 +15,8 @@ namespace CM.Services.CustomExceptions
         public const string IFileUploadServiceNull = "IFileUploadService cannot be null!";
         public const string IIngredientServiceNull = "IIngredientService cannot be null!";
         public const string IRecipeServiceNull = "IRecipeService cannot be null!";
+        public const string IBarServiceNull = "IBarService cannot be null!";
+        public const string ICocktailServiceNull = "ICocktailService cannot be null!";
         public const string IAppUserServiceNull = "IAppUserService cannot be null!";
         public const string INotificationManagerNull = "INotificationManager cannot be null!";
         public const string AppUserNull = "AppUser cannot be null!";
@@ -29,6 +31,8 @@ namespace CM.Services.CustomExceptions
         public const string NotificationNull = "Notification doesn't exist!";
         public const string BarNameNull = "Bar name cannot be null!";
         public const string CocktailNameNull = "Cocktail name cannot be null!";
+        public const string ReviewIsLiked = "You have already liked this review!";
+        public const string LikeNull = "Like does not exist";
 
     }
 }

@@ -140,30 +140,33 @@ namespace CM.Services
         /// </summary>
         /// <param name="barReviewDTO"></param>
         /// <returns></returns>
+        //Tested 
         public async Task<double?> CreateBarReview(BarReviewDTO barReviewDTO)
         {
-            //validations
             var user = await _context.Users
                 .FindAsync(barReviewDTO.UserID);
+            user.ValidateIfNull(ExceptionMessages.AppUserNull);
             var bar = await _context.Bars
                 .Include(b => b.Reviews)
                 .Where(b => b.Id == barReviewDTO.BarId)
                 .FirstOrDefaultAsync();
-            user.ValidateIfNull();
-            bar.ValidateIfNull();
+            bar.ValidateIfNull(ExceptionMessages.BarNull);
             var barReview = barReviewDTO.MapDTOToReview();
             if (bar.Reviews.Select(r => r.UserId).ToList().Any(id => id == user.Id))
             {
-                throw new InvalidOperationException("You have already reviewed this bar!");
+                throw new MagicException("You have already reviewed this bar!");
             }
             _context.BarReviews.Add(barReview);
             await _context.SaveChangesAsync().ConfigureAwait(false);
             await this.SetAverrageRatingForBar(barReviewDTO.BarId);
             return bar.BarRating;
         }
-        private async Task SetAverrageRatingForBar(string barId)
+        //Tested
+        public async Task SetAverrageRatingForBar(string barId)
         {
+            barId.ValidateIfNull(ExceptionMessages.BarNull);
             var bar = await _context.Bars.FirstOrDefaultAsync(b => b.Id == barId);
+            bar.ValidateIfNull(ExceptionMessages.BarNull);
             var barRatings = await _context.BarReviews
                                         .Where(r => r.BarId == barId)
                                         .Select(r => r.Rating)
@@ -172,12 +175,14 @@ namespace CM.Services
             bar.BarRating = avg;
             await _context.SaveChangesAsync();
         }
-
+        //Tested
         public async Task<int> LikeBarReview(string barReviewID, string userId)
         {
+            barReviewID.ValidateIfNull(ExceptionMessages.IdNull);
+            userId.ValidateIfNull(ExceptionMessages.IdNull);
             if (await _context.BarReviewLikes.AnyAsync(l => l.AppUserID == userId && l.BarReviewID == barReviewID))
             {
-                throw new InvalidOperationException("You have already liked this review!");
+                throw new MagicException(ExceptionMessages.ReviewIsLiked);
             }
             var like = new BarReviewLike()
             {
@@ -190,24 +195,29 @@ namespace CM.Services
             int count = await _context.BarReviewLikes.Where(r => r.BarReviewID == barReviewID).CountAsync();
             return count;
         }
-
+        //Tested
         public async Task<int> RemoveBarReviewLike(string barReviewID, string userId)
         {
+            
+            barReviewID.ValidateIfNull(ExceptionMessages.IdNull);
+            userId.ValidateIfNull(ExceptionMessages.IdNull);
             var like = await _context.BarReviewLikes.FirstOrDefaultAsync(l => l.AppUserID == userId && l.BarReviewID == barReviewID);
             if (like == null)
             {
-                throw new InvalidOperationException("You have not liked this review!");
+                throw new MagicException(ExceptionMessages.LikeNull);
             }
             _context.BarReviewLikes.Remove(like);
             await _context.SaveChangesAsync();
             return await _context.BarReviewLikes.Where(r => r.BarReviewID == barReviewID).CountAsync();
         }
-
+        //Tested
         public async Task<int> LikeCocktailReview(string cocktailReviewID, string userId)
         {
+            cocktailReviewID.ValidateIfNull(ExceptionMessages.IdNull);
+            userId.ValidateIfNull(ExceptionMessages.IdNull);
             if (await _context.CocktailReviewLikes.AnyAsync(l => l.AppUserID == userId && l.CocktailReviewID == cocktailReviewID))
             {
-                throw new InvalidOperationException("You have already liked this review!");
+                throw new MagicException(ExceptionMessages.ReviewIsLiked);
             }
             var like = new CocktailReviewLike()
             {
@@ -224,6 +234,8 @@ namespace CM.Services
 
         public async Task<int> RemoveCocktailReviewLike(string cocktailReviewID, string userId)
         {
+            cocktailReviewID.ValidateIfNull(ExceptionMessages.IdNull);
+            userId.ValidateIfNull(ExceptionMessages.IdNull);
             var like = await _context.CocktailReviewLikes.FirstOrDefaultAsync(l => l.AppUserID == userId && l.CocktailReviewID == cocktailReviewID);
             if (like == null)
             {
@@ -235,11 +247,12 @@ namespace CM.Services
         }
 
 
-        public async Task<int> GetTotalReviewsCountForCocktailAsync(string Id)
+        public async Task<int> GetTotalReviewsCountForCocktailAsync(string id)
         {
+            id.ValidateIfNull(ExceptionMessages.IdNull);
             return await _context
                           .CocktailReviews
-                          .Where(c => c.DateDeleted == null && c.CocktailId == Id)
+                          .Where(c => c.DateDeleted == null && c.CocktailId == id)
                           .CountAsync();
         }
 

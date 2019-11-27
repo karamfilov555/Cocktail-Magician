@@ -1,0 +1,71 @@
+﻿@model SearchViewModel
+@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@foreach (var cocktail in Model.Cocktails)
+{
+    <tr>
+        <td>
+            <a asp-area="Cocktails" asp-controller="Cocktails" asp-action="Details" asp-route-id="@cocktail.Id">
+                <img src="@cocktail.Image"
+                     width="200"
+                     style="border-radius:25px; padding-top:5px; padding-bottom:5px" alt="Bar picture" />
+            </a>
+        </td>
+        <td>
+            <h5>@cocktail.Name</h5>
+        </td>
+        <td>
+            <h5>@cocktail.Ingredients</h5>
+        </td>
+        <td>
+            @if (cocktail.Rating == 0 || cocktail.Rating == null)
+            {
+                <i>Not rated yet!</i>
+            }
+            else
+            {
+                if (cocktail.Rating * 10 % 10 == 0)
+                {
+                    for (int i = 0; i < cocktail.Rating - 1; i++)
+                    {
+                        <font color="gold">
+                            <i class="fa fa-star" style="color:gold"></i>
+                        </font>
+                    }
+                    <font color="gold">
+                        <i class="fa fa-star" style="color:gold"><font size="2"> @cocktail.Rating</font></i>
+                    </font>
+                }
+                else
+                {
+
+                    for (int i = 0; i < cocktail.Rating - 1; i++)
+                    {
+                        <font color="gold">
+                            <i class="fa fa-star" style="color:gold"></i>
+                        </font>
+                    }
+                    <font color="gold">
+                        <i class="fa fa-star-half" style="color:gold"> <font size="2"> @cocktail.Rating</font></i>
+                    </font>
+                }
+            }
+        </td>
+        <td>
+
+            @*@if (this.User.IsInRole("Member") || this.User.IsInRole("Manager") || this.User.IsInRole("Administrator"))
+                {*@
+            <p>
+                <a class="btn btn-default btn-sm" asp-area="Cocktails" asp-controller="Cocktails" asp-action="Details" asp-route-id="@cocktail.Id">
+                    <font style="color:gold">
+                        <i class="fa fa-search-plus"></i>Cocktail Details
+
+                    </font>
+                </a>
+            </p>
+            @*}*@
+
+        </td>
+    </tr>
+}

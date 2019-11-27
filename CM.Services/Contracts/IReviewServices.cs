@@ -24,6 +24,7 @@ namespace CM.Services.Contracts
 
         Task<int> GetPageCountForCocktailReviewsAsync(int reviewsPerPage, string Id);
         Task<int> GetTotalReviewsCountForCocktailAsync(string Id);
+        Task SetAverrageRatingForBar(string barId);
 
             //In-memoriam:
             //Task<IDictionary<string, Tuple<string, decimal, DateTime>>> GetReviewsDetailsForCocktial(string cocktailId);

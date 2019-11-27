@@ -42,7 +42,7 @@
 
                 <h5>
                     Rating:
-                    @if (@Model.Rating == null)
+                    @if (@Model.Rating == null||Model.Rating==0)
                     {
                         <i>Not rated yet!</i>
                     }

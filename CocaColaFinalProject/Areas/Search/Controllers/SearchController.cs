@@ -21,7 +21,7 @@ namespace CM.Web.Areas.Search.Controllers
         }
 
 
-        public async Task<IActionResult> SearchResults(string searchString)
+        public async Task<IActionResult> SearchResults(string searchString, int pageIndex, string entity)
         {
             if (searchString == null)
             {
@@ -30,15 +30,36 @@ namespace CM.Web.Areas.Search.Controllers
             }
             try
             {
-                var barResults = await _searchServices.GetResultsFromBars(searchString);
-                var cocktailResults = await _searchServices.GetResultsFromCocktails(searchString);
-
                 var searchVM = new SearchViewModel();
-                searchVM.Bars = barResults.Select(b => b.MapSearchBarVMToDTO()).ToList();
-                searchVM.Cocktails = cocktailResults.Select(c => c.MapCocktailSearchDTOToVM()).ToList();
                 searchVM.SearchCriteria = searchString;
-                return View(searchVM);
-
+                if (entity == "bars")
+                {
+                    var barResults = await _searchServices.GetThreeBarResultsSortedByName(searchString, pageIndex);
+                    searchVM.Bars = barResults.Select(b => b.MapSearchBarVMToDTO()).ToList();
+                    if (barResults.Count==0)
+                    {
+                    _toast.AddInfoToastMessage("No more results");
+                    }
+                    return PartialView("_SearchBarsResult", searchVM);
+                }
+                else if (entity == "cocktails")
+                {
+                    var cocktailResults = await _searchServices.GetThreeResultsFromCocktails(searchString, pageIndex);
+                    searchVM.Cocktails = cocktailResults.Select(c => c.MapCocktailSearchDTOToVM()).ToList();
+                    if (cocktailResults.Count == 0)
+                    {
+                        _toast.AddInfoToastMessage("No more results");
+                    }
+                    return PartialView("_SearchCocktailsResults", searchVM);
+                }
+                else
+                {
+                    var barResults = await _searchServices.GetThreeBarResultsSortedByName(searchString, pageIndex);
+                    var cocktailResults = await _searchServices.GetThreeResultsFromCocktails(searchString, pageIndex);
+                    searchVM.Bars = barResults.Select(b => b.MapSearchBarVMToDTO()).ToList();
+                    searchVM.Cocktails = cocktailResults.Select(c => c.MapCocktailSearchDTOToVM()).ToList();
+                    return View(searchVM);
+                }
             }
             catch (System.Exception ex)
             {

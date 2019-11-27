@@ -46,7 +46,6 @@
     <Folder Include="Areas\Cocktails\Data\" />
     <Folder Include="Areas\Ingredients\Data\" />
     <Folder Include="Areas\Notifications\Data\" />
-    <Folder Include="Areas\Search\Views\Shared\" />
     <Folder Include="wwwroot\images\" />
   </ItemGroup>
 
