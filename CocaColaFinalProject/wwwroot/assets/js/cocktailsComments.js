@@ -25,12 +25,11 @@
         cache: false,
         success: function (result) {
             animation.insertAfter($('#loadComments'));
-            $('#loadComments').attr('class', 'btn btn-danger disabled')
+            $('#loadComments').attr('class', 'btn btn-primary disable')
             //animation.appendTo($('#tbody'));
             setTimeout(function () {
                 animation.remove();
-                $('#loadComments').attr('class', 'btn btn-danger')
-                console.log(result)
+                $('#loadComments').attr('class', 'btn btn-primary')
                 $(result).appendTo($('#putCommentsHere'));
             }, 600);
         }

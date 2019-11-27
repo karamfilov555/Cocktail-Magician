@@ -3,64 +3,84 @@
     ViewData["Title"] = "ListUsers";
 }
 
-<h3 class="hdr4">All Users</h3>
+<div class="bg-1 section" id="events" style="margin-top:-18px">
+    <div class="inner" data-image="/assets/images/content/ccback12.jpg" data-topspace="1" style="background-image: url('/assets/images/content/ccback12.jpg'); padding-top: 1px;">
+        <div class="inner" data-topspace="1" data-bottomspace="1" style="background-image: none; ">
+            <h3 class="hdr4">All Users</h3>
+            <div style="background-color:rgba(16, 6, 6, 0.80)">
+
+                @if (Model.Count == 1)
+                {
+                    <h5>
+                        <center>
+                        There are no users in app yet!
+                        </center>
+                    </h5>
+                }
+                else
+                {
 
 
-<table class="table">
-    <thead>
-        <tr>
-            <th></th>
-            <th><h5>Username</h5></th>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th><h5>Username</h5></th>
 
-            <th>
-                <h5>E-mail</h5>
-            </th>
-            <th>
-                <h5>Role</h5>
-            </th>
-            <th></th>
-           
-        </tr>
-    </thead>
+                            <th>
+                                <h5>E-mail</h5>
+                            </th>
+                            <th>
+                                <h5>Role</h5>
+                            </th>
+                            <th></th>
 
-    <tbody>
-        @foreach (var user in Model)
-        {
-            if (user.Role != "Administrator")
-            {
-                <tr>
-                    <td></td>
-                    <td><h5>@user.Username</h5></td>
-                    <td><h5> @user.Email</h5></td>
-                    <td> <h5>@user.Role</h5></td>
+                        </tr>
+                    </thead>
 
-
-
-                    <td>
-                        <p>
-                            @if (user.Role != ("Administrator") && user.Role != ("Manager"))
+                    <tbody>
+                        @foreach (var user in Model)
+                        {
+                            if (user.Role != "Administrator")
                             {
-                                <a method="post" class="btn btn-default btn-sm"
-                                   asp-action="ChangeRoleToManager" asp-controller="AppUser" asp-route-id="@user.Id">
-                                    <font style="color:gold">
-                                        Create Manager
-                                    </font>
-                                </a>
-                            }
-                        </p>
-                        <p>
-                            <a method="get" class="btn btn-default btn-sm"
-                                asp-action="Delete" asp-controller="AppUser" asp-route-id="@user.Id">
-                                <font style="color:gold">
-                                    Delete
-                                </font>
-                            </a>
-                        </p>
+                                <tr>
+                                    <td></td>
+                                    <td><h5>@user.Username</h5></td>
+                                    <td><h5> @user.Email</h5></td>
+                                    <td> <h5>@user.Role</h5></td>
 
-                        
-                    
-                </tr>
-            }
-        }
-    </tbody>
-</table>
+
+
+                                    <td>
+                                        <p>
+                                            @if (user.Role != ("Administrator") && user.Role != ("Manager"))
+                                            {
+                                                <a method="post" class="btn btn-default btn-sm"
+                                                   asp-action="ChangeRoleToManager" asp-controller="AppUser" asp-route-id="@user.Id">
+                                                    <font style="color:gold">
+                                                        Create Manager
+                                                    </font>
+                                                </a>
+                                            }
+                                        </p>
+                                        <p>
+                                            <a method="get" class="btn btn-default btn-sm"
+                                               asp-action="Delete" asp-controller="AppUser" asp-route-id="@user.Id">
+                                                <font style="color:gold">
+                                                    Delete
+                                                </font>
+                                            </a>
+                                        </p>
+
+
+
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+                }
+                </div>
+                </div>
+                </div>
+                </div>

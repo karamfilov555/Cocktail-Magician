@@ -124,7 +124,6 @@ namespace CM.Services
                      .ToListAsync();
             }
             var reviewDTOs = reviews.Select(r => r.BarMapReviewToDTO()).ToList();
-                       
             return reviewDTOs;
         }
 

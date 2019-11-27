@@ -3,8 +3,6 @@
 @{
     ViewData["Title"] = "Index";
 }
-    <br />
-<h1 class="hdr1">Ingredients List</h1>
 
 <div class="bg-1 section" id="events" style="margin-top:-18px">
     <div class="inner" data-image="/assets/images/content/ccback12.jpg" data-topspace="1" style="background-image: url('/assets/images/content/ccback12.jpg'); padding-top: 1px;">
@@ -83,7 +81,7 @@
                     @if (Model.TenIngredientsList.Count == 0)
                     {
                         <div class="card-body">
-                            <h3>This is all the Cocktails in the app yet!</h3>
+                            <h3>This is all the Ingredients in the app yet!</h3>
                         </div>
                     }
                     else
@@ -91,11 +89,11 @@
 
                         @if (Model.MoreToLoad == false)
                         {
-                            <a class="btn btn-default btn-sm disabled"><h5 style="margin-bottom:-5px">Load more cocktails <i class="fa fa-arrow-circle-o-down"></i></h5></a>
+                            <a class="btn btn-default btn-sm disabled"><h5 style="margin-bottom:-5px">Load more Ingredients <i class="fa fa-arrow-circle-o-down"></i></h5></a>
                         }
                         else
                         {
-                            <a id="loadMoreIngredients" asp-area="Ingredients" asp-controller="Ingredients" asp-action="Index" class="btn btn-default btn-sm" data-currPage="@Model.CurrPage"><h5 style="margin-bottom:-5px; color:gold">Load more cocktails <i class="fa fa-plus-circle"></i></h5></a>
+                            <a id="loadMoreIngredients" asp-area="Ingredients" asp-controller="Ingredients" asp-action="Index" class="btn btn-default btn-sm" data-currPage="@Model.CurrPage"><h5 style="margin-bottom:-5px; color:gold">Load more Ingredients <i class="fa fa-plus-circle"></i></h5></a>
                         }
                     }
                 </center>

@@ -19,13 +19,11 @@ namespace CM.Web.Mappers
             cocktailVm.Rating = (double)Math.Round((decimal)(cocktailDto.Rating??0), 2);
             cocktailVm.Image = cocktailDto.Image;
             cocktailVm.DateDeleted = cocktailDto.DateDeleted;
-            //cocktailVm.CocktailIngredients = cocktailDto.CocktailIngredients;
-            cocktailVm.CocktailComponents = cocktailDto.Ingredients.Select(i => i.MapToCocktailComponentVM()).ToList(); 
+            cocktailVm.CocktailComponents = cocktailDto.Ingredients.Select(i => i.MapToCocktailComponentVM()).ToList();
             cocktailVm.BarCocktails = cocktailDto.BarCocktails;
             cocktailVm.LikeCount = cocktailDto.LikeCount;
             cocktailVm.LikeByUsers = cocktailDto.LikedByUsers;
             //cocktailVm.Ingredients = cocktailDto.Ingredients.Select(i => i.MapIngredientToViewModel());
-            //Recepie .? mai nqma smisul ako samo moje da se dl
             return cocktailVm; 
 
         }

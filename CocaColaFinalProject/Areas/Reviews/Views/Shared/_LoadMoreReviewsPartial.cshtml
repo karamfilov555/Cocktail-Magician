@@ -8,7 +8,16 @@
             
             <div class="blog_thumbnail">
                 <div class="box_text">
-                    <span class="ribbon_icon"><i class="fa fa-quote-left"></i></span>
+
+                    @if (item.Rating > 5)
+                    {
+
+                        <span class="ribbon_icon"><i class="fa fa-thumbs-up"></i></span>
+                    }
+                    else
+                    {
+                        <span class="ribbon_icon"><i class="fa fa-thumbs-down"></i></span>
+                    }
 
                     <blockquote class="inner">
                         <p class="text-body" style="width:400px; word-wrap:break-word; display:inline-block;" rows="5">
@@ -35,10 +44,11 @@
                     <form id="like-1" method="post" asp-area="Reviews" asp-controller="CocktailReviews" asp-action="LikeCocktailReview"
                           data-cocktailReviewID="@item.Id" data-cocktailId="@item.CocktailID">
                         <button type="submit"
+                                style="background-color:transparent; border-color:transparent"
                                 class="reviewLike-2"
                                 data-cocktailReviewID="@item.Id" data-cocktailId="@item.CocktailID">
-                            <i class="fa fa-heart fa-lg text-danger"></i>
-                            <span> @item.LikeCount</span>
+                            <i style="color:red" class="fa fa-heart fa-lg text-danger"></i>
+                            <span style="color:gold"> @item.LikeCount</span>
                         </button>
                     </form>
                 }
@@ -47,9 +57,10 @@
                     <form id="unlike-1" method="post" asp-area="Reviews" asp-controller="CocktailReviews" asp-action="RemoveCocktailReview"
                           data-cocktailReviewID="@item.Id" data-cocktailId="@item.CocktailID">
                         <button type="submit"
+                                style="background-color:transparent; border-color:transparent"
                                 class="reviewUnlike-2" data-cocktailReviewID="@item.Id" data-cocktailId="@item.CocktailID">
-                            <i class="fa fa-heart fa-lg text-danger"></i>
-                            <span>@item.LikeCount</span>
+                            <i style="color:red" class="fa fa-heart fa-lg text-danger"></i>
+                            <span style="color:gold">@item.LikeCount</span>
                         </button>
                     </form>
                 }

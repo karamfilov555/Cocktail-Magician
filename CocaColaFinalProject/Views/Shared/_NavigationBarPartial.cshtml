@@ -5,7 +5,7 @@
 
 <li class="dropdown">
     <a asp-area="Bars" asp-controller="Bars" asp-action="ListBars" class="dropdown-toggle">Bars</a>
-    <ul class="dropdown-menu">
+    <ul class="dropdown-menu" style="margin-top:-20px">
         <li><a asp-area="Bars" asp-controller="Bars" asp-action="ListBars">Bars List</a></li>
         @if (User.IsInRole("Administrator") || User.IsInRole("Manager"))
         {
@@ -15,7 +15,7 @@
 </li>
 <li class="dropdown">
     <a asp-area="Cocktails" asp-controller="Cocktails" asp-action="ListCocktails" class="dropdown-toggle">Cocktails</a>
-    <ul class="dropdown-menu">
+    <ul class="dropdown-menu"  style="margin-top:-20px">
         <li><a asp-area="Cocktails" asp-controller="Cocktails" asp-action="ListCocktails">Cocktails List</a></li>
         @if (User.IsInRole("Administrator") || User.IsInRole("Manager"))
         {
@@ -27,7 +27,7 @@
 {
     <li class="dropdown">
         <a asp-area="Ingredients" asp-controller="Ingredients" asp-action="Index" class="dropdown-toggle">Ingredients</a>
-        <ul class="dropdown-menu">
+        <ul class="dropdown-menu"  style="margin-top:-20px">
             <li><a asp-area="Ingredients" asp-controller="Ingredients" asp-action="Index">Ingredients List</a></li>
             <li><a asp-area="Ingredients" asp-controller="Ingredients" asp-action="Create">Add new Ingredient</a></li>
         </ul>

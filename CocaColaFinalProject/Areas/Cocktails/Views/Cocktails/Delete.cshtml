@@ -3,46 +3,57 @@
     ViewData["Title"] = "Delete";
     Layout = "~/Views/Shared/_LayoutCustom.cshtml";
 }
+    <div class="bg-1 section" id="events" style="margin-top:-18px">
+        <div class="inner" data-image="/assets/images/content/ccback12.jpg" data-topspace="1" style="background-image: url('/assets/images/content/ccback12.jpg'); padding-top: 1px;">
+            <div class="inner" data-topspace="1" data-bottomspace="1" style="background-image: none; ">
+                <h3 class="hdr4">Delete Cocktail @Model.Name</h3>
+                <div style="background-color:rgba(16, 6, 6, 0.80)">
 
 
 
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th><h5>Cocktail's Picture</h5></th>
+                                <th><h5>Cocktail's Details</h5></th>
+                                <th><h5>Cocktail's Ingredients</h5></th>
 
-<table class="table">
-    <thead>
-        <tr>
-            <th><h5>Cocktail's Picture</h5></th>
-            <th><h5>Cocktail's Details</h5></th>
-            <th><h5>Cocktail's Ingredients</h5></th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
 
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
+                            <tr>
+                                <td><img src="@Model.Image" height="250" width="250" style="border-radius:25px; padding-top:5px; padding-bottom:5px"></td>
+                                <td>
+                                    <h5>Name: @Model.Name</h5>
+                                    <h5>Rating: @Model.Rating</h5>
 
-        <tr>
-            <td><img src="@Model.Image" height="250" width="250" style="border-radius:25px; padding-top:5px; padding-bottom:5px"></td>
-            <td>
-                <h5>Name: @Model.Name</h5>
-                <h5>Rating: @Model.Rating</h5>
+                                </td>
+                                <td>
+                                    @foreach (var ingredient in Model.CocktailComponents)
+                                    {
+                                        <h5>
+                                            @ingredient.Ingredient
+                                        </h5>
+                                    }
+                                </td>
+                            </tr>
 
-            </td>
-            <td>
-                @foreach (var ingredient in Model.CocktailComponents)
-                {
-                    <h5>
-                        @ingredient.Ingredient
-                    </h5>
-                }
-            </td>
-        </tr>
-
-    </tbody>
-</table>
-<center>
-    <center><h3><font style="color:mintcream">Are you sure you want to delete "@Model.Name" cocktail?</font></h3></center>
-    <form method="post" asp-area="Cocktails" asp-controller="Cocktails" asp-action="Delete" style="padding-bottom:20px">
-        <input type="hidden" />
-        <input type="submit" value="Delete" class="btn btn-danger" /> |
-        <a asp-action="ListCocktails" class="btn btn-success">Back to List</a>
-    </form>
-</center>
+                        </tbody>
+                    </table>
+                    <center>
+                        <center><h3><font style="color:mintcream">Are you sure you want to delete "@Model.Name" cocktail?</font></h3></center>
+                        <form method="post" asp-area="Cocktails" asp-controller="Cocktails" asp-action="Delete" style="padding-bottom:20px">
+                        <p>
+                            <input type="hidden" />
+                            <input type="submit" value="Delete" class="btn btn-primary" />
+                            </p>
+                            <p>
+                            <a type="submit" class="btn btn-sm" style="color:white;margin-bottom:20px;" asp-area="Cocktails" asp-controller="Cocktails" asp-action="ListCocktails"><i class="fa fa-arrow-circle-o-left"></i> Back To List</a></p>
+                        </form>
+                    </center>
+                    </div>
+                    </div>
+                    </div>
+                    </div>

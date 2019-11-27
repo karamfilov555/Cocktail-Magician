@@ -113,14 +113,13 @@
                                             </p>
                                         }
                                         <p>
-                                            <a class="btn btn-default btn-sm" asp-area="Cocktails" asp-controller="Cocktails" asp-action="Details" asp-route-id="@cocktail.Id"><font style="color:gold"><i class="fa fa-search-plus"></i> Cocktail Details</font></a>
+                                            <a class="btn btn-default btn-sm" asp-area="Cocktails" asp-controller="Cocktails" asp-action="Details" asp-route-id="@cocktail.Id"><font style="color:gold"><i class="fa fa-map-marker"></i> Where To Find</font></a>
                                         </p>
                                     </td>
                                 </tr>
                             }
                         </tbody>
                     </table>
-                </div>
                 <center style="padding-bottom:20px">
                     @if (Model.FiveCocktailsList.Count == 0)
                     {
@@ -140,6 +139,7 @@
                         }
                     }
                 </center>
+                </div>
                 </div>
                 </div>
                 </div>

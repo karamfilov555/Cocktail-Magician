@@ -4,97 +4,82 @@
     ViewData["Title"] = "View";
     Layout = "~/Views/Shared/_LayoutCustom.cshtml";
 }
-<center>
+<div class="bg-1 section" id="events" style="margin-top:-18px">
+    <div class="inner" data-image="/assets/images/content/ccback12.jpg" data-topspace="1" style="background-image: url('/assets/images/content/ccback12.jpg'); padding-top: 1px;">
+        <div class="inner" data-topspace="1" data-bottomspace="1" style="background-image: none; ">
+            <h3 class="hdr4">Create Bar</h3>
+            <div style="background-color:rgba(16, 6, 6, 0.80)">
 
+                <center style="padding-bottom:50px;padding-top:20px">
+                    <h4></h4>
+                    <hr />
+                    <div class="row">
+                        <div class="col-md-4 col-md-offset-4">
+                            <form asp-controller="Bars" asp-area="Bars" asp-action="Create" method="post"
+                                  enctype="multipart/form-data">
+                                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                <input type="hidden" asp-for="@Model.AllCountries" />
+                                <input type="hidden" asp-for="@Model.AllCocktails" />
+                                <div class="form-group">
+                                    <label style="color:gold" asp-for="Name" class="control-label"></label>
+                                    <input asp-for="Name" class="form-control" />
+                                    <span asp-validation-for="Name" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label style="color:gold" asp-for="Website" class="control-label"></label>
+                                    <input asp-for="Website" class="form-control" />
+                                    <span asp-validation-for="Website" class="text-danger"></span>
+                                </div>
 
-    <h4></h4>
-    <hr />
-    <div class="row">
-        <h1>Create Bar</h1>
-        <div class="col-md-4 col-md-offset-4">
-            <form asp-controller="Bars" asp-area="Bars" asp-action="Create" method="post"
-                  enctype="multipart/form-data">
-                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                <input type="hidden" asp-for="@Model.AllCountries"/>
-                <input type="hidden" asp-for="@Model.AllCocktails" />
-                <div class="form-group">
-                    <label asp-for="Name" class="control-label"></label>
-                    <input asp-for="Name" class="form-control" />
-                    <span asp-validation-for="Name" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="Website" class="control-label"></label>
-                    <input asp-for="Website" class="form-control" />
-                    <span asp-validation-for="Website" class="text-danger"></span>
-                </div>
-
-                <div class="form-group">
-                    <label asp-for="Country" class="control-label">Choose country:</label>
-                    <select class="select-editable form-control" asp-for="Country"
-                            input="text" asp-items="@Model.AllCountries" id="Country" name="Country">
-                        <option disabled hidden selected value="">Start Typing...</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label asp-for="City" class="control-label"></label>
-                    <input asp-for="City" class="form-control" />
-                    <span asp-validation-for="City" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="Details" class="control-label">Detailed Adress</label>
-                    <input asp-for="Details" class="form-control" />
-                    <span asp-validation-for="Details" class="text-danger"></span>
-                </div>
-                <div>
-                    <label asp-for="BarImage" class="control-label">Upload Image</label>
-                    <input asp-for="BarImage" class="btn btn-primary btn-sm" />
-                    <span asp-validation-for="BarImage" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <div>
-                        <br />
-                        <label asp-for="AllCocktailsIDs" class="control-label">Choose Cocktails:</label>
-                        <select style="width:500px"
-                                class="js-example-basic-multiple control-label"
-                                asp-for="AllCocktailsIDs" asp-items="@Model.AllCocktails" multiple="multiple">
-                        </select>
+                                <div class="form-group">
+                                    <label style="color:gold" asp-for="Country" class="control-label">Choose country:</label>
+                                    <select  class="select-editable form-control" asp-for="Country"
+                                            input="text" asp-items="@Model.AllCountries" id="Country" name="Country">
+                                        <option disabled hidden selected value="">Start Typing...</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label style="color:gold" asp-for="City" class="control-label"></label>
+                                    <input asp-for="City" class="form-control" />
+                                    <span asp-validation-for="City" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label style="color:gold" asp-for="Details" class="control-label">Detailed Adress</label>
+                                    <input asp-for="Details" class="form-control" />
+                                    <span asp-validation-for="Details" class="text-danger"></span>
+                                </div>
+                                <div>
+                                    <label style="color:gold" asp-for="BarImage" class="control-label">Upload Image</label>
+                                    <input asp-for="BarImage" class="btn btn-primary btn-sm" />
+                                    <span asp-validation-for="BarImage" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <div>
+                                        <br />
+                                        <label style="color:gold" asp-for="AllCocktailsIDs" class="control-label">Choose Cocktails:</label>
+                                        <select style="width:400px"
+                                                class="js-example-basic-multiple control-label"
+                                                asp-for="AllCocktailsIDs" asp-items="@Model.AllCocktails" multiple="multiple"></select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <input type="submit" value="Create" class="btn btn-primary" />
+                                </div>
+                            </form>
+                        </div>
                     </div>
+
+                    <div>
+                        <a asp-action="Index">Back to List</a>
+                    </div>
+
+                </center>
                 </div>
-                @*<div class="form-group">
-            <label asp-for="IngredientsIDs" class="control-label">Ingredients</label>
-            <select id="selectmenu" asp-for="IngredientsIDs" class="js-example-basic-multiple form-control" asp-items="@Model.Ingredients" multiple="multiple" placeholder="Choose Ingredients..."></select>
-        </div>*@
-                @*<div class="row">
-
-                <div class="input-group dropdown">
-                    <input type="text" class="form-control dropdown-toggle" value="">
-                    <ul class="dropdown-menu">
-                        @foreach (var item in @Model.IngredientsNames)
-                        {
-                            <li>
-                                <a data-value="@item">@item.Text</a>
-                            </li>
-                        }
-
-                    </ul>
-                    <span role="button" class="input-group-addon dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="caret"></span></span>
                 </div>
-        </div>*@
-                <div class="form-group">
-                    <input type="submit" value="Create" class="btn btn-primary" />
                 </div>
-            </form>
-        </div>
-    </div>
-
-    <div>
-        <a asp-action="Index">Back to List</a>
-    </div>
-
-</center>
-
-<script>
-     window.onload = function () {
-        $('.js-example-basic-multiple').select2();
-};
-</script>
+                </div>
+                <script>
+                    window.onload = function () {
+                        $('.js-example-basic-multiple').select2();
+                    };
+                </script>

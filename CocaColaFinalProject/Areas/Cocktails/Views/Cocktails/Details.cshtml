@@ -4,95 +4,120 @@
     ViewData["Title"] = "Details";
     Layout = "~/Views/Shared/_LayoutCustom.cshtml";
 }
-    <head>
-        @*<link rel="stylesheet" href="~/bootstrap/dist/css/bootstrap.css" />*@
-        <link rel="stylesheet" href="~/kendo-ui/styles/kendo.common-material.min.css" />
-        <link rel="stylesheet" href="~/kendo-ui/styles/kendo.material.min.css" />
+<head>
+    @*<link rel="stylesheet" href="~/bootstrap/dist/css/bootstrap.css" />*@
+    <link rel="stylesheet" href="~/kendo-ui/styles/kendo.common-material.min.css" />
+    <link rel="stylesheet" href="~/kendo-ui/styles/kendo.material.min.css" />
 
-        <script src="~/jquery/dist/jquery.js"></script>
-        <script src="~/bootstrap/dist/js/bootstrap.bundle.js"></script>
-        @*Kendo Start Here:*@
-        <script src="~/kendo-ui/js/kendo.all.min.js"></script>
-        <script src="~/kendo-ui/js/kendo.aspnetmvc.min.js"></script>
-        @* css styling *@
-        @* jquery *@
-    </head>
+    <script src="~/jquery/dist/jquery.js"></script>
+    <script src="~/bootstrap/dist/js/bootstrap.bundle.js"></script>
+    @*Kendo Start Here:*@
+    <script src="~/kendo-ui/js/kendo.all.min.js"></script>
+    <script src="~/kendo-ui/js/kendo.aspnetmvc.min.js"></script>
+    @* css styling *@
+    @* jquery *@
+</head>
 @*<center><h1>@Model.Name details</h1></center>*@
-<table class="table">
-    <thead>
-        <tr>
-            <th><h5>Cocktail's Picture</h5></th>
-            <th><h5  style="margin-left:27px">Cocktail's Details</h5></th>
-            <th><h5>Cocktail's Ingredients</h5></th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td><img src="@Model.Image" height="250" width="250" style="border-radius:25px; padding-top:5px; padding-bottom:5px"></td>
-            <td>
-                <h5  style="margin-left:27px">Name: @Model.Name</h5>
-                @if (Model.Rating == null)
-                {
-                    <h5 style="margin-left:27px">
-                        Not Rated Yet!
-                    </h5>
-                }
-                else
-                {
-                    <kendo-rating name="readonlyRating"
-                                  style="margin-left: 15px;
+<div class="bg-1 section" id="events" style="margin-top:-18px">
+    <div class="inner" data-image="/assets/images/content/ccback12.jpg" data-topspace="1" style="background-image: url('/assets/images/content/ccback12.jpg'); padding-top: 1px;">
+        <div class="inner" data-topspace="1" data-bottomspace="1" style="background-image: none; ">
+            <h3 class="hdr4"> Where to find "@Model.Name"</h3>
+            <div style="background-color:rgba(16, 6, 6, 0.80)">
+
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th><h5>Cocktail's Picture</h5></th>
+                            <th><h5 style="margin-left:27px">Cocktail's Details</h5></th>
+                            <th><h5>Cocktail's Ingredients</h5></th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><img src="@Model.Image" height="250" width="250" style="border-radius:25px; padding-top:5px; padding-bottom:5px"></td>
+                            <td>
+                                <h5 style="margin-left:27px">Name: @Model.Name</h5>
+                                @if (Model.Rating == null)
+                                {
+                                    <h5 style="margin-left:27px">
+                                        Not Rated Yet!
+                                    </h5>
+                                }
+                                else
+                                {
+                                    <kendo-rating name="readonlyRating"
+                                                  style="margin-left: 15px;
     padding-bottom: 20px;"
-                                  min="1" max="10"
-                                  value="@Model.Rating"
-                                  readonly="true" enabled="false">
-                    </kendo-rating>
-                }
-            </td>
-            <td>
-                @foreach (var item in Model.CocktailComponents)
+                                                  min="1" max="10"
+                                                  value="@Model.Rating"
+                                                  readonly="true" enabled="false">
+                                    </kendo-rating>
+                                }
+                            </td>
+                            <td>
+                                @foreach (var item in Model.CocktailComponents)
+                                {
+                                    <h5>
+                                        @item.Ingredient
+                                    </h5>
+                                }
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                @if (Model.BarCocktails.Count() == 0)
                 {
-                    <h5>
-                        @item.Ingredient
-                    </h5>
+                    <h3 class="hdr3">
+                        you can be the first in the town to offer this cocktail
+                    </h3>
                 }
-            </td>
-        </tr>
-    </tbody>
-</table>
-<h1 class="hdr6"> Where to find "@Model.Name"</h1>
-@if (Model.BarCocktails.Count() == 0)
-{
-    <h3 class="hdr3">
-        you can be the first in the town to offer this cocktail
-    </h3>
-}
 
-@foreach (var item in Model.BarCocktails)
-{
+                @foreach (var item in Model.BarCocktails)
+                {
 
-    var addressNew = item.Bar.Address.Country.Name + ", " + item.Bar.Address.City + ", "+ item.Bar.Address.Details;
+                    var addressNew = item.Bar.Address.Country.Name + ", " + item.Bar.Address.City + ", " + item.Bar.Address.Details;
 
-    <div class="eventBox">
-        <span class="date">SEP <span>06</span></span>
-        <h4 class="hdr2">
-            @item.Bar.Name<br>
-            <span class="place"> @addressNew</span>
-            <span class="time">11:00 am - 1:00 pm</span>
-        </h4>
-        <hr>
-        <div class="clearfix"></div>
-        <button style="background:none ; border:0px ; outline:0px ; padding-top:5px" id="map_cocktail" data-rel="prettyPhoto" class="mapit" value="@addressNew"><i></i>Map it </button>
-        <a target="_blank" href="http://www.facebook.com/sharer/sharer.php?u=foodtruck.html.themeforest.createit.pl" class="shareit"><i></i>Share it</a>
+                    <div class="eventBox">
+                        <span class="date">
+                            RATING
+                            @if (item.Bar.BarRating == null)
+                            {
+                                <span style="font-size:small"><i>Not Rated</i></span>
+                            }
+                            else
+                            {
+                                {
+                                    var rating = (double)Math.Round((decimal)(item.Bar.BarRating ?? 0), 2);
+                                <span>@rating</span>
+                                }
+
+                            }
+                        </span>
+                        <h4 class="hdr2">
+                            @item.Bar.Name<br>
+                            <span class="place"> @addressNew</span>
+                            <span class="time">11:00 am - 1:00 pm</span>
+                        </h4>
+                        <hr>
+                        <div class="clearfix"></div>
+                        <button style="background:none ; border:0px ; outline:0px ; padding-top:5px" id="map_cocktail" data-rel="prettyPhoto" class="mapit" value="@addressNew"><i></i>Map it </button>
+                        <a target="_blank" href="http://www.facebook.com/sharer/sharer.php?u=foodtruck.html.themeforest.createit.pl" class="shareit"><i></i>Share it</a>
+                    </div>
+                }
+                <center>
+                    <div style="padding-bottom:20px">
+                        <a asp-action="ListCocktails" class="btn btn-success">Back to List</a>
+                    </div>
+                </center>
+            </div>
+        </div>
     </div>
-}
-<center>
-    <div style="padding-bottom:20px">
-        <a asp-action="ListCocktails" class="btn btn-success">Back to List</a>
-    </div>
-</center>
+</div>
+
 <script src="~/assets/js/customGoogleMapper.js">
- 
+
 </script>
 <script async defer
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB2QJIfVlhWTpxgG5zCkx1XMmwADlMuE4c&callback=initialize">

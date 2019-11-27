@@ -16,7 +16,7 @@
         cache: false,
         success: function (result) {
 
-            a.html('<i class="fa fa-heart fa-lg text-danger"></i > <span>' + result + '</span>').removeClass("reviewLike-2").addClass("reviewUnlike-2");
+            a.html('<i style="color:red" class="fa fa-heart fa-lg text-danger"></i > <span style="color:gold">' + result + '</span>').removeClass("reviewLike-2").addClass("reviewUnlike-2");
 
         },
         fail: function (xhr, textStatus, errorThrown) {
@@ -48,7 +48,7 @@ $(document).on("click", '.reviewUnlike-2', function () {
         cache: false,
         success: function (result) {
 
-            a.html('<i class="fa fa-heart fa-lg text-danger"></i > <span>' + result + '</span>').removeClass("reviewUnlike-2").addClass("reviewLike-2");
+            a.html('<i class="fa fa-heart fa-lg text-danger"></i > <span style="color:gold">' + result + '</span>').removeClass("reviewUnlike-2").addClass("reviewLike-2");
 
         },
         fail: function (xhr, textStatus, errorThrown) {
