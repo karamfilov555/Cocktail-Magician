@@ -32,7 +32,7 @@
                 animation.remove();
                 $('#loadMore').attr('class', 'btn btn-default btn-sm')
             $(result).appendTo($('#tbody'));
-            }, 600);
+            }, 1000);
         }
     })
 });

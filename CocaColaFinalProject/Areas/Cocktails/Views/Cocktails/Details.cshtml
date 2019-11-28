@@ -47,11 +47,11 @@
                                 else
                                 {
                                     <kendo-rating name="readonlyRating"
-                                                  style="margin-left: 15px;
+                                                  style="margin-left: 15px;color:gold;
     padding-bottom: 20px;"
                                                   min="1" max="10"
                                                   value="@Model.Rating"
-                                                  readonly="true" enabled="false">
+                                                  readonly="true" enabled="true">
                                     </kendo-rating>
                                 }
                             </td>
@@ -103,7 +103,7 @@
                         <hr>
                         <div class="clearfix"></div>
                         <button style="background:none ; border:0px ; outline:0px ; padding-top:5px" id="map_cocktail" data-rel="prettyPhoto" class="mapit" value="@addressNew"><i></i>Map it </button>
-                        <a target="_blank" href="http://www.facebook.com/sharer/sharer.php?u=foodtruck.html.themeforest.createit.pl" class="shareit"><i></i>Share it</a>
+                        <a target="_blank" href="http://www.facebook.com/sharer/sharer.php?u=@item.Bar.Image" class="shareit"><i></i>Share it</a>
                     </div>
                 }
                 <center>

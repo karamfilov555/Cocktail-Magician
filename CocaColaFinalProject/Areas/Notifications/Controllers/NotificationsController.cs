@@ -30,7 +30,9 @@ namespace CM.Web.Areas.Notifications.Controllers
                 string id = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
                 var notifications = await _notificationServices.GetNotificationsForUserAsync(id);
                 var notificationsVm = notifications.Select(n => n.MapToNotificationVM());
-                var notificationsVmSortedByDate = notificationsVm.OrderByDescending(n => n.EventDate);
+                var notificationsVmSortedByDate = notificationsVm.OrderBy(n => n.IsSeen)
+                                                                 .ThenByDescending
+                                                                 (n => n.EventDate);
                 return View(notificationsVmSortedByDate);
             }
             catch (Exception ex)
@@ -53,7 +55,6 @@ namespace CM.Web.Areas.Notifications.Controllers
                 var notification = await _notificationServices.MarkAsSeenAsync(Id);
                 _toast.AddInfoToastMessage("Message marked as seen.");
                 return PartialView("_NotificationSeenPartial", notification.MapToNotificationVM());
-                //return ok
             }
             catch (Exception ex)
             {
@@ -68,10 +69,10 @@ namespace CM.Web.Areas.Notifications.Controllers
         {
             try
             {
-            string id = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var notificatonsCount = await _notificationServices.GetUnseenNotificationsCountForUserAsync(id);
+                string id = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+                var notificatonsCount = await _notificationServices.GetUnseenNotificationsCountForUserAsync(id);
 
-            return notificatonsCount;
+                return notificatonsCount;
 
             }
             catch (Exception ex)
@@ -84,9 +85,9 @@ namespace CM.Web.Areas.Notifications.Controllers
         {
             try
             {
-            await _notificationServices.CreateNewMessageAsync(name, email, message);
-            _toast.AddSuccessToastMessage("You successfully contact our support!");
-            return RedirectToAction("Index", "Home");
+                await _notificationServices.CreateNewMessageAsync(name, email, message);
+                _toast.AddSuccessToastMessage("You successfully contact our support!");
+                return RedirectToAction("Index", "Home");
 
             }
             catch (Exception ex)

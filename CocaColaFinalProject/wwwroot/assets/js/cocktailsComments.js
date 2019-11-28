@@ -31,7 +31,7 @@
                 animation.remove();
                 $('#loadComments').attr('class', 'btn btn-primary')
                 $(result).appendTo($('#putCommentsHere'));
-            }, 600);
+            }, 1000);
         }
     })
 });

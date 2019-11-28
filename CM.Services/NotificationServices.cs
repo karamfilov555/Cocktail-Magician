@@ -56,7 +56,7 @@ namespace CM.Services
             var notification = await _context.Notifications
                                              .Where(n => n.UserId == userId)
                                              .ToListAsync().ConfigureAwait(false);
-            return notification.Select(n => n.MapNotificationToDTO()).ToList();
+            return notification.Select(n => n.MapNotificationToDTO()).OrderBy(n=>n.IsSeen).ToList();
         }
         //Tested
         public async Task<int> GetUnseenNotificationsCountForUserAsync(string userId)

@@ -35,7 +35,7 @@
                 $('#loadMoreBars').attr('class', 'btn btn-default btn-sm');
                 console.log($('#tbodyBars'));
                 $(result).appendTo($('#tbodyBars'));
-            }, 600);
+            }, 1000);
         }
     })
 });

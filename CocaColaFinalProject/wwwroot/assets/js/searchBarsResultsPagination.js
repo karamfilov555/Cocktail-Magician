@@ -34,7 +34,7 @@
                 $('#loadMoreBarResults').attr('class', 'btn btn-default btn-sm');
                 //console.log($('#tbodyResults'));
                 $(result).appendTo($('#putBarResults'));
-            }, 600);
+            }, 1000);
         }
     })
 });

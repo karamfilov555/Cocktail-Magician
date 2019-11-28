@@ -34,7 +34,7 @@
                 $('#loadMoreCocktailsResults').attr('class', 'btn btn-default btn-sm');
                 //console.log($('#tbodyResults'));
                 $(result).appendTo($('#putCocktailsHere'));
-            }, 600);
+            }, 1000);
         }
     })
 });

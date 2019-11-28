@@ -30,13 +30,13 @@
         cache: false,
         success: function (result) {
             console.log(result);
-            animation.insertBefore($('#loadMoreBarComments'));
+            animation.insertAfter($('#loadMoreBarComments'));
             $('#loadMoreBarComments').attr('class', 'btn btn-default btn-sm disabled');
             setTimeout(function () {
                 animation.remove();
                 $('#loadMoreBarComments').attr('class', 'btn btn-default btn-sm');
                 $(result).appendTo($('#putMoreReviewsHere'));
-            }, 600);
+            }, 1000);
         }
     })
 });
