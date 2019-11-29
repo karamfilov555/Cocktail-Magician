@@ -1,0 +1,230 @@
+﻿@model ListReviewViewModel
+@{
+    ViewData["Title"] = "RateCocktail";
+    Layout = "~/Views/Shared/_LayoutCustom.cshtml";
+}
+
+    <head>
+        @*<link rel="stylesheet" href="~/bootstrap/dist/css/bootstrap.css" />*@
+        <link rel="stylesheet" href="~/kendo-ui/styles/kendo.common-material.min.css" />
+        <link rel="stylesheet" href="~/kendo-ui/styles/kendo.material.min.css" />
+
+        <script src="~/jquery/dist/jquery.js"></script>
+        <script src="~/bootstrap/dist/js/bootstrap.bundle.js"></script>
+        @*Kendo Start Here:*@
+        <script src="~/kendo-ui/js/kendo.all.min.js"></script>
+        <script src="~/kendo-ui/js/kendo.aspnetmvc.min.js"></script>
+        @* css styling *@
+        @* jquery *@
+    </head>
+    <div class="bg-1 section" id="events" style="margin-top:-18px">
+        <div class="inner" data-image="/assets/images/content/ccback12.jpg" data-topspace="1" style="background-image: url('/assets/images/content/ccback12.jpg'); padding-top: 1px;">
+            <div class="inner" data-topspace="1" data-bottomspace="1" style="background-image: none; ">
+                
+                    <center><h1 class="hdr4">Rate Cocktail "@Model.Name" </h1></center>
+                    <div style="background-color:rgba(16, 6, 6, 0.80)">
+
+                        <form asp-area="Reviews" asp-controller="CocktailReviews" asp-action="RateCocktail" method="post">
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th><h5>Cocktail's Picture</h5></th>
+                                        <th><h5 style="margin-left:27px">Cocktail's Details</h5></th>
+                                        <th><h5>Cocktail's Ingredients</h5></th>
+
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                    <tr>
+                                        <td><img src="@Model.Image" height="250" width="250" style="border-radius:20px"></td>
+                                        <td>
+                                            <h5 style="margin-left:27px">Name: @Model.Name</h5>
+                                            @if (@Model.Rating == 0 || Model.Rating == null)
+                                            {
+                                                <h5 style="margin-left:27px">
+                                                    Not Rated Yet!
+                                                </h5>
+                                            }
+                                            else
+                                            {
+                                                <kendo-rating name="readonlyRating"
+                                                              style="margin-left: 15px;
+                                        padding-bottom: 20px;color:gold"
+                                                              min="1" max="10"
+                                                              value="@Model.Rating"
+                                                              readonly="true" enabled="true">
+                                                </kendo-rating>
+
+                                            }
+
+                                        </td>
+                                        <td>
+                                            @foreach (var ingredient in Model.Ingredients)
+                                            {
+                                                <h5>
+                                                    @ingredient.Ingredient
+                                                </h5>
+                                            }
+                                        </td>
+                                    </tr>
+
+                                </tbody>
+                            </table>
+                            <table>
+                                <tbody>
+                                    <dl>
+                                        @if (Model.CanReview)
+                                        {
+                                            <dt class="col-sm-2">
+                                                <h3 class="hdr3" style="margin-top:7px"><font style="color:gold">Your grade</h3>
+                                            </dt>
+                                            <dd class="col-sm-10 text-danger">
+                                                <div class="form-group">
+                                                    <b>
+                                                        <kendo-rating style="color:gold" name="rating"
+                                                                      min="1" max="10"
+                                                                      value="@Model.Rating">
+                                                        </kendo-rating>
+                                                        <p>
+                                                            <span asp-validation-for="Rating" class="text-danger"></span>
+                                                        </p>
+                                                    </b>
+                                                </div>
+                                            <dt class="col-sm-2">
+                                                <h3 class="hdr3" style="margin-top:7px"><font style="color:gold">Current Rating</h3>
+                                            </dt>
+
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <textarea asp-for="Description" class="form-control input-sm" rows="5" cols="50" placeholder="Write your review here..." style="padding-right:10px"> </textarea>
+                                                    <br>
+                                                    <p>
+                                                        <button class="btn btn-primary" type="submit">Submit</button>
+
+
+                                                </div>
+
+                                            </div>
+                                            </dd>
+
+                                        }
+                                        else
+                                        {
+                                            <dt><h3 class="hdr3" style="color:gold"> You've already rated this cocktail ! </h3></dt>
+                                        }
+                                    </dl>
+                                </tbody>
+                            </table>
+                        </form>
+                        @if (Model.CanReview)
+                        {
+                            <br>
+                            <br>
+                            <br>
+                            <br>
+                            <br>
+                            <br>
+                            <br>
+                            <br>
+                            <br>
+                            <br>
+                            <br>
+                        }
+
+                        @if (Model.TotalReviewsForCocktail == 0)
+                        {
+                            <h3 class="hdr3" style="padding-bottom:20px;margin-top:-200px"> There are no comments for this cocktail yet! </h3>
+                            <center>
+                            <a type="submit" class="btn btn-sm" style="margin-bottom:20px;" asp-area="Cocktails" asp-controller="Cocktails" asp-action="ListCocktails"><i class="fa fa-arrow-circle-o-left"></i> Back To List</a>
+                            </center>
+                        }
+                        else
+                        {
+                            <center><h1 class="hdr6" style="">Comments for "@Model.Name" </h1></center>
+                            <center id="putCommentsHere">
+                                @foreach (var item in Model.ReviewsPerPageForCocktail)
+                                {
+                                    <div class="col-md-10 blog-main" style="padding-left:260px;color:black">
+                                        <div class="blog-post format-quote">
+                                            <div class="blog_thumbnail">
+                                                <div class="box_text">
+                                                    @if (item.Rating > 5.5)
+                                                    {
+
+                                                        <span class="ribbon_icon"><i class="fa fa-thumbs-up"></i></span>
+                                                    }
+                                                    else
+                                                    {
+                                                        <span class="ribbon_icon"><i class="fa fa-thumbs-down"></i></span>
+                                                    }
+
+                                                    <blockquote class="inner">
+                                                        <p class="text-body" style="width:400px; word-wrap:break-word; display:inline-block;" rows="5">
+
+                                                            "@item.Description"
+
+                                                        </p>
+                                                        <br>
+                                                        <p>
+                                                            <font style="color:gold">Grade: @item.Rating</font>
+
+                                                        </p>
+                                                        <span class="author">- The Coca-Cola Company, Cocktail Magician™, 2019 -</span>
+                                                    </blockquote>
+
+                                                </div>
+                                            </div>
+                                            <div class="meta_box">
+                                                <span class="meta_date">@item.ReviewDate.ToShortDateString()</span>
+                                                @*<span class="meta_comments"><a href="#"><em>21</em> <span>Comments</span></a></span>*@
+                                                <span class="meta_author"><a href="#">Publisher: @item.UserName</a></span>
+                                                @if (!item.LikedByUsers.Contains(@User.FindFirstValue(ClaimTypes.NameIdentifier)))
+                                                {
+                                                    <form id="like-1" method="post" asp-area="Reviews" asp-controller="CocktailReviews" asp-action="LikeCocktailReview"
+                                                          data-cocktailReviewID="@item.Id" style="background:none" data-cocktailId="@item.CocktailID">
+                                                        <button style="background-color:transparent; border-color:transparent" type="submit"
+                                                                class="reviewLike-2"
+                                                                data-cocktailReviewID="@item.Id" data-cocktailId="@item.CocktailID">
+                                                            <i style="color:red;" class="fa fa-heart fa-lg text-danger"></i>
+                                                            <span style="color:gold"> @item.LikeCount</span>
+                                                        </button>
+                                                    </form>
+                                                }
+                                                else
+                                                {
+                                                    <form id="unlike-1" method="post" asp-area="Reviews" asp-controller="CocktailReviews" asp-action="RemoveCocktailReview"
+                                                          data-cocktailReviewID="@item.Id" data-cocktailId="@item.CocktailID">
+                                                        <button style="background-color:transparent; border-color:transparent" type="submit"
+                                                                class="reviewUnlike-2" data-cocktailReviewID="@item.Id" data-cocktailId="@item.CocktailID">
+                                                            <i style="color:red;" class="fa fa-heart fa-lg text-danger"></i>
+                                                            <span style="color:gold">@item.LikeCount</span>
+                                                        </button>
+                                                    </form>
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                            </center>
+                        }
+
+                        @if (Model.TotalReviewsForCocktail != 0)
+                        {
+                            <center style="padding-bottom:20px">
+                                <p id="animationLoading" style="padding-bottom:10px">
+
+                                </p>
+                                <p style="padding-left:10px; padding-top:260px">
+                                    <a id="loadComments" asp-action="ListCocktails" data-currPage="@Model.CurrPage" data-Id="@Model.Id" class="btn btn-primary">Load More Comments</a>
+                                </p>
+                                <a type="submit" class="btn btn-sm" style="margin-bottom:20px;" asp-area="Cocktails" asp-controller="Cocktails" asp-action="ListCocktails"><i class="fa fa-arrow-circle-o-left"></i> Back To List</a>
+                            </center>
+                        }
+                    </div>
+                    </div>
+                    </div>
+                    </div>
+                    <script src="~/assets/js/cocktailsComments.js"></script>

@@ -1,0 +1,175 @@
+﻿@model AllBarReviewsViewModel
+@{
+    ViewData["Title"] = "BarReviews";
+}
+
+<head>
+    <link rel="stylesheet" href="~/kendo-ui/styles/kendo.common-material.min.css" />
+    <link rel="stylesheet" href="~/kendo-ui/styles/kendo.material.min.css" />
+
+    <script src="~/jquery/dist/jquery.js"></script>
+    <script src="~/bootstrap/dist/js/bootstrap.bundle.js"></script>
+    @*Kendo Start Here:*@
+    <script src="~/kendo-ui/js/kendo.all.min.js"></script>
+    <script src="~/kendo-ui/js/kendo.aspnetmvc.min.js"></script>
+</head>
+
+<div class="bg-1 section" id="events" style="margin-top:-18px">
+    <div class="inner" data-image="/assets/images/content/ccback12.jpg" data-topspace="1" style="background-image: url('/assets/images/content/ccback12.jpg'); padding-top: 1px;">
+        <div class="inner" data-topspace="1" data-bottomspace="1" style="background-image: none; ">
+            <h1 class="hdr4">Reviews for @Model.BarName </h1>
+            <div style="background-color:rgba(16, 6, 6, 0.80);">
+
+
+
+                <center >
+                    <br/>
+                    <br/>
+                    <br/>
+                    <img src="~/assets/images/content/American_Bar.jpg" style="margin-top:-20px; border-radius:30px">
+                    @if (@Model.Rating == 0 || @Model.Rating == null)
+                    {
+                        <h3><i>Not rated yet!</i></h3>
+                    }
+                    else
+                    {
+                        <font color="gold">
+                            <kendo-rating name="readonlyRating"
+                                          style="margin-left: 15px;
+                                        padding-bottom: 20px;
+                                        padding-top:20px;
+                                        color:gold"
+                                          min="1" max="10"
+                                          value="@Model.Rating"
+                                          readonly="true" enabled="true">
+                            </kendo-rating>
+                        </font>
+                    }
+                </center>
+                @{
+                    if (!@Model.ReviewedByUsers.Contains(@User.FindFirstValue(ClaimTypes.NameIdentifier)))
+                    {
+                        //var reviewVM = new BarReviewViewModel();
+                        //reviewVM.BarId = Model.BarId;
+                        //reviewVM.BarName = Model.BarName;
+
+                        @*<partial name="_CreateBarReviewPartial" model=reviewVM />*@
+                        <center>
+                            <a class="btn btn-default btn-lg" style="margin-bottom:-5px; color:gold"
+                               asp-action="CreateBarReview" asp-controller="BarReviews" asp-area="Reviews" asp-route-id="@Model.BarId" class="btn btn-default">Add Your Review</a>
+                        </center>
+                    }
+                    else
+                    {
+                        <dt><h3 class="hdr3" style="color:gold"> You've already rated this cocktail ! </h3></dt>
+                    }
+                }
+
+
+                <br />
+                <div class="row" style="margin-right:20px">
+                    <h3 class="hdr4">All Comments:</h3>
+                    <center>
+
+                        <ul id="putMoreReviewsHere" class="commentList list-unstyled">
+                            <li>
+                                @if (@Model.Reviews.Count == 0)
+                                {
+                                    <h6 class="hdr3">No reviews yet</h6>
+                                }
+                                @foreach (var review in @Model.Reviews)
+                                {
+                                    <center>
+                                        <div class="col-md-10 blog-main" style="padding-left:260px">
+                                            <div class="blog-post format-quote">
+                                                <div class="blog_thumbnail">
+                                                    <div class="box_text">
+                                                        @if (review.Rating > 5.5)
+                                                        {
+
+                                                            <span class="ribbon_icon"><i class="fa fa-thumbs-up"></i></span>
+                                                        }
+                                                        else
+                                                        {
+                                                            <span class="ribbon_icon"><i class="fa fa-thumbs-down"></i></span>
+                                                        }
+
+                                                        <blockquote class="inner">
+                                                            <p class="text-body" style="width:400px; word-wrap:break-word; display:inline-block;" rows="5">
+
+                                                                "@review.Description"
+
+                                                            </p>
+                                                            <br>
+                                                            <p>
+                                                                <font style="color:gold">Grade: @review.Rating</font>
+
+                                                            </p>
+                                                            <span class="author">- The Coca-Cola Company, Cocktail Magician™, 2019 -</span>
+                                                        </blockquote>
+
+                                                    </div>
+                                                </div>
+                                                <div class="meta_box">
+                                                    <span class="meta_date">@review.ReviewDate</span>
+                                                    @*<span class="meta_comments"><a href="#"><em>21</em> <span>Comments</span></a></span>*@
+                                                    <span class="meta_author"><a href="#">Publisher: @review.UserName</a></span>
+                                                    @if (!review.LikedByUsers.Contains(@User.FindFirstValue(ClaimTypes.NameIdentifier)))
+                                                    {
+                                                        <form id="like-1" method="post" asp-area="Reviews" asp-controller="BarReviews" asp-action="LikeBarReview"
+                                                              asp-route-barReviewID="@review.Id" asp-route-barId="@review.BarId" asp-route-name="@review.BarName"
+                                                              data-barReviewID="@review.Id" data-barId="@review.BarId" data-name="@review.BarName">
+                                                            <button type="submit"
+                                                                    class="like-2"
+                                                                    style="background-color:transparent;border-color:transparent"
+                                                                    data-barReviewID="@review.Id" data-barId="@review.BarId">
+                                                                <i class="fa fa-heart fa-lg text-danger"></i>
+                                                                <span style="color:gold"> @review.LikeCount</span>
+                                                            </button>
+                                                        </form>
+                                                    }
+                                                    else
+                                                    {
+                                                        <form id="unlike-1" method="post" asp-area="Reviews" asp-controller="BarReviews" asp-action="RemoveLikeBarReview"
+                                                              asp-route-barReviewID="@review.Id" asp-route-barId="@review.BarId" asp-route-name="@review.BarName"
+                                                              data-barReviewID="@review.Id" data-barId="@review.BarId">
+                                                            <button type="submit"
+                                                                    style="background-color:transparent;border-color:transparent"
+                                                                    class="unlike-2" data-barReviewID="@review.Id" data-barId="@review.BarId">
+                                                                <i class="fa fa-heart fa-lg text-danger"></i>
+                                                                <span style="color:gold">@review.LikeCount</span>
+                                                            </button>
+                                                        </form>
+                                                    }
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                    </center>
+                                }
+                        </ul>
+                    </center>
+                    @*@if (Model.Reviews.Count > 2)
+                    {*@
+                        <center>
+                            <a id="loadMoreBarComments" asp-area="Reviews" asp-controller="BarReviews" asp-action="BarReviews" class="btn btn-primary"
+                               data-id="@Model.BarId" data-name="@Model.BarName" data-rating="@Model.Rating" data-pageNumber="0">
+                                <h5 style="margin-bottom:-5px; color:gold">Load more comments <i class="fa fa-plus-circle"></i></h5>
+                            </a>
+                        </center>
+                    @*}*@
+                </div>
+                <center>
+                    <div>
+                        <a asp-area="Bars" asp-controller="Bars" asp-action="ListBars"
+                           class="btn btn-sm"><i class="fa fa-arrow-circle-o-left"></i>Back to List</a>
+                    </div>
+                </center>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+<script src="~/assets/js/barReviewsPagination.js"></script>

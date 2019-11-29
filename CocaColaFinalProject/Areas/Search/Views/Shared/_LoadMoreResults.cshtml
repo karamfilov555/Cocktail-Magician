@@ -1,0 +1,71 @@
+﻿<tbody>
+    @foreach (var bar in Model.Bars)
+    {
+        <tr>
+            <td>
+                <a asp-area="Bars" asp-controller="Bars" asp-action="Details" asp-route-id="@bar.Id">
+                    <img src="@bar.Image"
+                         width="300"
+                         style="border-radius:25px; padding-top:5px; padding-bottom:5px" alt="Bar picture" />
+                </a>
+            </td>
+            <td>
+                <h5>@bar.Name</h5>
+            </td>
+            <td>
+                <h5>@bar.Address</h5>
+            </td>
+            <td>
+                @if (@bar.BarRating == 0 || @bar.BarRating == null)
+                {
+                    <i>Not rated yet!</i>
+                }
+                else
+                {
+                    if (bar.BarRating * 10 % 10 == 0)
+                    {
+                        for (int i = 0; i < bar.BarRating - 1; i++)
+                        {
+                            <font color="gold">
+                                <i class="fa fa-star" style="color:gold"></i>
+                            </font>
+                        }
+                        <font color="gold">
+                            <i class="fa fa-star" style="color:gold"><font size="2"> @bar.BarRating</font></i>
+                        </font>
+                    }
+                    else
+                    {
+
+                        for (int i = 0; i < bar.BarRating - 1; i++)
+                        {
+                            <font color="gold">
+                                <i class="fa fa-star" style="color:gold"></i>
+                            </font>
+                        }
+                        <font color="gold">
+                            <i class="fa fa-star-half" style="color:gold"> <font size="2"> @bar.BarRating</font></i>
+                        </font>
+                    }
+                }
+            </td>
+
+
+
+            @*@if (this.User.IsInRole("Member") || this.User.IsInRole("Manager") || this.User.IsInRole("Administrator"))
+                {*@
+            <td>
+                <p>
+                    <a class="btn btn-default btn-sm" asp-area="Bars" asp-action="Details" asp-route-id="@bar.Id">
+                        <font style="color:gold">
+                            <i class="fa fa-search-plus"></i>
+                            Details
+                        </font>
+                    </a>
+                </p>
+            </td>
+            @*}*@
+
+        </tr>
+    }
+</tbody>

@@ -10,6 +10,10 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
+using Microsoft.AspNetCore.Http;
+using CM.Services;
+using NToastNotify;
+using CM.Web.Infrastructure.Attributes;
 
 namespace CM.Web.Areas.Identity.Pages.Account
 {
@@ -20,17 +24,23 @@ namespace CM.Web.Areas.Identity.Pages.Account
         private readonly UserManager<AppUser> _userManager;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
+        private readonly IFileUploadService _fileUploadService;
+        private readonly IToastNotification _toast;
 
         public RegisterModel(
             UserManager<AppUser> userManager,
             SignInManager<AppUser> signInManager,
             ILogger<RegisterModel> logger,
-            IEmailSender emailSender)
+            IEmailSender emailSender,
+            IFileUploadService fileUploadService,
+            IToastNotification toast)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
             _emailSender = emailSender;
+            _fileUploadService = fileUploadService;
+            _toast = toast;
         }
 
         [BindProperty]
@@ -43,7 +53,7 @@ namespace CM.Web.Areas.Identity.Pages.Account
         public class InputModel
         {
             [Required]
-           
+
             public string Username { get; set; }
             [Required]
             [EmailAddress]
@@ -60,6 +70,9 @@ namespace CM.Web.Areas.Identity.Pages.Account
             [Display(Name = "Confirm password")]
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; }
+            [MaxImageSize(500000)]
+            [AllowedImageFormat(new string[] { ".jpg", ".png", "jpeg" })]
+            public IFormFile Image { get; set; }
         }
 
         public void OnGet(string returnUrl = null)
@@ -72,8 +85,18 @@ namespace CM.Web.Areas.Identity.Pages.Account
             returnUrl = returnUrl ?? Url.Content("~/");
             if (ModelState.IsValid)
             {
-                var user = new AppUser { UserName = Input.Username, Email = Input.Email };
+                string uniqueFileNamePath;
+                if (Input.Image != null)
+                {
+                uniqueFileNamePath = _fileUploadService.UploadFile(Input.Image);
+                }
+                else
+                {
+                    uniqueFileNamePath = "/assets/images/hat.jpg";
+                }
+                var user = new AppUser { UserName = Input.Username, Email = Input.Email, ImageURL = uniqueFileNamePath };
                 var result = await _userManager.CreateAsync(user, Input.Password);
+                await _userManager.AddToRoleAsync(user, "Member");
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User created a new account with password.");

@@ -1,0 +1,277 @@
+﻿@model SearchViewModel
+@{
+    Layout = "~/Views/Shared/_LayoutCustom.cshtml";
+}
+
+<div class="bg-1 section" id="events" style="margin-top:-18px">
+    <div class="inner" data-image="/assets/images/content/ccback12.jpg" data-topspace="1" style="background-image: url('/assets/images/content/ccback12.jpg'); padding-top: 1px;">
+        <div class="inner" data-topspace="1" data-bottomspace="1" style="background-image: none; ">
+            <center>
+                <h3 class=" hdr4">
+                    See search results for:
+                </h3>
+            </center>
+            @*<div class="row" id="tab-switcher" style="margin-right:0px">*@
+
+
+            <div style="">
+                <center style="" ;>
+
+                    <div class="col-md-7">
+
+                        <h3 id="tab-switcher" class="tab-link btn btn-success" data-tab="bars" style="color:gold; padding-bottom:5px; background-color:green; margin-bottom:20px; margin-right:-45px; margin-top:20px">Bars</h3>
+                    </div>
+                    <div class="col-md-1">
+                        <h3 id="tab-switcher2" class="tab-link btn btn-success" data-tab="cocktails" style="color: gold;padding-bottom:5px; background-color:grey; margin-bottom:20px; margin-top:20px">Cocktails</h3>
+                    </div>
+                </center>
+            </div>
+            @*  </div>*@
+
+            <div id="bars" class="tab-container" style="background-color:rgba(16, 6, 6, 0.80)">
+
+                @if (Model.Bars.Count == 0)
+                {
+                    <div style="padding-top:150px;padding-bottom:100px">
+                        <center>
+                            <h5>No results! Try the other tab!</h5>
+                        </center>
+                    </div>
+                }
+                else
+                {
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>
+                                    <h5>
+                                        Bar's Picture
+                                    </h5>
+                                </th>
+                                <th>
+                                    <h5>
+                                        Name
+                                    </h5>
+                                </th>
+                                <th width="30%">
+                                    <h5>
+                                        Address
+                                    </h5>
+                                </th>
+                                <th>
+                                    <h5>
+                                        Rating
+                                    </h5>
+                                </th>
+                                <th>
+                                </th>
+
+                                @*<th width="15%"><h5>Website</h5></th>*@
+                                @*<th></th>*@
+                            </tr>
+                        </thead>
+                        <tbody id="putBarResults">
+                            @foreach (var bar in Model.Bars)
+                            {
+                                <tr>
+                                    <td>
+                                        <a asp-area="Bars" asp-controller="Bars" asp-action="Details" asp-route-id="@bar.Id">
+                                            <img src="@bar.Image"
+                                                 width="300"
+                                                 style="border-radius:25px; padding-top:5px; padding-bottom:5px" alt="Bar picture" />
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <h5>@bar.Name</h5>
+                                    </td>
+                                    <td>
+                                        <h5>@bar.Address</h5>
+                                    </td>
+                                    <td>
+                                        @if (@bar.BarRating == 0 || @bar.BarRating == null)
+                                        {
+                                            <i>Not rated yet!</i>
+                                        }
+                                        else
+                                        {
+                                            if (bar.BarRating * 10 % 10 == 0)
+                                            {
+                                                for (int i = 0; i < bar.BarRating - 1; i++)
+                                                {
+                                                    <font color="gold">
+                                                        <i class="fa fa-star" style="color:gold"></i>
+                                                    </font>
+                                                }
+                                                <font color="gold">
+                                                    <i class="fa fa-star" style="color:gold"><font size="2"> @bar.BarRating</font></i>
+                                                </font>
+                                            }
+                                            else
+                                            {
+
+                                                for (int i = 0; i < bar.BarRating - 1; i++)
+                                                {
+                                                    <font color="gold">
+                                                        <i class="fa fa-star" style="color:gold"></i>
+                                                    </font>
+                                                }
+                                                <font color="gold">
+                                                    <i class="fa fa-star-half" style="color:gold"> <font size="2"> @bar.BarRating</font></i>
+                                                </font>
+                                            }
+                                        }
+                                    </td>
+
+                                    <td>
+                                        <p>
+                                            <a class="btn btn-default btn-sm" asp-area="Bars" asp-controller="Bars" asp-action="Details" asp-route-id="@bar.Id">
+                                                <font style="color:gold">
+                                                    <i class="fa fa-search-plus"></i>
+                                                    Details
+                                                </font>
+                                            </a>
+                                        </p>
+                                    </td>
+
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                    <center>
+                    </center>
+                }
+                <center>
+                    <a id="loadMoreBarResults" class="btn btn-default btn-sm"
+                       data-searchCriteria="@Model.SearchCriteria" data-pageIndex="1" data-entity="bars">
+                        <h5 style="margin-bottom:-5px; color:gold">Load more results <i class="fa fa-plus-circle"></i></h5>
+                    </a>
+                    <br />
+                </center>
+                <br />
+            </div>
+            <div id="cocktails" style="display: none; background-color:rgba(16, 6, 6, 0.80)" class="tab-container">
+                @if (@Model.Cocktails.Count == 0)
+                {
+                    <div style="padding-top:150px;padding-bottom:100px">
+                        <center>
+                            <h5>No results! Try the other tab!</h5>
+                        </center>
+                    </div>
+                }
+                else
+                {
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th><h5>Cocktails's Picture</h5></th>
+                                <th>
+                                    <h5>
+                                        Name
+                                    </h5>
+                                </th>
+                                <th>
+                                    <h5>
+                                        Ingredients
+                                    </h5>
+                                </th>
+                                <th>
+                                    <h5>
+                                        Rating
+                                    </h5>
+                                </th>
+
+                                <th width="7%"></th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody id="putCocktailsHere">
+                            @foreach (var cocktail in Model.Cocktails)
+                            {
+                                <tr>
+                                    <td>
+                                        <a asp-area="Cocktails" asp-controller="Cocktails" asp-action="Details" asp-route-id="@cocktail.Id">
+                                            <img src="@cocktail.Image"
+                                                 width="200"
+                                                 style="border-radius:25px; padding-top:5px; padding-bottom:5px" alt="Bar picture" />
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <h5>@cocktail.Name</h5>
+                                    </td>
+                                    <td>
+                                        <h5>@cocktail.Ingredients</h5>
+                                    </td>
+                                    <td>
+                                        @if (cocktail.Rating == 0 || cocktail.Rating == null)
+                                        {
+                                            <i>Not rated yet!</i>
+                                        }
+                                        else
+                                        {
+                                            if (cocktail.Rating * 10 % 10 == 0)
+                                            {
+                                                for (int i = 0; i < cocktail.Rating - 1; i++)
+                                                {
+                                                    <font color="gold">
+                                                        <i class="fa fa-star" style="color:gold"></i>
+                                                    </font>
+                                                }
+                                                <font color="gold">
+                                                    <i class="fa fa-star" style="color:gold"><font size="2"> @cocktail.Rating</font></i>
+                                                </font>
+                                            }
+                                            else
+                                            {
+
+                                                for (int i = 0; i < cocktail.Rating - 1; i++)
+                                                {
+                                                    <font color="gold">
+                                                        <i class="fa fa-star" style="color:gold"></i>
+                                                    </font>
+                                                }
+                                                <font color="gold">
+                                                    <i class="fa fa-star-half" style="color:gold"> <font size="2"> @cocktail.Rating</font></i>
+                                                </font>
+                                            }
+                                        }
+                                    </td>
+                                    <td>
+
+                                        @*@if (this.User.IsInRole("Member") || this.User.IsInRole("Manager") || this.User.IsInRole("Administrator"))
+                                            {*@
+                                        <p>
+                                            <a class="btn btn-default btn-sm" asp-area="Cocktails" asp-controller="Cocktails" asp-action="Details" asp-route-id="@cocktail.Id">
+                                                <font style="color:gold">
+                                                    <i class="fa fa-search-plus"></i>Cocktail Details
+
+                                                </font>
+                                            </a>
+                                        </p>
+                                        @*}*@
+
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+
+
+                    </table>
+                }
+                <center>
+                    <a id="loadMoreCocktailsResults" class="btn btn-default btn-sm"
+                       data-searchCriteria="@Model.SearchCriteria" data-pageIndex1="1" data-entity1="cocktails">
+                        <h5 style="margin-bottom:-5px; color:gold">Load more results <i class="fa fa-plus-circle"></i></h5>
+                    </a>
+                    <br />
+                </center>
+                <br />
+            </div>
+            @*<a id="loadMoreResults" asp-area="Search" asp-controller="Search" asp-action="SearchResults" data-pageIndex="0" data-searchCriteria="@Model.SearchCriteria" class="btn btn-default btn-sm"><h5 style="margin-bottom:-5px; color:gold">Load more cocktails <i class="fa fa-plus-circle"></i></h5></a>*@
+        </div>
+    </div>
+</div>
+
+
+<script src="/assets/bootstrap/js/bootstrap.min.js"></script>
+<script src="~/assets/js/searchBarsResultsPagination.js"></script>
+<script src="~/assets/js/searchResultsCocktails.js"></script>

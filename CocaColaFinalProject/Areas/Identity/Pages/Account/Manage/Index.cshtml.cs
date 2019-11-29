@@ -5,10 +5,15 @@ using System.Linq;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
 using CM.Models;
+using CM.Services;
+using CM.Services.Contracts;
+using CM.Web.Infrastructure.Attributes;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using NToastNotify;
 
 namespace CM.Web.Areas.Identity.Pages.Account.Manage
 {
@@ -17,15 +22,22 @@ namespace CM.Web.Areas.Identity.Pages.Account.Manage
         private readonly UserManager<AppUser> _userManager;
         private readonly SignInManager<AppUser> _signInManager;
         private readonly IEmailSender _emailSender;
+        private readonly IFileUploadService _fileUploadService;
+        private readonly IToastNotification _toast;
+        private readonly IAppUserServices _appUserServices;
 
         public IndexModel(
             UserManager<AppUser> userManager,
             SignInManager<AppUser> signInManager,
-            IEmailSender emailSender)
+            IEmailSender emailSender, IFileUploadService fileUploadService,
+            IToastNotification toast, IAppUserServices appUserServices)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _emailSender = emailSender;
+            _fileUploadService = fileUploadService;
+            _toast = toast;
+            _appUserServices = appUserServices;
         }
 
         public string Username { get; set; }
@@ -47,6 +59,11 @@ namespace CM.Web.Areas.Identity.Pages.Account.Manage
             [Phone]
             [Display(Name = "Phone number")]
             public string PhoneNumber { get; set; }
+            public string ImageUrl { get; set; }
+            [MaxImageSize(500000)]
+            [AllowedImageFormat(new string[] { ".jpg", ".png", "jpeg" })]
+            public IFormFile Image { get; set; }
+
         }
 
         public async Task<IActionResult> OnGetAsync()
@@ -60,15 +77,17 @@ namespace CM.Web.Areas.Identity.Pages.Account.Manage
             var userName = await _userManager.GetUserNameAsync(user);
             var email = await _userManager.GetEmailAsync(user);
             var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
+            var imageURL = user.ImageURL;
 
             Username = userName;
 
             Input = new InputModel
             {
                 Email = email,
-                PhoneNumber = phoneNumber
+                PhoneNumber = phoneNumber,
+                ImageUrl = imageURL
             };
-
+            ViewData["IMG"] = await _appUserServices.GetProfilePictureURL(user.Id);
             IsEmailConfirmed = await _userManager.IsEmailConfirmedAsync(user);
 
             return Page();
@@ -86,6 +105,7 @@ namespace CM.Web.Areas.Identity.Pages.Account.Manage
             {
                 return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
             }
+
 
             var email = await _userManager.GetEmailAsync(user);
             if (Input.Email != email)
@@ -108,7 +128,11 @@ namespace CM.Web.Areas.Identity.Pages.Account.Manage
                     throw new InvalidOperationException($"Unexpected error occurred setting phone number for user with ID '{userId}'.");
                 }
             }
-
+            if (Input.Image != null)
+            {
+                var uniqueFileNamePath = _fileUploadService.UploadFile(Input.Image);
+                await _appUserServices.SetProfilePictureURL(user.Id, uniqueFileNamePath);
+            }
             await _signInManager.RefreshSignInAsync(user);
             StatusMessage = "Your profile has been updated";
             return RedirectToPage();

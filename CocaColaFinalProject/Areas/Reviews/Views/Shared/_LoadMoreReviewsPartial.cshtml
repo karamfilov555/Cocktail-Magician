@@ -1,0 +1,72 @@
+﻿@model ListReviewViewModel
+  
+@foreach (var item in Model.ReviewsPerPageForCocktail)
+    {
+<center>
+    <div class="col-md-10 blog-main" style="padding-left:260px">
+        <div class="blog-post format-quote">
+            
+            <div class="blog_thumbnail">
+                <div class="box_text">
+
+                    @if (item.Rating > 5)
+                    {
+
+                        <span class="ribbon_icon"><i class="fa fa-thumbs-up"></i></span>
+                    }
+                    else
+                    {
+                        <span class="ribbon_icon"><i class="fa fa-thumbs-down"></i></span>
+                    }
+
+                    <blockquote class="inner">
+                        <p class="text-body" style="width:400px; word-wrap:break-word; display:inline-block;" rows="5">
+
+                            "@item.Description"
+
+                        </p>
+                        <br>
+                        <p>
+                            <font style="color:gold">Grade: @item.Rating</font>
+
+                        </p>
+                        <span class="author">- The Coca-Cola Company, Cocktail Magician™, 2019 -</span>
+                    </blockquote>
+
+                </div>
+            </div>
+            <div class="meta_box">
+                <span class="meta_date">@item.ReviewDate.ToShortDateString()</span>
+                @*<span class="meta_comments"><a href="#"><em>21</em> <span>Comments</span></a></span>*@
+                <span class="meta_author"><a href="#">Publisher: @item.UserName</a></span>
+                @if (!item.LikedByUsers.Contains(@User.FindFirstValue(ClaimTypes.NameIdentifier)))
+                {
+                    <form id="like-1" method="post" asp-area="Reviews" asp-controller="CocktailReviews" asp-action="LikeCocktailReview"
+                          data-cocktailReviewID="@item.Id" data-cocktailId="@item.CocktailID">
+                        <button type="submit"
+                                style="background-color:transparent; border-color:transparent"
+                                class="reviewLike-2"
+                                data-cocktailReviewID="@item.Id" data-cocktailId="@item.CocktailID">
+                            <i style="color:red" class="fa fa-heart fa-lg text-danger"></i>
+                            <span style="color:gold"> @item.LikeCount</span>
+                        </button>
+                    </form>
+                }
+                else
+                {
+                    <form id="unlike-1" method="post" asp-area="Reviews" asp-controller="CocktailReviews" asp-action="RemoveCocktailReview"
+                          data-cocktailReviewID="@item.Id" data-cocktailId="@item.CocktailID">
+                        <button type="submit"
+                                style="background-color:transparent; border-color:transparent"
+                                class="reviewUnlike-2" data-cocktailReviewID="@item.Id" data-cocktailId="@item.CocktailID">
+                            <i style="color:red" class="fa fa-heart fa-lg text-danger"></i>
+                            <span style="color:gold">@item.LikeCount</span>
+                        </button>
+                    </form>
+                }
+
+            </div>
+        </div>
+    </div>
+</center>
+    }

@@ -6,16 +6,54 @@
     <AspNetCoreHostingModel>InProcess</AspNetCoreHostingModel>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Compile Remove="Areas\Bars\Data\**" />
+    <Compile Remove="Areas\Ingredients\Data\**" />
+    <Compile Remove="Areas\Notifications\Data\**" />
+    <Content Remove="Areas\Bars\Data\**" />
+    <Content Remove="Areas\Ingredients\Data\**" />
+    <Content Remove="Areas\Notifications\Data\**" />
+    <EmbeddedResource Remove="Areas\Bars\Data\**" />
+    <EmbeddedResource Remove="Areas\Ingredients\Data\**" />
+    <EmbeddedResource Remove="Areas\Notifications\Data\**" />
+    <None Remove="Areas\Bars\Data\**" />
+    <None Remove="Areas\Ingredients\Data\**" />
+    <None Remove="Areas\Notifications\Data\**" />
+    <TypeScriptCompile Remove="Areas\Ingredients\Data\**" />
+    <TypeScriptCompile Remove="Areas\Notifications\Data\**" />
+  </ItemGroup>
+
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
+    <PackageReference Include="Microsoft.TypeScript.MSBuild" Version="3.7.2">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.4" />
+    <PackageReference Include="NToastNotify" Version="5.0.12" />
   </ItemGroup>
 
 
   <ItemGroup>
     <ProjectReference Include="..\CM.Data\CM.Data.csproj" />
+    <ProjectReference Include="..\CM.Services\CM.Services.csproj" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <Folder Include="Areas\Cocktails\Data\" />
+    <Folder Include="Areas\Ingredients\Data\" />
+    <Folder Include="Areas\Notifications\Data\" />
+    <Folder Include="wwwroot\images\" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <Reference Include="Kendo.Mvc">
+      <HintPath>wwwroot\lib\Kendo.Mvc.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
 </Project>

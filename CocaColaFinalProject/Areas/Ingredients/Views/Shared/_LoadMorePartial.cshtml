@@ -1,0 +1,35 @@
+﻿@model IngredientsListViewModel
+
+@foreach (var item in Model.TenIngredientsList)
+{
+    <tr>
+        <td></td>
+        <td style="padding-right:200px">
+            <h5>
+                @item.Name
+            </h5>
+        </td>
+        <td style="padding-right:200px">
+            <h5>
+                @item.Brand
+            </h5>
+        </td>
+        <td style="padding-right:200px">
+            <h5>
+                @item.Country
+            </h5>
+        </td>
+        <td>
+            @if (this.User.IsInRole("Administrator") || this.User.IsInRole("Manager"))
+            {
+                <p style="padding-right:-400px">
+                    <a class="btn btn-default btn-sm" asp-area="Ingredients" asp-controller="Ingredients" asp-action="Edit" asp-route-id="@item.Id"><font style="color:gold"><i class="fa fa-magic"></i> Edit Ingeredient</font></a>
+                </p>
+                <p>
+                    <a class="btn btn-default btn-sm" asp-area="Ingredients" asp-controller="Ingredients" asp-action="Delete" asp-route-id="@item.Id"><font style="color:gold"><i class="fa fa-trash-o"></i> Delete Ingeredient</font></a>
+                </p>
+            }
+        </td>
+        <td></td>
+    </tr>
+}

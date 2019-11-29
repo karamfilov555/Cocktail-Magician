@@ -19,133 +19,31 @@ namespace CM.Data.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("CM.Models.Bar", b =>
-                {
-                    b.Property<string>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("Address")
-                        .IsRequired();
-
-                    b.Property<decimal>("BarRating");
-
-                    b.Property<string>("Image");
-
-                    b.Property<string>("Name")
-                        .IsRequired();
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Bar");
-                });
-
-            modelBuilder.Entity("CM.Models.BarCocktail", b =>
-                {
-                    b.Property<string>("BarId");
-
-                    b.Property<string>("CocktailId");
-
-                    b.HasKey("BarId", "CocktailId");
-
-                    b.HasIndex("CocktailId");
-
-                    b.ToTable("BarCocktails");
-                });
-
-            modelBuilder.Entity("CM.Models.BarReview", b =>
+            modelBuilder.Entity("CM.Models.Address", b =>
                 {
                     b.Property<string>("Id")
                         .ValueGeneratedOnAdd();
 
                     b.Property<string>("BarId");
 
-                    b.Property<string>("Description");
+                    b.Property<string>("City");
 
-                    b.Property<decimal>("Rating")
-                        .HasColumnType("decimal(18,2)");
+                    b.Property<string>("CountryId");
 
-                    b.Property<string>("UserId");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("BarId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("BarReviews");
-                });
-
-            modelBuilder.Entity("CM.Models.Cocktail", b =>
-                {
-                    b.Property<string>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("Image");
-
-                    b.Property<string>("Name")
-                        .IsRequired();
-
-                    b.Property<decimal>("Rating");
+                    b.Property<string>("Details");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Cocktails");
+                    b.HasIndex("BarId")
+                        .IsUnique()
+                        .HasFilter("[BarId] IS NOT NULL");
+
+                    b.HasIndex("CountryId");
+
+                    b.ToTable("Addresses");
                 });
 
-            modelBuilder.Entity("CM.Models.CocktailIngredient", b =>
-                {
-                    b.Property<string>("CocktailId");
-
-                    b.Property<string>("IngredientId");
-
-                    b.HasKey("CocktailId", "IngredientId");
-
-                    b.HasIndex("IngredientId");
-
-                    b.ToTable("CocktailIngredients");
-                });
-
-            modelBuilder.Entity("CM.Models.CocktailReview", b =>
-                {
-                    b.Property<string>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("BarId");
-
-                    b.Property<string>("CocktailId");
-
-                    b.Property<string>("Description");
-
-                    b.Property<decimal>("Rating")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<string>("UserId");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("BarId");
-
-                    b.HasIndex("CocktailId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("CocktailReviews");
-                });
-
-            modelBuilder.Entity("CM.Models.Ingredient", b =>
-                {
-                    b.Property<string>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("Name")
-                        .IsRequired();
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Ingredients");
-                });
-
-            modelBuilder.Entity("CM.Models.Role", b =>
+            modelBuilder.Entity("CM.Models.AppRole", b =>
                 {
                     b.Property<string>("Id")
                         .ValueGeneratedOnAdd();
@@ -169,7 +67,7 @@ namespace CM.Data.Migrations
                     b.ToTable("AspNetRoles");
                 });
 
-            modelBuilder.Entity("CM.Models.User", b =>
+            modelBuilder.Entity("CM.Models.AppUser", b =>
                 {
                     b.Property<string>("Id")
                         .ValueGeneratedOnAdd();
@@ -179,10 +77,14 @@ namespace CM.Data.Migrations
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken();
 
+                    b.Property<DateTime?>("DateDeleted");
+
                     b.Property<string>("Email")
                         .HasMaxLength(256);
 
                     b.Property<bool>("EmailConfirmed");
+
+                    b.Property<string>("ImageURL");
 
                     b.Property<bool>("LockoutEnabled");
 
@@ -218,6 +120,249 @@ namespace CM.Data.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers");
+                });
+
+            modelBuilder.Entity("CM.Models.Bar", b =>
+                {
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<double?>("BarRating");
+
+                    b.Property<DateTime?>("DateDeleted");
+
+                    b.Property<string>("Image");
+
+                    b.Property<string>("Name")
+                        .IsRequired();
+
+                    b.Property<string>("Website");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Bars");
+                });
+
+            modelBuilder.Entity("CM.Models.BarCocktail", b =>
+                {
+                    b.Property<string>("BarId");
+
+                    b.Property<string>("CocktailId");
+
+                    b.HasKey("BarId", "CocktailId");
+
+                    b.HasIndex("CocktailId");
+
+                    b.ToTable("BarCocktails");
+                });
+
+            modelBuilder.Entity("CM.Models.BarReview", b =>
+                {
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("BarId");
+
+                    b.Property<DateTime?>("DateDeleted");
+
+                    b.Property<string>("Description");
+
+                    b.Property<decimal?>("Rating")
+                        .HasConversion(new ValueConverter<decimal, decimal>(v => default(decimal), v => default(decimal), new ConverterMappingHints(precision: 38, scale: 17)))
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<DateTime>("ReviewDate");
+
+                    b.Property<string>("UserId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BarId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("BarReviews");
+                });
+
+            modelBuilder.Entity("CM.Models.BarReviewLike", b =>
+                {
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("AppUserID");
+
+                    b.Property<string>("BarReviewID");
+
+                    b.Property<DateTime>("Date");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AppUserID");
+
+                    b.HasIndex("BarReviewID");
+
+                    b.ToTable("BarReviewLikes");
+                });
+
+            modelBuilder.Entity("CM.Models.Cocktail", b =>
+                {
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<DateTime?>("DateDeleted");
+
+                    b.Property<string>("Image");
+
+                    b.Property<string>("Name")
+                        .IsRequired();
+
+                    b.Property<double?>("Rating");
+
+                    b.Property<string>("Recepie");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Cocktails");
+                });
+
+            modelBuilder.Entity("CM.Models.CocktailComponent", b =>
+                {
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("CocktailId");
+
+                    b.Property<string>("IngredientId");
+
+                    b.Property<string>("Name");
+
+                    b.Property<int>("Quantity");
+
+                    b.Property<string>("Unit")
+                        .IsRequired();
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CocktailId");
+
+                    b.HasIndex("IngredientId");
+
+                    b.ToTable("CocktailComponent");
+                });
+
+            modelBuilder.Entity("CM.Models.CocktailIngredient", b =>
+                {
+                    b.Property<string>("CocktailId");
+
+                    b.Property<string>("IngredientId");
+
+                    b.HasKey("CocktailId", "IngredientId");
+
+                    b.HasIndex("IngredientId");
+
+                    b.ToTable("CocktailIngredient");
+                });
+
+            modelBuilder.Entity("CM.Models.CocktailReview", b =>
+                {
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("CocktailId");
+
+                    b.Property<DateTime?>("DateDeleted");
+
+                    b.Property<string>("Description");
+
+                    b.Property<decimal?>("Rating")
+                        .HasConversion(new ValueConverter<decimal, decimal>(v => default(decimal), v => default(decimal), new ConverterMappingHints(precision: 38, scale: 17)))
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<DateTime>("ReviewDate");
+
+                    b.Property<string>("UserId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CocktailId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("CocktailReviews");
+                });
+
+            modelBuilder.Entity("CM.Models.CocktailReviewLike", b =>
+                {
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("AppUserID");
+
+                    b.Property<string>("CocktailReviewID");
+
+                    b.Property<DateTime>("Date");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AppUserID");
+
+                    b.HasIndex("CocktailReviewID");
+
+                    b.ToTable("CocktailReviewLikes");
+                });
+
+            modelBuilder.Entity("CM.Models.Country", b =>
+                {
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Name");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Countries");
+                });
+
+            modelBuilder.Entity("CM.Models.Ingredient", b =>
+                {
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Brand");
+
+                    b.Property<string>("Country");
+
+                    b.Property<DateTime?>("DateDeleted");
+
+                    b.Property<string>("ImageUrl");
+
+                    b.Property<string>("Name");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Ingredients");
+                });
+
+            modelBuilder.Entity("CM.Models.Notification", b =>
+                {
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Description");
+
+                    b.Property<DateTime>("EventDate");
+
+                    b.Property<bool>("IsSeen");
+
+                    b.Property<string>("UserId");
+
+                    b.Property<string>("Username");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Notifications");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -310,6 +455,17 @@ namespace CM.Data.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
+            modelBuilder.Entity("CM.Models.Address", b =>
+                {
+                    b.HasOne("CM.Models.Bar", "Bar")
+                        .WithOne("Address")
+                        .HasForeignKey("CM.Models.Address", "BarId");
+
+                    b.HasOne("CM.Models.Country", "Country")
+                        .WithMany("Adresses")
+                        .HasForeignKey("CountryId");
+                });
+
             modelBuilder.Entity("CM.Models.BarCocktail", b =>
                 {
                     b.HasOne("CM.Models.Bar", "Bar")
@@ -326,45 +482,83 @@ namespace CM.Data.Migrations
             modelBuilder.Entity("CM.Models.BarReview", b =>
                 {
                     b.HasOne("CM.Models.Bar", "Bar")
-                        .WithMany("BarReviews")
-                        .HasForeignKey("BarId");
+                        .WithMany("Reviews")
+                        .HasForeignKey("BarId")
+                        .OnDelete(DeleteBehavior.Restrict);
 
-                    b.HasOne("CM.Models.User", "User")
-                        .WithMany()
+                    b.HasOne("CM.Models.AppUser", "User")
+                        .WithMany("BarReviews")
                         .HasForeignKey("UserId");
+                });
+
+            modelBuilder.Entity("CM.Models.BarReviewLike", b =>
+                {
+                    b.HasOne("CM.Models.AppUser", "User")
+                        .WithMany("BarReviewLikes")
+                        .HasForeignKey("AppUserID");
+
+                    b.HasOne("CM.Models.BarReview", "BarReview")
+                        .WithMany("BarReviewLikes")
+                        .HasForeignKey("BarReviewID");
+                });
+
+            modelBuilder.Entity("CM.Models.CocktailComponent", b =>
+                {
+                    b.HasOne("CM.Models.Cocktail", "Cocktail")
+                        .WithMany("CocktailComponents")
+                        .HasForeignKey("CocktailId");
+
+                    b.HasOne("CM.Models.Ingredient", "Ingredient")
+                        .WithMany("CocktailComponents")
+                        .HasForeignKey("IngredientId");
                 });
 
             modelBuilder.Entity("CM.Models.CocktailIngredient", b =>
                 {
                     b.HasOne("CM.Models.Cocktail", "Cocktail")
-                        .WithMany("CocktailIngredients")
+                        .WithMany()
                         .HasForeignKey("CocktailId")
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("CM.Models.Ingredient", "Ingredient")
-                        .WithMany("CocktailIngredients")
+                        .WithMany()
                         .HasForeignKey("IngredientId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("CM.Models.CocktailReview", b =>
                 {
-                    b.HasOne("CM.Models.Bar", "Bar")
-                        .WithMany()
-                        .HasForeignKey("BarId");
+                    b.HasOne("CM.Models.Cocktail", "Cocktail")
+                        .WithMany("Reviews")
+                        .HasForeignKey("CocktailId")
+                        .OnDelete(DeleteBehavior.Restrict);
 
-                    b.HasOne("CM.Models.Cocktail")
+                    b.HasOne("CM.Models.AppUser", "User")
                         .WithMany("CocktailReviews")
-                        .HasForeignKey("CocktailId");
+                        .HasForeignKey("UserId");
+                });
 
-                    b.HasOne("CM.Models.User", "User")
-                        .WithMany()
+            modelBuilder.Entity("CM.Models.CocktailReviewLike", b =>
+                {
+                    b.HasOne("CM.Models.AppUser", "User")
+                        .WithMany("CocktailReviewLikes")
+                        .HasForeignKey("AppUserID");
+
+                    b.HasOne("CM.Models.CocktailReview", "CocktailReview")
+                        .WithMany("CocktailReviewLikes")
+                        .HasForeignKey("CocktailReviewID");
+                });
+
+            modelBuilder.Entity("CM.Models.Notification", b =>
+                {
+                    b.HasOne("CM.Models.AppUser", "User")
+                        .WithMany("Notifications")
                         .HasForeignKey("UserId");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
-                    b.HasOne("CM.Models.Role")
+                    b.HasOne("CM.Models.AppRole")
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -372,7 +566,7 @@ namespace CM.Data.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("CM.Models.User")
+                    b.HasOne("CM.Models.AppUser")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -380,7 +574,7 @@ namespace CM.Data.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("CM.Models.User")
+                    b.HasOne("CM.Models.AppUser")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -388,12 +582,12 @@ namespace CM.Data.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
                 {
-                    b.HasOne("CM.Models.Role")
+                    b.HasOne("CM.Models.AppRole")
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("CM.Models.User")
+                    b.HasOne("CM.Models.AppUser")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -401,7 +595,7 @@ namespace CM.Data.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
-                    b.HasOne("CM.Models.User")
+                    b.HasOne("CM.Models.AppUser")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);

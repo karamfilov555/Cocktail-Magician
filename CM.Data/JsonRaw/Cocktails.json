@@ -1,0 +1,77 @@
+[
+  {
+    "Id": "1",
+    "Image": "http://cocktail.itsplanet.eu/img/cocktail/2017_1.jpg",
+    "Name": "Americano",
+    "Rating": 9
+  },
+  {
+    "Id": "2",
+    "Image": "http://cocktail.itsplanet.eu/img/cocktail/2017_2.jpg",
+    "Name": "Angel Face"
+  },
+  {
+    "Id": "3",
+    "Image": "http://cocktail.itsplanet.eu/img/cocktail/2017_3.jpg",
+    "Name": "Aviation"
+  },
+  {
+    "Id": "4",
+    "Image": "http://cocktail.itsplanet.eu/img/cocktail/2017_4.jpg",
+    "Name": "Bacardi"
+  },
+  {
+    "Id": "5",
+    "Image": "http://cocktail.itsplanet.eu/img/cocktail/2017_16.jpg",
+    "Name": "Banana Daiquiri"
+  },
+  {
+    "Id":  "6",
+    "Image": "http://cocktail.itsplanet.eu/img/cocktail/2017_5.jpg",
+    "Name": "Barracuda"
+  },
+  {
+    "Id": "7",
+    "Image": "http://cocktail.itsplanet.eu/img/cocktail/2017_6.jpg",
+    "Name": "Between The Sheets"
+  },
+  {
+    "Id": "8",
+    "Image": "http://cocktail.itsplanet.eu/img/cocktail/2017_7.jpg",
+    "Name": "Black Russian"
+  },
+  {
+    "Id": "9",
+    "Image": "http://cocktail.itsplanet.eu/img/cocktail/2017_8.jpg",
+    "Name": "Bramble",
+    "Rating": 8
+  },
+  {
+    "Id": "10",
+    "Image": "http://cocktail.itsplanet.eu/img/cocktail/2017_9.jpg",
+    "Name": "Bronks"
+  },
+  {
+    "Id": "11",
+    "Image": "http://cocktail.itsplanet.eu/img/cocktail/2017_86.jpg",
+    "Name": "Caipirinha",
+    "Rating":7 
+  },
+  {
+    "Id": "12",
+    "Image": "http://cocktail.itsplanet.eu/img/cocktail/2017_400.jpg",
+    "Name": "Caipiroska"
+  },
+  {
+    "Id": "13",
+    "Image": "http://cocktail.itsplanet.eu/img/cocktail/2017_401.jpg",
+    "Name": "Caipiroska Strawberry",
+    "Rating":  10
+  },
+  {
+    "Id": "14",
+    "Image": "http://cocktail.itsplanet.eu/img/cocktail/2017_11.jpg",
+    "Name": "Campari Orange",
+    "Rating": 9.5
+  }
+]

@@ -1,0 +1,207 @@
+﻿
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="description" content=" ">
+    <meta name="author" content=" ">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1, shrink-to-fit=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>The Coca-Cola's Cocktail Magician</title>
+
+    <link rel="stylesheet" type="text/css" href="/assets/js/customscroll/jquery.mCustomScrollbar.css">
+    <link rel="stylesheet" type="text/css" href="/assets/js/flexslider/css/flexslider.css">
+    <link rel="stylesheet" type="text/css" href="/assets/js/prettyPhoto/css/prettyPhoto.css">
+    <link rel="stylesheet" type="text/css" href="/assets/js/bxslider/jquery.bxslider.css">
+    <link rel="stylesheet" type="text/css" href="/assets/css/font-awesome.css">
+
+    <link rel="stylesheet" type="text/css" href="/assets/css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="/assets/css/style.css">
+    <link rel="stylesheet" type="text/css" href="/assets/css/customCss.css">
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"
+            integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+            crossorigin="anonymous"></script>
+    <!-- modernizr : detect css transition -->
+    <script src="/assets/js/modernizr.custom.81779.js"></script>
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script src="/assets/bootstrap/js/html5shiv.js"></script>
+    <script src="/assets/bootstrap/js/respond.min.js"></script>
+    <![endif]-->
+    @* MULTI SELECT LIBRARY STARTS HERE : *@
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.10/css/select2.min.css" rel="stylesheet" />
+
+
+
+</head>
+<body>
+    <nav class="navbar navbar-default" role="navigation">
+        <div class="inner">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle btn btn-primary" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <div class="container-search">
+                        <form method="get" asp-area="Search" asp-controller="Search" asp-action="SearchResults">
+                            <input name="searchString" type="text" placeholder="Magic search...">
+
+                            <div class="search-search"></div>
+                        </form>
+                    </div>
+                    <div class="text-center">
+                        <p class="address">
+                            The Coca-Cola Company Cocktail Magician™ Telerik Academy, Sofia, Bulgaria
+                        </p>
+                    </div>
+
+                    <center>
+                        <partial name="_LogoPartial" />
+                    </center>
+
+                    <partial name="_HeaderPartial" />
+
+                </div>
+
+
+
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse navbar-ex1-collapse" style="rotation:0">
+                    <ul class="nav navbar-nav text-center" data-pos="145" style="margin-top: -5px;">
+                        @*active class !!!!*@
+                        <li>
+                            <a asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                        </li>
+                        <li><a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a></li>
+                        <li><a asp-area="" asp-controller="Home" asp-action="About">About</a></li>
+                        @*<li><a asp-area="" asp-controller="Home" asp-action="Cola"></a></li>*@
+
+
+                        <partial name="_NavigationBarPartial" />
+
+
+
+                        @*<li class="align-content-end"><partial name="_NavigationBarPartial" /></li>*@
+
+                    </ul>
+
+                </div>
+                <!-- /.navbar-collapse -->
+            </div>
+            <!-- / container -->
+
+            <div class="btm"></div>
+        </div>
+    </nav>
+
+
+    <section style="margin-top: 20px">
+        @RenderBody()
+    </section>
+    <footer>
+        <div class="container">
+
+            <div class="row">
+                <div class="col-md-3">
+
+                    <h4 style="padding-left:30px;color:gold">Contact</h4>
+
+                    <p>
+                        <img src="~/assets/images/content/jitLogoFinal.png">
+                        <br><br>
+                        Telerik Academy,<br><br>
+                        Sofia, Bulgaria<br><br>
+                        @*0877 - 35 - 36 - 88<br><br>
+                        *@
+                        <a href="">yuliya.gencheva@gmail.com</a>
+                        <br><br>
+                        <a href="">karamfilov555@gmail.com</a>
+                    </p>
+
+                </div>
+                <div class="col-md-6">
+                    <partial name="_LogoPartial">
+
+                        <div style="padding-top:145px;margin-bottom:-50px;padding-bottom:28px">
+                            <ul class="bigSocials">
+                                <li class="fb"><a href="https://www.facebook.com"><img src="/assets/images/social-fb.png" alt="Facebook"></a></li>
+                                <li class="tw"><a href="https://www.twitter.com"><img src="/assets/images/social-tw.png" alt="Twitter"></a></li>
+                                <li class="gg"><a href="https://www.google.com"><img src="/assets/images/social-gg.png" alt="Google+"></a></li>
+                                <li class="rss"><a asp-controller="Home" asp-action="Cola"><img src="~/assets/images/content/colaken-removebg-preview.png" alt="RSS"></a></li>
+                            </ul>
+                            <p class="copyright">© Copyright 2019 JiT Team <a href="https://www.telerikacademy.com"> Telerik Academy</a></p>
+                        </div>
+
+
+                </div>
+                <h4><font style="padding-left:33px;color:gold">Quick Message Form</font></h4>
+
+                <div class="col-md-12">
+                    <div class="form">
+
+
+                        <form method="post" asp-area="Notifications" asp-controller="Notifications" asp-action="SendQuickMessage">
+                            <div class="col-md-2">
+                                <input class="form-control" style="background-color:aliceblue" type="text" name="Name" placeholder="Name" value="@ViewData["Name"]" required>
+                            </div>
+                            <br />
+                            <br />
+                            <br />
+                            <div class="col-md-2">
+                                <input class="form-control" style="background-color:aliceblue;margin-left: 153px;
+    margin-top: -72px;" type="email" name="Email" placeholder="Email" value="@ViewData["Email"]" required>
+                            </div>
+                            <br />
+                            <br />
+                            <br />
+                            <div class="col-md-4">
+                                <textarea rows="5"
+                                          style="background-color:aliceblue;margin-left:484px;
+    margin-top: -200px;" class="form-control" placeholder="Message" name="Message" value="@ViewData["Message"]"></textarea>
+
+                            </div>
+                            <br />
+                            <br />
+                            <br />
+                            <div class="col-md-3">
+                                <button style="margin-top:-83px;margin-left:245px" class="btn btn-sm">
+                                    Alright, Submit
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+        <a href="#" id="toTop"></a>
+    </footer>
+
+    <script src="/assets/bootstrap/js/bootstrap.min.js"></script>
+
+
+    <script src="/assets/js/customscroll/jquery.mCustomScrollbar.concat.min.js"></script>
+    <script src="/assets/js/flexslider/jquery.easing.1.3.min.js"></script>
+    <script src="/assets/js/flexslider/jquery.flexslider-min.js"></script>
+    <script src="/assets/js/bxslider/jquery.bxslider.min.js"></script>
+   
+    <script src="/assets/js/jquery.sticky.js"></script>
+    <script src="/assets/form/js/form.js"></script>
+    <script src="/assets/js/main.js"></script>
+    <script src="/assets/js/less.min.js"></script>
+    <script src="/assets/js/like.js"></script>
+    <script src="~/assets/js/reviewLike.js"></script>
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.10/js/select2.min.js"></script>
+    <script src="~/assets/js/tab-switcher.js"></script>
+    @RenderSection("Scripts", required: false)
+    @await Component.InvokeAsync("NToastNotify")
+</body>
+
+</html>

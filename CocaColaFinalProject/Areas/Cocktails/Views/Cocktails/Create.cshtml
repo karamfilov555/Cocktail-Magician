@@ -1,0 +1,126 @@
+﻿
+@model CreateCocktailViewModel
+
+@{
+    ViewData["Title"] = "View";
+    Layout = "~/Views/Shared/_LayoutCustom.cshtml";
+}
+    <div class="bg-1 section" id="events" style="margin-top:-18px">
+        <div class="inner" data-image="/assets/images/content/ccback12.jpg" data-topspace="1" style="background-image: url('/assets/images/content/ccback12.jpg'); padding-top: 1px;">
+            <div class="inner" data-topspace="1" data-bottomspace="1" style="background-image: none; ">
+                <h3 class="hdr4">Create Cocktail</h3>
+                <div style="background-color:rgba(16, 6, 6, 0.80)">
+                @*<center><img src="~/assets/images/content/createCocktailHeader.png" /> </center>*@
+                    <center style="padding-bottom:50px;padding-top:20px">
+                        <h4></h4>
+                        <hr />
+                        <div class="row" style="margin-right:0px">
+                            <div class="col-md-4 col-md-offset-4" style=" color:gold">
+                                
+                                <form asp-area="Cocktails" asp-controller="Cocktails" asp-action="Create" method="post"
+                                      enctype="multipart/form-data">
+                                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                    <div class="form-group">
+                                        <label asp-for="@Model.Name" class="control-label" style=" color:gold"></label>
+                                        <input asp-for="@Model.Name" class="form-control"  />
+                                        <span asp-validation-for="@Model.Name" class="text-danger"></span>
+                                    </div>
+                                    <div>
+                                        <label asp-for="@Model.CocktailImage" class="control-label" style=" color:gold">Cocktail's Image</label>
+                                        <input asp-for="@Model.CocktailImage" class="btn btn-primary btn-sm" />
+                                    </div>
+
+                                    <br />
+                                    <div>
+                                        <label style=" color:gold">Add Ingredients</label>
+                                        <table id="ingredients" class="table table-responsive" style=" color:gold">
+                                            <tbody style="color:gold">
+                                                <tr>
+                                                    <th width="75%" valign="middle"><h6 style=" color:gold">Ingredient</h6></th>
+                                                    <th><h6 width="2%" style="color:gold" >Quantity</h6></th>
+                                                    <th width="40%"><h6 style=" color:gold">Units</h6></th>
+                                                    <th></th>
+                                                </tr>
+                                                <tr class="tableRow">
+                                                    <td>
+                                                        <select id="selectmenu" name="Ingredients[0].Ingredient"
+                                                                class="select-editable form-control" asp-items="@Model.IngredientsNames"
+                                                                input="text" placeholder="Choose Ingredient" style=" color:black"></select>
+                                                    </td>
+                                                    <td>
+                                                        <input name="Ingredients[0].Quantity" type="number"  style=" color:black" class="form-control" />
+                                                    </td>
+                                                    <td>
+                                                        <select class="form-control" name="Ingredients[0].Ingredient"  style=" color:black" asp-items="Html.GetEnumSelectList<Unit>()">
+                                                            <option hidden disabled selected value="">ml</option>
+                                                        </select>
+                                                    </td>
+                                                    <td>
+                                                        <a class="xSignIngredients" onclick="removeRow(this)"><i class="fa fa-times"></i></a>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+
+                                        </table>
+                                        <input type="hidden" value="0" id="total_row">
+                                        <input class="btn btn-success btn-sm" type="button" onclick="addRow()" value="+ Add more ingredients">
+
+                                        <br />
+                                        <br />
+                                    </div>
+                                    <div class="form-group">
+
+                                        <textarea asp-for="@Model.Recipe" class="form-control" placeholder="Write the full recepie here..."> </textarea>
+
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="submit" value="Create" class="btn btn-primary" />
+                                    </div>
+                                </form>
+
+                            </div>
+                        </div>
+                        <div>
+                            <a type="submit" class="btn btn-sm" style="margin-bottom:20px;" asp-area="Cocktails" asp-controller="Cocktails" asp-action="ListCocktails"><i class="fa fa-arrow-circle-o-left"></i> Back To List</a>
+                        </div>
+
+                    </center>
+                    </div>
+                    </div>
+                    </div>
+                    </div>
+                    <script>
+                        window.onload = function () {
+                            $('.js-example-basic-multiple').select2();
+                        };
+                    </script>
+
+                    <script src="/assets/js/jquery.min.js"></script>
+                    <script src="/assets/bootstrap/js/bootstrap.min.js"></script>
+
+
+                    <script src="/assets/js/cocktailsPagination.js"></script>
+
+
+                    <script src="/assets/js/customscroll/jquery.mCustomScrollbar.concat.min.js"></script>
+                    <script src="/assets/js/flexslider/jquery.easing.1.3.min.js"></script>
+                    <script src="/assets/js/flexslider/jquery.flexslider-min.js"></script>
+                    <script src="/assets/js/prettyPhoto/js/jquery.prettyPhoto.js"></script>
+                    <script src="/assets/js/bxslider/jquery.bxslider.min.js"></script>
+                    <script src="/assets/twitter/js/jquery.tweet.js"></script>
+                    <script src="/assets/js/jquery.hoverdir.js"></script>
+                    <script src="/assets/js/jquery.arctext.js"></script>
+                    <script src="/assets/js/jquery.placeholder.js"></script>
+                    <script src="/assets/js/jquery.sticky.js"></script>
+
+                    <script src="/assets/form/js/form.js"></script>
+                    <script src="/assets/js/main.js"></script>
+                    <script src="/assets/js/less.min.js"></script>
+                    <script src="~/assets/js/addRowInCreateCocktails.js"></script>
+                    <script src="~/assets/js/removeRowInCreateCocktail.js"></script>
+                    <script src="/assets/js/like.js"></script>
+
+                    <script src="/assets/js/NotificationSeen.js"></script>
+
+
+                    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.10/js/select2.min.js"></script>

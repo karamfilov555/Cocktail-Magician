@@ -1,0 +1,31 @@
+﻿
+@inject SignInManager<AppUser> SignInManager
+@inject UserManager<AppUser> UserManager
+
+@if (SignInManager.IsSignedIn(User))
+{
+    @await Component.InvokeAsync("LoggedUserHeader", this.User.FindFirstValue(ClaimTypes.NameIdentifier));
+
+}
+else
+{
+    <ul class="smallSocials2" style="margin-right:-80px">
+        <img src="~/assets/images/content/wizGif2.gif" width="35" height="40" align="left" style="display:block; border-radius:30px; margin-top:6px; margin-right:-80px; margin-left:35px" />
+        <li2 class="dropdown active">
+            <a class="btn3" asp-area="Identity" asp-page="/Account/Manage/Index"><font size="5"> Account</font></a>
+            <ul class="dropdown-menu" style="background-color:brown">
+                <li style="background-color:brown">
+
+                    <form method="get" class="form-inline" action="/Identity/Account/Login">
+                        <button type="submit" class="progress-bar" style="border:0px"><font size="5">Login</font></button>
+                    </form>
+                </li>
+                <li style="background-color:brown">
+                    <form method="get" class="form-inline" action="/Identity/Account/Register">
+                        <button type="submit" class="progress-bar" style="border:0px"><font size="5">Register</font></button>
+                    </form>
+                </li>
+            </ul>
+        </li2>
+    </ul>
+}

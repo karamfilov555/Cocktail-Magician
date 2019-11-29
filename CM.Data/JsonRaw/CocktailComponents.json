@@ -1,0 +1,165 @@
+[
+  {
+    "CocktailId": "1",
+    "IngredientId": "14",
+    "Quantity": "100",
+    "Unit": "ml"
+
+  },
+  {
+    "CocktailId": "1",
+    "IngredientId": "11",
+    "Quantity": "100",
+    "Unit": "ml"
+  },
+  {
+    "CocktailId": "2",
+    "IngredientId": "10",
+    "Quantity": "100",
+    "Unit": "ml"
+  },
+  {
+    "CocktailId": "2",
+    "IngredientId": "13",
+    "Quantity": "100",
+    "Unit": "ml"
+  },
+  {
+    "CocktailId": "3",
+    "IngredientId": "10",
+    "Quantity": "100",
+    "Unit": "ml"
+  },
+  {
+    "CocktailId": "3",
+    "IngredientId": "11",
+    "Quantity": "100",
+    "Unit": "ml"
+  },
+  {
+    "CocktailId": "4",
+    "IngredientId": "12",
+    "Quantity": "100",
+    "Unit": "ml"
+  },
+  {
+    "CocktailId": "4",
+    "IngredientId": "9",
+    "Quantity": "100",
+    "Unit": "ml"
+  },
+  {
+    "CocktailId": "5",
+    "IngredientId": "5",
+    "Quantity": "100",
+    "Unit": "ml"
+  },
+  {
+    "CocktailId": "5",
+    "IngredientId": "12",
+    "Quantity": "100",
+    "Unit": "ml"
+  },
+  {
+    "CocktailId": "6",
+    "IngredientId": "1",
+    "Quantity": "100",
+    "Unit": "ml"
+  },
+  {
+    "CocktailId": "8",
+    "IngredientId": "1",
+    "Quantity": "100",
+    "Unit": "ml"
+  },
+  {
+    "CocktailId": "8",
+    "IngredientId": "8",
+    "Quantity": "100",
+    "Unit": "ml"
+  },
+  {
+    "CocktailId": "7",
+    "IngredientId": "10",
+    "Quantity": "100",
+    "Unit": "ml"
+  },
+  {
+    "CocktailId": "7",
+    "IngredientId": "3",
+    "Quantity": "100",
+    "Unit": "ml"
+  },
+  {
+    "CocktailId": "9",
+    "IngredientId": "9",
+    "Quantity": "100",
+    "Unit": "ml"
+  },
+  {
+    "CocktailId": "9",
+    "IngredientId": "7",
+    "Quantity": "100",
+    "Unit": "ml"
+  },
+  {
+    "CocktailId": "10",
+    "IngredientId": "2",
+    "Quantity": "100",
+    "Unit": "ml"
+  },
+  {
+    "CocktailId": "10",
+    "IngredientId": "4",
+    "Quantity": "100",
+    "Unit": "ml"
+  },
+  {
+    "CocktailId": "11",
+    "IngredientId": "12",
+    "Quantity": "100",
+    "Unit": "ml"
+  },
+  {
+    "CocktailId": "11",
+    "IngredientId": "11",
+    "Quantity": "100",
+    "Unit": "ml"
+  },
+  {
+    "CocktailId": "12",
+    "IngredientId": "1",
+    "Quantity": "100",
+    "Unit": "ml"
+  },
+  {
+    "CocktailId": "12",
+    "IngredientId": "9",
+    "Quantity": "100",
+    "Unit": "ml"
+  },
+  {
+    "CocktailId": "13",
+    "IngredientId": "1",
+    "Quantity": "100",
+    "Unit": "ml"
+  },
+  {
+    "CocktailId": "13",
+    "IngredientId": "5",
+    "Quantity": "100",
+    "Unit": "ml"
+  },
+  {
+    "CocktailId": "14",
+    "IngredientId": "1",
+    "Quantity": "100",
+    "Unit": "ml"
+  },
+  {
+    "CocktailId": "14",
+    "IngredientId": "6",
+    "Quantity": "100",
+    "Unit": "ml"
+  }
+]

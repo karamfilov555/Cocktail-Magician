@@ -2,38 +2,59 @@
 @model RegisterModel
 @{
     ViewData["Title"] = "Register";
+    Layout = "~/Views/Shared/_LayoutCustom.cshtml";
 }
+<div class="bg-1 section" id="events" style="margin-top:-18px">
+    <div class="inner" data-image="/assets/images/content/ccback12.jpg" data-topspace="1" style="background-image: url('/assets/images/content/ccback12.jpg'); padding-top: 1px;">
+        <div class="inner" data-topspace="1" data-bottomspace="1" style="background-image: none; ">
+            <h3 class="hdr4">@ViewData["Title"]</h3>
+            <div style="background-color:rgba(16, 6, 6, 0.80)">
 
-<h1>@ViewData["Title"]</h1>
 
-<div class="row">
-    <div class="col-md-4">
-        <form asp-route-returnUrl="@Model.ReturnUrl" method="post">
-            <h4>Create a new account.</h4>
-            <hr />
-            <div asp-validation-summary="All" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Input.Username"></label>
-                <input asp-for="Input.Username" class="form-control" />
-                <span asp-validation-for="Input.Username" class="text-danger"></span>
+                <div class="row" style="margin-right:20px">
+                    <div class="col-md-4 col-md-offset-4">
+                        <form asp-route-returnUrl="@Model.ReturnUrl" method="post" enctype="multipart/form-data">
+                            <label align="center" style="padding-bottom:20px; padding-top:10px; color:gold">Create a new account:</label>
+                            <hr />
+                            <center>
+                                <div asp-validation-summary="All" class="text-danger"></div>
+                                <div class="form-group">
+                                    <label  style="color:gold" asp-for="Input.Username"></label>
+                                    <input asp-for="Input.Username" class="form-control" />
+                                    <span asp-validation-for="Input.Username" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label  style="color:gold" asp-for="Input.Email"></label>
+                                    <input asp-for="Input.Email" class="form-control" />
+                                    <span asp-validation-for="Input.Email" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label  style="color:gold" asp-for="Input.Password"></label>
+                                    <input asp-for="Input.Password" class="form-control" />
+                                    <span asp-validation-for="Input.Password" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label style="color:gold" asp-for="Input.ConfirmPassword"></label>
+                                    <input asp-for="Input.ConfirmPassword" class="form-control" />
+                                    <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+                                </div>
+                                <div>
+                                    <label  style="color:gold" asp-for="@Model.Input.Image"></label>
+                                    <input asp-for="@Model.Input.Image" class="form-control" type="file" />
+                                    @*<span asp-validation-for="Input.Image" class="text-danger"></span>*@
+                                </div>
+                                </center>
+                                    <div align="center">
+                                        <br />
+                                        <button type="submit" class="btn btn-primary">Register</button>
+                                        <br />
+                                        <br />
+                                    </div>
+</form>
+                    </div>
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="Input.Email"></label>
-                <input asp-for="Input.Email" class="form-control" />
-                <span asp-validation-for="Input.Email" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Input.Password"></label>
-                <input asp-for="Input.Password" class="form-control" />
-                <span asp-validation-for="Input.Password" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Input.ConfirmPassword"></label>
-                <input asp-for="Input.ConfirmPassword" class="form-control" />
-                <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
-            </div>
-            <button type="submit" class="btn btn-primary">Register</button>
-        </form>
+        </div>
     </div>
 </div>
 
