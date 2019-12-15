@@ -1,17 +1,18 @@
-# JTGroup FinalProject_tempRepo
+# JiT Team Final Project The Coca-Cola Company™ "Cocktail Magician"
 
 
-to be migrated on gitHub!
+Web application based on ASP.NET Core 2.2. 
+Cocktail Magician allows creation of recipes for cocktails and follows their distribution and success
+in bars. 
+Employees can create cocktails and define the bars which can
+offer them. 
+Registered users can rate, comment, search, etc. cocktails
+and bars, download and upload recipes and images.
+Admin can manage all process, users and items on the application.
 
+Used technologies: C#, ASP.NET Core 2.2, Entity Framework Core 2.2,
+SQL Server, Kendo UI, REST, JavaScript, Ajax, Bootstrap, CSS, HTML, Git
+Awarded by "The Coca-Cola Company" as the best project for the
+cohort
+by JiT Team™
 Team members: Julia Stoimenova , Todor Karamfilov
-Due Date: 28.11.2019
-Trello board ???
-Technologies used:
--> db ef 2.2 
--> asp.net core mvc 2.2 
--> C#
--> MUST be over 80% test covered ( inMemory, unit) !!! Life-hack: To rise percantage of test coverage at the end of the project
-DELETE MIGRATIONS ( then migrate the whole db at once, migrations ruin test statistics) 
--> gitHub (git)
--> front-end ( some ajax to be impl. , theme ) 
--> communicators
